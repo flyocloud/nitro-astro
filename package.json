@@ -1,0 +1,21 @@
+{
+  "name": "@flyo/nitro-astro",
+  "version": "1.0.0",
+  "description": "Astro Framework",
+  "main": "dist/index.js",
+  "author": "Basil Suter <git@nadar.io>",
+  "license": "MIT",
+  "scripts": {
+    "release": "npm publish --access=public"
+  },
+  "devDependencies": {
+    "astro": "^3.4.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flyocloud/nitro-astro"
+  },
+  "dependencies": {
+    "@flyo/nitro-js": "^1.0.5"
+  }
+}
