@@ -2,14 +2,22 @@
   "name": "@flyo/nitro-astro",
   "version": "1.0.0",
   "description": "Astro Framework",
-  "main": "dist/index.js",
+  "main": "./dist/nitro-astro.js",
+  "module": "./dist/nitro-astro.mjs",
+  "files": [
+    "dist"
+  ],
   "author": "Basil Suter <git@nadar.io>",
   "license": "MIT",
   "scripts": {
-    "release": "npm publish --access=public"
+    "release": "npm publish --access=public",
+    "build": "vite build"
   },
   "devDependencies": {
-    "astro": "^3.4.3"
+    "astro": "^3.4.3",
+    "typescript": "5.2.2",
+    "vite": "^4.5.0",
+    "vite-plugin-dts": "^3.6.3"
   },
   "repository": {
     "type": "git",
