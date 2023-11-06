@@ -22,11 +22,12 @@ export default function flyoNitroIntegration(
     return {
       name: "@flyo/nitro-astro",
       hooks: {
-        "astro:config:setup": ({ injectScript, updateConfig }) => {
-          
+        "astro:config:setup": ({ injectScript }) => {
+
           injectScript(
             "page-ssr",
             `
+              import { ApiClient } from '@flyo/nitro-js'
               var defaultClient = ApiClient.instance;
               defaultClient.defaultHeaders = {}
           
@@ -47,3 +48,6 @@ export default function flyoNitroIntegration(
       },
     };
   }
+
+export { default as FlyoNitroBlock } from './components/FlyoNitroBlock.astro';
+export { default as FlyoNitroPage } from './components/FlyoNitroPage.astro';

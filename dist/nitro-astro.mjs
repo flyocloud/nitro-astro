@@ -3507,10 +3507,11 @@ function ut(i) {
   return {
     name: "@flyo/nitro-astro",
     hooks: {
-      "astro:config:setup": ({ injectScript: c, updateConfig: l }) => {
+      "astro:config:setup": ({ injectScript: c }) => {
         c(
           "page-ssr",
           `
+              import { ApiClient } from '@flyo/nitro-js'
               var defaultClient = ApiClient.instance;
               defaultClient.defaultHeaders = {}
           

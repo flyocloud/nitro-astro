@@ -1,0 +1,23 @@
+---
+import type { AstroComponentFactory } from "astro/dist/runtime/server";
+
+interface Props {
+	block: object;
+    [prop: string]: unknown;
+}
+
+const { block, ...props } = Astro.props;
+let DynamicComponent: AstroComponentFactory;
+
+async function importComponent(block) {
+    /* @vite-ignore */ 
+    const module = await import('./'+block.component+'.astro');
+    return module.default;
+}
+
+(async () => {
+    DynamicComponent = await importComponent(block);
+})();
+---
+
+{DynamicComponent && <DynamicComponent :block={block} {...props} />}
