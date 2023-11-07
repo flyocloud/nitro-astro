@@ -50,20 +50,20 @@ var N = {}, Z = { exports: {} }, Ae = { exports: {} };
       return this;
     if (arguments.length == 1)
       return delete this._callbacks["$" + l], this;
-    for (var _, w = 0; w < d.length; w++)
-      if (_ = d[w], _ === p || _.fn === p) {
+    for (var b, w = 0; w < d.length; w++)
+      if (b = d[w], b === p || b.fn === p) {
         d.splice(w, 1);
         break;
       }
     return d.length === 0 && delete this._callbacks["$" + l], this;
   }, u.prototype.emit = function(l) {
     this._callbacks = this._callbacks || {};
-    for (var p = new Array(arguments.length - 1), d = this._callbacks["$" + l], _ = 1; _ < arguments.length; _++)
-      p[_ - 1] = arguments[_];
+    for (var p = new Array(arguments.length - 1), d = this._callbacks["$" + l], b = 1; b < arguments.length; b++)
+      p[b - 1] = arguments[b];
     if (d) {
       d = d.slice(0);
-      for (var _ = 0, w = d.length; _ < w; ++_)
-        d[_].apply(this, p);
+      for (var b = 0, w = d.length; b < w; ++b)
+        d[b].apply(this, p);
     }
     return this;
   }, u.prototype.listeners = function(l) {
@@ -102,7 +102,7 @@ function z(i, u, y, l) {
   var p = Object.getOwnPropertyDescriptor(l, y);
   p.get !== void 0 ? p.configurable ? (Object.defineProperty(l, y, { value: i }), B.push([l, y, u, p])) : M.push([u, y, i]) : (l[y] = i, B.push([l, y, u]));
 }
-function ee(i, u, y, l, p, d, _) {
+function ee(i, u, y, l, p, d, b) {
   d += 1;
   var w;
   if (typeof i == "object" && i !== null) {
@@ -111,22 +111,22 @@ function ee(i, u, y, l, p, d, _) {
         z(ke, i, u, p);
         return;
       }
-    if (typeof _.depthLimit < "u" && d > _.depthLimit) {
+    if (typeof b.depthLimit < "u" && d > b.depthLimit) {
       z(j, i, u, p);
       return;
     }
-    if (typeof _.edgesLimit < "u" && y + 1 > _.edgesLimit) {
+    if (typeof b.edgesLimit < "u" && y + 1 > b.edgesLimit) {
       z(j, i, u, p);
       return;
     }
     if (l.push(i), Array.isArray(i))
       for (w = 0; w < i.length; w++)
-        ee(i[w], w, w, l, i, d, _);
+        ee(i[w], w, w, l, i, d, b);
     else {
       var T = Object.keys(i);
       for (w = 0; w < T.length; w++) {
         var S = T[w];
-        ee(i[S], S, w, l, i, d, _);
+        ee(i[S], S, w, l, i, d, b);
       }
     }
     l.pop();
@@ -144,13 +144,13 @@ function Ne(i, u, y, l) {
     return JSON.stringify("[unable to serialize, circular reference is too complex to analyze]");
   } finally {
     for (; B.length !== 0; ) {
-      var _ = B.pop();
-      _.length === 4 ? Object.defineProperty(_[0], _[1], _[3]) : _[0][_[1]] = _[2];
+      var b = B.pop();
+      b.length === 4 ? Object.defineProperty(b[0], b[1], b[3]) : b[0][b[1]] = b[2];
     }
   }
   return d;
 }
-function te(i, u, y, l, p, d, _) {
+function te(i, u, y, l, p, d, b) {
   d += 1;
   var w;
   if (typeof i == "object" && i !== null) {
@@ -165,22 +165,22 @@ function te(i, u, y, l, p, d, _) {
     } catch {
       return;
     }
-    if (typeof _.depthLimit < "u" && d > _.depthLimit) {
+    if (typeof b.depthLimit < "u" && d > b.depthLimit) {
       z(j, i, u, p);
       return;
     }
-    if (typeof _.edgesLimit < "u" && y + 1 > _.edgesLimit) {
+    if (typeof b.edgesLimit < "u" && y + 1 > b.edgesLimit) {
       z(j, i, u, p);
       return;
     }
     if (l.push(i), Array.isArray(i))
       for (w = 0; w < i.length; w++)
-        te(i[w], w, w, l, i, d, _);
+        te(i[w], w, w, l, i, d, b);
     else {
       var T = {}, S = Object.keys(i).sort(Ge);
       for (w = 0; w < S.length; w++) {
         var O = S[w];
-        te(i[O], O, w, l, i, d, _), T[O] = i[O];
+        te(i[O], O, w, l, i, d, b), T[O] = i[O];
       }
       if (typeof p < "u")
         B.push([p, u, i]), p[u] = T;
@@ -300,11 +300,11 @@ E.prototype.then = function(i, u) {
             d(y.timedoutError);
             return;
           }
-          var _ = new Error("Aborted");
-          _.code = "ABORTED", _.status = y.status, _.method = y.method, _.url = y.url, d(_);
+          var b = new Error("Aborted");
+          b.code = "ABORTED", b.status = y.status, b.method = y.method, b.url = y.url, d(b);
         }
-      }), l.end(function(_, w) {
-        _ ? d(_) : p(w);
+      }), l.end(function(b, w) {
+        b ? d(b) : p(w);
       });
     });
   }
@@ -549,7 +549,7 @@ var ut = ne;
   }
   var l;
   typeof window < "u" ? l = window : typeof self > "u" ? (console.warn("Using browser-only version of superagent in non-browser environment"), l = void 0) : l = self;
-  var p = $e, d = We, _ = Xe, w = Ie, T = Ze, S = ut;
+  var p = $e, d = We, b = Xe, w = Ie, T = Ze, S = ut;
   function O() {
   }
   i.exports = function(s, v) {
@@ -601,16 +601,16 @@ var ut = ne;
           e(s, v, P);
         });
       else if (w(m))
-        for (var b in m)
-          Object.prototype.hasOwnProperty.call(m, b) && e(s, "".concat(v, "[").concat(b, "]"), m[b]);
+        for (var _ in m)
+          Object.prototype.hasOwnProperty.call(m, _) && e(s, "".concat(v, "[").concat(_, "]"), m[_]);
       else
         s.push(encodeURI(v) + "=" + encodeURIComponent(m));
     }
   }
   n.serializeObject = r;
   function o(s) {
-    for (var v = {}, m = s.split("&"), b, P, A = 0, C = m.length; A < C; ++A)
-      b = m[A], P = b.indexOf("="), P === -1 ? v[decodeURIComponent(b)] = "" : v[decodeURIComponent(b.slice(0, P))] = decodeURIComponent(b.slice(P + 1));
+    for (var v = {}, m = s.split("&"), _, P, A = 0, C = m.length; A < C; ++A)
+      _ = m[A], P = _.indexOf("="), P === -1 ? v[decodeURIComponent(_)] = "" : v[decodeURIComponent(_.slice(0, P))] = decodeURIComponent(_.slice(P + 1));
     return v;
   }
   n.parseString = o, n.types = {
@@ -628,8 +628,8 @@ var ut = ne;
     "application/json": JSON.parse
   };
   function f(s) {
-    for (var v = s.split(/\r?\n/), m = {}, b, P, A, C, k = 0, I = v.length; k < I; ++k)
-      P = v[k], b = P.indexOf(":"), b !== -1 && (A = P.slice(0, b).toLowerCase(), C = t(P.slice(b + 1)), m[A] = C);
+    for (var v = s.split(/\r?\n/), m = {}, _, P, A, C, k = 0, I = v.length; k < I; ++k)
+      P = v[k], _ = P.indexOf(":"), _ !== -1 && (A = P.slice(0, _).toLowerCase(), C = t(P.slice(_ + 1)), m[A] = C);
     return m;
   }
   function a(s) {
@@ -644,17 +644,17 @@ var ut = ne;
     var v = n.parse[this.type];
     return this.req._parser ? this.req._parser(this, s) : (!v && a(this.type) && (v = n.parse["application/json"]), v && s && (s.length > 0 || s instanceof Object) ? v(s) : null);
   }, c.prototype.toError = function() {
-    var s = this.req, v = s.method, m = s.url, b = "cannot ".concat(v, " ").concat(m, " (").concat(this.status, ")"), P = new Error(b);
+    var s = this.req, v = s.method, m = s.url, _ = "cannot ".concat(v, " ").concat(m, " (").concat(this.status, ")"), P = new Error(_);
     return P.status = this.status, P.method = v, P.url = m, P;
   }, n.Response = c;
   function g(s, v) {
     var m = this;
     this._query = this._query || [], this.method = s, this.url = v, this.header = {}, this._header = {}, this.on("end", function() {
-      var b = null, P = null;
+      var _ = null, P = null;
       try {
         P = new c(m);
       } catch (C) {
-        return b = new Error("Parser is unable to parse the response"), b.parse = !0, b.original = C, m.xhr ? (b.rawResponse = typeof m.xhr.responseType > "u" ? m.xhr.responseText : m.xhr.response, b.status = m.xhr.status ? m.xhr.status : null, b.statusCode = b.status) : (b.rawResponse = null, b.status = null), m.callback(b);
+        return _ = new Error("Parser is unable to parse the response"), _.parse = !0, _.original = C, m.xhr ? (_.rawResponse = typeof m.xhr.responseType > "u" ? m.xhr.responseText : m.xhr.response, _.status = m.xhr.status ? m.xhr.status : null, _.statusCode = _.status) : (_.rawResponse = null, _.status = null), m.callback(_);
       }
       m.emit("response", P);
       var A;
@@ -663,10 +663,10 @@ var ut = ne;
       } catch (C) {
         A = C;
       }
-      A ? (A.original = b, A.response = P, A.status = P.status, m.callback(A, P)) : m.callback(null, P);
+      A ? (A.original = _, A.response = P, A.status = P.status, m.callback(A, P)) : m.callback(null, P);
     });
   }
-  p(g.prototype), _(g.prototype), g.prototype.type = function(s) {
+  p(g.prototype), b(g.prototype), g.prototype.type = function(s) {
     return this.set("Content-Type", n.types[s] || s), this;
   }, g.prototype.accept = function(s) {
     return this.set("Accept", n.types[s] || s), this;
@@ -674,12 +674,12 @@ var ut = ne;
     arguments.length === 1 && (v = ""), y(v) === "object" && v !== null && (m = v, v = ""), m || (m = {
       type: typeof btoa == "function" ? "basic" : "auto"
     });
-    var b = function(A) {
+    var _ = function(A) {
       if (typeof btoa == "function")
         return btoa(A);
       throw new Error("Cannot use basic auth, btoa is not a function");
     };
-    return this._auth(s, v, m, b);
+    return this._auth(s, v, m, _);
   }, g.prototype.query = function(s) {
     return typeof s != "string" && (s = r(s)), s && this._query.push(s), this;
   }, g.prototype.attach = function(s, v, m) {
@@ -733,12 +733,12 @@ Possible causes: the network is offline, Origin is not allowed by Access-Control
         s.emit("end");
       }
     };
-    var b = function(I, R) {
+    var _ = function(I, R) {
       R.total > 0 && (R.percent = R.loaded / R.total * 100, R.percent === 100 && clearTimeout(s._uploadTimeoutTimer)), R.direction = I, s.emit("progress", R);
     };
     if (this.hasListeners("progress"))
       try {
-        v.addEventListener("progress", b.bind(null, "download")), v.upload && v.upload.addEventListener("progress", b.bind(null, "upload"));
+        v.addEventListener("progress", _.bind(null, "download")), v.upload && v.upload.addEventListener("progress", _.bind(null, "upload"));
       } catch {
       }
     v.upload && this._setUploadTimeout();
@@ -758,32 +758,32 @@ Possible causes: the network is offline, Origin is not allowed by Access-Control
     return new S();
   }, ["GET", "POST", "OPTIONS", "PATCH", "PUT", "DELETE"].forEach(function(s) {
     S.prototype[s.toLowerCase()] = function(v, m) {
-      var b = new n.Request(s, v);
-      return this._setDefaults(b), m && b.end(m), b;
+      var _ = new n.Request(s, v);
+      return this._setDefaults(_), m && _.end(m), _;
     };
   }), S.prototype.del = S.prototype.delete, n.get = function(s, v, m) {
-    var b = n("GET", s);
-    return typeof v == "function" && (m = v, v = null), v && b.query(v), m && b.end(m), b;
+    var _ = n("GET", s);
+    return typeof v == "function" && (m = v, v = null), v && _.query(v), m && _.end(m), _;
   }, n.head = function(s, v, m) {
-    var b = n("HEAD", s);
-    return typeof v == "function" && (m = v, v = null), v && b.query(v), m && b.end(m), b;
+    var _ = n("HEAD", s);
+    return typeof v == "function" && (m = v, v = null), v && _.query(v), m && _.end(m), _;
   }, n.options = function(s, v, m) {
-    var b = n("OPTIONS", s);
-    return typeof v == "function" && (m = v, v = null), v && b.send(v), m && b.end(m), b;
+    var _ = n("OPTIONS", s);
+    return typeof v == "function" && (m = v, v = null), v && _.send(v), m && _.end(m), _;
   };
   function h(s, v, m) {
-    var b = n("DELETE", s);
-    return typeof v == "function" && (m = v, v = null), v && b.send(v), m && b.end(m), b;
+    var _ = n("DELETE", s);
+    return typeof v == "function" && (m = v, v = null), v && _.send(v), m && _.end(m), _;
   }
   n.del = h, n.delete = h, n.patch = function(s, v, m) {
-    var b = n("PATCH", s);
-    return typeof v == "function" && (m = v, v = null), v && b.send(v), m && b.end(m), b;
+    var _ = n("PATCH", s);
+    return typeof v == "function" && (m = v, v = null), v && _.send(v), m && _.end(m), _;
   }, n.post = function(s, v, m) {
-    var b = n("POST", s);
-    return typeof v == "function" && (m = v, v = null), v && b.send(v), m && b.end(m), b;
+    var _ = n("POST", s);
+    return typeof v == "function" && (m = v, v = null), v && _.send(v), m && _.end(m), _;
   }, n.put = function(s, v, m) {
-    var b = n("PUT", s);
-    return typeof v == "function" && (m = v, v = null), v && b.send(v), m && b.end(m), b;
+    var _ = n("PUT", s);
+    return typeof v == "function" && (m = v, v = null), v && _.send(v), m && _.end(m), _;
   };
 })(Z, Z.exports);
 var ft = Z.exports;
@@ -811,14 +811,14 @@ const lt = {}, at = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
     if (!(t instanceof r))
       throw new TypeError("Cannot call a class as a function");
   }
-  function _(t, r) {
+  function b(t, r) {
     for (var e = 0; e < r.length; e++) {
       var o = r[e];
       o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(t, T(o.key), o);
     }
   }
   function w(t, r, e) {
-    return r && _(t.prototype, r), e && _(t, e), Object.defineProperty(t, "prototype", { writable: !1 }), t;
+    return r && b(t.prototype, r), e && b(t, e), Object.defineProperty(t, "prototype", { writable: !1 }), t;
   }
   function T(t) {
     var r = S(t, "string");
@@ -1053,7 +1053,7 @@ const lt = {}, at = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
        */
     }, {
       key: "callApi",
-      value: function(e, o, f, a, c, g, h, s, v, m, b, P) {
+      value: function(e, o, f, a, c, g, h, s, v, m, _, P) {
         var A = this, C = this.buildUrl(e, f, P), k = (0, u.default)(o, C);
         if (this.plugins !== null)
           for (var I in this.plugins)
@@ -1074,14 +1074,14 @@ const lt = {}, at = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
         } else
           h != null && (k.header["Content-Type"] || k.type("application/json"), k.send(h));
         var ge = this.jsonPreferredMime(m);
-        return ge && k.accept(ge), b === "Blob" ? k.responseType("blob") : b === "String" && k.responseType("text"), this.enableCookies && (typeof window > "u" ? this.agent._attachCookies(k) : k.withCredentials()), new Promise(function(V, _e) {
+        return ge && k.accept(ge), _ === "Blob" ? k.responseType("blob") : _ === "String" && k.responseType("text"), this.enableCookies && (typeof window > "u" ? this.agent._attachCookies(k) : k.withCredentials()), new Promise(function(V, _e) {
           k.end(function(be, q) {
             if (be) {
               var D = {};
               q && (D.status = q.status, D.statusText = q.statusText, D.body = q.body, D.response = q), D.error = be, _e(D);
             } else
               try {
-                var He = A.deserialize(q, b);
+                var He = A.deserialize(q, _);
                 A.enableCookies && typeof window > "u" && A.agent._saveCookies(q), V({
                   data: He,
                   response: q
@@ -1275,14 +1275,14 @@ function qe() {
     function d(o, f) {
       var a = typeof Symbol < "u" && o[Symbol.iterator] || o["@@iterator"];
       if (!a) {
-        if (Array.isArray(o) || (a = _(o)) || f && o && typeof o.length == "number") {
+        if (Array.isArray(o) || (a = b(o)) || f && o && typeof o.length == "number") {
           a && (o = a);
           var c = 0, g = function() {
           };
           return { s: g, n: function() {
             return c >= o.length ? { done: !0 } : { done: !1, value: o[c++] };
-          }, e: function(b) {
-            throw b;
+          }, e: function(_) {
+            throw _;
           }, f: g };
         }
         throw new TypeError(`Invalid attempt to iterate non-iterable instance.
@@ -1292,10 +1292,10 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       return { s: function() {
         a = a.call(o);
       }, n: function() {
-        var b = a.next();
-        return h = b.done, b;
-      }, e: function(b) {
-        s = !0, v = b;
+        var _ = a.next();
+        return h = _.done, _;
+      }, e: function(_) {
+        s = !0, v = _;
       }, f: function() {
         try {
           !h && a.return != null && a.return();
@@ -1305,7 +1305,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         }
       } };
     }
-    function _(o, f) {
+    function b(o, f) {
       if (o) {
         if (typeof o == "string")
           return w(o, f);
@@ -1427,14 +1427,14 @@ function ie() {
       if (!(t instanceof r))
         throw new TypeError("Cannot call a class as a function");
     }
-    function _(t, r) {
+    function b(t, r) {
       for (var e = 0; e < r.length; e++) {
         var o = r[e];
         o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(t, T(o.key), o);
       }
     }
     function w(t, r, e) {
-      return r && _(t.prototype, r), e && _(t, e), Object.defineProperty(t, "prototype", { writable: !1 }), t;
+      return r && b(t.prototype, r), e && b(t, e), Object.defineProperty(t, "prototype", { writable: !1 }), t;
     }
     function T(t) {
       var r = S(t, "string");
@@ -1552,15 +1552,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   function d(e, o) {
     if (e) {
       if (typeof e == "string")
-        return _(e, o);
+        return b(e, o);
       var f = Object.prototype.toString.call(e).slice(8, -1);
       if (f === "Object" && e.constructor && (f = e.constructor.name), f === "Map" || f === "Set")
         return Array.from(e);
       if (f === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(f))
-        return _(e, o);
+        return b(e, o);
     }
   }
-  function _(e, o) {
+  function b(e, o) {
     (o == null || o > e.length) && (o = e.length);
     for (var f = 0, a = new Array(o); f < o; f++)
       a[f] = e[f];
@@ -1677,14 +1677,14 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   function d(o, f) {
     var a = typeof Symbol < "u" && o[Symbol.iterator] || o["@@iterator"];
     if (!a) {
-      if (Array.isArray(o) || (a = _(o)) || f && o && typeof o.length == "number") {
+      if (Array.isArray(o) || (a = b(o)) || f && o && typeof o.length == "number") {
         a && (o = a);
         var c = 0, g = function() {
         };
         return { s: g, n: function() {
           return c >= o.length ? { done: !0 } : { done: !1, value: o[c++] };
-        }, e: function(b) {
-          throw b;
+        }, e: function(_) {
+          throw _;
         }, f: g };
       }
       throw new TypeError(`Invalid attempt to iterate non-iterable instance.
@@ -1694,10 +1694,10 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     return { s: function() {
       a = a.call(o);
     }, n: function() {
-      var b = a.next();
-      return h = b.done, b;
-    }, e: function(b) {
-      s = !0, v = b;
+      var _ = a.next();
+      return h = _.done, _;
+    }, e: function(_) {
+      s = !0, v = _;
     }, f: function() {
       try {
         !h && a.return != null && a.return();
@@ -1707,7 +1707,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       }
     } };
   }
-  function _(o, f) {
+  function b(o, f) {
     if (o) {
       if (typeof o == "string")
         return w(o, f);
@@ -1837,7 +1837,7 @@ var le = {};
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
     }
   }
-  function _(n, t, r) {
+  function b(n, t, r) {
     return t && d(n.prototype, t), r && d(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function w(n) {
@@ -1860,7 +1860,7 @@ var le = {};
     function n() {
       p(this, n), n.initialize(this);
     }
-    return _(n, null, [{
+    return b(n, null, [{
       key: "initialize",
       value: function(r) {
       }
@@ -1914,7 +1914,7 @@ var le = {};
       return e && typeof Symbol == "function" && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e;
     }, d(r);
   }
-  function _(r, e) {
+  function b(r, e) {
     if (!(r instanceof e))
       throw new TypeError("Cannot call a class as a function");
   }
@@ -1945,7 +1945,7 @@ var le = {};
   }
   var n = /* @__PURE__ */ function() {
     function r() {
-      _(this, r), r.initialize(this);
+      b(this, r), r.initialize(this);
     }
     return T(r, null, [{
       key: "initialize",
@@ -2010,7 +2010,7 @@ var ae = {}, se = {}, ce = {};
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
     }
   }
-  function _(n, t, r) {
+  function b(n, t, r) {
     return t && d(n.prototype, t), r && d(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function w(n) {
@@ -2033,7 +2033,7 @@ var ae = {}, se = {}, ce = {};
     function n() {
       p(this, n), n.initialize(this);
     }
-    return _(n, null, [{
+    return b(n, null, [{
       key: "initialize",
       value: function(r) {
       }
@@ -2089,14 +2089,14 @@ var ae = {}, se = {}, ce = {};
     if (!(t instanceof r))
       throw new TypeError("Cannot call a class as a function");
   }
-  function _(t, r) {
+  function b(t, r) {
     for (var e = 0; e < r.length; e++) {
       var o = r[e];
       o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(t, T(o.key), o);
     }
   }
   function w(t, r, e) {
-    return r && _(t.prototype, r), e && _(t, e), Object.defineProperty(t, "prototype", { writable: !1 }), t;
+    return r && b(t.prototype, r), e && b(t, e), Object.defineProperty(t, "prototype", { writable: !1 }), t;
   }
   function T(t) {
     var r = S(t, "string");
@@ -2192,14 +2192,14 @@ var ae = {}, se = {}, ce = {};
     if (!(t instanceof r))
       throw new TypeError("Cannot call a class as a function");
   }
-  function _(t, r) {
+  function b(t, r) {
     for (var e = 0; e < r.length; e++) {
       var o = r[e];
       o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(t, T(o.key), o);
     }
   }
   function w(t, r, e) {
-    return r && _(t.prototype, r), e && _(t, e), Object.defineProperty(t, "prototype", { writable: !1 }), t;
+    return r && b(t.prototype, r), e && b(t, e), Object.defineProperty(t, "prototype", { writable: !1 }), t;
   }
   function T(t) {
     var r = S(t, "string");
@@ -2282,7 +2282,7 @@ var W = {};
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
     }
   }
-  function _(n, t, r) {
+  function b(n, t, r) {
     return t && d(n.prototype, t), r && d(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function w(n) {
@@ -2305,7 +2305,7 @@ var W = {};
     function n() {
       p(this, n), n.initialize(this);
     }
-    return _(n, null, [{
+    return b(n, null, [{
       key: "initialize",
       value: function(r) {
       }
@@ -2380,7 +2380,7 @@ var ye = {};
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
     }
   }
-  function _(n, t, r) {
+  function b(n, t, r) {
     return t && d(n.prototype, t), r && d(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function w(n) {
@@ -2403,7 +2403,7 @@ var ye = {};
     function n() {
       p(this, n), n.initialize(this);
     }
-    return _(n, null, [{
+    return b(n, null, [{
       key: "initialize",
       value: function(r) {
       }
@@ -2468,7 +2468,7 @@ var pe = {}, he = {};
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
     }
   }
-  function _(n, t, r) {
+  function b(n, t, r) {
     return t && d(n.prototype, t), r && d(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function w(n) {
@@ -2491,7 +2491,7 @@ var pe = {}, he = {};
     function n() {
       p(this, n), n.initialize(this);
     }
-    return _(n, null, [{
+    return b(n, null, [{
       key: "initialize",
       value: function(r) {
       }
@@ -2554,7 +2554,7 @@ var me = {};
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
     }
   }
-  function _(n, t, r) {
+  function b(n, t, r) {
     return t && d(n.prototype, t), r && d(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function w(n) {
@@ -2577,7 +2577,7 @@ var me = {};
     function n() {
       p(this, n), n.initialize(this);
     }
-    return _(n, null, [{
+    return b(n, null, [{
       key: "initialize",
       value: function(r) {
       }
@@ -2613,8 +2613,8 @@ var me = {};
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = _(N), y = _(ie()), l = _(ye), p = _(he), d = _(me);
-  function _(c) {
+  var u = b(N), y = b(ie()), l = b(ye), p = b(he), d = b(me);
+  function b(c) {
     return c && c.__esModule ? c : { default: c };
   }
   function w(c) {
@@ -2641,19 +2641,19 @@ var me = {};
       throw new TypeError(`Invalid attempt to iterate non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
     }
-    var m = !0, b = !1, P;
+    var m = !0, _ = !1, P;
     return { s: function() {
       h = h.call(c);
     }, n: function() {
       var C = h.next();
       return m = C.done, C;
     }, e: function(C) {
-      b = !0, P = C;
+      _ = !0, P = C;
     }, f: function() {
       try {
         !m && h.return != null && h.return();
       } finally {
-        if (b)
+        if (_)
           throw P;
       }
     } };
@@ -2766,16 +2766,16 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         if (h.breadcrumb) {
           if (!Array.isArray(h.breadcrumb))
             throw new Error("Expected the field `breadcrumb` to be an array in the JSON data but got " + h.breadcrumb);
-          var b = T(h.breadcrumb), P;
+          var _ = T(h.breadcrumb), P;
           try {
-            for (b.s(); !(P = b.n()).done; ) {
+            for (_.s(); !(P = _.n()).done; ) {
               var A = P.value;
               p.default.validateJSON(A);
             }
           } catch (C) {
-            b.e(C);
+            _.e(C);
           } finally {
-            b.f();
+            _.f();
           }
         }
         return !0;
@@ -2813,7 +2813,7 @@ var ve = {};
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
     }
   }
-  function _(n, t, r) {
+  function b(n, t, r) {
     return t && d(n.prototype, t), r && d(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function w(n) {
@@ -2836,7 +2836,7 @@ var ve = {};
     function n() {
       p(this, n), n.initialize(this);
     }
-    return _(n, null, [{
+    return b(n, null, [{
       key: "initialize",
       value: function(r) {
       }
@@ -2889,14 +2889,14 @@ var Je = {};
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
-  function _(n, t) {
+  function b(n, t) {
     for (var r = 0; r < t.length; r++) {
       var e = t[r];
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, T(e.key), e);
     }
   }
   function w(n, t, r) {
-    return t && _(n.prototype, t), r && _(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
+    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function T(n) {
     var t = S(n, "string");
@@ -2961,14 +2961,14 @@ var Me = {};
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
-  function _(n, t) {
+  function b(n, t) {
     for (var r = 0; r < t.length; r++) {
       var e = t[r];
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, T(e.key), e);
     }
   }
   function w(n, t, r) {
-    return t && _(n.prototype, t), r && _(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
+    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function T(n) {
     var t = S(n, "string");
@@ -3074,14 +3074,14 @@ var xe = {};
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
-  function _(n, t) {
+  function b(n, t) {
     for (var r = 0; r < t.length; r++) {
       var e = t[r];
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, T(e.key), e);
     }
   }
   function w(n, t, r) {
-    return t && _(n.prototype, t), r && _(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
+    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function T(n) {
     var t = S(n, "string");
@@ -3176,14 +3176,14 @@ var Be = {};
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
-  function _(n, t) {
+  function b(n, t) {
     for (var r = 0; r < t.length; r++) {
       var e = t[r];
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, T(e.key), e);
     }
   }
   function w(n, t, r) {
-    return t && _(n.prototype, t), r && _(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
+    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function T(n) {
     var t = S(n, "string");
@@ -3254,14 +3254,14 @@ var De = {};
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
-  function _(n, t) {
+  function b(n, t) {
     for (var r = 0; r < t.length; r++) {
       var e = t[r];
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, T(e.key), e);
     }
   }
   function w(n, t, r) {
-    return t && _(n.prototype, t), r && _(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
+    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function T(n) {
     var t = S(n, "string");
@@ -3326,14 +3326,14 @@ var ze = {};
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
-  function _(n, t) {
+  function b(n, t) {
     for (var r = 0; r < t.length; r++) {
       var e = t[r];
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, T(e.key), e);
     }
   }
   function w(n, t, r) {
-    return t && _(n.prototype, t), r && _(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
+    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function T(n) {
     var t = S(n, "string");
@@ -3413,7 +3413,7 @@ var ze = {};
   }), Object.defineProperty(i, "ConfigResponseNitro", {
     enumerable: !0,
     get: function() {
-      return _.default;
+      return b.default;
     }
   }), Object.defineProperty(i, "EntitiesApi", {
     enumerable: !0,
@@ -3491,16 +3491,16 @@ var ze = {};
       return f.default;
     }
   });
-  var u = m(N), y = m(ie()), l = m(qe()), p = m(oe), d = m(ue), _ = m(le), w = m(ae), T = m(se), S = m(ce), O = m(W), n = m(ye), t = m(pe), r = m(he), e = m(me), o = m(fe), f = m(ve), a = m(Je), c = m(Me), g = m(xe), h = m(Be), s = m(De), v = m(ze);
-  function m(b) {
-    return b && b.__esModule ? b : { default: b };
+  var u = m(N), y = m(ie()), l = m(qe()), p = m(oe), d = m(ue), b = m(le), w = m(ae), T = m(se), S = m(ce), O = m(W), n = m(ye), t = m(pe), r = m(he), e = m(me), o = m(fe), f = m(ve), a = m(Je), c = m(Me), g = m(xe), h = m(Be), s = m(De), v = m(ze);
+  function m(_) {
+    return _ && _.__esModule ? _ : { default: _ };
   }
 })(Ke);
 const st = /[\p{Lu}]/u, ct = /[\p{Ll}]/u, Te = /^[\p{Lu}](?![\p{Lu}])/gu, Fe = /([\p{Alpha}\p{N}_]|$)/u, de = /[_.\- ]+/, yt = new RegExp("^" + de.source), Pe = new RegExp(de.source + Fe.source, "gu"), Ee = new RegExp("\\d+" + Fe.source, "gu"), pt = (i, u, y, l) => {
-  let p = !1, d = !1, _ = !1, w = !1;
+  let p = !1, d = !1, b = !1, w = !1;
   for (let T = 0; T < i.length; T++) {
     const S = i[T];
-    w = T > 2 ? i[T - 3] === "-" : !0, p && st.test(S) ? (i = i.slice(0, T) + "-" + i.slice(T), p = !1, _ = d, d = !0, T++) : d && _ && ct.test(S) && (!w || l) ? (i = i.slice(0, T - 1) + "-" + i.slice(T - 1), _ = d, d = !1, p = !0) : (p = u(S) === S && y(S) !== S, _ = d, d = y(S) === S && u(S) !== S);
+    w = T > 2 ? i[T - 3] === "-" : !0, p && st.test(S) ? (i = i.slice(0, T) + "-" + i.slice(T), p = !1, b = d, d = !0, T++) : d && b && ct.test(S) && (!w || l) ? (i = i.slice(0, T - 1) + "-" + i.slice(T - 1), b = d, d = !1, p = !0) : (p = u(S) === S && y(S) !== S, b = d, d = y(S) === S && u(S) !== S);
   }
   return i;
 }, ht = (i, u) => (Te.lastIndex = 0, i.replace(Te, (y) => u(y))), mt = (i, u) => (Pe.lastIndex = 0, Ee.lastIndex = 0, i.replace(Pe, (y, l) => u(l)).replace(Ee, (y) => u(y)));
@@ -3526,17 +3526,17 @@ function dt(i, u, y) {
     },
     async load(d) {
       if (d === p) {
-        const _ = [];
+        const b = [];
         for (const [T, S] of Object.entries(u)) {
           const O = await this.resolve(
             "/" + i + "/" + S + ".astro"
           );
-          O && _.push(`export { default as ${vt(T)} } from "${O.id}"`);
+          O && b.push(`export { default as ${vt(T)} } from "${O.id}"`);
         }
         let w = null;
         return y && (w = await this.resolve(
           "/" + i + "/" + y + ".astro"
-        )), w ? _.push(`export { default as fallback } from "${w.id}"`) : _.push('export { default as fallback } from "@flyo/nitro-astro/FallbackComponent.astro"'), console.log(_.join(";")), _.join(";");
+        )), w ? b.push(`export { default as fallback } from "${w.id}"`) : b.push('export { default as fallback } from "@flyo/nitro-astro/FallbackComponent.astro"'), b.join(";");
       }
     }
   };
