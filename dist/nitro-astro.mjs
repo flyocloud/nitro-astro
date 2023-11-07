@@ -1,69 +1,69 @@
-function xe(i) {
+function Ue(i) {
   if (i.__esModule)
     return i;
   var u = i.default;
   if (typeof u == "function") {
-    var c = function l() {
+    var y = function l() {
       return this instanceof l ? Reflect.construct(u, arguments, this.constructor) : u.apply(this, arguments);
     };
-    c.prototype = u.prototype;
+    y.prototype = u.prototype;
   } else
-    c = {};
-  return Object.defineProperty(c, "__esModule", { value: !0 }), Object.keys(i).forEach(function(l) {
-    var h = Object.getOwnPropertyDescriptor(i, l);
-    Object.defineProperty(c, l, h.get ? h : {
+    y = {};
+  return Object.defineProperty(y, "__esModule", { value: !0 }), Object.keys(i).forEach(function(l) {
+    var p = Object.getOwnPropertyDescriptor(i, l);
+    Object.defineProperty(y, l, p.get ? p : {
       enumerable: !0,
       get: function() {
         return i[l];
       }
     });
-  }), c;
+  }), y;
 }
-var De = {};
-function Fe(i) {
+var Ke = {};
+function je(i) {
   throw new Error('Could not dynamically require "' + i + '". Please configure the dynamicRequireTargets or/and ignoreDynamicRequires option of @rollup/plugin-commonjs appropriately for this require call to work.');
 }
-var C = {}, Z = { exports: {} }, Oe = { exports: {} };
+var N = {}, Z = { exports: {} }, Ae = { exports: {} };
 (function(i) {
   i.exports = u;
   function u(l) {
     if (l)
-      return c(l);
+      return y(l);
   }
-  function c(l) {
-    for (var h in u.prototype)
-      l[h] = u.prototype[h];
+  function y(l) {
+    for (var p in u.prototype)
+      l[p] = u.prototype[p];
     return l;
   }
-  u.prototype.on = u.prototype.addEventListener = function(l, h) {
-    return this._callbacks = this._callbacks || {}, (this._callbacks["$" + l] = this._callbacks["$" + l] || []).push(h), this;
-  }, u.prototype.once = function(l, h) {
-    function b() {
-      this.off(l, b), h.apply(this, arguments);
+  u.prototype.on = u.prototype.addEventListener = function(l, p) {
+    return this._callbacks = this._callbacks || {}, (this._callbacks["$" + l] = this._callbacks["$" + l] || []).push(p), this;
+  }, u.prototype.once = function(l, p) {
+    function d() {
+      this.off(l, d), p.apply(this, arguments);
     }
-    return b.fn = h, this.on(l, b), this;
-  }, u.prototype.off = u.prototype.removeListener = u.prototype.removeAllListeners = u.prototype.removeEventListener = function(l, h) {
+    return d.fn = p, this.on(l, d), this;
+  }, u.prototype.off = u.prototype.removeListener = u.prototype.removeAllListeners = u.prototype.removeEventListener = function(l, p) {
     if (this._callbacks = this._callbacks || {}, arguments.length == 0)
       return this._callbacks = {}, this;
-    var b = this._callbacks["$" + l];
-    if (!b)
+    var d = this._callbacks["$" + l];
+    if (!d)
       return this;
     if (arguments.length == 1)
       return delete this._callbacks["$" + l], this;
-    for (var _, w = 0; w < b.length; w++)
-      if (_ = b[w], _ === h || _.fn === h) {
-        b.splice(w, 1);
+    for (var _, w = 0; w < d.length; w++)
+      if (_ = d[w], _ === p || _.fn === p) {
+        d.splice(w, 1);
         break;
       }
-    return b.length === 0 && delete this._callbacks["$" + l], this;
+    return d.length === 0 && delete this._callbacks["$" + l], this;
   }, u.prototype.emit = function(l) {
     this._callbacks = this._callbacks || {};
-    for (var h = new Array(arguments.length - 1), b = this._callbacks["$" + l], _ = 1; _ < arguments.length; _++)
-      h[_ - 1] = arguments[_];
-    if (b) {
-      b = b.slice(0);
-      for (var _ = 0, w = b.length; _ < w; ++_)
-        b[_].apply(this, h);
+    for (var p = new Array(arguments.length - 1), d = this._callbacks["$" + l], _ = 1; _ < arguments.length; _++)
+      p[_ - 1] = arguments[_];
+    if (d) {
+      d = d.slice(0);
+      for (var _ = 0, w = d.length; _ < w; ++_)
+        d[_].apply(this, p);
     }
     return this;
   }, u.prototype.listeners = function(l) {
@@ -71,75 +71,75 @@ var C = {}, Z = { exports: {} }, Oe = { exports: {} };
   }, u.prototype.hasListeners = function(l) {
     return !!this.listeners(l).length;
   };
-})(Oe);
-var He = Oe.exports, Le = H;
+})(Ae);
+var $e = Ae.exports, We = H;
 H.default = H;
-H.stable = Ee;
-H.stableStringify = Ee;
-var j = "[...]", Te = "[Circular]", B = [], M = [];
-function Pe() {
+H.stable = Ne;
+H.stableStringify = Ne;
+var j = "[...]", ke = "[Circular]", B = [], M = [];
+function Ce() {
   return {
     depthLimit: Number.MAX_SAFE_INTEGER,
     edgesLimit: Number.MAX_SAFE_INTEGER
   };
 }
-function H(i, u, c, l) {
-  typeof l > "u" && (l = Pe()), ee(i, "", 0, [], void 0, 0, l);
-  var h;
+function H(i, u, y, l) {
+  typeof l > "u" && (l = Ce()), ee(i, "", 0, [], void 0, 0, l);
+  var p;
   try {
-    M.length === 0 ? h = JSON.stringify(i, u, c) : h = JSON.stringify(i, Ae(u), c);
+    M.length === 0 ? p = JSON.stringify(i, u, y) : p = JSON.stringify(i, Re(u), y);
   } catch {
     return JSON.stringify("[unable to serialize, circular reference is too complex to analyze]");
   } finally {
     for (; B.length !== 0; ) {
-      var b = B.pop();
-      b.length === 4 ? Object.defineProperty(b[0], b[1], b[3]) : b[0][b[1]] = b[2];
+      var d = B.pop();
+      d.length === 4 ? Object.defineProperty(d[0], d[1], d[3]) : d[0][d[1]] = d[2];
     }
   }
-  return h;
+  return p;
 }
-function D(i, u, c, l) {
-  var h = Object.getOwnPropertyDescriptor(l, c);
-  h.get !== void 0 ? h.configurable ? (Object.defineProperty(l, c, { value: i }), B.push([l, c, u, h])) : M.push([u, c, i]) : (l[c] = i, B.push([l, c, u]));
+function z(i, u, y, l) {
+  var p = Object.getOwnPropertyDescriptor(l, y);
+  p.get !== void 0 ? p.configurable ? (Object.defineProperty(l, y, { value: i }), B.push([l, y, u, p])) : M.push([u, y, i]) : (l[y] = i, B.push([l, y, u]));
 }
-function ee(i, u, c, l, h, b, _) {
-  b += 1;
+function ee(i, u, y, l, p, d, _) {
+  d += 1;
   var w;
   if (typeof i == "object" && i !== null) {
     for (w = 0; w < l.length; w++)
       if (l[w] === i) {
-        D(Te, i, u, h);
+        z(ke, i, u, p);
         return;
       }
-    if (typeof _.depthLimit < "u" && b > _.depthLimit) {
-      D(j, i, u, h);
+    if (typeof _.depthLimit < "u" && d > _.depthLimit) {
+      z(j, i, u, p);
       return;
     }
-    if (typeof _.edgesLimit < "u" && c + 1 > _.edgesLimit) {
-      D(j, i, u, h);
+    if (typeof _.edgesLimit < "u" && y + 1 > _.edgesLimit) {
+      z(j, i, u, p);
       return;
     }
     if (l.push(i), Array.isArray(i))
       for (w = 0; w < i.length; w++)
-        ee(i[w], w, w, l, i, b, _);
+        ee(i[w], w, w, l, i, d, _);
     else {
       var T = Object.keys(i);
       for (w = 0; w < T.length; w++) {
         var S = T[w];
-        ee(i[S], S, w, l, i, b, _);
+        ee(i[S], S, w, l, i, d, _);
       }
     }
     l.pop();
   }
 }
-function Ue(i, u) {
+function Ge(i, u) {
   return i < u ? -1 : i > u ? 1 : 0;
 }
-function Ee(i, u, c, l) {
-  typeof l > "u" && (l = Pe());
-  var h = te(i, "", 0, [], void 0, 0, l) || i, b;
+function Ne(i, u, y, l) {
+  typeof l > "u" && (l = Ce());
+  var p = te(i, "", 0, [], void 0, 0, l) || i, d;
   try {
-    M.length === 0 ? b = JSON.stringify(h, u, c) : b = JSON.stringify(h, Ae(u), c);
+    M.length === 0 ? d = JSON.stringify(p, u, y) : d = JSON.stringify(p, Re(u), y);
   } catch {
     return JSON.stringify("[unable to serialize, circular reference is too complex to analyze]");
   } finally {
@@ -148,15 +148,15 @@ function Ee(i, u, c, l) {
       _.length === 4 ? Object.defineProperty(_[0], _[1], _[3]) : _[0][_[1]] = _[2];
     }
   }
-  return b;
+  return d;
 }
-function te(i, u, c, l, h, b, _) {
-  b += 1;
+function te(i, u, y, l, p, d, _) {
+  d += 1;
   var w;
   if (typeof i == "object" && i !== null) {
     for (w = 0; w < l.length; w++)
       if (l[w] === i) {
-        D(Te, i, u, h);
+        z(ke, i, u, p);
         return;
       }
     try {
@@ -165,72 +165,72 @@ function te(i, u, c, l, h, b, _) {
     } catch {
       return;
     }
-    if (typeof _.depthLimit < "u" && b > _.depthLimit) {
-      D(j, i, u, h);
+    if (typeof _.depthLimit < "u" && d > _.depthLimit) {
+      z(j, i, u, p);
       return;
     }
-    if (typeof _.edgesLimit < "u" && c + 1 > _.edgesLimit) {
-      D(j, i, u, h);
+    if (typeof _.edgesLimit < "u" && y + 1 > _.edgesLimit) {
+      z(j, i, u, p);
       return;
     }
     if (l.push(i), Array.isArray(i))
       for (w = 0; w < i.length; w++)
-        te(i[w], w, w, l, i, b, _);
+        te(i[w], w, w, l, i, d, _);
     else {
-      var T = {}, S = Object.keys(i).sort(Ue);
+      var T = {}, S = Object.keys(i).sort(Ge);
       for (w = 0; w < S.length; w++) {
         var O = S[w];
-        te(i[O], O, w, l, i, b, _), T[O] = i[O];
+        te(i[O], O, w, l, i, d, _), T[O] = i[O];
       }
-      if (typeof h < "u")
-        B.push([h, u, i]), h[u] = T;
+      if (typeof p < "u")
+        B.push([p, u, i]), p[u] = T;
       else
         return T;
     }
     l.pop();
   }
 }
-function Ae(i) {
-  return i = typeof i < "u" ? i : function(u, c) {
-    return c;
-  }, function(u, c) {
+function Re(i) {
+  return i = typeof i < "u" ? i : function(u, y) {
+    return y;
+  }, function(u, y) {
     if (M.length > 0)
       for (var l = 0; l < M.length; l++) {
-        var h = M[l];
-        if (h[1] === u && h[0] === c) {
-          c = h[2], M.splice(l, 1);
+        var p = M[l];
+        if (p[1] === u && p[0] === y) {
+          y = p[2], M.splice(l, 1);
           break;
         }
       }
-    return i.call(this, u, c);
+    return i.call(this, u, y);
   };
 }
 function U(i) {
   "@babel/helpers - typeof";
-  return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? U = function(c) {
-    return typeof c;
-  } : U = function(c) {
-    return c && typeof Symbol == "function" && c.constructor === Symbol && c !== Symbol.prototype ? "symbol" : typeof c;
+  return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? U = function(y) {
+    return typeof y;
+  } : U = function(y) {
+    return y && typeof Symbol == "function" && y.constructor === Symbol && y !== Symbol.prototype ? "symbol" : typeof y;
   }, U(i);
 }
-function Ke(i) {
+function Ve(i) {
   return i !== null && U(i) === "object";
 }
-var ke = Ke;
+var Ie = Ve;
 function K(i) {
   "@babel/helpers - typeof";
-  return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? K = function(c) {
-    return typeof c;
-  } : K = function(c) {
-    return c && typeof Symbol == "function" && c.constructor === Symbol && c !== Symbol.prototype ? "symbol" : typeof c;
+  return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? K = function(y) {
+    return typeof y;
+  } : K = function(y) {
+    return y && typeof Symbol == "function" && y.constructor === Symbol && y !== Symbol.prototype ? "symbol" : typeof y;
   }, K(i);
 }
-var W = ke, je = E;
+var $ = Ie, Xe = E;
 function E(i) {
   if (i)
-    return We(i);
+    return Qe(i);
 }
-function We(i) {
+function Qe(i) {
   for (var u in E.prototype)
     Object.prototype.hasOwnProperty.call(E.prototype, u) && (i[u] = E.prototype[u]);
   return i;
@@ -270,41 +270,41 @@ E.prototype.timeout = function(i) {
 E.prototype.retry = function(i, u) {
   return (arguments.length === 0 || i === !0) && (i = 1), i <= 0 && (i = 0), this._maxRetries = i, this._retries = 0, this._retryCallback = u, this;
 };
-var $e = ["ECONNRESET", "ETIMEDOUT", "EADDRINFO", "ESOCKETTIMEDOUT"];
+var Ye = ["ECONNRESET", "ETIMEDOUT", "EADDRINFO", "ESOCKETTIMEDOUT"];
 E.prototype._shouldRetry = function(i, u) {
   if (!this._maxRetries || this._retries++ >= this._maxRetries)
     return !1;
   if (this._retryCallback)
     try {
-      var c = this._retryCallback(i, u);
-      if (c === !0)
+      var y = this._retryCallback(i, u);
+      if (y === !0)
         return !0;
-      if (c === !1)
+      if (y === !1)
         return !1;
     } catch (l) {
       console.error(l);
     }
-  return !!(u && u.status && u.status >= 500 && u.status !== 501 || i && (i.code && $e.includes(i.code) || i.timeout && i.code === "ECONNABORTED" || i.crossDomain));
+  return !!(u && u.status && u.status >= 500 && u.status !== 501 || i && (i.code && Ye.includes(i.code) || i.timeout && i.code === "ECONNABORTED" || i.crossDomain));
 };
 E.prototype._retry = function() {
   return this.clearTimeout(), this.req && (this.req = null, this.req = this.request()), this._aborted = !1, this.timedout = !1, this.timedoutError = null, this._end();
 };
 E.prototype.then = function(i, u) {
-  var c = this;
+  var y = this;
   if (!this._fullfilledPromise) {
     var l = this;
-    this._endCalled && console.warn("Warning: superagent request was sent twice, because both .end() and .then() were called. Never call .end() if you use promises"), this._fullfilledPromise = new Promise(function(h, b) {
+    this._endCalled && console.warn("Warning: superagent request was sent twice, because both .end() and .then() were called. Never call .end() if you use promises"), this._fullfilledPromise = new Promise(function(p, d) {
       l.on("abort", function() {
-        if (!(c._maxRetries && c._maxRetries > c._retries)) {
-          if (c.timedout && c.timedoutError) {
-            b(c.timedoutError);
+        if (!(y._maxRetries && y._maxRetries > y._retries)) {
+          if (y.timedout && y.timedoutError) {
+            d(y.timedoutError);
             return;
           }
           var _ = new Error("Aborted");
-          _.code = "ABORTED", _.status = c.status, _.method = c.method, _.url = c.url, b(_);
+          _.code = "ABORTED", _.status = y.status, _.method = y.method, _.url = y.url, d(_);
         }
       }), l.end(function(_, w) {
-        _ ? b(_) : h(w);
+        _ ? d(_) : p(w);
       });
     });
   }
@@ -329,9 +329,9 @@ E.prototype.get = function(i) {
 };
 E.prototype.getHeader = E.prototype.get;
 E.prototype.set = function(i, u) {
-  if (W(i)) {
-    for (var c in i)
-      Object.prototype.hasOwnProperty.call(i, c) && this.set(c, i[c]);
+  if ($(i)) {
+    for (var y in i)
+      Object.prototype.hasOwnProperty.call(i, y) && this.set(y, i[y]);
     return this;
   }
   return this._header[i.toLowerCase()] = u, this.header[i] = u, this;
@@ -344,9 +344,9 @@ E.prototype.field = function(i, u) {
     throw new Error(".field(name, val) name can not be empty");
   if (this._data)
     throw new Error(".field() can't be used if .send() is used. Please use only .send() or only .field() & .attach()");
-  if (W(i)) {
-    for (var c in i)
-      Object.prototype.hasOwnProperty.call(i, c) && this.field(c, i[c]);
+  if ($(i)) {
+    for (var y in i)
+      Object.prototype.hasOwnProperty.call(i, y) && this.field(y, i[y]);
     return this;
   }
   if (Array.isArray(u)) {
@@ -361,8 +361,8 @@ E.prototype.field = function(i, u) {
 E.prototype.abort = function() {
   return this._aborted ? this : (this._aborted = !0, this.xhr && this.xhr.abort(), this.req && this.req.abort(), this.clearTimeout(), this.emit("abort"), this);
 };
-E.prototype._auth = function(i, u, c, l) {
-  switch (c.type) {
+E.prototype._auth = function(i, u, y, l) {
+  switch (y.type) {
     case "basic":
       this.set("Authorization", "Basic ".concat(l("".concat(i, ":").concat(u))));
       break;
@@ -395,19 +395,19 @@ E.prototype.toJSON = function() {
   };
 };
 E.prototype.send = function(i) {
-  var u = W(i), c = this._header["content-type"];
+  var u = $(i), y = this._header["content-type"];
   if (this._formData)
     throw new Error(".send() can't be used if .attach() or .field() is used. Please use only .send() or only .field() & .attach()");
   if (u && !this._data)
     Array.isArray(i) ? this._data = [] : this._isHost(i) || (this._data = {});
   else if (i && this._data && this._isHost(this._data))
     throw new Error("Can't merge these send calls");
-  if (u && W(this._data))
+  if (u && $(this._data))
     for (var l in i)
       Object.prototype.hasOwnProperty.call(i, l) && (this._data[l] = i[l]);
   else
-    typeof i == "string" ? (c || this.type("form"), c = this._header["content-type"], c === "application/x-www-form-urlencoded" ? this._data = this._data ? "".concat(this._data, "&").concat(i) : i : this._data = (this._data || "") + i) : this._data = i;
-  return !u || this._isHost(i) ? this : (c || this.type("json"), this);
+    typeof i == "string" ? (y || this.type("form"), y = this._header["content-type"], y === "application/x-www-form-urlencoded" ? this._data = this._data ? "".concat(this._data, "&").concat(i) : i : this._data = (this._data || "") + i) : this._data = i;
+  return !u || this._isHost(i) ? this : (y || this.type("json"), this);
 };
 E.prototype.sortQuery = function(i) {
   return this._sort = typeof i > "u" ? !0 : i, this;
@@ -417,18 +417,18 @@ E.prototype._finalizeQueryString = function() {
   if (i && (this.url += (this.url.includes("?") ? "&" : "?") + i), this._query.length = 0, this._sort) {
     var u = this.url.indexOf("?");
     if (u >= 0) {
-      var c = this.url.slice(u + 1).split("&");
-      typeof this._sort == "function" ? c.sort(this._sort) : c.sort(), this.url = this.url.slice(0, u) + "?" + c.join("&");
+      var y = this.url.slice(u + 1).split("&");
+      typeof this._sort == "function" ? y.sort(this._sort) : y.sort(), this.url = this.url.slice(0, u) + "?" + y.join("&");
     }
   }
 };
 E.prototype._appendQueryString = function() {
   console.warn("Unsupported");
 };
-E.prototype._timeoutError = function(i, u, c) {
+E.prototype._timeoutError = function(i, u, y) {
   if (!this._aborted) {
     var l = new Error("".concat(i + u, "ms exceeded"));
-    l.timeout = u, l.code = "ECONNABORTED", l.errno = c, this.timedout = !0, this.timedoutError = l, this.abort(), this.callback(l);
+    l.timeout = u, l.code = "ECONNABORTED", l.errno = y, this.timedout = !0, this.timedoutError = l, this.abort(), this.callback(l);
   }
 };
 E.prototype._setTimeouts = function() {
@@ -444,79 +444,79 @@ L.type = function(i) {
   return i.split(/ *; */).shift();
 };
 L.params = function(i) {
-  return i.split(/ *; */).reduce(function(u, c) {
-    var l = c.split(/ *= */), h = l.shift(), b = l.shift();
-    return h && b && (u[h] = b), u;
+  return i.split(/ *; */).reduce(function(u, y) {
+    var l = y.split(/ *= */), p = l.shift(), d = l.shift();
+    return p && d && (u[p] = d), u;
   }, {});
 };
 L.parseLinks = function(i) {
-  return i.split(/ *, */).reduce(function(u, c) {
-    var l = c.split(/ *; */), h = l[0].slice(1, -1), b = l[1].split(/ *= */)[1].slice(1, -1);
-    return u[b] = h, u;
+  return i.split(/ *, */).reduce(function(u, y) {
+    var l = y.split(/ *; */), p = l[0].slice(1, -1), d = l[1].split(/ *= */)[1].slice(1, -1);
+    return u[d] = p, u;
   }, {});
 };
 L.cleanHeader = function(i, u) {
   return delete i["content-type"], delete i["content-length"], delete i["transfer-encoding"], delete i.host, u && (delete i.authorization, delete i.cookie), i;
 };
-var X = L, Ge = z;
-function z(i) {
+var X = L, Ze = x;
+function x(i) {
   if (i)
-    return Ve(i);
+    return et(i);
 }
-function Ve(i) {
-  for (var u in z.prototype)
-    Object.prototype.hasOwnProperty.call(z.prototype, u) && (i[u] = z.prototype[u]);
+function et(i) {
+  for (var u in x.prototype)
+    Object.prototype.hasOwnProperty.call(x.prototype, u) && (i[u] = x.prototype[u]);
   return i;
 }
-z.prototype.get = function(i) {
+x.prototype.get = function(i) {
   return this.header[i.toLowerCase()];
 };
-z.prototype._setHeaderProperties = function(i) {
+x.prototype._setHeaderProperties = function(i) {
   var u = i["content-type"] || "";
   this.type = X.type(u);
-  var c = X.params(u);
-  for (var l in c)
-    Object.prototype.hasOwnProperty.call(c, l) && (this[l] = c[l]);
+  var y = X.params(u);
+  for (var l in y)
+    Object.prototype.hasOwnProperty.call(y, l) && (this[l] = y[l]);
   this.links = {};
   try {
     i.link && (this.links = X.parseLinks(i.link));
   } catch {
   }
 };
-z.prototype._setStatusProperties = function(i) {
+x.prototype._setStatusProperties = function(i) {
   var u = i / 100 | 0;
   this.statusCode = i, this.status = this.statusCode, this.statusType = u, this.info = u === 1, this.ok = u === 2, this.redirect = u === 3, this.clientError = u === 4, this.serverError = u === 5, this.error = u === 4 || u === 5 ? this.toError() : !1, this.created = i === 201, this.accepted = i === 202, this.noContent = i === 204, this.badRequest = i === 400, this.unauthorized = i === 401, this.notAcceptable = i === 406, this.forbidden = i === 403, this.notFound = i === 404, this.unprocessableEntity = i === 422;
 };
-function Xe(i) {
-  return et(i) || Ze(i) || Ye(i) || Qe();
+function tt(i) {
+  return ot(i) || it(i) || nt(i) || rt();
 }
-function Qe() {
+function rt() {
   throw new TypeError(`Invalid attempt to spread non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
 }
-function Ye(i, u) {
+function nt(i, u) {
   if (i) {
     if (typeof i == "string")
       return re(i, u);
-    var c = Object.prototype.toString.call(i).slice(8, -1);
-    if (c === "Object" && i.constructor && (c = i.constructor.name), c === "Map" || c === "Set")
+    var y = Object.prototype.toString.call(i).slice(8, -1);
+    if (y === "Object" && i.constructor && (y = i.constructor.name), y === "Map" || y === "Set")
       return Array.from(i);
-    if (c === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(c))
+    if (y === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(y))
       return re(i, u);
   }
 }
-function Ze(i) {
+function it(i) {
   if (typeof Symbol < "u" && Symbol.iterator in Object(i))
     return Array.from(i);
 }
-function et(i) {
+function ot(i) {
   if (Array.isArray(i))
     return re(i);
 }
 function re(i, u) {
   (u == null || u > i.length) && (u = i.length);
-  for (var c = 0, l = new Array(u); c < u; c++)
-    l[c] = i[c];
+  for (var y = 0, l = new Array(u); y < u; y++)
+    l[y] = i[y];
   return l;
 }
 function ne() {
@@ -524,39 +524,39 @@ function ne() {
 }
 ["use", "on", "once", "set", "query", "type", "accept", "auth", "withCredentials", "sortQuery", "retry", "ok", "redirects", "timeout", "buffer", "serialize", "parse", "ca", "key", "pfx", "cert", "disableTLSCerts"].forEach(function(i) {
   ne.prototype[i] = function() {
-    for (var u = arguments.length, c = new Array(u), l = 0; l < u; l++)
-      c[l] = arguments[l];
+    for (var u = arguments.length, y = new Array(u), l = 0; l < u; l++)
+      y[l] = arguments[l];
     return this._defaults.push({
       fn: i,
-      args: c
+      args: y
     }), this;
   };
 });
 ne.prototype._setDefaults = function(i) {
   this._defaults.forEach(function(u) {
-    i[u.fn].apply(i, Xe(u.args));
+    i[u.fn].apply(i, tt(u.args));
   });
 };
-var tt = ne;
+var ut = ne;
 (function(i, u) {
-  function c(s) {
+  function y(s) {
     "@babel/helpers - typeof";
-    return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? c = function(m) {
+    return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? y = function(m) {
       return typeof m;
-    } : c = function(m) {
+    } : y = function(m) {
       return m && typeof Symbol == "function" && m.constructor === Symbol && m !== Symbol.prototype ? "symbol" : typeof m;
-    }, c(s);
+    }, y(s);
   }
   var l;
   typeof window < "u" ? l = window : typeof self > "u" ? (console.warn("Using browser-only version of superagent in non-browser environment"), l = void 0) : l = self;
-  var h = He, b = Le, _ = je, w = ke, T = Ge, S = tt;
+  var p = $e, d = We, _ = Xe, w = Ie, T = Ze, S = ut;
   function O() {
   }
   i.exports = function(s, v) {
     return typeof v == "function" ? new u.Request("GET", s).end(v) : arguments.length === 1 ? new u.Request("GET", s) : new u.Request(s, v);
   }, u = i.exports;
   var n = u;
-  u.Request = d, n.getXHR = function() {
+  u.Request = g, n.getXHR = function() {
     if (l.XMLHttpRequest && (!l.location || l.location.protocol !== "file:" || !l.ActiveXObject))
       return new XMLHttpRequest();
     try {
@@ -601,16 +601,16 @@ var tt = ne;
           e(s, v, P);
         });
       else if (w(m))
-        for (var g in m)
-          Object.prototype.hasOwnProperty.call(m, g) && e(s, "".concat(v, "[").concat(g, "]"), m[g]);
+        for (var b in m)
+          Object.prototype.hasOwnProperty.call(m, b) && e(s, "".concat(v, "[").concat(b, "]"), m[b]);
       else
         s.push(encodeURI(v) + "=" + encodeURIComponent(m));
     }
   }
   n.serializeObject = r;
   function o(s) {
-    for (var v = {}, m = s.split("&"), g, P, A = 0, N = m.length; A < N; ++A)
-      g = m[A], P = g.indexOf("="), P === -1 ? v[decodeURIComponent(g)] = "" : v[decodeURIComponent(g.slice(0, P))] = decodeURIComponent(g.slice(P + 1));
+    for (var v = {}, m = s.split("&"), b, P, A = 0, C = m.length; A < C; ++A)
+      b = m[A], P = b.indexOf("="), P === -1 ? v[decodeURIComponent(b)] = "" : v[decodeURIComponent(b.slice(0, P))] = decodeURIComponent(b.slice(P + 1));
     return v;
   }
   n.parseString = o, n.types = {
@@ -622,98 +622,98 @@ var tt = ne;
     "form-data": "application/x-www-form-urlencoded"
   }, n.serialize = {
     "application/x-www-form-urlencoded": r,
-    "application/json": b
+    "application/json": d
   }, n.parse = {
     "application/x-www-form-urlencoded": o,
     "application/json": JSON.parse
   };
   function f(s) {
-    for (var v = s.split(/\r?\n/), m = {}, g, P, A, N, k = 0, R = v.length; k < R; ++k)
-      P = v[k], g = P.indexOf(":"), g !== -1 && (A = P.slice(0, g).toLowerCase(), N = t(P.slice(g + 1)), m[A] = N);
+    for (var v = s.split(/\r?\n/), m = {}, b, P, A, C, k = 0, I = v.length; k < I; ++k)
+      P = v[k], b = P.indexOf(":"), b !== -1 && (A = P.slice(0, b).toLowerCase(), C = t(P.slice(b + 1)), m[A] = C);
     return m;
   }
   function a(s) {
     return /[/+]json($|[^-\w])/.test(s);
   }
-  function y(s) {
+  function c(s) {
     this.req = s, this.xhr = this.req.xhr, this.text = this.req.method !== "HEAD" && (this.xhr.responseType === "" || this.xhr.responseType === "text") || typeof this.xhr.responseType > "u" ? this.xhr.responseText : null, this.statusText = this.req.xhr.statusText;
     var v = this.xhr.status;
     v === 1223 && (v = 204), this._setStatusProperties(v), this.headers = f(this.xhr.getAllResponseHeaders()), this.header = this.headers, this.header["content-type"] = this.xhr.getResponseHeader("content-type"), this._setHeaderProperties(this.header), this.text === null && s._responseType ? this.body = this.xhr.response : this.body = this.req.method === "HEAD" ? null : this._parseBody(this.text ? this.text : this.xhr.response);
   }
-  T(y.prototype), y.prototype._parseBody = function(s) {
+  T(c.prototype), c.prototype._parseBody = function(s) {
     var v = n.parse[this.type];
     return this.req._parser ? this.req._parser(this, s) : (!v && a(this.type) && (v = n.parse["application/json"]), v && s && (s.length > 0 || s instanceof Object) ? v(s) : null);
-  }, y.prototype.toError = function() {
-    var s = this.req, v = s.method, m = s.url, g = "cannot ".concat(v, " ").concat(m, " (").concat(this.status, ")"), P = new Error(g);
+  }, c.prototype.toError = function() {
+    var s = this.req, v = s.method, m = s.url, b = "cannot ".concat(v, " ").concat(m, " (").concat(this.status, ")"), P = new Error(b);
     return P.status = this.status, P.method = v, P.url = m, P;
-  }, n.Response = y;
-  function d(s, v) {
+  }, n.Response = c;
+  function g(s, v) {
     var m = this;
     this._query = this._query || [], this.method = s, this.url = v, this.header = {}, this._header = {}, this.on("end", function() {
-      var g = null, P = null;
+      var b = null, P = null;
       try {
-        P = new y(m);
-      } catch (N) {
-        return g = new Error("Parser is unable to parse the response"), g.parse = !0, g.original = N, m.xhr ? (g.rawResponse = typeof m.xhr.responseType > "u" ? m.xhr.responseText : m.xhr.response, g.status = m.xhr.status ? m.xhr.status : null, g.statusCode = g.status) : (g.rawResponse = null, g.status = null), m.callback(g);
+        P = new c(m);
+      } catch (C) {
+        return b = new Error("Parser is unable to parse the response"), b.parse = !0, b.original = C, m.xhr ? (b.rawResponse = typeof m.xhr.responseType > "u" ? m.xhr.responseText : m.xhr.response, b.status = m.xhr.status ? m.xhr.status : null, b.statusCode = b.status) : (b.rawResponse = null, b.status = null), m.callback(b);
       }
       m.emit("response", P);
       var A;
       try {
         m._isResponseOK(P) || (A = new Error(P.statusText || P.text || "Unsuccessful HTTP response"));
-      } catch (N) {
-        A = N;
+      } catch (C) {
+        A = C;
       }
-      A ? (A.original = g, A.response = P, A.status = P.status, m.callback(A, P)) : m.callback(null, P);
+      A ? (A.original = b, A.response = P, A.status = P.status, m.callback(A, P)) : m.callback(null, P);
     });
   }
-  h(d.prototype), _(d.prototype), d.prototype.type = function(s) {
+  p(g.prototype), _(g.prototype), g.prototype.type = function(s) {
     return this.set("Content-Type", n.types[s] || s), this;
-  }, d.prototype.accept = function(s) {
+  }, g.prototype.accept = function(s) {
     return this.set("Accept", n.types[s] || s), this;
-  }, d.prototype.auth = function(s, v, m) {
-    arguments.length === 1 && (v = ""), c(v) === "object" && v !== null && (m = v, v = ""), m || (m = {
+  }, g.prototype.auth = function(s, v, m) {
+    arguments.length === 1 && (v = ""), y(v) === "object" && v !== null && (m = v, v = ""), m || (m = {
       type: typeof btoa == "function" ? "basic" : "auto"
     });
-    var g = function(A) {
+    var b = function(A) {
       if (typeof btoa == "function")
         return btoa(A);
       throw new Error("Cannot use basic auth, btoa is not a function");
     };
-    return this._auth(s, v, m, g);
-  }, d.prototype.query = function(s) {
+    return this._auth(s, v, m, b);
+  }, g.prototype.query = function(s) {
     return typeof s != "string" && (s = r(s)), s && this._query.push(s), this;
-  }, d.prototype.attach = function(s, v, m) {
+  }, g.prototype.attach = function(s, v, m) {
     if (v) {
       if (this._data)
         throw new Error("superagent can't mix .send() and .attach()");
       this._getFormData().append(s, v, m || v.name);
     }
     return this;
-  }, d.prototype._getFormData = function() {
+  }, g.prototype._getFormData = function() {
     return this._formData || (this._formData = new l.FormData()), this._formData;
-  }, d.prototype.callback = function(s, v) {
+  }, g.prototype.callback = function(s, v) {
     if (this._shouldRetry(s, v))
       return this._retry();
     var m = this._callback;
     this.clearTimeout(), s && (this._maxRetries && (s.retries = this._retries - 1), this.emit("error", s)), m(s, v);
-  }, d.prototype.crossDomainError = function() {
+  }, g.prototype.crossDomainError = function() {
     var s = new Error(`Request has been terminated
 Possible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.`);
     s.crossDomain = !0, s.status = this.status, s.method = this.method, s.url = this.url, this.callback(s);
-  }, d.prototype.agent = function() {
+  }, g.prototype.agent = function() {
     return console.warn("This is not supported in browser version of superagent"), this;
-  }, d.prototype.ca = d.prototype.agent, d.prototype.buffer = d.prototype.ca, d.prototype.write = function() {
+  }, g.prototype.ca = g.prototype.agent, g.prototype.buffer = g.prototype.ca, g.prototype.write = function() {
     throw new Error("Streaming is not supported in browser version of superagent");
-  }, d.prototype.pipe = d.prototype.write, d.prototype._isHost = function(s) {
-    return s && c(s) === "object" && !Array.isArray(s) && Object.prototype.toString.call(s) !== "[object Object]";
-  }, d.prototype.end = function(s) {
+  }, g.prototype.pipe = g.prototype.write, g.prototype._isHost = function(s) {
+    return s && y(s) === "object" && !Array.isArray(s) && Object.prototype.toString.call(s) !== "[object Object]";
+  }, g.prototype.end = function(s) {
     this._endCalled && console.warn("Warning: .end() was called twice. This is not supported in superagent"), this._endCalled = !0, this._callback = s || O, this._finalizeQueryString(), this._end();
-  }, d.prototype._setUploadTimeout = function() {
+  }, g.prototype._setUploadTimeout = function() {
     var s = this;
     this._uploadTimeout && !this._uploadTimeoutTimer && (this._uploadTimeoutTimer = setTimeout(function() {
       s._timeoutError("Upload timeout of ", s._uploadTimeout, "ETIMEDOUT");
     }, this._uploadTimeout));
-  }, d.prototype._end = function() {
+  }, g.prototype._end = function() {
     if (this._aborted)
       return this.callback(new Error("The request has been aborted even before .end() was called"));
     var s = this;
@@ -722,23 +722,23 @@ Possible causes: the network is offline, Origin is not allowed by Access-Control
     this._setTimeouts(), v.onreadystatechange = function() {
       var k = v.readyState;
       if (k >= 2 && s._responseTimeoutTimer && clearTimeout(s._responseTimeoutTimer), k === 4) {
-        var R;
+        var I;
         try {
-          R = v.status;
+          I = v.status;
         } catch {
-          R = 0;
+          I = 0;
         }
-        if (!R)
+        if (!I)
           return s.timedout || s._aborted ? void 0 : s.crossDomainError();
         s.emit("end");
       }
     };
-    var g = function(R, q) {
-      q.total > 0 && (q.percent = q.loaded / q.total * 100, q.percent === 100 && clearTimeout(s._uploadTimeoutTimer)), q.direction = R, s.emit("progress", q);
+    var b = function(I, R) {
+      R.total > 0 && (R.percent = R.loaded / R.total * 100, R.percent === 100 && clearTimeout(s._uploadTimeoutTimer)), R.direction = I, s.emit("progress", R);
     };
     if (this.hasListeners("progress"))
       try {
-        v.addEventListener("progress", g.bind(null, "download")), v.upload && v.upload.addEventListener("progress", g.bind(null, "upload"));
+        v.addEventListener("progress", b.bind(null, "download")), v.upload && v.upload.addEventListener("progress", b.bind(null, "upload"));
       } catch {
       }
     v.upload && this._setUploadTimeout();
@@ -751,63 +751,63 @@ Possible causes: the network is offline, Origin is not allowed by Access-Control
       var P = this._header["content-type"], A = this._serializer || n.serialize[P ? P.split(";")[0] : ""];
       !A && a(P) && (A = n.serialize["application/json"]), A && (m = A(m));
     }
-    for (var N in this.header)
-      this.header[N] !== null && Object.prototype.hasOwnProperty.call(this.header, N) && v.setRequestHeader(N, this.header[N]);
+    for (var C in this.header)
+      this.header[C] !== null && Object.prototype.hasOwnProperty.call(this.header, C) && v.setRequestHeader(C, this.header[C]);
     this._responseType && (v.responseType = this._responseType), this.emit("request", this), v.send(typeof m > "u" ? null : m);
   }, n.agent = function() {
     return new S();
   }, ["GET", "POST", "OPTIONS", "PATCH", "PUT", "DELETE"].forEach(function(s) {
     S.prototype[s.toLowerCase()] = function(v, m) {
-      var g = new n.Request(s, v);
-      return this._setDefaults(g), m && g.end(m), g;
+      var b = new n.Request(s, v);
+      return this._setDefaults(b), m && b.end(m), b;
     };
   }), S.prototype.del = S.prototype.delete, n.get = function(s, v, m) {
-    var g = n("GET", s);
-    return typeof v == "function" && (m = v, v = null), v && g.query(v), m && g.end(m), g;
+    var b = n("GET", s);
+    return typeof v == "function" && (m = v, v = null), v && b.query(v), m && b.end(m), b;
   }, n.head = function(s, v, m) {
-    var g = n("HEAD", s);
-    return typeof v == "function" && (m = v, v = null), v && g.query(v), m && g.end(m), g;
+    var b = n("HEAD", s);
+    return typeof v == "function" && (m = v, v = null), v && b.query(v), m && b.end(m), b;
   }, n.options = function(s, v, m) {
-    var g = n("OPTIONS", s);
-    return typeof v == "function" && (m = v, v = null), v && g.send(v), m && g.end(m), g;
+    var b = n("OPTIONS", s);
+    return typeof v == "function" && (m = v, v = null), v && b.send(v), m && b.end(m), b;
   };
-  function p(s, v, m) {
-    var g = n("DELETE", s);
-    return typeof v == "function" && (m = v, v = null), v && g.send(v), m && g.end(m), g;
+  function h(s, v, m) {
+    var b = n("DELETE", s);
+    return typeof v == "function" && (m = v, v = null), v && b.send(v), m && b.end(m), b;
   }
-  n.del = p, n.delete = p, n.patch = function(s, v, m) {
-    var g = n("PATCH", s);
-    return typeof v == "function" && (m = v, v = null), v && g.send(v), m && g.end(m), g;
+  n.del = h, n.delete = h, n.patch = function(s, v, m) {
+    var b = n("PATCH", s);
+    return typeof v == "function" && (m = v, v = null), v && b.send(v), m && b.end(m), b;
   }, n.post = function(s, v, m) {
-    var g = n("POST", s);
-    return typeof v == "function" && (m = v, v = null), v && g.send(v), m && g.end(m), g;
+    var b = n("POST", s);
+    return typeof v == "function" && (m = v, v = null), v && b.send(v), m && b.end(m), b;
   }, n.put = function(s, v, m) {
-    var g = n("PUT", s);
-    return typeof v == "function" && (m = v, v = null), v && g.send(v), m && g.end(m), g;
+    var b = n("PUT", s);
+    return typeof v == "function" && (m = v, v = null), v && b.send(v), m && b.end(m), b;
   };
 })(Z, Z.exports);
-var rt = Z.exports;
-const nt = {}, it = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+var ft = Z.exports;
+const lt = {}, at = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: nt
-}, Symbol.toStringTag, { value: "Module" })), be = /* @__PURE__ */ xe(it);
+  default: lt
+}, Symbol.toStringTag, { value: "Module" })), we = /* @__PURE__ */ Ue(at);
 (function(i) {
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = l(rt), c = l(be);
+  var u = l(ft), y = l(we);
   function l(t) {
     return t && t.__esModule ? t : { default: t };
   }
-  function h(t) {
+  function p(t) {
     "@babel/helpers - typeof";
-    return h = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(r) {
+    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(r) {
       return typeof r;
     } : function(r) {
       return r && typeof Symbol == "function" && r.constructor === Symbol && r !== Symbol.prototype ? "symbol" : typeof r;
-    }, h(t);
+    }, p(t);
   }
-  function b(t, r) {
+  function d(t, r) {
     if (!(t instanceof r))
       throw new TypeError("Cannot call a class as a function");
   }
@@ -822,15 +822,15 @@ const nt = {}, it = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
   }
   function T(t) {
     var r = S(t, "string");
-    return h(r) === "symbol" ? r : String(r);
+    return p(r) === "symbol" ? r : String(r);
   }
   function S(t, r) {
-    if (h(t) !== "object" || t === null)
+    if (p(t) !== "object" || t === null)
       return t;
     var e = t[Symbol.toPrimitive];
     if (e !== void 0) {
       var o = e.call(t, r || "default");
-      if (h(o) !== "object")
+      if (p(o) !== "object")
         return o;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
@@ -839,14 +839,14 @@ const nt = {}, it = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
   var O = /* @__PURE__ */ function() {
     function t() {
       var r = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : "https://api.flyo.cloud/nitro/v1";
-      b(this, t), this.basePath = r.replace(/\/+$/, ""), this.authentications = {
+      d(this, t), this.basePath = r.replace(/\/+$/, ""), this.authentications = {
         ApiToken: {
           type: "apiKey",
           in: "query",
           name: "token"
         }
       }, this.defaultHeaders = {
-        "User-Agent": "OpenAPI-Generator/1.0.0-beta.153/Javascript"
+        "User-Agent": "OpenAPI-Generator/1.0.0-beta.160/Javascript"
       }, this.timeout = 6e4, this.cache = !0, this.enableCookies = !1, typeof window > "u" && (this.agent = new u.default.agent()), this.requestAgent = null, this.plugins = null;
     }
     return w(t, [{
@@ -873,11 +873,11 @@ const nt = {}, it = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
         function(e, o, f) {
           var a = this;
           e.match(/^\//) || (e = "/" + e);
-          var y = this.basePath + e;
-          return f != null && (y = f + e), y = y.replace(/\{([\w-\.]+)\}/g, function(d, p) {
+          var c = this.basePath + e;
+          return f != null && (c = f + e), c = c.replace(/\{([\w-\.]+)\}/g, function(g, h) {
             var s;
-            return o.hasOwnProperty(p) ? s = a.paramToString(o[p]) : s = d, encodeURIComponent(s);
-          }), y;
+            return o.hasOwnProperty(h) ? s = a.paramToString(o[h]) : s = g, encodeURIComponent(s);
+          }), c;
         }
       )
       /**
@@ -917,10 +917,10 @@ const nt = {}, it = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
     }, {
       key: "isFileParam",
       value: function(e) {
-        if (typeof Fe == "function") {
+        if (typeof je == "function") {
           var o;
           try {
-            o = be;
+            o = we;
           } catch {
           }
           if (o && o.ReadStream && e instanceof o.ReadStream)
@@ -988,32 +988,32 @@ const nt = {}, it = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
       value: function(e, o) {
         var f = this;
         o.forEach(function(a) {
-          var y = f.authentications[a];
-          switch (y.type) {
+          var c = f.authentications[a];
+          switch (c.type) {
             case "basic":
-              (y.username || y.password) && e.auth(y.username || "", y.password || "");
+              (c.username || c.password) && e.auth(c.username || "", c.password || "");
               break;
             case "bearer":
-              if (y.accessToken) {
-                var d = typeof y.accessToken == "function" ? y.accessToken() : y.accessToken;
+              if (c.accessToken) {
+                var g = typeof c.accessToken == "function" ? c.accessToken() : c.accessToken;
                 e.set({
-                  Authorization: "Bearer " + d
+                  Authorization: "Bearer " + g
                 });
               }
               break;
             case "apiKey":
-              if (y.apiKey) {
-                var p = {};
-                y.apiKeyPrefix ? p[y.name] = y.apiKeyPrefix + " " + y.apiKey : p[y.name] = y.apiKey, y.in === "header" ? e.set(p) : e.query(p);
+              if (c.apiKey) {
+                var h = {};
+                c.apiKeyPrefix ? h[c.name] = c.apiKeyPrefix + " " + c.apiKey : h[c.name] = c.apiKey, c.in === "header" ? e.set(h) : e.query(h);
               }
               break;
             case "oauth2":
-              y.accessToken && e.set({
-                Authorization: "Bearer " + y.accessToken
+              c.accessToken && e.set({
+                Authorization: "Bearer " + c.accessToken
               });
               break;
             default:
-              throw new Error("Unknown authentication type: " + y.type);
+              throw new Error("Unknown authentication type: " + c.type);
           }
         });
       }
@@ -1032,7 +1032,7 @@ const nt = {}, it = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
         if (e == null || o == null || e.status == 204)
           return null;
         var f = e.body;
-        return (f == null || h(f) === "object" && typeof f.length > "u" && !Object.keys(f).length) && (f = e.text), t.convertToType(f, o);
+        return (f == null || p(f) === "object" && typeof f.length > "u" && !Object.keys(f).length) && (f = e.text), t.convertToType(f, o);
       }
       /**
        * Invokes the REST service using the supplied settings and parameters.
@@ -1053,41 +1053,41 @@ const nt = {}, it = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
        */
     }, {
       key: "callApi",
-      value: function(e, o, f, a, y, d, p, s, v, m, g, P) {
-        var A = this, N = this.buildUrl(e, f, P), k = (0, u.default)(o, N);
+      value: function(e, o, f, a, c, g, h, s, v, m, b, P) {
+        var A = this, C = this.buildUrl(e, f, P), k = (0, u.default)(o, C);
         if (this.plugins !== null)
-          for (var R in this.plugins)
-            this.plugins.hasOwnProperty(R) && k.use(this.plugins[R]);
-        this.applyAuthToRequest(k, s), o.toUpperCase() === "GET" && this.cache === !1 && (a._ = (/* @__PURE__ */ new Date()).getTime()), k.query(this.normalizeParams(a)), k.set(this.defaultHeaders).set(this.normalizeParams(y)), this.requestAgent && k.agent(this.requestAgent), k.timeout(this.timeout);
-        var q = this.jsonPreferredMime(v);
-        if (q && q != "multipart/form-data" && k.type(q), q === "application/x-www-form-urlencoded")
-          k.send(c.default.stringify(this.normalizeParams(d)));
-        else if (q == "multipart/form-data") {
-          var G = this.normalizeParams(d);
+          for (var I in this.plugins)
+            this.plugins.hasOwnProperty(I) && k.use(this.plugins[I]);
+        this.applyAuthToRequest(k, s), o.toUpperCase() === "GET" && this.cache === !1 && (a._ = (/* @__PURE__ */ new Date()).getTime()), k.query(this.normalizeParams(a)), k.set(this.defaultHeaders).set(this.normalizeParams(c)), this.requestAgent && k.agent(this.requestAgent), k.timeout(this.timeout);
+        var R = this.jsonPreferredMime(v);
+        if (R && R != "multipart/form-data" && k.type(R), R === "application/x-www-form-urlencoded")
+          k.send(y.default.stringify(this.normalizeParams(g)));
+        else if (R == "multipart/form-data") {
+          var G = this.normalizeParams(g);
           for (var F in G)
             if (G.hasOwnProperty(F)) {
-              var I = G[F];
-              this.isFileParam(I) ? k.attach(F, I) : Array.isArray(I) && I.length && this.isFileParam(I[0]) ? I.forEach(function(V) {
+              var J = G[F];
+              this.isFileParam(J) ? k.attach(F, J) : Array.isArray(J) && J.length && this.isFileParam(J[0]) ? J.forEach(function(V) {
                 return k.attach(F, V);
-              }) : k.field(F, I);
+              }) : k.field(F, J);
             }
         } else
-          p != null && (k.header["Content-Type"] || k.type("application/json"), k.send(p));
-        var de = this.jsonPreferredMime(m);
-        return de && k.accept(de), g === "Blob" ? k.responseType("blob") : g === "String" && k.responseType("text"), this.enableCookies && (typeof window > "u" ? this.agent._attachCookies(k) : k.withCredentials()), new Promise(function(V, ge) {
-          k.end(function(_e, J) {
-            if (_e) {
-              var x = {};
-              J && (x.status = J.status, x.statusText = J.statusText, x.body = J.body, x.response = J), x.error = _e, ge(x);
+          h != null && (k.header["Content-Type"] || k.type("application/json"), k.send(h));
+        var ge = this.jsonPreferredMime(m);
+        return ge && k.accept(ge), b === "Blob" ? k.responseType("blob") : b === "String" && k.responseType("text"), this.enableCookies && (typeof window > "u" ? this.agent._attachCookies(k) : k.withCredentials()), new Promise(function(V, _e) {
+          k.end(function(be, q) {
+            if (be) {
+              var D = {};
+              q && (D.status = q.status, D.statusText = q.statusText, D.body = q.body, D.response = q), D.error = be, _e(D);
             } else
               try {
-                var ze = A.deserialize(J, g);
-                A.enableCookies && typeof window > "u" && A.agent._saveCookies(J), V({
-                  data: ze,
-                  response: J
+                var He = A.deserialize(q, b);
+                A.enableCookies && typeof window > "u" && A.agent._saveCookies(q), V({
+                  data: He,
+                  response: q
                 });
-              } catch (Be) {
-                ge(Be);
+              } catch (Le) {
+                _e(Le);
               }
           });
         });
@@ -1123,17 +1123,17 @@ const nt = {}, it = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
         var o = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, f = this.hostSettings();
         if (e < 0 || e >= f.length)
           throw new Error("Invalid index " + e + " when selecting the host settings. Must be less than " + f.length);
-        var a = f[e], y = a.url;
-        for (var d in a.variables)
-          if (d in o) {
-            var p = a.variables[d];
-            if (!("enum_values" in p) || p.enum_values.includes(o[d]))
-              y = y.replace("{" + d + "}", o[d]);
+        var a = f[e], c = a.url;
+        for (var g in a.variables)
+          if (g in o) {
+            var h = a.variables[g];
+            if (!("enum_values" in h) || h.enum_values.includes(o[g]))
+              c = c.replace("{" + g + "}", o[g]);
             else
-              throw new Error("The variable `" + d + "` in the host URL has invalid value " + o[d] + ". Must be " + a.variables[d].enum_values + ".");
+              throw new Error("The variable `" + g + "` in the host URL has invalid value " + o[g] + ". Must be " + a.variables[g].enum_values + ".");
           } else
-            y = y.replace("{" + d + "}", a.variables[d].default_value);
-        return y;
+            c = c.replace("{" + g + "}", a.variables[g].default_value);
+        return c;
       }
       /**
       * Constructs a new map or array model from REST data.
@@ -1143,7 +1143,7 @@ const nt = {}, it = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
     }], [{
       key: "canBeJsonified",
       value: function(e) {
-        if (typeof e != "string" && h(e) !== "object")
+        if (typeof e != "string" && p(e) !== "object")
           return !1;
         try {
           var o = e.toString();
@@ -1194,20 +1194,20 @@ const nt = {}, it = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
               return e.map(function(m) {
                 return t.convertToType(m, f);
               });
-            } else if (h(o) === "object") {
-              var a, y;
-              for (var d in o)
-                if (o.hasOwnProperty(d)) {
-                  a = d, y = o[d];
+            } else if (p(o) === "object") {
+              var a, c;
+              for (var g in o)
+                if (o.hasOwnProperty(g)) {
+                  a = g, c = o[g];
                   break;
                 }
-              var p = {};
-              for (var d in e)
-                if (e.hasOwnProperty(d)) {
-                  var s = t.convertToType(d, a), v = t.convertToType(e[d], y);
-                  p[s] = v;
+              var h = {};
+              for (var g in e)
+                if (e.hasOwnProperty(g)) {
+                  var s = t.convertToType(g, a), v = t.convertToType(e[g], c);
+                  h[s] = v;
                 }
-              return p;
+              return h;
             } else
               return e;
         }
@@ -1219,8 +1219,8 @@ const nt = {}, it = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
           for (var a = 0; a < e.length; a++)
             e.hasOwnProperty(a) && (o[a] = t.convertToType(e[a], f));
         else
-          for (var y in e)
-            e.hasOwnProperty(y) && (o[y] = t.convertToType(e[y], f));
+          for (var c in e)
+            e.hasOwnProperty(c) && (o[c] = t.convertToType(e[c], f));
       }
     }]), t;
   }();
@@ -1253,52 +1253,52 @@ const nt = {}, it = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
   }, O.instance = new O();
   var n = O;
   i.default = n;
-})(C);
-var Q = {}, Y = {}, we;
-function Ne() {
-  return we || (we = 1, function(i) {
+})(N);
+var Q = {}, Y = {}, Se;
+function qe() {
+  return Se || (Se = 1, function(i) {
     Object.defineProperty(i, "__esModule", {
       value: !0
     }), i.default = void 0;
-    var u = l(C), c = l(ie());
+    var u = l(N), y = l(ie());
     function l(o) {
       return o && o.__esModule ? o : { default: o };
     }
-    function h(o) {
+    function p(o) {
       "@babel/helpers - typeof";
-      return h = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(f) {
+      return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(f) {
         return typeof f;
       } : function(f) {
         return f && typeof Symbol == "function" && f.constructor === Symbol && f !== Symbol.prototype ? "symbol" : typeof f;
-      }, h(o);
+      }, p(o);
     }
-    function b(o, f) {
+    function d(o, f) {
       var a = typeof Symbol < "u" && o[Symbol.iterator] || o["@@iterator"];
       if (!a) {
         if (Array.isArray(o) || (a = _(o)) || f && o && typeof o.length == "number") {
           a && (o = a);
-          var y = 0, d = function() {
+          var c = 0, g = function() {
           };
-          return { s: d, n: function() {
-            return y >= o.length ? { done: !0 } : { done: !1, value: o[y++] };
-          }, e: function(g) {
-            throw g;
-          }, f: d };
+          return { s: g, n: function() {
+            return c >= o.length ? { done: !0 } : { done: !1, value: o[c++] };
+          }, e: function(b) {
+            throw b;
+          }, f: g };
         }
         throw new TypeError(`Invalid attempt to iterate non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
       }
-      var p = !0, s = !1, v;
+      var h = !0, s = !1, v;
       return { s: function() {
         a = a.call(o);
       }, n: function() {
-        var g = a.next();
-        return p = g.done, g;
-      }, e: function(g) {
-        s = !0, v = g;
+        var b = a.next();
+        return h = b.done, b;
+      }, e: function(b) {
+        s = !0, v = b;
       }, f: function() {
         try {
-          !p && a.return != null && a.return();
+          !h && a.return != null && a.return();
         } finally {
           if (s)
             throw v;
@@ -1318,9 +1318,9 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }
     function w(o, f) {
       (f == null || f > o.length) && (f = o.length);
-      for (var a = 0, y = new Array(f); a < f; a++)
-        y[a] = o[a];
-      return y;
+      for (var a = 0, c = new Array(f); a < f; a++)
+        c[a] = o[a];
+      return c;
     }
     function T(o, f) {
       if (!(o instanceof f))
@@ -1328,8 +1328,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }
     function S(o, f) {
       for (var a = 0; a < f.length; a++) {
-        var y = f[a];
-        y.enumerable = y.enumerable || !1, y.configurable = !0, "value" in y && (y.writable = !0), Object.defineProperty(o, n(y.key), y);
+        var c = f[a];
+        c.enumerable = c.enumerable || !1, c.configurable = !0, "value" in c && (c.writable = !0), Object.defineProperty(o, n(c.key), c);
       }
     }
     function O(o, f, a) {
@@ -1337,16 +1337,16 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }
     function n(o) {
       var f = t(o, "string");
-      return h(f) === "symbol" ? f : String(f);
+      return p(f) === "symbol" ? f : String(f);
     }
     function t(o, f) {
-      if (h(o) !== "object" || o === null)
+      if (p(o) !== "object" || o === null)
         return o;
       var a = o[Symbol.toPrimitive];
       if (a !== void 0) {
-        var y = a.call(o, f || "default");
-        if (h(y) !== "object")
-          return y;
+        var c = a.call(o, f || "default");
+        if (p(c) !== "object")
+          return c;
         throw new TypeError("@@toPrimitive must return a primitive value.");
       }
       return (f === "string" ? String : Number)(o);
@@ -1368,8 +1368,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
          */
       }, {
         key: "constructFromObject",
-        value: function(a, y) {
-          return a && (y = y || new o(), a.hasOwnProperty("identifier") && (y.identifier = u.default.convertToType(a.identifier, "String")), a.hasOwnProperty("content") && (y.content = u.default.convertToType(a.content, [c.default]))), y;
+        value: function(a, c) {
+          return a && (c = c || new o(), a.hasOwnProperty("identifier") && (c.identifier = u.default.convertToType(a.identifier, "String")), a.hasOwnProperty("content") && (c.content = u.default.convertToType(a.content, [y.default]))), c;
         }
         /**
          * Validates the JSON data with respect to <code>BlockSlots</code>.
@@ -1384,16 +1384,16 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           if (a.content) {
             if (!Array.isArray(a.content))
               throw new Error("Expected the field `content` to be an array in the JSON data but got " + a.content);
-            var y = b(a.content), d;
+            var c = d(a.content), g;
             try {
-              for (y.s(); !(d = y.n()).done; ) {
-                var p = d.value;
-                c.default.validateJsonObject(p);
+              for (c.s(); !(g = c.n()).done; ) {
+                var h = g.value;
+                y.default.validateJSON(h);
               }
             } catch (s) {
-              y.e(s);
+              c.e(s);
             } finally {
-              y.f();
+              c.f();
             }
           }
           return !0;
@@ -1405,25 +1405,25 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     i.default = e;
   }(Y)), Y;
 }
-var Se;
+var Oe;
 function ie() {
-  return Se || (Se = 1, function(i) {
+  return Oe || (Oe = 1, function(i) {
     Object.defineProperty(i, "__esModule", {
       value: !0
     }), i.default = void 0;
-    var u = l(C), c = l(Ne());
+    var u = l(N), y = l(qe());
     function l(t) {
       return t && t.__esModule ? t : { default: t };
     }
-    function h(t) {
+    function p(t) {
       "@babel/helpers - typeof";
-      return h = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(r) {
+      return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(r) {
         return typeof r;
       } : function(r) {
         return r && typeof Symbol == "function" && r.constructor === Symbol && r !== Symbol.prototype ? "symbol" : typeof r;
-      }, h(t);
+      }, p(t);
     }
-    function b(t, r) {
+    function d(t, r) {
       if (!(t instanceof r))
         throw new TypeError("Cannot call a class as a function");
     }
@@ -1438,15 +1438,15 @@ function ie() {
     }
     function T(t) {
       var r = S(t, "string");
-      return h(r) === "symbol" ? r : String(r);
+      return p(r) === "symbol" ? r : String(r);
     }
     function S(t, r) {
-      if (h(t) !== "object" || t === null)
+      if (p(t) !== "object" || t === null)
         return t;
       var e = t[Symbol.toPrimitive];
       if (e !== void 0) {
         var o = e.call(t, r || "default");
-        if (h(o) !== "object")
+        if (p(o) !== "object")
           return o;
         throw new TypeError("@@toPrimitive must return a primitive value.");
       }
@@ -1454,7 +1454,7 @@ function ie() {
     }
     var O = /* @__PURE__ */ function() {
       function t() {
-        b(this, t), t.initialize(this);
+        d(this, t), t.initialize(this);
       }
       return w(t, null, [{
         key: "initialize",
@@ -1471,7 +1471,7 @@ function ie() {
         key: "constructFromObject",
         value: function(e, o) {
           return e && (o = o || new t(), e.hasOwnProperty("items") && (o.items = u.default.convertToType(e.items, [Object])), e.hasOwnProperty("content") && (o.content = u.default.convertToType(e.content, Object)), e.hasOwnProperty("config") && (o.config = u.default.convertToType(e.config, Object)), e.hasOwnProperty("identifier") && (o.identifier = u.default.convertToType(e.identifier, "String")), e.hasOwnProperty("uid") && (o.uid = u.default.convertToType(e.uid, "String")), e.hasOwnProperty("component") && (o.component = u.default.convertToType(e.component, "String")), e.hasOwnProperty("slots") && (o.slots = u.default.convertToType(e.slots, {
-            String: c.default
+            String: y.default
           }))), o;
         }
         /**
@@ -1504,8 +1504,8 @@ var oe = {}, ue = {}, fe = {};
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = c(C);
-  function c(e) {
+  var u = y(N);
+  function y(e) {
     return e && e.__esModule ? e : { default: e };
   }
   function l(e) {
@@ -1516,40 +1516,40 @@ var oe = {}, ue = {}, fe = {};
       return o && typeof Symbol == "function" && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
     }, l(e);
   }
-  function h(e, o) {
+  function p(e, o) {
     var f = typeof Symbol < "u" && e[Symbol.iterator] || e["@@iterator"];
     if (!f) {
-      if (Array.isArray(e) || (f = b(e)) || o && e && typeof e.length == "number") {
+      if (Array.isArray(e) || (f = d(e)) || o && e && typeof e.length == "number") {
         f && (e = f);
-        var a = 0, y = function() {
+        var a = 0, c = function() {
         };
-        return { s: y, n: function() {
+        return { s: c, n: function() {
           return a >= e.length ? { done: !0 } : { done: !1, value: e[a++] };
         }, e: function(m) {
           throw m;
-        }, f: y };
+        }, f: c };
       }
       throw new TypeError(`Invalid attempt to iterate non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
     }
-    var d = !0, p = !1, s;
+    var g = !0, h = !1, s;
     return { s: function() {
       f = f.call(e);
     }, n: function() {
       var m = f.next();
-      return d = m.done, m;
+      return g = m.done, m;
     }, e: function(m) {
-      p = !0, s = m;
+      h = !0, s = m;
     }, f: function() {
       try {
-        !d && f.return != null && f.return();
+        !g && f.return != null && f.return();
       } finally {
-        if (p)
+        if (h)
           throw s;
       }
     } };
   }
-  function b(e, o) {
+  function d(e, o) {
     if (e) {
       if (typeof e == "string")
         return _(e, o);
@@ -1638,14 +1638,14 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         if (f.children) {
           if (!Array.isArray(f.children))
             throw new Error("Expected the field `children` to be an array in the JSON data but got " + f.children);
-          var a = h(f.children), y;
+          var a = p(f.children), c;
           try {
-            for (a.s(); !(y = a.n()).done; ) {
-              var d = y.value;
-              e.validateJsonObject(d);
+            for (a.s(); !(c = a.n()).done; ) {
+              var g = c.value;
+              e.validateJSON(g);
             }
-          } catch (p) {
-            a.e(p);
+          } catch (h) {
+            a.e(h);
           } finally {
             a.f();
           }
@@ -1662,45 +1662,45 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = l(C), c = l(fe);
+  var u = l(N), y = l(fe);
   function l(o) {
     return o && o.__esModule ? o : { default: o };
   }
-  function h(o) {
+  function p(o) {
     "@babel/helpers - typeof";
-    return h = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(f) {
+    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(f) {
       return typeof f;
     } : function(f) {
       return f && typeof Symbol == "function" && f.constructor === Symbol && f !== Symbol.prototype ? "symbol" : typeof f;
-    }, h(o);
+    }, p(o);
   }
-  function b(o, f) {
+  function d(o, f) {
     var a = typeof Symbol < "u" && o[Symbol.iterator] || o["@@iterator"];
     if (!a) {
       if (Array.isArray(o) || (a = _(o)) || f && o && typeof o.length == "number") {
         a && (o = a);
-        var y = 0, d = function() {
+        var c = 0, g = function() {
         };
-        return { s: d, n: function() {
-          return y >= o.length ? { done: !0 } : { done: !1, value: o[y++] };
-        }, e: function(g) {
-          throw g;
-        }, f: d };
+        return { s: g, n: function() {
+          return c >= o.length ? { done: !0 } : { done: !1, value: o[c++] };
+        }, e: function(b) {
+          throw b;
+        }, f: g };
       }
       throw new TypeError(`Invalid attempt to iterate non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
     }
-    var p = !0, s = !1, v;
+    var h = !0, s = !1, v;
     return { s: function() {
       a = a.call(o);
     }, n: function() {
-      var g = a.next();
-      return p = g.done, g;
-    }, e: function(g) {
-      s = !0, v = g;
+      var b = a.next();
+      return h = b.done, b;
+    }, e: function(b) {
+      s = !0, v = b;
     }, f: function() {
       try {
-        !p && a.return != null && a.return();
+        !h && a.return != null && a.return();
       } finally {
         if (s)
           throw v;
@@ -1720,9 +1720,9 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   }
   function w(o, f) {
     (f == null || f > o.length) && (f = o.length);
-    for (var a = 0, y = new Array(f); a < f; a++)
-      y[a] = o[a];
-    return y;
+    for (var a = 0, c = new Array(f); a < f; a++)
+      c[a] = o[a];
+    return c;
   }
   function T(o, f) {
     if (!(o instanceof f))
@@ -1730,8 +1730,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   }
   function S(o, f) {
     for (var a = 0; a < f.length; a++) {
-      var y = f[a];
-      y.enumerable = y.enumerable || !1, y.configurable = !0, "value" in y && (y.writable = !0), Object.defineProperty(o, n(y.key), y);
+      var c = f[a];
+      c.enumerable = c.enumerable || !1, c.configurable = !0, "value" in c && (c.writable = !0), Object.defineProperty(o, n(c.key), c);
     }
   }
   function O(o, f, a) {
@@ -1739,16 +1739,16 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   }
   function n(o) {
     var f = t(o, "string");
-    return h(f) === "symbol" ? f : String(f);
+    return p(f) === "symbol" ? f : String(f);
   }
   function t(o, f) {
-    if (h(o) !== "object" || o === null)
+    if (p(o) !== "object" || o === null)
       return o;
     var a = o[Symbol.toPrimitive];
     if (a !== void 0) {
-      var y = a.call(o, f || "default");
-      if (h(y) !== "object")
-        return y;
+      var c = a.call(o, f || "default");
+      if (p(c) !== "object")
+        return c;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
     return (f === "string" ? String : Number)(o);
@@ -1770,8 +1770,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
        */
     }, {
       key: "constructFromObject",
-      value: function(a, y) {
-        return a && (y = y || new o(), a.hasOwnProperty("items") && (y.items = u.default.convertToType(a.items, [c.default])), a.hasOwnProperty("uid") && (y.uid = u.default.convertToType(a.uid, "String")), a.hasOwnProperty("identifier") && (y.identifier = u.default.convertToType(a.identifier, "String")), a.hasOwnProperty("label") && (y.label = u.default.convertToType(a.label, "String"))), y;
+      value: function(a, c) {
+        return a && (c = c || new o(), a.hasOwnProperty("items") && (c.items = u.default.convertToType(a.items, [y.default])), a.hasOwnProperty("uid") && (c.uid = u.default.convertToType(a.uid, "String")), a.hasOwnProperty("identifier") && (c.identifier = u.default.convertToType(a.identifier, "String")), a.hasOwnProperty("label") && (c.label = u.default.convertToType(a.label, "String"))), c;
       }
       /**
        * Validates the JSON data with respect to <code>ConfigResponseContainersValue</code>.
@@ -1784,16 +1784,16 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         if (a.items) {
           if (!Array.isArray(a.items))
             throw new Error("Expected the field `items` to be an array in the JSON data but got " + a.items);
-          var y = b(a.items), d;
+          var c = d(a.items), g;
           try {
-            for (y.s(); !(d = y.n()).done; ) {
-              var p = d.value;
-              c.default.validateJsonObject(p);
+            for (c.s(); !(g = c.n()).done; ) {
+              var h = g.value;
+              y.default.validateJSON(h);
             }
           } catch (s) {
-            y.e(s);
+            c.e(s);
           } finally {
-            y.f();
+            c.f();
           }
         }
         if (a.uid && !(typeof a.uid == "string" || a.uid instanceof String))
@@ -1815,8 +1815,8 @@ var le = {};
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = c(C);
-  function c(n) {
+  var u = y(N);
+  function y(n) {
     return n && n.__esModule ? n : { default: n };
   }
   function l(n) {
@@ -1827,18 +1827,18 @@ var le = {};
       return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
     }, l(n);
   }
-  function h(n, t) {
+  function p(n, t) {
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
-  function b(n, t) {
+  function d(n, t) {
     for (var r = 0; r < t.length; r++) {
       var e = t[r];
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
     }
   }
   function _(n, t, r) {
-    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
+    return t && d(n.prototype, t), r && d(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function w(n) {
     var t = T(n, "string");
@@ -1858,7 +1858,7 @@ var le = {};
   }
   var S = /* @__PURE__ */ function() {
     function n() {
-      h(this, n), n.initialize(this);
+      p(this, n), n.initialize(this);
     }
     return _(n, null, [{
       key: "initialize",
@@ -1902,17 +1902,17 @@ var le = {};
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = h(C), c = h(ue), l = h(le);
-  function h(r) {
+  var u = p(N), y = p(ue), l = p(le);
+  function p(r) {
     return r && r.__esModule ? r : { default: r };
   }
-  function b(r) {
+  function d(r) {
     "@babel/helpers - typeof";
-    return b = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(e) {
+    return d = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(e) {
       return typeof e;
     } : function(e) {
       return e && typeof Symbol == "function" && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e;
-    }, b(r);
+    }, d(r);
   }
   function _(r, e) {
     if (!(r instanceof e))
@@ -1929,15 +1929,15 @@ var le = {};
   }
   function S(r) {
     var e = O(r, "string");
-    return b(e) === "symbol" ? e : String(e);
+    return d(e) === "symbol" ? e : String(e);
   }
   function O(r, e) {
-    if (b(r) !== "object" || r === null)
+    if (d(r) !== "object" || r === null)
       return r;
     var o = r[Symbol.toPrimitive];
     if (o !== void 0) {
       var f = o.call(r, e || "default");
-      if (b(f) !== "object")
+      if (d(f) !== "object")
         return f;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
@@ -1962,7 +1962,7 @@ var le = {};
       key: "constructFromObject",
       value: function(o, f) {
         return o && (f = f || new r(), o.hasOwnProperty("nitro") && (f.nitro = l.default.constructFromObject(o.nitro)), o.hasOwnProperty("pages") && (f.pages = u.default.convertToType(o.pages, ["String"])), o.hasOwnProperty("containers") && (f.containers = u.default.convertToType(o.containers, {
-          String: c.default
+          String: y.default
         })), o.hasOwnProperty("globals") && (f.globals = u.default.convertToType(o.globals, Object))), f;
       }
       /**
@@ -1983,13 +1983,13 @@ var le = {};
   var t = n;
   i.default = t;
 })(oe);
-var ae = {}, se = {}, ye = {};
+var ae = {}, se = {}, ce = {};
 (function(i) {
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = c(C);
-  function c(n) {
+  var u = y(N);
+  function y(n) {
     return n && n.__esModule ? n : { default: n };
   }
   function l(n) {
@@ -2000,18 +2000,18 @@ var ae = {}, se = {}, ye = {};
       return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
     }, l(n);
   }
-  function h(n, t) {
+  function p(n, t) {
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
-  function b(n, t) {
+  function d(n, t) {
     for (var r = 0; r < t.length; r++) {
       var e = t[r];
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
     }
   }
   function _(n, t, r) {
-    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
+    return t && d(n.prototype, t), r && d(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function w(n) {
     var t = T(n, "string");
@@ -2031,7 +2031,7 @@ var ae = {}, se = {}, ye = {};
   }
   var S = /* @__PURE__ */ function() {
     function n() {
-      h(this, n), n.initialize(this);
+      p(this, n), n.initialize(this);
     }
     return _(n, null, [{
       key: "initialize",
@@ -2068,24 +2068,24 @@ var ae = {}, se = {}, ye = {};
   S.prototype.api = void 0, S.prototype.image = void 0;
   var O = S;
   i.default = O;
-})(ye);
+})(ce);
 (function(i) {
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = l(C), c = l(ye);
+  var u = l(N), y = l(ce);
   function l(t) {
     return t && t.__esModule ? t : { default: t };
   }
-  function h(t) {
+  function p(t) {
     "@babel/helpers - typeof";
-    return h = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(r) {
+    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(r) {
       return typeof r;
     } : function(r) {
       return r && typeof Symbol == "function" && r.constructor === Symbol && r !== Symbol.prototype ? "symbol" : typeof r;
-    }, h(t);
+    }, p(t);
   }
-  function b(t, r) {
+  function d(t, r) {
     if (!(t instanceof r))
       throw new TypeError("Cannot call a class as a function");
   }
@@ -2100,15 +2100,15 @@ var ae = {}, se = {}, ye = {};
   }
   function T(t) {
     var r = S(t, "string");
-    return h(r) === "symbol" ? r : String(r);
+    return p(r) === "symbol" ? r : String(r);
   }
   function S(t, r) {
-    if (h(t) !== "object" || t === null)
+    if (p(t) !== "object" || t === null)
       return t;
     var e = t[Symbol.toPrimitive];
     if (e !== void 0) {
       var o = e.call(t, r || "default");
-      if (h(o) !== "object")
+      if (p(o) !== "object")
         return o;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
@@ -2116,7 +2116,7 @@ var ae = {}, se = {}, ye = {};
   }
   var O = /* @__PURE__ */ function() {
     function t() {
-      b(this, t), t.initialize(this);
+      d(this, t), t.initialize(this);
     }
     return w(t, null, [{
       key: "initialize",
@@ -2132,7 +2132,7 @@ var ae = {}, se = {}, ye = {};
     }, {
       key: "constructFromObject",
       value: function(e, o) {
-        return e && (o = o || new t(), e.hasOwnProperty("_version") && (o._version = u.default.convertToType(e._version, "Number")), e.hasOwnProperty("entity_metric") && (o.entity_metric = c.default.constructFromObject(e.entity_metric)), e.hasOwnProperty("entity_unique_id") && (o.entity_unique_id = u.default.convertToType(e.entity_unique_id, "String")), e.hasOwnProperty("entity_id") && (o.entity_id = u.default.convertToType(e.entity_id, "String")), e.hasOwnProperty("entity_image") && (o.entity_image = u.default.convertToType(e.entity_image, "String")), e.hasOwnProperty("entity_slug") && (o.entity_slug = u.default.convertToType(e.entity_slug, "String")), e.hasOwnProperty("entity_teaser") && (o.entity_teaser = u.default.convertToType(e.entity_teaser, "String")), e.hasOwnProperty("entity_time_end") && (o.entity_time_end = u.default.convertToType(e.entity_time_end, "String")), e.hasOwnProperty("entity_time_start") && (o.entity_time_start = u.default.convertToType(e.entity_time_start, "String")), e.hasOwnProperty("entity_title") && (o.entity_title = u.default.convertToType(e.entity_title, "String")), e.hasOwnProperty("entity_type") && (o.entity_type = u.default.convertToType(e.entity_type, "String")), e.hasOwnProperty("entity_type_id") && (o.entity_type_id = u.default.convertToType(e.entity_type_id, "Number")), e.hasOwnProperty("updated_at") && (o.updated_at = u.default.convertToType(e.updated_at, "String")), e.hasOwnProperty("routes") && (o.routes = u.default.convertToType(e.routes, {
+        return e && (o = o || new t(), e.hasOwnProperty("_version") && (o._version = u.default.convertToType(e._version, "Number")), e.hasOwnProperty("entity_metric") && (o.entity_metric = y.default.constructFromObject(e.entity_metric)), e.hasOwnProperty("entity_unique_id") && (o.entity_unique_id = u.default.convertToType(e.entity_unique_id, "String")), e.hasOwnProperty("entity_id") && (o.entity_id = u.default.convertToType(e.entity_id, "String")), e.hasOwnProperty("entity_image") && (o.entity_image = u.default.convertToType(e.entity_image, "String")), e.hasOwnProperty("entity_slug") && (o.entity_slug = u.default.convertToType(e.entity_slug, "String")), e.hasOwnProperty("entity_teaser") && (o.entity_teaser = u.default.convertToType(e.entity_teaser, "String")), e.hasOwnProperty("entity_time_end") && (o.entity_time_end = u.default.convertToType(e.entity_time_end, "String")), e.hasOwnProperty("entity_time_start") && (o.entity_time_start = u.default.convertToType(e.entity_time_start, "String")), e.hasOwnProperty("entity_title") && (o.entity_title = u.default.convertToType(e.entity_title, "String")), e.hasOwnProperty("entity_type") && (o.entity_type = u.default.convertToType(e.entity_type, "String")), e.hasOwnProperty("entity_type_id") && (o.entity_type_id = u.default.convertToType(e.entity_type_id, "Number")), e.hasOwnProperty("updated_at") && (o.updated_at = u.default.convertToType(e.updated_at, "String")), e.hasOwnProperty("routes") && (o.routes = u.default.convertToType(e.routes, {
           String: "String"
         }))), o;
       }
@@ -2144,7 +2144,7 @@ var ae = {}, se = {}, ye = {};
     }, {
       key: "validateJSON",
       value: function(e) {
-        if (e.entity_metric && c.default.validateJSON(e.entity_metric), e.entity_unique_id && !(typeof e.entity_unique_id == "string" || e.entity_unique_id instanceof String))
+        if (e.entity_metric && y.default.validateJSON(e.entity_metric), e.entity_unique_id && !(typeof e.entity_unique_id == "string" || e.entity_unique_id instanceof String))
           throw new Error("Expected the field `entity_unique_id` to be a primitive type in the JSON string but got " + e.entity_unique_id);
         if (e.entity_id && !(typeof e.entity_id == "string" || e.entity_id instanceof String))
           throw new Error("Expected the field `entity_id` to be a primitive type in the JSON string but got " + e.entity_id);
@@ -2176,19 +2176,19 @@ var ae = {}, se = {}, ye = {};
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = l(C), c = l(se);
+  var u = l(N), y = l(se);
   function l(t) {
     return t && t.__esModule ? t : { default: t };
   }
-  function h(t) {
+  function p(t) {
     "@babel/helpers - typeof";
-    return h = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(r) {
+    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(r) {
       return typeof r;
     } : function(r) {
       return r && typeof Symbol == "function" && r.constructor === Symbol && r !== Symbol.prototype ? "symbol" : typeof r;
-    }, h(t);
+    }, p(t);
   }
-  function b(t, r) {
+  function d(t, r) {
     if (!(t instanceof r))
       throw new TypeError("Cannot call a class as a function");
   }
@@ -2203,15 +2203,15 @@ var ae = {}, se = {}, ye = {};
   }
   function T(t) {
     var r = S(t, "string");
-    return h(r) === "symbol" ? r : String(r);
+    return p(r) === "symbol" ? r : String(r);
   }
   function S(t, r) {
-    if (h(t) !== "object" || t === null)
+    if (p(t) !== "object" || t === null)
       return t;
     var e = t[Symbol.toPrimitive];
     if (e !== void 0) {
       var o = e.call(t, r || "default");
-      if (h(o) !== "object")
+      if (p(o) !== "object")
         return o;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
@@ -2219,7 +2219,7 @@ var ae = {}, se = {}, ye = {};
   }
   var O = /* @__PURE__ */ function() {
     function t() {
-      b(this, t), t.initialize(this);
+      d(this, t), t.initialize(this);
     }
     return w(t, null, [{
       key: "initialize",
@@ -2235,7 +2235,7 @@ var ae = {}, se = {}, ye = {};
     }, {
       key: "constructFromObject",
       value: function(e, o) {
-        return e && (o = o || new t(), e.hasOwnProperty("entity") && (o.entity = c.default.constructFromObject(e.entity)), e.hasOwnProperty("model") && (o.model = u.default.convertToType(e.model, Object)), e.hasOwnProperty("language") && (o.language = u.default.convertToType(e.language, "String"))), o;
+        return e && (o = o || new t(), e.hasOwnProperty("entity") && (o.entity = y.default.constructFromObject(e.entity)), e.hasOwnProperty("model") && (o.model = u.default.convertToType(e.model, Object)), e.hasOwnProperty("language") && (o.language = u.default.convertToType(e.language, "String"))), o;
       }
       /**
        * Validates the JSON data with respect to <code>Entity</code>.
@@ -2245,7 +2245,7 @@ var ae = {}, se = {}, ye = {};
     }, {
       key: "validateJSON",
       value: function(e) {
-        if (e.entity && c.default.validateJSON(e.entity), e.language && !(typeof e.language == "string" || e.language instanceof String))
+        if (e.entity && y.default.validateJSON(e.entity), e.language && !(typeof e.language == "string" || e.language instanceof String))
           throw new Error("Expected the field `language` to be a primitive type in the JSON string but got " + e.language);
         return !0;
       }
@@ -2255,13 +2255,13 @@ var ae = {}, se = {}, ye = {};
   var n = O;
   i.default = n;
 })(ae);
-var $ = {};
+var W = {};
 (function(i) {
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = c(C);
-  function c(n) {
+  var u = y(N);
+  function y(n) {
     return n && n.__esModule ? n : { default: n };
   }
   function l(n) {
@@ -2272,18 +2272,18 @@ var $ = {};
       return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
     }, l(n);
   }
-  function h(n, t) {
+  function p(n, t) {
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
-  function b(n, t) {
+  function d(n, t) {
     for (var r = 0; r < t.length; r++) {
       var e = t[r];
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
     }
   }
   function _(n, t, r) {
-    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
+    return t && d(n.prototype, t), r && d(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function w(n) {
     var t = T(n, "string");
@@ -2303,7 +2303,7 @@ var $ = {};
   }
   var S = /* @__PURE__ */ function() {
     function n() {
-      h(this, n), n.initialize(this);
+      p(this, n), n.initialize(this);
     }
     return _(n, null, [{
       key: "initialize",
@@ -2352,14 +2352,14 @@ var $ = {};
   S.prototype.entity_unique_id = void 0, S.prototype.entity_title = void 0, S.prototype.entity_teaser = void 0, S.prototype.entity_slug = void 0, S.prototype.entity_type = void 0, S.prototype.entity_type_id = void 0, S.prototype.entity_time_start = void 0, S.prototype.entity_image = void 0, S.prototype.routes = void 0;
   var O = S;
   i.default = O;
-})($);
-var ce = {};
+})(W);
+var ye = {};
 (function(i) {
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = c(C);
-  function c(n) {
+  var u = y(N);
+  function y(n) {
     return n && n.__esModule ? n : { default: n };
   }
   function l(n) {
@@ -2370,18 +2370,18 @@ var ce = {};
       return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
     }, l(n);
   }
-  function h(n, t) {
+  function p(n, t) {
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
-  function b(n, t) {
+  function d(n, t) {
     for (var r = 0; r < t.length; r++) {
       var e = t[r];
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
     }
   }
   function _(n, t, r) {
-    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
+    return t && d(n.prototype, t), r && d(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function w(n) {
     var t = T(n, "string");
@@ -2401,7 +2401,7 @@ var ce = {};
   }
   var S = /* @__PURE__ */ function() {
     function n() {
-      h(this, n), n.initialize(this);
+      p(this, n), n.initialize(this);
     }
     return _(n, null, [{
       key: "initialize",
@@ -2440,14 +2440,14 @@ var ce = {};
   S.prototype.description = void 0, S.prototype.image = void 0, S.prototype.title = void 0;
   var O = S;
   i.default = O;
-})(ce);
+})(ye);
 var pe = {}, he = {};
 (function(i) {
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = c(C);
-  function c(n) {
+  var u = y(N);
+  function y(n) {
     return n && n.__esModule ? n : { default: n };
   }
   function l(n) {
@@ -2458,18 +2458,18 @@ var pe = {}, he = {};
       return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
     }, l(n);
   }
-  function h(n, t) {
+  function p(n, t) {
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
-  function b(n, t) {
+  function d(n, t) {
     for (var r = 0; r < t.length; r++) {
       var e = t[r];
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
     }
   }
   function _(n, t, r) {
-    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
+    return t && d(n.prototype, t), r && d(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function w(n) {
     var t = T(n, "string");
@@ -2489,7 +2489,7 @@ var pe = {}, he = {};
   }
   var S = /* @__PURE__ */ function() {
     function n() {
-      h(this, n), n.initialize(this);
+      p(this, n), n.initialize(this);
     }
     return _(n, null, [{
       key: "initialize",
@@ -2532,8 +2532,8 @@ var me = {};
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = c(C);
-  function c(n) {
+  var u = y(N);
+  function y(n) {
     return n && n.__esModule ? n : { default: n };
   }
   function l(n) {
@@ -2544,18 +2544,18 @@ var me = {};
       return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
     }, l(n);
   }
-  function h(n, t) {
+  function p(n, t) {
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
-  function b(n, t) {
+  function d(n, t) {
     for (var r = 0; r < t.length; r++) {
       var e = t[r];
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
     }
   }
   function _(n, t, r) {
-    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
+    return t && d(n.prototype, t), r && d(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function w(n) {
     var t = T(n, "string");
@@ -2575,7 +2575,7 @@ var me = {};
   }
   var S = /* @__PURE__ */ function() {
     function n() {
-      h(this, n), n.initialize(this);
+      p(this, n), n.initialize(this);
     }
     return _(n, null, [{
       key: "initialize",
@@ -2613,104 +2613,104 @@ var me = {};
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = _(C), c = _(ie()), l = _(ce), h = _(he), b = _(me);
-  function _(y) {
-    return y && y.__esModule ? y : { default: y };
+  var u = _(N), y = _(ie()), l = _(ye), p = _(he), d = _(me);
+  function _(c) {
+    return c && c.__esModule ? c : { default: c };
   }
-  function w(y) {
+  function w(c) {
     "@babel/helpers - typeof";
-    return w = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(d) {
-      return typeof d;
-    } : function(d) {
-      return d && typeof Symbol == "function" && d.constructor === Symbol && d !== Symbol.prototype ? "symbol" : typeof d;
-    }, w(y);
+    return w = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(g) {
+      return typeof g;
+    } : function(g) {
+      return g && typeof Symbol == "function" && g.constructor === Symbol && g !== Symbol.prototype ? "symbol" : typeof g;
+    }, w(c);
   }
-  function T(y, d) {
-    var p = typeof Symbol < "u" && y[Symbol.iterator] || y["@@iterator"];
-    if (!p) {
-      if (Array.isArray(y) || (p = S(y)) || d && y && typeof y.length == "number") {
-        p && (y = p);
+  function T(c, g) {
+    var h = typeof Symbol < "u" && c[Symbol.iterator] || c["@@iterator"];
+    if (!h) {
+      if (Array.isArray(c) || (h = S(c)) || g && c && typeof c.length == "number") {
+        h && (c = h);
         var s = 0, v = function() {
         };
         return { s: v, n: function() {
-          return s >= y.length ? { done: !0 } : { done: !1, value: y[s++] };
-        }, e: function(N) {
-          throw N;
+          return s >= c.length ? { done: !0 } : { done: !1, value: c[s++] };
+        }, e: function(C) {
+          throw C;
         }, f: v };
       }
       throw new TypeError(`Invalid attempt to iterate non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
     }
-    var m = !0, g = !1, P;
+    var m = !0, b = !1, P;
     return { s: function() {
-      p = p.call(y);
+      h = h.call(c);
     }, n: function() {
-      var N = p.next();
-      return m = N.done, N;
-    }, e: function(N) {
-      g = !0, P = N;
+      var C = h.next();
+      return m = C.done, C;
+    }, e: function(C) {
+      b = !0, P = C;
     }, f: function() {
       try {
-        !m && p.return != null && p.return();
+        !m && h.return != null && h.return();
       } finally {
-        if (g)
+        if (b)
           throw P;
       }
     } };
   }
-  function S(y, d) {
-    if (y) {
-      if (typeof y == "string")
-        return O(y, d);
-      var p = Object.prototype.toString.call(y).slice(8, -1);
-      if (p === "Object" && y.constructor && (p = y.constructor.name), p === "Map" || p === "Set")
-        return Array.from(y);
-      if (p === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(p))
-        return O(y, d);
+  function S(c, g) {
+    if (c) {
+      if (typeof c == "string")
+        return O(c, g);
+      var h = Object.prototype.toString.call(c).slice(8, -1);
+      if (h === "Object" && c.constructor && (h = c.constructor.name), h === "Map" || h === "Set")
+        return Array.from(c);
+      if (h === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(h))
+        return O(c, g);
     }
   }
-  function O(y, d) {
-    (d == null || d > y.length) && (d = y.length);
-    for (var p = 0, s = new Array(d); p < d; p++)
-      s[p] = y[p];
+  function O(c, g) {
+    (g == null || g > c.length) && (g = c.length);
+    for (var h = 0, s = new Array(g); h < g; h++)
+      s[h] = c[h];
     return s;
   }
-  function n(y, d) {
-    if (!(y instanceof d))
+  function n(c, g) {
+    if (!(c instanceof g))
       throw new TypeError("Cannot call a class as a function");
   }
-  function t(y, d) {
-    for (var p = 0; p < d.length; p++) {
-      var s = d[p];
-      s.enumerable = s.enumerable || !1, s.configurable = !0, "value" in s && (s.writable = !0), Object.defineProperty(y, e(s.key), s);
+  function t(c, g) {
+    for (var h = 0; h < g.length; h++) {
+      var s = g[h];
+      s.enumerable = s.enumerable || !1, s.configurable = !0, "value" in s && (s.writable = !0), Object.defineProperty(c, e(s.key), s);
     }
   }
-  function r(y, d, p) {
-    return d && t(y.prototype, d), p && t(y, p), Object.defineProperty(y, "prototype", { writable: !1 }), y;
+  function r(c, g, h) {
+    return g && t(c.prototype, g), h && t(c, h), Object.defineProperty(c, "prototype", { writable: !1 }), c;
   }
-  function e(y) {
-    var d = o(y, "string");
-    return w(d) === "symbol" ? d : String(d);
+  function e(c) {
+    var g = o(c, "string");
+    return w(g) === "symbol" ? g : String(g);
   }
-  function o(y, d) {
-    if (w(y) !== "object" || y === null)
-      return y;
-    var p = y[Symbol.toPrimitive];
-    if (p !== void 0) {
-      var s = p.call(y, d || "default");
+  function o(c, g) {
+    if (w(c) !== "object" || c === null)
+      return c;
+    var h = c[Symbol.toPrimitive];
+    if (h !== void 0) {
+      var s = h.call(c, g || "default");
       if (w(s) !== "object")
         return s;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
-    return (d === "string" ? String : Number)(y);
+    return (g === "string" ? String : Number)(c);
   }
   var f = /* @__PURE__ */ function() {
-    function y() {
-      n(this, y), y.initialize(this);
+    function c() {
+      n(this, c), c.initialize(this);
     }
-    return r(y, null, [{
+    return r(c, null, [{
       key: "initialize",
-      value: function(p) {
+      value: function(h) {
       }
       /**
        * Constructs a <code>Page</code> from a plain JavaScript object, optionally creating a new instance.
@@ -2721,10 +2721,10 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
        */
     }, {
       key: "constructFromObject",
-      value: function(p, s) {
-        return p && (s = s || new y(), p.hasOwnProperty("id") && (s.id = u.default.convertToType(p.id, "Number")), p.hasOwnProperty("title") && (s.title = u.default.convertToType(p.title, "String")), p.hasOwnProperty("href") && (s.href = u.default.convertToType(p.href, "String")), p.hasOwnProperty("slug") && (s.slug = u.default.convertToType(p.slug, "String")), p.hasOwnProperty("json") && (s.json = u.default.convertToType(p.json, [c.default])), p.hasOwnProperty("depth") && (s.depth = u.default.convertToType(p.depth, "Number")), p.hasOwnProperty("is_home") && (s.is_home = u.default.convertToType(p.is_home, "Number")), p.hasOwnProperty("created_at") && (s.created_at = u.default.convertToType(p.created_at, "Number")), p.hasOwnProperty("updated_at") && (s.updated_at = u.default.convertToType(p.updated_at, "Number")), p.hasOwnProperty("is_visible") && (s.is_visible = u.default.convertToType(p.is_visible, "Number")), p.hasOwnProperty("meta_json") && (s.meta_json = l.default.constructFromObject(p.meta_json)), p.hasOwnProperty("properties") && (s.properties = u.default.convertToType(p.properties, {
-          String: b.default
-        })), p.hasOwnProperty("uid") && (s.uid = u.default.convertToType(p.uid, "String")), p.hasOwnProperty("type") && (s.type = u.default.convertToType(p.type, "String")), p.hasOwnProperty("target") && (s.target = u.default.convertToType(p.target, "String")), p.hasOwnProperty("container") && (s.container = u.default.convertToType(p.container, "String")), p.hasOwnProperty("breadcrumb") && (s.breadcrumb = u.default.convertToType(p.breadcrumb, [h.default]))), s;
+      value: function(h, s) {
+        return h && (s = s || new c(), h.hasOwnProperty("id") && (s.id = u.default.convertToType(h.id, "Number")), h.hasOwnProperty("title") && (s.title = u.default.convertToType(h.title, "String")), h.hasOwnProperty("href") && (s.href = u.default.convertToType(h.href, "String")), h.hasOwnProperty("slug") && (s.slug = u.default.convertToType(h.slug, "String")), h.hasOwnProperty("json") && (s.json = u.default.convertToType(h.json, [y.default])), h.hasOwnProperty("depth") && (s.depth = u.default.convertToType(h.depth, "Number")), h.hasOwnProperty("is_home") && (s.is_home = u.default.convertToType(h.is_home, "Number")), h.hasOwnProperty("created_at") && (s.created_at = u.default.convertToType(h.created_at, "Number")), h.hasOwnProperty("updated_at") && (s.updated_at = u.default.convertToType(h.updated_at, "Number")), h.hasOwnProperty("is_visible") && (s.is_visible = u.default.convertToType(h.is_visible, "Number")), h.hasOwnProperty("meta_json") && (s.meta_json = l.default.constructFromObject(h.meta_json)), h.hasOwnProperty("properties") && (s.properties = u.default.convertToType(h.properties, {
+          String: d.default
+        })), h.hasOwnProperty("uid") && (s.uid = u.default.convertToType(h.uid, "String")), h.hasOwnProperty("type") && (s.type = u.default.convertToType(h.type, "String")), h.hasOwnProperty("target") && (s.target = u.default.convertToType(h.target, "String")), h.hasOwnProperty("container") && (s.container = u.default.convertToType(h.container, "String")), h.hasOwnProperty("breadcrumb") && (s.breadcrumb = u.default.convertToType(h.breadcrumb, [p.default]))), s;
       }
       /**
        * Validates the JSON data with respect to <code>Page</code>.
@@ -2733,54 +2733,54 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
        */
     }, {
       key: "validateJSON",
-      value: function(p) {
-        if (p.title && !(typeof p.title == "string" || p.title instanceof String))
-          throw new Error("Expected the field `title` to be a primitive type in the JSON string but got " + p.title);
-        if (p.href && !(typeof p.href == "string" || p.href instanceof String))
-          throw new Error("Expected the field `href` to be a primitive type in the JSON string but got " + p.href);
-        if (p.slug && !(typeof p.slug == "string" || p.slug instanceof String))
-          throw new Error("Expected the field `slug` to be a primitive type in the JSON string but got " + p.slug);
-        if (p.json) {
-          if (!Array.isArray(p.json))
-            throw new Error("Expected the field `json` to be an array in the JSON data but got " + p.json);
-          var s = T(p.json), v;
+      value: function(h) {
+        if (h.title && !(typeof h.title == "string" || h.title instanceof String))
+          throw new Error("Expected the field `title` to be a primitive type in the JSON string but got " + h.title);
+        if (h.href && !(typeof h.href == "string" || h.href instanceof String))
+          throw new Error("Expected the field `href` to be a primitive type in the JSON string but got " + h.href);
+        if (h.slug && !(typeof h.slug == "string" || h.slug instanceof String))
+          throw new Error("Expected the field `slug` to be a primitive type in the JSON string but got " + h.slug);
+        if (h.json) {
+          if (!Array.isArray(h.json))
+            throw new Error("Expected the field `json` to be an array in the JSON data but got " + h.json);
+          var s = T(h.json), v;
           try {
             for (s.s(); !(v = s.n()).done; ) {
               var m = v.value;
-              c.default.validateJsonObject(m);
+              y.default.validateJSON(m);
             }
-          } catch (N) {
-            s.e(N);
+          } catch (C) {
+            s.e(C);
           } finally {
             s.f();
           }
         }
-        if (p.meta_json && l.default.validateJSON(p.meta_json), p.uid && !(typeof p.uid == "string" || p.uid instanceof String))
-          throw new Error("Expected the field `uid` to be a primitive type in the JSON string but got " + p.uid);
-        if (p.type && !(typeof p.type == "string" || p.type instanceof String))
-          throw new Error("Expected the field `type` to be a primitive type in the JSON string but got " + p.type);
-        if (p.target && !(typeof p.target == "string" || p.target instanceof String))
-          throw new Error("Expected the field `target` to be a primitive type in the JSON string but got " + p.target);
-        if (p.container && !(typeof p.container == "string" || p.container instanceof String))
-          throw new Error("Expected the field `container` to be a primitive type in the JSON string but got " + p.container);
-        if (p.breadcrumb) {
-          if (!Array.isArray(p.breadcrumb))
-            throw new Error("Expected the field `breadcrumb` to be an array in the JSON data but got " + p.breadcrumb);
-          var g = T(p.breadcrumb), P;
+        if (h.meta_json && l.default.validateJSON(h.meta_json), h.uid && !(typeof h.uid == "string" || h.uid instanceof String))
+          throw new Error("Expected the field `uid` to be a primitive type in the JSON string but got " + h.uid);
+        if (h.type && !(typeof h.type == "string" || h.type instanceof String))
+          throw new Error("Expected the field `type` to be a primitive type in the JSON string but got " + h.type);
+        if (h.target && !(typeof h.target == "string" || h.target instanceof String))
+          throw new Error("Expected the field `target` to be a primitive type in the JSON string but got " + h.target);
+        if (h.container && !(typeof h.container == "string" || h.container instanceof String))
+          throw new Error("Expected the field `container` to be a primitive type in the JSON string but got " + h.container);
+        if (h.breadcrumb) {
+          if (!Array.isArray(h.breadcrumb))
+            throw new Error("Expected the field `breadcrumb` to be an array in the JSON data but got " + h.breadcrumb);
+          var b = T(h.breadcrumb), P;
           try {
-            for (g.s(); !(P = g.n()).done; ) {
+            for (b.s(); !(P = b.n()).done; ) {
               var A = P.value;
-              h.default.validateJsonObject(A);
+              p.default.validateJSON(A);
             }
-          } catch (N) {
-            g.e(N);
+          } catch (C) {
+            b.e(C);
           } finally {
-            g.f();
+            b.f();
           }
         }
         return !0;
       }
-    }]), y;
+    }]), c;
   }();
   f.prototype.id = void 0, f.prototype.title = void 0, f.prototype.href = void 0, f.prototype.slug = void 0, f.prototype.json = void 0, f.prototype.depth = void 0, f.prototype.is_home = void 0, f.prototype.created_at = void 0, f.prototype.updated_at = void 0, f.prototype.is_visible = void 0, f.prototype.meta_json = void 0, f.prototype.properties = void 0, f.prototype.uid = void 0, f.prototype.type = void 0, f.prototype.target = void 0, f.prototype.container = void 0, f.prototype.breadcrumb = void 0;
   var a = f;
@@ -2791,8 +2791,8 @@ var ve = {};
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = c(C);
-  function c(n) {
+  var u = y(N);
+  function y(n) {
     return n && n.__esModule ? n : { default: n };
   }
   function l(n) {
@@ -2803,18 +2803,18 @@ var ve = {};
       return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
     }, l(n);
   }
-  function h(n, t) {
+  function p(n, t) {
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
-  function b(n, t) {
+  function d(n, t) {
     for (var r = 0; r < t.length; r++) {
       var e = t[r];
       e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
     }
   }
   function _(n, t, r) {
-    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
+    return t && d(n.prototype, t), r && d(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
   }
   function w(n) {
     var t = T(n, "string");
@@ -2834,7 +2834,7 @@ var ve = {};
   }
   var S = /* @__PURE__ */ function() {
     function n() {
-      h(this, n), n.initialize(this);
+      p(this, n), n.initialize(this);
     }
     return _(n, null, [{
       key: "initialize",
@@ -2868,24 +2868,24 @@ var ve = {};
   var O = S;
   i.default = O;
 })(ve);
-var Ce = {};
+var Je = {};
 (function(i) {
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = l(C), c = l(oe);
+  var u = l(N), y = l(oe);
   function l(n) {
     return n && n.__esModule ? n : { default: n };
   }
-  function h(n) {
+  function p(n) {
     "@babel/helpers - typeof";
-    return h = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
+    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
       return typeof t;
     } : function(t) {
       return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, h(n);
+    }, p(n);
   }
-  function b(n, t) {
+  function d(n, t) {
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
@@ -2900,15 +2900,15 @@ var Ce = {};
   }
   function T(n) {
     var t = S(n, "string");
-    return h(t) === "symbol" ? t : String(t);
+    return p(t) === "symbol" ? t : String(t);
   }
   function S(n, t) {
-    if (h(n) !== "object" || n === null)
+    if (p(n) !== "object" || n === null)
       return n;
     var r = n[Symbol.toPrimitive];
     if (r !== void 0) {
       var e = r.call(n, t || "default");
-      if (h(e) !== "object")
+      if (p(e) !== "object")
         return e;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
@@ -2916,13 +2916,13 @@ var Ce = {};
   }
   var O = /* @__PURE__ */ function() {
     function n(t) {
-      b(this, n), this.apiClient = t || u.default.instance;
+      d(this, n), this.apiClient = t || u.default.instance;
     }
     return w(n, [{
       key: "configWithHttpInfo",
       value: function() {
-        var r = null, e = {}, o = {}, f = {}, a = {}, y = ["ApiToken"], d = [], p = ["application/json"], s = c.default;
-        return this.apiClient.callApi("/config", "GET", e, o, f, a, r, y, d, p, s, null);
+        var r = null, e = {}, o = {}, f = {}, a = {}, c = ["ApiToken"], g = [], h = ["application/json"], s = y.default;
+        return this.apiClient.callApi("/config", "GET", e, o, f, a, r, c, g, h, s, null);
       }
       /**
        * Get Config
@@ -2939,25 +2939,25 @@ var Ce = {};
     }]), n;
   }();
   i.default = O;
-})(Ce);
-var qe = {};
+})(Je);
+var Me = {};
 (function(i) {
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = l(C), c = l(ae);
+  var u = l(N), y = l(ae);
   function l(n) {
     return n && n.__esModule ? n : { default: n };
   }
-  function h(n) {
+  function p(n) {
     "@babel/helpers - typeof";
-    return h = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
+    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
       return typeof t;
     } : function(t) {
       return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, h(n);
+    }, p(n);
   }
-  function b(n, t) {
+  function d(n, t) {
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
@@ -2972,15 +2972,15 @@ var qe = {};
   }
   function T(n) {
     var t = S(n, "string");
-    return h(t) === "symbol" ? t : String(t);
+    return p(t) === "symbol" ? t : String(t);
   }
   function S(n, t) {
-    if (h(n) !== "object" || n === null)
+    if (p(n) !== "object" || n === null)
       return n;
     var r = n[Symbol.toPrimitive];
     if (r !== void 0) {
       var e = r.call(n, t || "default");
-      if (h(e) !== "object")
+      if (p(e) !== "object")
         return e;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
@@ -2988,7 +2988,7 @@ var qe = {};
   }
   var O = /* @__PURE__ */ function() {
     function n(t) {
-      b(this, n), this.apiClient = t || u.default.instance;
+      d(this, n), this.apiClient = t || u.default.instance;
     }
     return w(n, [{
       key: "entityBySlugWithHttpInfo",
@@ -3001,8 +3001,8 @@ var qe = {};
           slug: r
         }, a = {
           typeId: e.typeId
-        }, y = {}, d = {}, p = ["ApiToken"], s = [], v = ["application/json"], m = c.default;
-        return this.apiClient.callApi("/entities/slug/{slug}", "GET", f, a, y, d, o, p, s, v, m, null);
+        }, c = {}, g = {}, h = ["ApiToken"], s = [], v = ["application/json"], m = y.default;
+        return this.apiClient.callApi("/entities/slug/{slug}", "GET", f, a, c, g, o, h, s, v, m, null);
       }
       /**
        * Find entity by slug and optional Type-ID
@@ -3033,8 +3033,8 @@ var qe = {};
           throw new Error("Missing the required parameter 'uniqueid' when calling entityByUniqueid");
         var o = {
           uniqueid: r
-        }, f = {}, a = {}, y = {}, d = ["ApiToken"], p = [], s = ["application/json"], v = c.default;
-        return this.apiClient.callApi("/entities/uniqueid/{uniqueid}", "GET", o, f, a, y, e, d, p, s, v, null);
+        }, f = {}, a = {}, c = {}, g = ["ApiToken"], h = [], s = ["application/json"], v = y.default;
+        return this.apiClient.callApi("/entities/uniqueid/{uniqueid}", "GET", o, f, a, c, e, g, h, s, v, null);
       }
       /**
        * Find entity by uniqueid
@@ -3052,25 +3052,25 @@ var qe = {};
     }]), n;
   }();
   i.default = O;
-})(qe);
-var Re = {};
+})(Me);
+var xe = {};
 (function(i) {
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = l(C), c = l(pe);
+  var u = l(N), y = l(pe);
   function l(n) {
     return n && n.__esModule ? n : { default: n };
   }
-  function h(n) {
+  function p(n) {
     "@babel/helpers - typeof";
-    return h = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
+    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
       return typeof t;
     } : function(t) {
       return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, h(n);
+    }, p(n);
   }
-  function b(n, t) {
+  function d(n, t) {
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
@@ -3085,15 +3085,15 @@ var Re = {};
   }
   function T(n) {
     var t = S(n, "string");
-    return h(t) === "symbol" ? t : String(t);
+    return p(t) === "symbol" ? t : String(t);
   }
   function S(n, t) {
-    if (h(n) !== "object" || n === null)
+    if (p(n) !== "object" || n === null)
       return n;
     var r = n[Symbol.toPrimitive];
     if (r !== void 0) {
       var e = r.call(n, t || "default");
-      if (h(e) !== "object")
+      if (p(e) !== "object")
         return e;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
@@ -3101,13 +3101,13 @@ var Re = {};
   }
   var O = /* @__PURE__ */ function() {
     function n(t) {
-      b(this, n), this.apiClient = t || u.default.instance;
+      d(this, n), this.apiClient = t || u.default.instance;
     }
     return w(n, [{
       key: "homeWithHttpInfo",
       value: function() {
-        var r = null, e = {}, o = {}, f = {}, a = {}, y = ["ApiToken"], d = [], p = ["application/json"], s = c.default;
-        return this.apiClient.callApi("/pages/home", "GET", e, o, f, a, r, y, d, p, s, null);
+        var r = null, e = {}, o = {}, f = {}, a = {}, c = ["ApiToken"], g = [], h = ["application/json"], s = y.default;
+        return this.apiClient.callApi("/pages/home", "GET", e, o, f, a, r, c, g, h, s, null);
       }
       /**
        * Get Home
@@ -3125,7 +3125,7 @@ var Re = {};
        * Get Page by slug
        * This endpoint retrieves comprehensive information from a specified page using either a slug or a path. The slug refers to a unique identifier for the page, while the path is the slug with a leading slash. By providing either the slug or the path as input, the function will gather all the relevant details associated with the page.
        * @param {Object} opts Optional parameters
-       * @param {String} opts.slug The function retrieves a specific page by its slug. If no slug is provided, it automatically returns the homepage. Moreover, it seamlessly handles paths with subpages, allowing for nested URLs like \"testpage/subpage\". In this way, a forward slash (\"/\") within the path is recognized as a valid character and processed accordingly.
+       * @param {String} [slug] The function retrieves a specific page by its slug. If no slug is provided, it automatically returns the homepage. Moreover, it seamlessly handles paths with subpages, allowing for nested URLs like \"testpage/subpage\". In this way, a forward slash (\"/\") within the path is recognized as a valid character and processed accordingly.
        * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Page} and HTTP response
        */
     }, {
@@ -3134,8 +3134,8 @@ var Re = {};
         r = r || {};
         var e = null, o = {}, f = {
           slug: r.slug
-        }, a = {}, y = {}, d = ["ApiToken"], p = [], s = ["application/json"], v = c.default;
-        return this.apiClient.callApi("/pages", "GET", o, f, a, y, e, d, p, s, v, null);
+        }, a = {}, c = {}, g = ["ApiToken"], h = [], s = ["application/json"], v = y.default;
+        return this.apiClient.callApi("/pages", "GET", o, f, a, c, e, g, h, s, v, null);
       }
       /**
        * Get Page by slug
@@ -3154,25 +3154,25 @@ var Re = {};
     }]), n;
   }();
   i.default = O;
-})(Re);
-var Je = {};
+})(xe);
+var Be = {};
 (function(i) {
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = l(C), c = l($);
+  var u = l(N), y = l(W);
   function l(n) {
     return n && n.__esModule ? n : { default: n };
   }
-  function h(n) {
+  function p(n) {
     "@babel/helpers - typeof";
-    return h = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
+    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
       return typeof t;
     } : function(t) {
       return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, h(n);
+    }, p(n);
   }
-  function b(n, t) {
+  function d(n, t) {
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
@@ -3187,15 +3187,15 @@ var Je = {};
   }
   function T(n) {
     var t = S(n, "string");
-    return h(t) === "symbol" ? t : String(t);
+    return p(t) === "symbol" ? t : String(t);
   }
   function S(n, t) {
-    if (h(n) !== "object" || n === null)
+    if (p(n) !== "object" || n === null)
       return n;
     var r = n[Symbol.toPrimitive];
     if (r !== void 0) {
       var e = r.call(n, t || "default");
-      if (h(e) !== "object")
+      if (p(e) !== "object")
         return e;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
@@ -3203,7 +3203,7 @@ var Je = {};
   }
   var O = /* @__PURE__ */ function() {
     function n(t) {
-      b(this, n), this.apiClient = t || u.default.instance;
+      d(this, n), this.apiClient = t || u.default.instance;
     }
     return w(n, [{
       key: "searchWithHttpInfo",
@@ -3213,8 +3213,8 @@ var Je = {};
           throw new Error("Missing the required parameter 'query' when calling search");
         var o = {}, f = {
           query: r
-        }, a = {}, y = {}, d = ["ApiToken"], p = [], s = ["application/json"], v = [c.default];
-        return this.apiClient.callApi("/search", "GET", o, f, a, y, e, d, p, s, v, null);
+        }, a = {}, c = {}, g = ["ApiToken"], h = [], s = ["application/json"], v = [y.default];
+        return this.apiClient.callApi("/search", "GET", o, f, a, c, e, g, h, s, v, null);
       }
       /**
        * Get Search by query
@@ -3232,25 +3232,25 @@ var Je = {};
     }]), n;
   }();
   i.default = O;
-})(Je);
-var Ie = {};
+})(Be);
+var De = {};
 (function(i) {
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = l(C), c = l($);
+  var u = l(N), y = l(W);
   function l(n) {
     return n && n.__esModule ? n : { default: n };
   }
-  function h(n) {
+  function p(n) {
     "@babel/helpers - typeof";
-    return h = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
+    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
       return typeof t;
     } : function(t) {
       return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, h(n);
+    }, p(n);
   }
-  function b(n, t) {
+  function d(n, t) {
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
@@ -3265,15 +3265,15 @@ var Ie = {};
   }
   function T(n) {
     var t = S(n, "string");
-    return h(t) === "symbol" ? t : String(t);
+    return p(t) === "symbol" ? t : String(t);
   }
   function S(n, t) {
-    if (h(n) !== "object" || n === null)
+    if (p(n) !== "object" || n === null)
       return n;
     var r = n[Symbol.toPrimitive];
     if (r !== void 0) {
       var e = r.call(n, t || "default");
-      if (h(e) !== "object")
+      if (p(e) !== "object")
         return e;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
@@ -3281,13 +3281,13 @@ var Ie = {};
   }
   var O = /* @__PURE__ */ function() {
     function n(t) {
-      b(this, n), this.apiClient = t || u.default.instance;
+      d(this, n), this.apiClient = t || u.default.instance;
     }
     return w(n, [{
       key: "sitemapWithHttpInfo",
       value: function() {
-        var r = null, e = {}, o = {}, f = {}, a = {}, y = ["ApiToken"], d = [], p = ["application/json"], s = [c.default];
-        return this.apiClient.callApi("/sitemap", "GET", e, o, f, a, r, y, d, p, s, null);
+        var r = null, e = {}, o = {}, f = {}, a = {}, c = ["ApiToken"], g = [], h = ["application/json"], s = [y.default];
+        return this.apiClient.callApi("/sitemap", "GET", e, o, f, a, r, c, g, h, s, null);
       }
       /**
        * Get Sitemap
@@ -3304,25 +3304,25 @@ var Ie = {};
     }]), n;
   }();
   i.default = O;
-})(Ie);
-var Me = {};
+})(De);
+var ze = {};
 (function(i) {
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = l(C), c = l(ve);
+  var u = l(N), y = l(ve);
   function l(n) {
     return n && n.__esModule ? n : { default: n };
   }
-  function h(n) {
+  function p(n) {
     "@babel/helpers - typeof";
-    return h = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
+    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
       return typeof t;
     } : function(t) {
       return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, h(n);
+    }, p(n);
   }
-  function b(n, t) {
+  function d(n, t) {
     if (!(n instanceof t))
       throw new TypeError("Cannot call a class as a function");
   }
@@ -3337,15 +3337,15 @@ var Me = {};
   }
   function T(n) {
     var t = S(n, "string");
-    return h(t) === "symbol" ? t : String(t);
+    return p(t) === "symbol" ? t : String(t);
   }
   function S(n, t) {
-    if (h(n) !== "object" || n === null)
+    if (p(n) !== "object" || n === null)
       return n;
     var r = n[Symbol.toPrimitive];
     if (r !== void 0) {
       var e = r.call(n, t || "default");
-      if (h(e) !== "object")
+      if (p(e) !== "object")
         return e;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
@@ -3353,13 +3353,13 @@ var Me = {};
   }
   var O = /* @__PURE__ */ function() {
     function n(t) {
-      b(this, n), this.apiClient = t || u.default.instance;
+      d(this, n), this.apiClient = t || u.default.instance;
     }
     return w(n, [{
       key: "versionWithHttpInfo",
       value: function() {
-        var r = null, e = {}, o = {}, f = {}, a = {}, y = ["ApiToken"], d = [], p = ["application/json"], s = c.default;
-        return this.apiClient.callApi("/version", "GET", e, o, f, a, r, y, d, p, s, null);
+        var r = null, e = {}, o = {}, f = {}, a = {}, c = ["ApiToken"], g = [], h = ["application/json"], s = y.default;
+        return this.apiClient.callApi("/version", "GET", e, o, f, a, r, c, g, h, s, null);
       }
       /**
        * Get Version Information
@@ -3376,7 +3376,7 @@ var Me = {};
     }]), n;
   }();
   i.default = O;
-})(Me);
+})(ze);
 (function(i) {
   Object.defineProperty(i, "__esModule", {
     value: !0
@@ -3388,7 +3388,7 @@ var Me = {};
   }), Object.defineProperty(i, "Block", {
     enumerable: !0,
     get: function() {
-      return c.default;
+      return y.default;
     }
   }), Object.defineProperty(i, "BlockSlots", {
     enumerable: !0,
@@ -3403,12 +3403,12 @@ var Me = {};
   }), Object.defineProperty(i, "ConfigResponse", {
     enumerable: !0,
     get: function() {
-      return h.default;
+      return p.default;
     }
   }), Object.defineProperty(i, "ConfigResponseContainersValue", {
     enumerable: !0,
     get: function() {
-      return b.default;
+      return d.default;
     }
   }), Object.defineProperty(i, "ConfigResponseNitro", {
     enumerable: !0,
@@ -3418,7 +3418,7 @@ var Me = {};
   }), Object.defineProperty(i, "EntitiesApi", {
     enumerable: !0,
     get: function() {
-      return y.default;
+      return c.default;
     }
   }), Object.defineProperty(i, "Entity", {
     enumerable: !0,
@@ -3463,7 +3463,7 @@ var Me = {};
   }), Object.defineProperty(i, "PagesApi", {
     enumerable: !0,
     get: function() {
-      return d.default;
+      return g.default;
     }
   }), Object.defineProperty(i, "PagesInner", {
     enumerable: !0,
@@ -3473,7 +3473,7 @@ var Me = {};
   }), Object.defineProperty(i, "SearchApi", {
     enumerable: !0,
     get: function() {
-      return p.default;
+      return h.default;
     }
   }), Object.defineProperty(i, "SitemapApi", {
     enumerable: !0,
@@ -3491,46 +3491,102 @@ var Me = {};
       return f.default;
     }
   });
-  var u = m(C), c = m(ie()), l = m(Ne()), h = m(oe), b = m(ue), _ = m(le), w = m(ae), T = m(se), S = m(ye), O = m($), n = m(ce), t = m(pe), r = m(he), e = m(me), o = m(fe), f = m(ve), a = m(Ce), y = m(qe), d = m(Re), p = m(Je), s = m(Ie), v = m(Me);
-  function m(g) {
-    return g && g.__esModule ? g : { default: g };
+  var u = m(N), y = m(ie()), l = m(qe()), p = m(oe), d = m(ue), _ = m(le), w = m(ae), T = m(se), S = m(ce), O = m(W), n = m(ye), t = m(pe), r = m(he), e = m(me), o = m(fe), f = m(ve), a = m(Je), c = m(Me), g = m(xe), h = m(Be), s = m(De), v = m(ze);
+  function m(b) {
+    return b && b.__esModule ? b : { default: b };
   }
-})(De);
-function ot() {
+})(Ke);
+const st = /[\p{Lu}]/u, ct = /[\p{Ll}]/u, Te = /^[\p{Lu}](?![\p{Lu}])/gu, Fe = /([\p{Alpha}\p{N}_]|$)/u, de = /[_.\- ]+/, yt = new RegExp("^" + de.source), Pe = new RegExp(de.source + Fe.source, "gu"), Ee = new RegExp("\\d+" + Fe.source, "gu"), pt = (i, u, y, l) => {
+  let p = !1, d = !1, _ = !1, w = !1;
+  for (let T = 0; T < i.length; T++) {
+    const S = i[T];
+    w = T > 2 ? i[T - 3] === "-" : !0, p && st.test(S) ? (i = i.slice(0, T) + "-" + i.slice(T), p = !1, _ = d, d = !0, T++) : d && _ && ct.test(S) && (!w || l) ? (i = i.slice(0, T - 1) + "-" + i.slice(T - 1), _ = d, d = !1, p = !0) : (p = u(S) === S && y(S) !== S, _ = d, d = y(S) === S && u(S) !== S);
+  }
+  return i;
+}, ht = (i, u) => (Te.lastIndex = 0, i.replace(Te, (y) => u(y))), mt = (i, u) => (Pe.lastIndex = 0, Ee.lastIndex = 0, i.replace(Pe, (y, l) => u(l)).replace(Ee, (y) => u(y)));
+function vt(i, u) {
+  if (!(typeof i == "string" || Array.isArray(i)))
+    throw new TypeError("Expected the input to be `string | string[]`");
+  if (u = {
+    pascalCase: !1,
+    preserveConsecutiveUppercase: !1,
+    ...u
+  }, Array.isArray(i) ? i = i.map((d) => d.trim()).filter((d) => d.length).join("-") : i = i.trim(), i.length === 0)
+    return "";
+  const y = u.locale === !1 ? (d) => d.toLowerCase() : (d) => d.toLocaleLowerCase(u.locale), l = u.locale === !1 ? (d) => d.toUpperCase() : (d) => d.toLocaleUpperCase(u.locale);
+  return i.length === 1 ? de.test(i) ? "" : u.pascalCase ? l(i) : y(i) : (i !== y(i) && (i = pt(i, y, l, u.preserveConsecutiveUppercase)), i = i.replace(yt, ""), i = u.preserveConsecutiveUppercase ? ht(i, y) : y(i), u.pascalCase && (i = l(i.charAt(0)) + i.slice(1)), mt(i, l));
+}
+function dt(i, u, y) {
+  const l = "virtual:flyo-components", p = "\0" + l;
+  return {
+    name: "vite-plugin-flyo-components",
+    async resolveId(d) {
+      if (d === l)
+        return p;
+    },
+    async load(d) {
+      if (d === p) {
+        const _ = [];
+        for (const [T, S] of Object.entries(u)) {
+          const O = await this.resolve(
+            "/" + i + "/" + S + ".astro"
+          );
+          O && _.push(`export { default as ${vt(T)} } from "${O.id}"`);
+        }
+        let w = null;
+        return y && (w = await this.resolve(
+          "/" + i + "/" + y + ".astro"
+        )), w ? _.push(`export { default as fallback } from "${w.id}"`) : _.push('export { default as fallback } from "@flyo/nitro-astro/FallbackComponent.astro"'), console.log(_.join(";")), _.join(";");
+      }
+    }
+  };
+}
+function gt() {
   return globalThis.flyoNitroInstance || console.error("flyoNitroInstance has not been initialized correctly"), globalThis.flyoNitroInstance;
 }
-function ut(i) {
+function _t(i) {
   const u = {
     accessToken: !1,
+    fallbackComponent: null,
     ...i
   };
   return {
     name: "@flyo/nitro-astro",
     hooks: {
-      "astro:config:setup": ({ injectScript: c }) => {
-        c(
+      "astro:config:setup": ({ injectScript: y, updateConfig: l }) => {
+        l({
+          vite: {
+            plugins: [
+              dt(
+                i.componentsDir,
+                i.components,
+                i.fallbackComponent
+              )
+            ]
+          }
+        }), y(
           "page-ssr",
           `
-              import { ApiClient } from '@flyo/nitro-js'
-              var defaultClient = ApiClient.instance;
-              defaultClient.defaultHeaders = {}
-          
-              let ApiToken = defaultClient.authentications['ApiToken'];
-              ApiToken.apiKey = '${u.accessToken}';
-          
-              globalThis.flyoNitroInstance = defaultClient;
-            `
-        ), c(
+            import { ApiClient } from '@flyo/nitro-js'
+            var defaultClient = ApiClient.instance;
+            defaultClient.defaultHeaders = {}
+
+            let ApiToken = defaultClient.authentications['ApiToken'];
+            ApiToken.apiKey = '${u.accessToken}';
+
+            globalThis.flyoNitroInstance = defaultClient;
+          `
+        ), y(
           "page",
           `
-              console.log('reload')
-            `
+            console.log('reload')
+          `
         );
       }
     }
   };
 }
 export {
-  ut as default,
-  ot as useFlyoNitro
+  _t as default,
+  gt as useFlyoNitro
 };

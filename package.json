@@ -7,6 +7,27 @@
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/nitro-astro.mjs",
+      "require": "./dist/nitro-astro.js"
+    },
+    "./FlyoNitroBlock.astro": {
+      "types": "./src/components/FlyoNitroBlock.ts",
+      "import": "./src/components/FlyoNitroBlock.ts",
+      "require": "./src/components/FlyoNitroBlock.ts"
+    },
+    "./FlyoNitroPage.astro": {
+      "types": "./src/components/FlyoNitroPage.ts",
+      "import": "./src/components/FlyoNitroPage.ts",
+      "require": "./src/components/FlyoNitroPage.ts"
+    },
+    "./FallbackComponent.astro": {
+      "types": "./src/components/FallbackComponent.ts",
+      "import": "./src/components/FallbackComponent.ts",
+      "require": "./src/components/FallbackComponent.ts"
+    }
+  },
   "author": "Basil Suter <git@nadar.io>",
   "license": "MIT",
   "scripts": {

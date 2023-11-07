@@ -6,7 +6,9 @@ interface Props {
 }
 
 const { page } = Astro.props
+
 ---
-{page.json.map((block) => (
+
+{page.json.map((block: object) => (
     <FlyoNitroBlock block={block} />
-))}    
+))}

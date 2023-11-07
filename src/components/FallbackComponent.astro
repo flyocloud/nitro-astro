@@ -1,0 +1,11 @@
+---
+interface Props {
+	block: object
+}
+
+const { block } = Astro.props
+---
+
+<div style="margin: 20px 0; padding: 10px; border-radius: 5px; background-color: #DC143C; color: white;">
+    Can't find <strong>{block.component}</strong> in the Projects component folder.
+</div>

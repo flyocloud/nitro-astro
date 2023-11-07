@@ -1,5 +1,7 @@
 ---
-import type { AstroComponentFactory } from "astro/dist/runtime/server";
+import * as components from 'virtual:flyo-components'
+import type { AstroComponentFactory } from "astro/dist/runtime/server"
+import camelcase from "camelcase"
 
 interface Props {
 	block: object;
@@ -7,17 +9,24 @@ interface Props {
 }
 
 const { block, ...props } = Astro.props;
-let DynamicComponent: AstroComponentFactory;
 
-async function importComponent(block) {
-    /* @vite-ignore */ 
-    const module = await import('./'+block.component+'.astro');
-    return module.default;
+let DynamicComponent: AstroComponentFactory = null;
+let errorMessage: string = '';
+
+/* @vite-ignore */
+let Component: AstroComponentFactory = null
+
+const key : string = camelcase(block.component)
+const componentFound : boolean = key in components
+
+if (componentFound) {
+    Component = components[key]
+} else {
+    Component = components.fallback
 }
 
-(async () => {
-    DynamicComponent = await importComponent(block);
-})();
 ---
 
-{DynamicComponent && <DynamicComponent :block={block} {...props} />}
+<div style="color: white">
+    {Component && <Component block={block} {...props} />}
+</div>
