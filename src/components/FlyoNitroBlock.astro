@@ -27,6 +27,6 @@ if (componentFound) {
 
 ---
 
-<div style="color: white">
+<div onclick={`openBlockInFlyo("${block.uid}")`}>
     {Component && <Component block={block} {...props} />}
 </div>

@@ -19,8 +19,8 @@ function Ue(i) {
     });
   }), y;
 }
-var Ke = {};
-function je(i) {
+var je = {};
+function Ke(i) {
   throw new Error('Could not dynamically require "' + i + '". Please configure the dynamicRequireTargets or/and ignoreDynamicRequires option of @rollup/plugin-commonjs appropriately for this require call to work.');
 }
 var N = {}, Z = { exports: {} }, Ae = { exports: {} };
@@ -72,11 +72,11 @@ var N = {}, Z = { exports: {} }, Ae = { exports: {} };
     return !!this.listeners(l).length;
   };
 })(Ae);
-var $e = Ae.exports, We = H;
+var We = Ae.exports, $e = H;
 H.default = H;
 H.stable = Ne;
 H.stableStringify = Ne;
-var j = "[...]", ke = "[Circular]", B = [], M = [];
+var K = "[...]", ke = "[Circular]", B = [], M = [];
 function Ce() {
   return {
     depthLimit: Number.MAX_SAFE_INTEGER,
@@ -112,11 +112,11 @@ function ee(i, u, y, l, p, d, b) {
         return;
       }
     if (typeof b.depthLimit < "u" && d > b.depthLimit) {
-      z(j, i, u, p);
+      z(K, i, u, p);
       return;
     }
     if (typeof b.edgesLimit < "u" && y + 1 > b.edgesLimit) {
-      z(j, i, u, p);
+      z(K, i, u, p);
       return;
     }
     if (l.push(i), Array.isArray(i))
@@ -166,11 +166,11 @@ function te(i, u, y, l, p, d, b) {
       return;
     }
     if (typeof b.depthLimit < "u" && d > b.depthLimit) {
-      z(j, i, u, p);
+      z(K, i, u, p);
       return;
     }
     if (typeof b.edgesLimit < "u" && y + 1 > b.edgesLimit) {
-      z(j, i, u, p);
+      z(K, i, u, p);
       return;
     }
     if (l.push(i), Array.isArray(i))
@@ -217,15 +217,15 @@ function Ve(i) {
   return i !== null && U(i) === "object";
 }
 var Ie = Ve;
-function K(i) {
+function j(i) {
   "@babel/helpers - typeof";
-  return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? K = function(y) {
+  return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? j = function(y) {
     return typeof y;
-  } : K = function(y) {
+  } : j = function(y) {
     return y && typeof Symbol == "function" && y.constructor === Symbol && y !== Symbol.prototype ? "symbol" : typeof y;
-  }, K(i);
+  }, j(i);
 }
-var $ = Ie, Xe = E;
+var W = Ie, Xe = E;
 function E(i) {
   if (i)
     return Qe(i);
@@ -248,7 +248,7 @@ E.prototype.serialize = function(i) {
   return this._serializer = i, this;
 };
 E.prototype.timeout = function(i) {
-  if (!i || K(i) !== "object")
+  if (!i || j(i) !== "object")
     return this._timeout = i, this._responseTimeout = 0, this._uploadTimeout = 0, this;
   for (var u in i)
     if (Object.prototype.hasOwnProperty.call(i, u))
@@ -329,7 +329,7 @@ E.prototype.get = function(i) {
 };
 E.prototype.getHeader = E.prototype.get;
 E.prototype.set = function(i, u) {
-  if ($(i)) {
+  if (W(i)) {
     for (var y in i)
       Object.prototype.hasOwnProperty.call(i, y) && this.set(y, i[y]);
     return this;
@@ -344,7 +344,7 @@ E.prototype.field = function(i, u) {
     throw new Error(".field(name, val) name can not be empty");
   if (this._data)
     throw new Error(".field() can't be used if .send() is used. Please use only .send() or only .field() & .attach()");
-  if ($(i)) {
+  if (W(i)) {
     for (var y in i)
       Object.prototype.hasOwnProperty.call(i, y) && this.field(y, i[y]);
     return this;
@@ -395,14 +395,14 @@ E.prototype.toJSON = function() {
   };
 };
 E.prototype.send = function(i) {
-  var u = $(i), y = this._header["content-type"];
+  var u = W(i), y = this._header["content-type"];
   if (this._formData)
     throw new Error(".send() can't be used if .attach() or .field() is used. Please use only .send() or only .field() & .attach()");
   if (u && !this._data)
     Array.isArray(i) ? this._data = [] : this._isHost(i) || (this._data = {});
   else if (i && this._data && this._isHost(this._data))
     throw new Error("Can't merge these send calls");
-  if (u && $(this._data))
+  if (u && W(this._data))
     for (var l in i)
       Object.prototype.hasOwnProperty.call(i, l) && (this._data[l] = i[l]);
   else
@@ -549,7 +549,7 @@ var ut = ne;
   }
   var l;
   typeof window < "u" ? l = window : typeof self > "u" ? (console.warn("Using browser-only version of superagent in non-browser environment"), l = void 0) : l = self;
-  var p = $e, d = We, b = Xe, w = Ie, T = Ze, S = ut;
+  var p = We, d = $e, b = Xe, w = Ie, T = Ze, S = ut;
   function O() {
   }
   i.exports = function(s, v) {
@@ -846,7 +846,7 @@ const lt = {}, at = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
           name: "token"
         }
       }, this.defaultHeaders = {
-        "User-Agent": "OpenAPI-Generator/1.0.0-beta.160/Javascript"
+        "User-Agent": "OpenAPI-Generator/1.0.0-beta.153/Javascript"
       }, this.timeout = 6e4, this.cache = !0, this.enableCookies = !1, typeof window > "u" && (this.agent = new u.default.agent()), this.requestAgent = null, this.plugins = null;
     }
     return w(t, [{
@@ -917,7 +917,7 @@ const lt = {}, at = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
     }, {
       key: "isFileParam",
       value: function(e) {
-        if (typeof je == "function") {
+        if (typeof Ke == "function") {
           var o;
           try {
             o = we;
@@ -1388,7 +1388,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             try {
               for (c.s(); !(g = c.n()).done; ) {
                 var h = g.value;
-                y.default.validateJSON(h);
+                y.default.validateJsonObject(h);
               }
             } catch (s) {
               c.e(s);
@@ -1642,7 +1642,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           try {
             for (a.s(); !(c = a.n()).done; ) {
               var g = c.value;
-              e.validateJSON(g);
+              e.validateJsonObject(g);
             }
           } catch (h) {
             a.e(h);
@@ -1788,7 +1788,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           try {
             for (c.s(); !(g = c.n()).done; ) {
               var h = g.value;
-              y.default.validateJSON(h);
+              y.default.validateJsonObject(h);
             }
           } catch (s) {
             c.e(s);
@@ -2255,7 +2255,7 @@ var ae = {}, se = {}, ce = {};
   var n = O;
   i.default = n;
 })(ae);
-var W = {};
+var $ = {};
 (function(i) {
   Object.defineProperty(i, "__esModule", {
     value: !0
@@ -2352,7 +2352,7 @@ var W = {};
   S.prototype.entity_unique_id = void 0, S.prototype.entity_title = void 0, S.prototype.entity_teaser = void 0, S.prototype.entity_slug = void 0, S.prototype.entity_type = void 0, S.prototype.entity_type_id = void 0, S.prototype.entity_time_start = void 0, S.prototype.entity_image = void 0, S.prototype.routes = void 0;
   var O = S;
   i.default = O;
-})(W);
+})($);
 var ye = {};
 (function(i) {
   Object.defineProperty(i, "__esModule", {
@@ -2747,7 +2747,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           try {
             for (s.s(); !(v = s.n()).done; ) {
               var m = v.value;
-              y.default.validateJSON(m);
+              y.default.validateJsonObject(m);
             }
           } catch (C) {
             s.e(C);
@@ -2770,7 +2770,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           try {
             for (_.s(); !(P = _.n()).done; ) {
               var A = P.value;
-              p.default.validateJSON(A);
+              p.default.validateJsonObject(A);
             }
           } catch (C) {
             _.e(C);
@@ -3125,7 +3125,7 @@ var xe = {};
        * Get Page by slug
        * This endpoint retrieves comprehensive information from a specified page using either a slug or a path. The slug refers to a unique identifier for the page, while the path is the slug with a leading slash. By providing either the slug or the path as input, the function will gather all the relevant details associated with the page.
        * @param {Object} opts Optional parameters
-       * @param {String} [slug] The function retrieves a specific page by its slug. If no slug is provided, it automatically returns the homepage. Moreover, it seamlessly handles paths with subpages, allowing for nested URLs like \"testpage/subpage\". In this way, a forward slash (\"/\") within the path is recognized as a valid character and processed accordingly.
+       * @param {String} opts.slug The function retrieves a specific page by its slug. If no slug is provided, it automatically returns the homepage. Moreover, it seamlessly handles paths with subpages, allowing for nested URLs like \"testpage/subpage\". In this way, a forward slash (\"/\") within the path is recognized as a valid character and processed accordingly.
        * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Page} and HTTP response
        */
     }, {
@@ -3160,7 +3160,7 @@ var Be = {};
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = l(N), y = l(W);
+  var u = l(N), y = l($);
   function l(n) {
     return n && n.__esModule ? n : { default: n };
   }
@@ -3238,7 +3238,7 @@ var De = {};
   Object.defineProperty(i, "__esModule", {
     value: !0
   }), i.default = void 0;
-  var u = l(N), y = l(W);
+  var u = l(N), y = l($);
   function l(n) {
     return n && n.__esModule ? n : { default: n };
   }
@@ -3491,11 +3491,11 @@ var ze = {};
       return f.default;
     }
   });
-  var u = m(N), y = m(ie()), l = m(qe()), p = m(oe), d = m(ue), b = m(le), w = m(ae), T = m(se), S = m(ce), O = m(W), n = m(ye), t = m(pe), r = m(he), e = m(me), o = m(fe), f = m(ve), a = m(Je), c = m(Me), g = m(xe), h = m(Be), s = m(De), v = m(ze);
+  var u = m(N), y = m(ie()), l = m(qe()), p = m(oe), d = m(ue), b = m(le), w = m(ae), T = m(se), S = m(ce), O = m($), n = m(ye), t = m(pe), r = m(he), e = m(me), o = m(fe), f = m(ve), a = m(Je), c = m(Me), g = m(xe), h = m(Be), s = m(De), v = m(ze);
   function m(_) {
     return _ && _.__esModule ? _ : { default: _ };
   }
-})(Ke);
+})(je);
 const st = /[\p{Lu}]/u, ct = /[\p{Ll}]/u, Te = /^[\p{Lu}](?![\p{Lu}])/gu, Fe = /([\p{Alpha}\p{N}_]|$)/u, de = /[_.\- ]+/, yt = new RegExp("^" + de.source), Pe = new RegExp(de.source + Fe.source, "gu"), Ee = new RegExp("\\d+" + Fe.source, "gu"), pt = (i, u, y, l) => {
   let p = !1, d = !1, b = !1, w = !1;
   for (let T = 0; T < i.length; T++) {
@@ -3547,6 +3547,7 @@ function gt() {
 function _t(i) {
   const u = {
     accessToken: !1,
+    liveEdit: !1,
     fallbackComponent: null,
     ...i
   };
@@ -3576,11 +3577,31 @@ function _t(i) {
 
             globalThis.flyoNitroInstance = defaultClient;
           `
-        ), y(
+        ), u.liveEdit && y(
           "page",
           `
-            console.log('reload')
-          `
+              window.addEventListener("message", (event) => {
+                if (event.data?.action === 'pageRefresh') {
+                    window.location.reload(true);
+                }
+              })
+
+              function getActualWindow() {
+                if (window === window.top) {
+                  return window;
+                } else if (window.parent) {
+                  return window.parent;
+                }
+                return window;
+              }
+              
+              function openBlockInFlyo(blockUid) {
+                getActualWindow().postMessage({
+                    action: 'openEdit',
+                    data: JSON.parse(JSON.stringify({item:{uid: blockUid}}))
+                }, 'https://flyo.cloud')
+              }
+            `
         );
       }
     }

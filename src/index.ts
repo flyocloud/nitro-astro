@@ -4,6 +4,7 @@ import vitePluginFlyoComponents from "./vite-plugin-flyo-components";
 
 export type IntegrationOptions = {
     accessToken: string,
+    liveEdit: boolean,
     componentsDir: string,
     components: object,
     fallbackComponent?: string
@@ -22,6 +23,7 @@ export default function flyoNitroIntegration(
 
   const resolvedOptions = {
     accessToken: false,
+    liveEdit: false,
     fallbackComponent: null,
     ...options,
   };
@@ -56,12 +58,34 @@ export default function flyoNitroIntegration(
           `
         ); // do
 
-        injectScript(
-          "page",
-          `
-            console.log('reload')
-          `
-        );
+        if (resolvedOptions.liveEdit) {
+          injectScript(
+            "page",
+            `
+              window.addEventListener("message", (event) => {
+                if (event.data?.action === 'pageRefresh') {
+                    window.location.reload(true);
+                }
+              })
+
+              function getActualWindow() {
+                if (window === window.top) {
+                  return window;
+                } else if (window.parent) {
+                  return window.parent;
+                }
+                return window;
+              }
+              
+              function openBlockInFlyo(blockUid) {
+                getActualWindow().postMessage({
+                    action: 'openEdit',
+                    data: JSON.parse(JSON.stringify({item:{uid: blockUid}}))
+                }, 'https://flyo.cloud')
+              }
+            `
+          );
+        }
       },
     },
   };

@@ -10,7 +10,14 @@ import flyoNitroIntegration from '@flyo/nitro-astro';
 
 export default defineConfig({
   integrations: [
-    flyoNitroIntegration({accessToken: 'N0vxR2275jSoEvFion7UNSGKS6JscMM2GvOZUo4n95zFroAZ'})
+    flyoNitroIntegration({
+      accessToken: 'N0vxfdfd275jSoEvFion7dfdfsdfasdfasd4n95zFroAZ', // switch between dev and prod token depending on the enviroment
+      liveEdit: true, // on dev and preview system this should be enabled, as this allows to reload the application inside the flyo preview frame when things change
+      components: { // define where the flyo components are located the suffix .astro is no required. Object key is the value from flyo, while object value is the component inside astro components folder
+        "FlyoElementName": "AstroElementName",
+        "AnotherFlyoElement": "subfolder/AnotherFlyoElement"
+      }
+    })
   ],
 });
 ```
