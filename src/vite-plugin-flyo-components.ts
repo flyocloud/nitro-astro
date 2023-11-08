@@ -42,7 +42,7 @@ export default function vitePluginFlyoComponents(
                 if (fallbackComponentResolvedId) {
                     exports.push(`export { default as fallback } from "${fallbackComponentResolvedId.id}"`)
                 } else {
-                    exports.push(`export { default as fallback } from "@flyo/nitro-astro/FallbackComponent.astro"`)
+                    exports.push(`export { default as fallback } from "@flyo/nitro-astro/src/components/FallbackComponent.astro"`)
                 }
 
                 return exports.join(';')

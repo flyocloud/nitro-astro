@@ -19,8 +19,8 @@ function Ue(i) {
     });
   }), y;
 }
-var je = {};
-function Ke(i) {
+var Ke = {};
+function je(i) {
   throw new Error('Could not dynamically require "' + i + '". Please configure the dynamicRequireTargets or/and ignoreDynamicRequires option of @rollup/plugin-commonjs appropriately for this require call to work.');
 }
 var N = {}, Z = { exports: {} }, Ae = { exports: {} };
@@ -76,7 +76,7 @@ var We = Ae.exports, $e = H;
 H.default = H;
 H.stable = Ne;
 H.stableStringify = Ne;
-var K = "[...]", ke = "[Circular]", B = [], M = [];
+var j = "[...]", ke = "[Circular]", B = [], M = [];
 function Ce() {
   return {
     depthLimit: Number.MAX_SAFE_INTEGER,
@@ -112,11 +112,11 @@ function ee(i, u, y, l, p, d, b) {
         return;
       }
     if (typeof b.depthLimit < "u" && d > b.depthLimit) {
-      z(K, i, u, p);
+      z(j, i, u, p);
       return;
     }
     if (typeof b.edgesLimit < "u" && y + 1 > b.edgesLimit) {
-      z(K, i, u, p);
+      z(j, i, u, p);
       return;
     }
     if (l.push(i), Array.isArray(i))
@@ -166,11 +166,11 @@ function te(i, u, y, l, p, d, b) {
       return;
     }
     if (typeof b.depthLimit < "u" && d > b.depthLimit) {
-      z(K, i, u, p);
+      z(j, i, u, p);
       return;
     }
     if (typeof b.edgesLimit < "u" && y + 1 > b.edgesLimit) {
-      z(K, i, u, p);
+      z(j, i, u, p);
       return;
     }
     if (l.push(i), Array.isArray(i))
@@ -217,13 +217,13 @@ function Ve(i) {
   return i !== null && U(i) === "object";
 }
 var Ie = Ve;
-function j(i) {
+function K(i) {
   "@babel/helpers - typeof";
-  return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? j = function(y) {
+  return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? K = function(y) {
     return typeof y;
-  } : j = function(y) {
+  } : K = function(y) {
     return y && typeof Symbol == "function" && y.constructor === Symbol && y !== Symbol.prototype ? "symbol" : typeof y;
-  }, j(i);
+  }, K(i);
 }
 var W = Ie, Xe = E;
 function E(i) {
@@ -248,7 +248,7 @@ E.prototype.serialize = function(i) {
   return this._serializer = i, this;
 };
 E.prototype.timeout = function(i) {
-  if (!i || j(i) !== "object")
+  if (!i || K(i) !== "object")
     return this._timeout = i, this._responseTimeout = 0, this._uploadTimeout = 0, this;
   for (var u in i)
     if (Object.prototype.hasOwnProperty.call(i, u))
@@ -846,7 +846,7 @@ const lt = {}, at = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
           name: "token"
         }
       }, this.defaultHeaders = {
-        "User-Agent": "OpenAPI-Generator/1.0.0-beta.153/Javascript"
+        "User-Agent": "OpenAPI-Generator/1.0.0-beta.160/Javascript"
       }, this.timeout = 6e4, this.cache = !0, this.enableCookies = !1, typeof window > "u" && (this.agent = new u.default.agent()), this.requestAgent = null, this.plugins = null;
     }
     return w(t, [{
@@ -917,7 +917,7 @@ const lt = {}, at = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
     }, {
       key: "isFileParam",
       value: function(e) {
-        if (typeof Ke == "function") {
+        if (typeof je == "function") {
           var o;
           try {
             o = we;
@@ -1388,7 +1388,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             try {
               for (c.s(); !(g = c.n()).done; ) {
                 var h = g.value;
-                y.default.validateJsonObject(h);
+                y.default.validateJSON(h);
               }
             } catch (s) {
               c.e(s);
@@ -1642,7 +1642,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           try {
             for (a.s(); !(c = a.n()).done; ) {
               var g = c.value;
-              e.validateJsonObject(g);
+              e.validateJSON(g);
             }
           } catch (h) {
             a.e(h);
@@ -1788,7 +1788,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           try {
             for (c.s(); !(g = c.n()).done; ) {
               var h = g.value;
-              y.default.validateJsonObject(h);
+              y.default.validateJSON(h);
             }
           } catch (s) {
             c.e(s);
@@ -2747,7 +2747,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           try {
             for (s.s(); !(v = s.n()).done; ) {
               var m = v.value;
-              y.default.validateJsonObject(m);
+              y.default.validateJSON(m);
             }
           } catch (C) {
             s.e(C);
@@ -2770,7 +2770,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           try {
             for (_.s(); !(P = _.n()).done; ) {
               var A = P.value;
-              p.default.validateJsonObject(A);
+              p.default.validateJSON(A);
             }
           } catch (C) {
             _.e(C);
@@ -3125,7 +3125,7 @@ var xe = {};
        * Get Page by slug
        * This endpoint retrieves comprehensive information from a specified page using either a slug or a path. The slug refers to a unique identifier for the page, while the path is the slug with a leading slash. By providing either the slug or the path as input, the function will gather all the relevant details associated with the page.
        * @param {Object} opts Optional parameters
-       * @param {String} opts.slug The function retrieves a specific page by its slug. If no slug is provided, it automatically returns the homepage. Moreover, it seamlessly handles paths with subpages, allowing for nested URLs like \"testpage/subpage\". In this way, a forward slash (\"/\") within the path is recognized as a valid character and processed accordingly.
+       * @param {String} [slug] The function retrieves a specific page by its slug. If no slug is provided, it automatically returns the homepage. Moreover, it seamlessly handles paths with subpages, allowing for nested URLs like \"testpage/subpage\". In this way, a forward slash (\"/\") within the path is recognized as a valid character and processed accordingly.
        * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Page} and HTTP response
        */
     }, {
@@ -3495,7 +3495,7 @@ var ze = {};
   function m(_) {
     return _ && _.__esModule ? _ : { default: _ };
   }
-})(je);
+})(Ke);
 const st = /[\p{Lu}]/u, ct = /[\p{Ll}]/u, Te = /^[\p{Lu}](?![\p{Lu}])/gu, Fe = /([\p{Alpha}\p{N}_]|$)/u, de = /[_.\- ]+/, yt = new RegExp("^" + de.source), Pe = new RegExp(de.source + Fe.source, "gu"), Ee = new RegExp("\\d+" + Fe.source, "gu"), pt = (i, u, y, l) => {
   let p = !1, d = !1, b = !1, w = !1;
   for (let T = 0; T < i.length; T++) {
@@ -3536,7 +3536,7 @@ function dt(i, u, y) {
         let w = null;
         return y && (w = await this.resolve(
           "/" + i + "/" + y + ".astro"
-        )), w ? b.push(`export { default as fallback } from "${w.id}"`) : b.push('export { default as fallback } from "@flyo/nitro-astro/FallbackComponent.astro"'), b.join(";");
+        )), w ? b.push(`export { default as fallback } from "${w.id}"`) : b.push('export { default as fallback } from "@flyo/nitro-astro/src/components/FallbackComponent.astro"'), b.join(";");
       }
     }
   };
@@ -3594,7 +3594,7 @@ function _t(i) {
                 }
                 return window;
               }
-              
+
               window.openBlockInFlyo = function(blockUid) {
                 getActualWindow().postMessage({
                     action: 'openEdit',

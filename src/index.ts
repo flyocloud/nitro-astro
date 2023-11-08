@@ -76,7 +76,7 @@ export default function flyoNitroIntegration(
                 }
                 return window;
               }
-              
+
               window.openBlockInFlyo = function(blockUid) {
                 getActualWindow().postMessage({
                     action: 'openEdit',
