@@ -10,11 +10,8 @@ interface Props {
 
 const { block, ...props } = Astro.props;
 
-let DynamicComponent: AstroComponentFactory = null;
-let errorMessage: string = '';
-
 /* @vite-ignore */
-let Component: AstroComponentFactory = null
+let Component: AstroComponentFactory | null = null
 
 const key : string = camelcase(block.component)
 const componentFound : boolean = key in components
@@ -27,6 +24,6 @@ if (componentFound) {
 
 ---
 
-<div onclick={`openBlockInFlyo("${block.uid}")`}>
+<div onclick={`openBlockInFlyo('${block.uid}')`}>
     {Component && <Component block={block} {...props} />}
 </div>

@@ -3595,7 +3595,7 @@ function _t(i) {
                 return window;
               }
               
-              function openBlockInFlyo(blockUid) {
+              window.openBlockInFlyo = function(blockUid) {
                 getActualWindow().postMessage({
                     action: 'openEdit',
                     data: JSON.parse(JSON.stringify({item:{uid: blockUid}}))

@@ -29,7 +29,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
                 return window;
               }
               
-              function openBlockInFlyo(blockUid) {
+              window.openBlockInFlyo = function(blockUid) {
                 getActualWindow().postMessage({
                     action: 'openEdit',
                     data: JSON.parse(JSON.stringify({item:{uid: blockUid}}))
