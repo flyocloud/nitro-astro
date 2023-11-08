@@ -1,6 +1,6 @@
 {
   "name": "@flyo/nitro-astro",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Astro Framework",
   "main": "./dist/nitro-astro.js",
   "module": "./dist/nitro-astro.mjs",
@@ -25,6 +25,6 @@
     "url": "https://github.com/flyocloud/nitro-astro"
   },
   "dependencies": {
-    "@flyo/nitro-js": "^1.0.5"
+    "@flyo/nitro-js": "^1.0.6"
   }
 }
