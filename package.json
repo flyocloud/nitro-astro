@@ -5,7 +5,8 @@
   "main": "./dist/nitro-astro.js",
   "module": "./dist/nitro-astro.mjs",
   "files": [
-    "dist"
+    "dist",
+    "src/components"
   ],
   "author": "Basil Suter <git@nadar.io>",
   "license": "MIT",
