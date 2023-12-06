@@ -21,7 +21,7 @@
       "require": "./src/components/FlyoNitroBlock.ts"
     },
     "./FlyoNitroPage.astro": {
-      "types": "./src/omponents/FlyoNitroPage.ts",
+      "types": "./src/components/FlyoNitroPage.ts",
       "import": "./src/components/FlyoNitroPage.ts",
       "require": "./src/components/FlyoNitroPage.ts"
     }
