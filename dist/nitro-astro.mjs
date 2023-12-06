@@ -1,392 +1,1581 @@
-function Ue(i) {
-  if (i.__esModule)
-    return i;
-  var u = i.default;
-  if (typeof u == "function") {
-    var y = function l() {
-      return this instanceof l ? Reflect.construct(u, arguments, this.constructor) : u.apply(this, arguments);
+function tr(t) {
+  return t && t.__esModule && Object.prototype.hasOwnProperty.call(t, "default") ? t.default : t;
+}
+function er(t) {
+  if (t.__esModule)
+    return t;
+  var e = t.default;
+  if (typeof e == "function") {
+    var r = function o() {
+      return this instanceof o ? Reflect.construct(e, arguments, this.constructor) : e.apply(this, arguments);
     };
-    y.prototype = u.prototype;
+    r.prototype = e.prototype;
   } else
-    y = {};
-  return Object.defineProperty(y, "__esModule", { value: !0 }), Object.keys(i).forEach(function(l) {
-    var p = Object.getOwnPropertyDescriptor(i, l);
-    Object.defineProperty(y, l, p.get ? p : {
+    r = {};
+  return Object.defineProperty(r, "__esModule", { value: !0 }), Object.keys(t).forEach(function(o) {
+    var n = Object.getOwnPropertyDescriptor(t, o);
+    Object.defineProperty(r, o, n.get ? n : {
       enumerable: !0,
       get: function() {
-        return i[l];
+        return t[o];
       }
     });
-  }), y;
+  }), r;
 }
-var je = {};
-function Ke(i) {
-  throw new Error('Could not dynamically require "' + i + '". Please configure the dynamicRequireTargets or/and ignoreDynamicRequires option of @rollup/plugin-commonjs appropriately for this require call to work.');
-}
-var N = {}, Z = { exports: {} }, Ae = { exports: {} };
-(function(i) {
-  i.exports = u;
-  function u(l) {
-    if (l)
-      return y(l);
+var Mt = { exports: {} }, ke = { exports: {} };
+(function(t) {
+  t.exports = e;
+  function e(o) {
+    if (o)
+      return r(o);
   }
-  function y(l) {
-    for (var p in u.prototype)
-      l[p] = u.prototype[p];
-    return l;
+  function r(o) {
+    for (var n in e.prototype)
+      o[n] = e.prototype[n];
+    return o;
   }
-  u.prototype.on = u.prototype.addEventListener = function(l, p) {
-    return this._callbacks = this._callbacks || {}, (this._callbacks["$" + l] = this._callbacks["$" + l] || []).push(p), this;
-  }, u.prototype.once = function(l, p) {
-    function v() {
-      this.off(l, v), p.apply(this, arguments);
+  e.prototype.on = e.prototype.addEventListener = function(o, n) {
+    return this._callbacks = this._callbacks || {}, (this._callbacks["$" + o] = this._callbacks["$" + o] || []).push(n), this;
+  }, e.prototype.once = function(o, n) {
+    function i() {
+      this.off(o, i), n.apply(this, arguments);
     }
-    return v.fn = p, this.on(l, v), this;
-  }, u.prototype.off = u.prototype.removeListener = u.prototype.removeAllListeners = u.prototype.removeEventListener = function(l, p) {
+    return i.fn = n, this.on(o, i), this;
+  }, e.prototype.off = e.prototype.removeListener = e.prototype.removeAllListeners = e.prototype.removeEventListener = function(o, n) {
     if (this._callbacks = this._callbacks || {}, arguments.length == 0)
       return this._callbacks = {}, this;
-    var v = this._callbacks["$" + l];
-    if (!v)
+    var i = this._callbacks["$" + o];
+    if (!i)
       return this;
     if (arguments.length == 1)
-      return delete this._callbacks["$" + l], this;
-    for (var b, w = 0; w < v.length; w++)
-      if (b = v[w], b === p || b.fn === p) {
-        v.splice(w, 1);
+      return delete this._callbacks["$" + o], this;
+    for (var a, s = 0; s < i.length; s++)
+      if (a = i[s], a === n || a.fn === n) {
+        i.splice(s, 1);
         break;
       }
-    return v.length === 0 && delete this._callbacks["$" + l], this;
-  }, u.prototype.emit = function(l) {
+    return i.length === 0 && delete this._callbacks["$" + o], this;
+  }, e.prototype.emit = function(o) {
     this._callbacks = this._callbacks || {};
-    for (var p = new Array(arguments.length - 1), v = this._callbacks["$" + l], b = 1; b < arguments.length; b++)
-      p[b - 1] = arguments[b];
-    if (v) {
-      v = v.slice(0);
-      for (var b = 0, w = v.length; b < w; ++b)
-        v[b].apply(this, p);
+    for (var n = new Array(arguments.length - 1), i = this._callbacks["$" + o], a = 1; a < arguments.length; a++)
+      n[a - 1] = arguments[a];
+    if (i) {
+      i = i.slice(0);
+      for (var a = 0, s = i.length; a < s; ++a)
+        i[a].apply(this, n);
     }
     return this;
-  }, u.prototype.listeners = function(l) {
-    return this._callbacks = this._callbacks || {}, this._callbacks["$" + l] || [];
-  }, u.prototype.hasListeners = function(l) {
-    return !!this.listeners(l).length;
+  }, e.prototype.listeners = function(o) {
+    return this._callbacks = this._callbacks || {}, this._callbacks["$" + o] || [];
+  }, e.prototype.hasListeners = function(o) {
+    return !!this.listeners(o).length;
   };
-})(Ae);
-var We = Ae.exports, $e = H;
-H.default = H;
-H.stable = Ne;
-H.stableStringify = Ne;
-var K = "[...]", ke = "[Circular]", B = [], M = [];
+})(ke);
+var rr = ke.exports, or = ht;
+ht.default = ht;
+ht.stable = Ie;
+ht.stableStringify = Ie;
+var wt = "[...]", Re = "[Circular]", tt = [], X = [];
 function Ce() {
   return {
     depthLimit: Number.MAX_SAFE_INTEGER,
     edgesLimit: Number.MAX_SAFE_INTEGER
   };
 }
-function H(i, u, y, l) {
-  typeof l > "u" && (l = Ce()), ee(i, "", 0, [], void 0, 0, l);
-  var p;
+function ht(t, e, r, o) {
+  typeof o > "u" && (o = Ce()), qt(t, "", 0, [], void 0, 0, o);
+  var n;
   try {
-    M.length === 0 ? p = JSON.stringify(i, u, y) : p = JSON.stringify(i, Re(u), y);
+    X.length === 0 ? n = JSON.stringify(t, e, r) : n = JSON.stringify(t, Ne(e), r);
   } catch {
     return JSON.stringify("[unable to serialize, circular reference is too complex to analyze]");
   } finally {
-    for (; B.length !== 0; ) {
-      var v = B.pop();
-      v.length === 4 ? Object.defineProperty(v[0], v[1], v[3]) : v[0][v[1]] = v[2];
+    for (; tt.length !== 0; ) {
+      var i = tt.pop();
+      i.length === 4 ? Object.defineProperty(i[0], i[1], i[3]) : i[0][i[1]] = i[2];
     }
   }
-  return p;
+  return n;
 }
-function z(i, u, y, l) {
-  var p = Object.getOwnPropertyDescriptor(l, y);
-  p.get !== void 0 ? p.configurable ? (Object.defineProperty(l, y, { value: i }), B.push([l, y, u, p])) : M.push([u, y, i]) : (l[y] = i, B.push([l, y, u]));
+function nt(t, e, r, o) {
+  var n = Object.getOwnPropertyDescriptor(o, r);
+  n.get !== void 0 ? n.configurable ? (Object.defineProperty(o, r, { value: t }), tt.push([o, r, e, n])) : X.push([e, r, t]) : (o[r] = t, tt.push([o, r, e]));
 }
-function ee(i, u, y, l, p, v, b) {
-  v += 1;
-  var w;
-  if (typeof i == "object" && i !== null) {
-    for (w = 0; w < l.length; w++)
-      if (l[w] === i) {
-        z(ke, i, u, p);
+function qt(t, e, r, o, n, i, a) {
+  i += 1;
+  var s;
+  if (typeof t == "object" && t !== null) {
+    for (s = 0; s < o.length; s++)
+      if (o[s] === t) {
+        nt(Re, t, e, n);
         return;
       }
-    if (typeof b.depthLimit < "u" && v > b.depthLimit) {
-      z(K, i, u, p);
+    if (typeof a.depthLimit < "u" && i > a.depthLimit) {
+      nt(wt, t, e, n);
       return;
     }
-    if (typeof b.edgesLimit < "u" && y + 1 > b.edgesLimit) {
-      z(K, i, u, p);
+    if (typeof a.edgesLimit < "u" && r + 1 > a.edgesLimit) {
+      nt(wt, t, e, n);
       return;
     }
-    if (l.push(i), Array.isArray(i))
-      for (w = 0; w < i.length; w++)
-        ee(i[w], w, w, l, i, v, b);
+    if (o.push(t), Array.isArray(t))
+      for (s = 0; s < t.length; s++)
+        qt(t[s], s, s, o, t, i, a);
     else {
-      var T = Object.keys(i);
-      for (w = 0; w < T.length; w++) {
-        var S = T[w];
-        ee(i[S], S, w, l, i, v, b);
+      var u = Object.keys(t);
+      for (s = 0; s < u.length; s++) {
+        var f = u[s];
+        qt(t[f], f, s, o, t, i, a);
       }
     }
-    l.pop();
+    o.pop();
   }
 }
-function Ge(i, u) {
-  return i < u ? -1 : i > u ? 1 : 0;
+function nr(t, e) {
+  return t < e ? -1 : t > e ? 1 : 0;
 }
-function Ne(i, u, y, l) {
-  typeof l > "u" && (l = Ce());
-  var p = te(i, "", 0, [], void 0, 0, l) || i, v;
+function Ie(t, e, r, o) {
+  typeof o > "u" && (o = Ce());
+  var n = Bt(t, "", 0, [], void 0, 0, o) || t, i;
   try {
-    M.length === 0 ? v = JSON.stringify(p, u, y) : v = JSON.stringify(p, Re(u), y);
+    X.length === 0 ? i = JSON.stringify(n, e, r) : i = JSON.stringify(n, Ne(e), r);
   } catch {
     return JSON.stringify("[unable to serialize, circular reference is too complex to analyze]");
   } finally {
-    for (; B.length !== 0; ) {
-      var b = B.pop();
-      b.length === 4 ? Object.defineProperty(b[0], b[1], b[3]) : b[0][b[1]] = b[2];
+    for (; tt.length !== 0; ) {
+      var a = tt.pop();
+      a.length === 4 ? Object.defineProperty(a[0], a[1], a[3]) : a[0][a[1]] = a[2];
     }
   }
-  return v;
+  return i;
 }
-function te(i, u, y, l, p, v, b) {
-  v += 1;
-  var w;
-  if (typeof i == "object" && i !== null) {
-    for (w = 0; w < l.length; w++)
-      if (l[w] === i) {
-        z(ke, i, u, p);
+function Bt(t, e, r, o, n, i, a) {
+  i += 1;
+  var s;
+  if (typeof t == "object" && t !== null) {
+    for (s = 0; s < o.length; s++)
+      if (o[s] === t) {
+        nt(Re, t, e, n);
         return;
       }
     try {
-      if (typeof i.toJSON == "function")
+      if (typeof t.toJSON == "function")
         return;
     } catch {
       return;
     }
-    if (typeof b.depthLimit < "u" && v > b.depthLimit) {
-      z(K, i, u, p);
+    if (typeof a.depthLimit < "u" && i > a.depthLimit) {
+      nt(wt, t, e, n);
       return;
     }
-    if (typeof b.edgesLimit < "u" && y + 1 > b.edgesLimit) {
-      z(K, i, u, p);
+    if (typeof a.edgesLimit < "u" && r + 1 > a.edgesLimit) {
+      nt(wt, t, e, n);
       return;
     }
-    if (l.push(i), Array.isArray(i))
-      for (w = 0; w < i.length; w++)
-        te(i[w], w, w, l, i, v, b);
+    if (o.push(t), Array.isArray(t))
+      for (s = 0; s < t.length; s++)
+        Bt(t[s], s, s, o, t, i, a);
     else {
-      var T = {}, S = Object.keys(i).sort(Ge);
-      for (w = 0; w < S.length; w++) {
-        var O = S[w];
-        te(i[O], O, w, l, i, v, b), T[O] = i[O];
+      var u = {}, f = Object.keys(t).sort(nr);
+      for (s = 0; s < f.length; s++) {
+        var b = f[s];
+        Bt(t[b], b, s, o, t, i, a), u[b] = t[b];
       }
-      if (typeof p < "u")
-        B.push([p, u, i]), p[u] = T;
+      if (typeof n < "u")
+        tt.push([n, e, t]), n[e] = u;
       else
-        return T;
+        return u;
     }
-    l.pop();
+    o.pop();
   }
 }
-function Re(i) {
-  return i = typeof i < "u" ? i : function(u, y) {
-    return y;
-  }, function(u, y) {
-    if (M.length > 0)
-      for (var l = 0; l < M.length; l++) {
-        var p = M[l];
-        if (p[1] === u && p[0] === y) {
-          y = p[2], M.splice(l, 1);
+function Ne(t) {
+  return t = typeof t < "u" ? t : function(e, r) {
+    return r;
+  }, function(e, r) {
+    if (X.length > 0)
+      for (var o = 0; o < X.length; o++) {
+        var n = X[o];
+        if (n[1] === e && n[0] === r) {
+          r = n[2], X.splice(o, 1);
           break;
         }
       }
-    return i.call(this, u, y);
+    return t.call(this, e, r);
   };
 }
-function U(i) {
-  "@babel/helpers - typeof";
-  return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? U = function(y) {
-    return typeof y;
-  } : U = function(y) {
-    return y && typeof Symbol == "function" && y.constructor === Symbol && y !== Symbol.prototype ? "symbol" : typeof y;
-  }, U(i);
+var ir = function() {
+  if (typeof Symbol != "function" || typeof Object.getOwnPropertySymbols != "function")
+    return !1;
+  if (typeof Symbol.iterator == "symbol")
+    return !0;
+  var t = {}, e = Symbol("test"), r = Object(e);
+  if (typeof e == "string" || Object.prototype.toString.call(e) !== "[object Symbol]" || Object.prototype.toString.call(r) !== "[object Symbol]")
+    return !1;
+  var o = 42;
+  t[e] = o;
+  for (e in t)
+    return !1;
+  if (typeof Object.keys == "function" && Object.keys(t).length !== 0 || typeof Object.getOwnPropertyNames == "function" && Object.getOwnPropertyNames(t).length !== 0)
+    return !1;
+  var n = Object.getOwnPropertySymbols(t);
+  if (n.length !== 1 || n[0] !== e || !Object.prototype.propertyIsEnumerable.call(t, e))
+    return !1;
+  if (typeof Object.getOwnPropertyDescriptor == "function") {
+    var i = Object.getOwnPropertyDescriptor(t, e);
+    if (i.value !== o || i.enumerable !== !0)
+      return !1;
+  }
+  return !0;
+}, ie = typeof Symbol < "u" && Symbol, ar = ir, sr = function() {
+  return typeof ie != "function" || typeof Symbol != "function" || typeof ie("foo") != "symbol" || typeof Symbol("bar") != "symbol" ? !1 : ar();
+}, lr = "Function.prototype.bind called on incompatible ", ur = Object.prototype.toString, cr = Math.max, pr = "[object Function]", ae = function(t, e) {
+  for (var r = [], o = 0; o < t.length; o += 1)
+    r[o] = t[o];
+  for (var n = 0; n < e.length; n += 1)
+    r[n + t.length] = e[n];
+  return r;
+}, fr = function(t, e) {
+  for (var r = [], o = e || 0, n = 0; o < t.length; o += 1, n += 1)
+    r[n] = t[o];
+  return r;
+}, yr = function(t, e) {
+  for (var r = "", o = 0; o < t.length; o += 1)
+    r += t[o], o + 1 < t.length && (r += e);
+  return r;
+}, hr = function(t) {
+  var e = this;
+  if (typeof e != "function" || ur.apply(e) !== pr)
+    throw new TypeError(lr + e);
+  for (var r = fr(arguments, 1), o, n = function() {
+    if (this instanceof o) {
+      var f = e.apply(
+        this,
+        ae(r, arguments)
+      );
+      return Object(f) === f ? f : this;
+    }
+    return e.apply(
+      t,
+      ae(r, arguments)
+    );
+  }, i = cr(0, e.length - r.length), a = [], s = 0; s < i; s++)
+    a[s] = "$" + s;
+  if (o = Function("binder", "return function (" + yr(a, ",") + "){ return binder.apply(this,arguments); }")(n), e.prototype) {
+    var u = function() {
+    };
+    u.prototype = e.prototype, o.prototype = new u(), u.prototype = null;
+  }
+  return o;
+}, dr = hr, Qt = Function.prototype.bind || dr, mr = Qt, br = mr.call(Function.call, Object.prototype.hasOwnProperty), A, at = SyntaxError, Fe = Function, it = TypeError, Pt = function(t) {
+  try {
+    return Fe('"use strict"; return (' + t + ").constructor;")();
+  } catch {
+  }
+}, Z = Object.getOwnPropertyDescriptor;
+if (Z)
+  try {
+    Z({}, "");
+  } catch {
+    Z = null;
+  }
+var xt = function() {
+  throw new it();
+}, gr = Z ? function() {
+  try {
+    return arguments.callee, xt;
+  } catch {
+    try {
+      return Z(arguments, "callee").get;
+    } catch {
+      return xt;
+    }
+  }
+}() : xt, rt = sr(), z = Object.getPrototypeOf || function(t) {
+  return t.__proto__;
+}, ot = {}, vr = typeof Uint8Array > "u" ? A : z(Uint8Array), Y = {
+  "%AggregateError%": typeof AggregateError > "u" ? A : AggregateError,
+  "%Array%": Array,
+  "%ArrayBuffer%": typeof ArrayBuffer > "u" ? A : ArrayBuffer,
+  "%ArrayIteratorPrototype%": rt ? z([][Symbol.iterator]()) : A,
+  "%AsyncFromSyncIteratorPrototype%": A,
+  "%AsyncFunction%": ot,
+  "%AsyncGenerator%": ot,
+  "%AsyncGeneratorFunction%": ot,
+  "%AsyncIteratorPrototype%": ot,
+  "%Atomics%": typeof Atomics > "u" ? A : Atomics,
+  "%BigInt%": typeof BigInt > "u" ? A : BigInt,
+  "%BigInt64Array%": typeof BigInt64Array > "u" ? A : BigInt64Array,
+  "%BigUint64Array%": typeof BigUint64Array > "u" ? A : BigUint64Array,
+  "%Boolean%": Boolean,
+  "%DataView%": typeof DataView > "u" ? A : DataView,
+  "%Date%": Date,
+  "%decodeURI%": decodeURI,
+  "%decodeURIComponent%": decodeURIComponent,
+  "%encodeURI%": encodeURI,
+  "%encodeURIComponent%": encodeURIComponent,
+  "%Error%": Error,
+  "%eval%": eval,
+  // eslint-disable-line no-eval
+  "%EvalError%": EvalError,
+  "%Float32Array%": typeof Float32Array > "u" ? A : Float32Array,
+  "%Float64Array%": typeof Float64Array > "u" ? A : Float64Array,
+  "%FinalizationRegistry%": typeof FinalizationRegistry > "u" ? A : FinalizationRegistry,
+  "%Function%": Fe,
+  "%GeneratorFunction%": ot,
+  "%Int8Array%": typeof Int8Array > "u" ? A : Int8Array,
+  "%Int16Array%": typeof Int16Array > "u" ? A : Int16Array,
+  "%Int32Array%": typeof Int32Array > "u" ? A : Int32Array,
+  "%isFinite%": isFinite,
+  "%isNaN%": isNaN,
+  "%IteratorPrototype%": rt ? z(z([][Symbol.iterator]())) : A,
+  "%JSON%": typeof JSON == "object" ? JSON : A,
+  "%Map%": typeof Map > "u" ? A : Map,
+  "%MapIteratorPrototype%": typeof Map > "u" || !rt ? A : z((/* @__PURE__ */ new Map())[Symbol.iterator]()),
+  "%Math%": Math,
+  "%Number%": Number,
+  "%Object%": Object,
+  "%parseFloat%": parseFloat,
+  "%parseInt%": parseInt,
+  "%Promise%": typeof Promise > "u" ? A : Promise,
+  "%Proxy%": typeof Proxy > "u" ? A : Proxy,
+  "%RangeError%": RangeError,
+  "%ReferenceError%": ReferenceError,
+  "%Reflect%": typeof Reflect > "u" ? A : Reflect,
+  "%RegExp%": RegExp,
+  "%Set%": typeof Set > "u" ? A : Set,
+  "%SetIteratorPrototype%": typeof Set > "u" || !rt ? A : z((/* @__PURE__ */ new Set())[Symbol.iterator]()),
+  "%SharedArrayBuffer%": typeof SharedArrayBuffer > "u" ? A : SharedArrayBuffer,
+  "%String%": String,
+  "%StringIteratorPrototype%": rt ? z(""[Symbol.iterator]()) : A,
+  "%Symbol%": rt ? Symbol : A,
+  "%SyntaxError%": at,
+  "%ThrowTypeError%": gr,
+  "%TypedArray%": vr,
+  "%TypeError%": it,
+  "%Uint8Array%": typeof Uint8Array > "u" ? A : Uint8Array,
+  "%Uint8ClampedArray%": typeof Uint8ClampedArray > "u" ? A : Uint8ClampedArray,
+  "%Uint16Array%": typeof Uint16Array > "u" ? A : Uint16Array,
+  "%Uint32Array%": typeof Uint32Array > "u" ? A : Uint32Array,
+  "%URIError%": URIError,
+  "%WeakMap%": typeof WeakMap > "u" ? A : WeakMap,
+  "%WeakRef%": typeof WeakRef > "u" ? A : WeakRef,
+  "%WeakSet%": typeof WeakSet > "u" ? A : WeakSet
+};
+try {
+  null.error;
+} catch (t) {
+  var wr = z(z(t));
+  Y["%Error.prototype%"] = wr;
 }
-function Ve(i) {
-  return i !== null && U(i) === "object";
+var Sr = function t(e) {
+  var r;
+  if (e === "%AsyncFunction%")
+    r = Pt("async function () {}");
+  else if (e === "%GeneratorFunction%")
+    r = Pt("function* () {}");
+  else if (e === "%AsyncGeneratorFunction%")
+    r = Pt("async function* () {}");
+  else if (e === "%AsyncGenerator%") {
+    var o = t("%AsyncGeneratorFunction%");
+    o && (r = o.prototype);
+  } else if (e === "%AsyncIteratorPrototype%") {
+    var n = t("%AsyncGenerator%");
+    n && (r = z(n.prototype));
+  }
+  return Y[e] = r, r;
+}, se = {
+  "%ArrayBufferPrototype%": ["ArrayBuffer", "prototype"],
+  "%ArrayPrototype%": ["Array", "prototype"],
+  "%ArrayProto_entries%": ["Array", "prototype", "entries"],
+  "%ArrayProto_forEach%": ["Array", "prototype", "forEach"],
+  "%ArrayProto_keys%": ["Array", "prototype", "keys"],
+  "%ArrayProto_values%": ["Array", "prototype", "values"],
+  "%AsyncFunctionPrototype%": ["AsyncFunction", "prototype"],
+  "%AsyncGenerator%": ["AsyncGeneratorFunction", "prototype"],
+  "%AsyncGeneratorPrototype%": ["AsyncGeneratorFunction", "prototype", "prototype"],
+  "%BooleanPrototype%": ["Boolean", "prototype"],
+  "%DataViewPrototype%": ["DataView", "prototype"],
+  "%DatePrototype%": ["Date", "prototype"],
+  "%ErrorPrototype%": ["Error", "prototype"],
+  "%EvalErrorPrototype%": ["EvalError", "prototype"],
+  "%Float32ArrayPrototype%": ["Float32Array", "prototype"],
+  "%Float64ArrayPrototype%": ["Float64Array", "prototype"],
+  "%FunctionPrototype%": ["Function", "prototype"],
+  "%Generator%": ["GeneratorFunction", "prototype"],
+  "%GeneratorPrototype%": ["GeneratorFunction", "prototype", "prototype"],
+  "%Int8ArrayPrototype%": ["Int8Array", "prototype"],
+  "%Int16ArrayPrototype%": ["Int16Array", "prototype"],
+  "%Int32ArrayPrototype%": ["Int32Array", "prototype"],
+  "%JSONParse%": ["JSON", "parse"],
+  "%JSONStringify%": ["JSON", "stringify"],
+  "%MapPrototype%": ["Map", "prototype"],
+  "%NumberPrototype%": ["Number", "prototype"],
+  "%ObjectPrototype%": ["Object", "prototype"],
+  "%ObjProto_toString%": ["Object", "prototype", "toString"],
+  "%ObjProto_valueOf%": ["Object", "prototype", "valueOf"],
+  "%PromisePrototype%": ["Promise", "prototype"],
+  "%PromiseProto_then%": ["Promise", "prototype", "then"],
+  "%Promise_all%": ["Promise", "all"],
+  "%Promise_reject%": ["Promise", "reject"],
+  "%Promise_resolve%": ["Promise", "resolve"],
+  "%RangeErrorPrototype%": ["RangeError", "prototype"],
+  "%ReferenceErrorPrototype%": ["ReferenceError", "prototype"],
+  "%RegExpPrototype%": ["RegExp", "prototype"],
+  "%SetPrototype%": ["Set", "prototype"],
+  "%SharedArrayBufferPrototype%": ["SharedArrayBuffer", "prototype"],
+  "%StringPrototype%": ["String", "prototype"],
+  "%SymbolPrototype%": ["Symbol", "prototype"],
+  "%SyntaxErrorPrototype%": ["SyntaxError", "prototype"],
+  "%TypedArrayPrototype%": ["TypedArray", "prototype"],
+  "%TypeErrorPrototype%": ["TypeError", "prototype"],
+  "%Uint8ArrayPrototype%": ["Uint8Array", "prototype"],
+  "%Uint8ClampedArrayPrototype%": ["Uint8ClampedArray", "prototype"],
+  "%Uint16ArrayPrototype%": ["Uint16Array", "prototype"],
+  "%Uint32ArrayPrototype%": ["Uint32Array", "prototype"],
+  "%URIErrorPrototype%": ["URIError", "prototype"],
+  "%WeakMapPrototype%": ["WeakMap", "prototype"],
+  "%WeakSetPrototype%": ["WeakSet", "prototype"]
+}, mt = Qt, St = br, Ar = mt.call(Function.call, Array.prototype.concat), _r = mt.call(Function.apply, Array.prototype.splice), le = mt.call(Function.call, String.prototype.replace), At = mt.call(Function.call, String.prototype.slice), Or = mt.call(Function.call, RegExp.prototype.exec), Er = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g, jr = /\\(\\)?/g, Tr = function(t) {
+  var e = At(t, 0, 1), r = At(t, -1);
+  if (e === "%" && r !== "%")
+    throw new at("invalid intrinsic syntax, expected closing `%`");
+  if (r === "%" && e !== "%")
+    throw new at("invalid intrinsic syntax, expected opening `%`");
+  var o = [];
+  return le(t, Er, function(n, i, a, s) {
+    o[o.length] = a ? le(s, jr, "$1") : i || n;
+  }), o;
+}, Pr = function(t, e) {
+  var r = t, o;
+  if (St(se, r) && (o = se[r], r = "%" + o[0] + "%"), St(Y, r)) {
+    var n = Y[r];
+    if (n === ot && (n = Sr(r)), typeof n > "u" && !e)
+      throw new it("intrinsic " + t + " exists, but is not available. Please file an issue!");
+    return {
+      alias: o,
+      name: r,
+      value: n
+    };
+  }
+  throw new at("intrinsic " + t + " does not exist!");
+}, Kt = function(t, e) {
+  if (typeof t != "string" || t.length === 0)
+    throw new it("intrinsic name must be a non-empty string");
+  if (arguments.length > 1 && typeof e != "boolean")
+    throw new it('"allowMissing" argument must be a boolean');
+  if (Or(/^%?[^%]*%?$/, t) === null)
+    throw new at("`%` may not be present anywhere but at the beginning and end of the intrinsic name");
+  var r = Tr(t), o = r.length > 0 ? r[0] : "", n = Pr("%" + o + "%", e), i = n.name, a = n.value, s = !1, u = n.alias;
+  u && (o = u[0], _r(r, Ar([0, 1], u)));
+  for (var f = 1, b = !0; f < r.length; f += 1) {
+    var v = r[f], m = At(v, 0, 1), S = At(v, -1);
+    if ((m === '"' || m === "'" || m === "`" || S === '"' || S === "'" || S === "`") && m !== S)
+      throw new at("property names with quotes must have matching quotes");
+    if ((v === "constructor" || !b) && (s = !0), o += "." + v, i = "%" + o + "%", St(Y, i))
+      a = Y[i];
+    else if (a != null) {
+      if (!(v in a)) {
+        if (!e)
+          throw new it("base intrinsic for " + t + " exists, but the property is not available.");
+        return;
+      }
+      if (Z && f + 1 >= r.length) {
+        var w = Z(a, v);
+        b = !!w, b && "get" in w && !("originalValue" in w.get) ? a = w.get : a = a[v];
+      } else
+        b = St(a, v), a = a[v];
+      b && !s && (Y[i] = a);
+    }
+  }
+  return a;
+}, Ue = { exports: {} };
+(function(t) {
+  var e = Qt, r = Kt, o = r("%Function.prototype.apply%"), n = r("%Function.prototype.call%"), i = r("%Reflect.apply%", !0) || e.call(n, o), a = r("%Object.getOwnPropertyDescriptor%", !0), s = r("%Object.defineProperty%", !0), u = r("%Math.max%");
+  if (s)
+    try {
+      s({}, "a", { value: 1 });
+    } catch {
+      s = null;
+    }
+  t.exports = function(b) {
+    var v = i(e, n, arguments);
+    if (a && s) {
+      var m = a(v, "length");
+      m.configurable && s(
+        v,
+        "length",
+        { value: 1 + u(0, b.length - (arguments.length - 1)) }
+      );
+    }
+    return v;
+  };
+  var f = function() {
+    return i(e, o, arguments);
+  };
+  s ? s(t.exports, "apply", { value: f }) : t.exports.apply = f;
+})(Ue);
+var xr = Ue.exports, De = Kt, Le = xr, kr = Le(De("String.prototype.indexOf")), Rr = function(t, e) {
+  var r = De(t, !!e);
+  return typeof r == "function" && kr(t, ".prototype.") > -1 ? Le(r) : r;
+};
+const Me = {}, Cr = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: Me
+}, Symbol.toStringTag, { value: "Module" })), qe = /* @__PURE__ */ er(Cr);
+var Xt = typeof Map == "function" && Map.prototype, kt = Object.getOwnPropertyDescriptor && Xt ? Object.getOwnPropertyDescriptor(Map.prototype, "size") : null, _t = Xt && kt && typeof kt.get == "function" ? kt.get : null, ue = Xt && Map.prototype.forEach, Zt = typeof Set == "function" && Set.prototype, Rt = Object.getOwnPropertyDescriptor && Zt ? Object.getOwnPropertyDescriptor(Set.prototype, "size") : null, Ot = Zt && Rt && typeof Rt.get == "function" ? Rt.get : null, ce = Zt && Set.prototype.forEach, Ir = typeof WeakMap == "function" && WeakMap.prototype, pt = Ir ? WeakMap.prototype.has : null, Nr = typeof WeakSet == "function" && WeakSet.prototype, ft = Nr ? WeakSet.prototype.has : null, Fr = typeof WeakRef == "function" && WeakRef.prototype, pe = Fr ? WeakRef.prototype.deref : null, Ur = Boolean.prototype.valueOf, Dr = Object.prototype.toString, Lr = Function.prototype.toString, Mr = String.prototype.match, Yt = String.prototype.slice, V = String.prototype.replace, qr = String.prototype.toUpperCase, fe = String.prototype.toLowerCase, Be = RegExp.prototype.test, ye = Array.prototype.concat, H = Array.prototype.join, Br = Array.prototype.slice, he = Math.floor, zt = typeof BigInt == "function" ? BigInt.prototype.valueOf : null, Ct = Object.getOwnPropertySymbols, Ht = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? Symbol.prototype.toString : null, st = typeof Symbol == "function" && typeof Symbol.iterator == "object", I = typeof Symbol == "function" && Symbol.toStringTag && (typeof Symbol.toStringTag === st || !0) ? Symbol.toStringTag : null, ze = Object.prototype.propertyIsEnumerable, de = (typeof Reflect == "function" ? Reflect.getPrototypeOf : Object.getPrototypeOf) || ([].__proto__ === Array.prototype ? function(t) {
+  return t.__proto__;
+} : null);
+function me(t, e) {
+  if (t === 1 / 0 || t === -1 / 0 || t !== t || t && t > -1e3 && t < 1e3 || Be.call(/e/, e))
+    return e;
+  var r = /[0-9](?=(?:[0-9]{3})+(?![0-9]))/g;
+  if (typeof t == "number") {
+    var o = t < 0 ? -he(-t) : he(t);
+    if (o !== t) {
+      var n = String(o), i = Yt.call(e, n.length + 1);
+      return V.call(n, r, "$&_") + "." + V.call(V.call(i, /([0-9]{3})/g, "$&_"), /_$/, "");
+    }
+  }
+  return V.call(e, r, "$&_");
 }
-var Ie = Ve;
-function j(i) {
-  "@babel/helpers - typeof";
-  return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? j = function(y) {
-    return typeof y;
-  } : j = function(y) {
-    return y && typeof Symbol == "function" && y.constructor === Symbol && y !== Symbol.prototype ? "symbol" : typeof y;
-  }, j(i);
+var $t = qe, be = $t.custom, ge = $e(be) ? be : null, zr = function t(e, r, o, n) {
+  var i = r || {};
+  if (J(i, "quoteStyle") && i.quoteStyle !== "single" && i.quoteStyle !== "double")
+    throw new TypeError('option "quoteStyle" must be "single" or "double"');
+  if (J(i, "maxStringLength") && (typeof i.maxStringLength == "number" ? i.maxStringLength < 0 && i.maxStringLength !== 1 / 0 : i.maxStringLength !== null))
+    throw new TypeError('option "maxStringLength", if provided, must be a positive integer, Infinity, or `null`');
+  var a = J(i, "customInspect") ? i.customInspect : !0;
+  if (typeof a != "boolean" && a !== "symbol")
+    throw new TypeError("option \"customInspect\", if provided, must be `true`, `false`, or `'symbol'`");
+  if (J(i, "indent") && i.indent !== null && i.indent !== "	" && !(parseInt(i.indent, 10) === i.indent && i.indent > 0))
+    throw new TypeError('option "indent" must be "\\t", an integer > 0, or `null`');
+  if (J(i, "numericSeparator") && typeof i.numericSeparator != "boolean")
+    throw new TypeError('option "numericSeparator", if provided, must be `true` or `false`');
+  var s = i.numericSeparator;
+  if (typeof e > "u")
+    return "undefined";
+  if (e === null)
+    return "null";
+  if (typeof e == "boolean")
+    return e ? "true" : "false";
+  if (typeof e == "string")
+    return Ge(e, i);
+  if (typeof e == "number") {
+    if (e === 0)
+      return 1 / 0 / e > 0 ? "0" : "-0";
+    var u = String(e);
+    return s ? me(e, u) : u;
+  }
+  if (typeof e == "bigint") {
+    var f = String(e) + "n";
+    return s ? me(e, f) : f;
+  }
+  var b = typeof i.depth > "u" ? 5 : i.depth;
+  if (typeof o > "u" && (o = 0), o >= b && b > 0 && typeof e == "object")
+    return Wt(e) ? "[Array]" : "[Object]";
+  var v = ao(i, o);
+  if (typeof n > "u")
+    n = [];
+  else if (We(n, e) >= 0)
+    return "[Circular]";
+  function m(l, c, p) {
+    if (c && (n = Br.call(n), n.push(c)), p) {
+      var y = {
+        depth: i.depth
+      };
+      return J(i, "quoteStyle") && (y.quoteStyle = i.quoteStyle), t(l, y, o + 1, n);
+    }
+    return t(l, i, o + 1, n);
+  }
+  if (typeof e == "function" && !ve(e)) {
+    var S = Xr(e), w = bt(e, m);
+    return "[Function" + (S ? ": " + S : " (anonymous)") + "]" + (w.length > 0 ? " { " + H.call(w, ", ") + " }" : "");
+  }
+  if ($e(e)) {
+    var C = st ? V.call(String(e), /^(Symbol\(.*\))_[^)]*$/, "$1") : Ht.call(e);
+    return typeof e == "object" && !st ? ct(C) : C;
+  }
+  if (oo(e)) {
+    for (var x = "<" + fe.call(String(e.nodeName)), h = e.attributes || [], k = 0; k < h.length; k++)
+      x += " " + h[k].name + "=" + He(Hr(h[k].value), "double", i);
+    return x += ">", e.childNodes && e.childNodes.length && (x += "..."), x += "</" + fe.call(String(e.nodeName)) + ">", x;
+  }
+  if (Wt(e)) {
+    if (e.length === 0)
+      return "[]";
+    var F = bt(e, m);
+    return v && !io(F) ? "[" + Gt(F, v) + "]" : "[ " + H.call(F, ", ") + " ]";
+  }
+  if (Wr(e)) {
+    var E = bt(e, m);
+    return !("cause" in Error.prototype) && "cause" in e && !ze.call(e, "cause") ? "{ [" + String(e) + "] " + H.call(ye.call("[cause]: " + m(e.cause), E), ", ") + " }" : E.length === 0 ? "[" + String(e) + "]" : "{ [" + String(e) + "] " + H.call(E, ", ") + " }";
+  }
+  if (typeof e == "object" && a) {
+    if (ge && typeof e[ge] == "function" && $t)
+      return $t(e, { depth: b - o });
+    if (a !== "symbol" && typeof e.inspect == "function")
+      return e.inspect();
+  }
+  if (Zr(e)) {
+    var U = [];
+    return ue && ue.call(e, function(l, c) {
+      U.push(m(c, e, !0) + " => " + m(l, e));
+    }), we("Map", _t.call(e), U, v);
+  }
+  if (eo(e)) {
+    var M = [];
+    return ce && ce.call(e, function(l) {
+      M.push(m(l, e));
+    }), we("Set", Ot.call(e), M, v);
+  }
+  if (Yr(e))
+    return It("WeakMap");
+  if (ro(e))
+    return It("WeakSet");
+  if (to(e))
+    return It("WeakRef");
+  if (Jr(e))
+    return ct(m(Number(e)));
+  if (Qr(e))
+    return ct(m(zt.call(e)));
+  if (Vr(e))
+    return ct(Ur.call(e));
+  if (Gr(e))
+    return ct(m(String(e)));
+  if (!$r(e) && !ve(e)) {
+    var j = bt(e, m), T = de ? de(e) === Object.prototype : e instanceof Object || e.constructor === Object, _ = e instanceof Object ? "" : "null prototype", D = !T && I && Object(e) === e && I in e ? Yt.call(Q(e), 8, -1) : _ ? "Object" : "", q = T || typeof e.constructor != "function" ? "" : e.constructor.name ? e.constructor.name + " " : "", $ = q + (D || _ ? "[" + H.call(ye.call([], D || [], _ || []), ": ") + "] " : "");
+    return j.length === 0 ? $ + "{}" : v ? $ + "{" + Gt(j, v) + "}" : $ + "{ " + H.call(j, ", ") + " }";
+  }
+  return String(e);
+};
+function He(t, e, r) {
+  var o = (r.quoteStyle || e) === "double" ? '"' : "'";
+  return o + t + o;
 }
-var W = Ie, Xe = E;
-function E(i) {
-  if (i)
-    return Qe(i);
+function Hr(t) {
+  return V.call(String(t), /"/g, "&quot;");
 }
-function Qe(i) {
-  for (var u in E.prototype)
-    Object.prototype.hasOwnProperty.call(E.prototype, u) && (i[u] = E.prototype[u]);
-  return i;
+function Wt(t) {
+  return Q(t) === "[object Array]" && (!I || !(typeof t == "object" && I in t));
 }
-E.prototype.clearTimeout = function() {
+function $r(t) {
+  return Q(t) === "[object Date]" && (!I || !(typeof t == "object" && I in t));
+}
+function ve(t) {
+  return Q(t) === "[object RegExp]" && (!I || !(typeof t == "object" && I in t));
+}
+function Wr(t) {
+  return Q(t) === "[object Error]" && (!I || !(typeof t == "object" && I in t));
+}
+function Gr(t) {
+  return Q(t) === "[object String]" && (!I || !(typeof t == "object" && I in t));
+}
+function Jr(t) {
+  return Q(t) === "[object Number]" && (!I || !(typeof t == "object" && I in t));
+}
+function Vr(t) {
+  return Q(t) === "[object Boolean]" && (!I || !(typeof t == "object" && I in t));
+}
+function $e(t) {
+  if (st)
+    return t && typeof t == "object" && t instanceof Symbol;
+  if (typeof t == "symbol")
+    return !0;
+  if (!t || typeof t != "object" || !Ht)
+    return !1;
+  try {
+    return Ht.call(t), !0;
+  } catch {
+  }
+  return !1;
+}
+function Qr(t) {
+  if (!t || typeof t != "object" || !zt)
+    return !1;
+  try {
+    return zt.call(t), !0;
+  } catch {
+  }
+  return !1;
+}
+var Kr = Object.prototype.hasOwnProperty || function(t) {
+  return t in this;
+};
+function J(t, e) {
+  return Kr.call(t, e);
+}
+function Q(t) {
+  return Dr.call(t);
+}
+function Xr(t) {
+  if (t.name)
+    return t.name;
+  var e = Mr.call(Lr.call(t), /^function\s*([\w$]+)/);
+  return e ? e[1] : null;
+}
+function We(t, e) {
+  if (t.indexOf)
+    return t.indexOf(e);
+  for (var r = 0, o = t.length; r < o; r++)
+    if (t[r] === e)
+      return r;
+  return -1;
+}
+function Zr(t) {
+  if (!_t || !t || typeof t != "object")
+    return !1;
+  try {
+    _t.call(t);
+    try {
+      Ot.call(t);
+    } catch {
+      return !0;
+    }
+    return t instanceof Map;
+  } catch {
+  }
+  return !1;
+}
+function Yr(t) {
+  if (!pt || !t || typeof t != "object")
+    return !1;
+  try {
+    pt.call(t, pt);
+    try {
+      ft.call(t, ft);
+    } catch {
+      return !0;
+    }
+    return t instanceof WeakMap;
+  } catch {
+  }
+  return !1;
+}
+function to(t) {
+  if (!pe || !t || typeof t != "object")
+    return !1;
+  try {
+    return pe.call(t), !0;
+  } catch {
+  }
+  return !1;
+}
+function eo(t) {
+  if (!Ot || !t || typeof t != "object")
+    return !1;
+  try {
+    Ot.call(t);
+    try {
+      _t.call(t);
+    } catch {
+      return !0;
+    }
+    return t instanceof Set;
+  } catch {
+  }
+  return !1;
+}
+function ro(t) {
+  if (!ft || !t || typeof t != "object")
+    return !1;
+  try {
+    ft.call(t, ft);
+    try {
+      pt.call(t, pt);
+    } catch {
+      return !0;
+    }
+    return t instanceof WeakSet;
+  } catch {
+  }
+  return !1;
+}
+function oo(t) {
+  return !t || typeof t != "object" ? !1 : typeof HTMLElement < "u" && t instanceof HTMLElement ? !0 : typeof t.nodeName == "string" && typeof t.getAttribute == "function";
+}
+function Ge(t, e) {
+  if (t.length > e.maxStringLength) {
+    var r = t.length - e.maxStringLength, o = "... " + r + " more character" + (r > 1 ? "s" : "");
+    return Ge(Yt.call(t, 0, e.maxStringLength), e) + o;
+  }
+  var n = V.call(V.call(t, /(['\\])/g, "\\$1"), /[\x00-\x1f]/g, no);
+  return He(n, "single", e);
+}
+function no(t) {
+  var e = t.charCodeAt(0), r = {
+    8: "b",
+    9: "t",
+    10: "n",
+    12: "f",
+    13: "r"
+  }[e];
+  return r ? "\\" + r : "\\x" + (e < 16 ? "0" : "") + qr.call(e.toString(16));
+}
+function ct(t) {
+  return "Object(" + t + ")";
+}
+function It(t) {
+  return t + " { ? }";
+}
+function we(t, e, r, o) {
+  var n = o ? Gt(r, o) : H.call(r, ", ");
+  return t + " (" + e + ") {" + n + "}";
+}
+function io(t) {
+  for (var e = 0; e < t.length; e++)
+    if (We(t[e], `
+`) >= 0)
+      return !1;
+  return !0;
+}
+function ao(t, e) {
+  var r;
+  if (t.indent === "	")
+    r = "	";
+  else if (typeof t.indent == "number" && t.indent > 0)
+    r = H.call(Array(t.indent + 1), " ");
+  else
+    return null;
+  return {
+    base: r,
+    prev: H.call(Array(e + 1), r)
+  };
+}
+function Gt(t, e) {
+  if (t.length === 0)
+    return "";
+  var r = `
+` + e.prev + e.base;
+  return r + H.call(t, "," + r) + `
+` + e.prev;
+}
+function bt(t, e) {
+  var r = Wt(t), o = [];
+  if (r) {
+    o.length = t.length;
+    for (var n = 0; n < t.length; n++)
+      o[n] = J(t, n) ? e(t[n], t) : "";
+  }
+  var i = typeof Ct == "function" ? Ct(t) : [], a;
+  if (st) {
+    a = {};
+    for (var s = 0; s < i.length; s++)
+      a["$" + i[s]] = i[s];
+  }
+  for (var u in t)
+    J(t, u) && (r && String(Number(u)) === u && u < t.length || st && a["$" + u] instanceof Symbol || (Be.call(/[^\w$]/, u) ? o.push(e(u, t) + ": " + e(t[u], t)) : o.push(u + ": " + e(t[u], t))));
+  if (typeof Ct == "function")
+    for (var f = 0; f < i.length; f++)
+      ze.call(t, i[f]) && o.push("[" + e(i[f]) + "]: " + e(t[i[f]], t));
+  return o;
+}
+var te = Kt, ut = Rr, so = zr, lo = te("%TypeError%"), gt = te("%WeakMap%", !0), vt = te("%Map%", !0), uo = ut("WeakMap.prototype.get", !0), co = ut("WeakMap.prototype.set", !0), po = ut("WeakMap.prototype.has", !0), fo = ut("Map.prototype.get", !0), yo = ut("Map.prototype.set", !0), ho = ut("Map.prototype.has", !0), ee = function(t, e) {
+  for (var r = t, o; (o = r.next) !== null; r = o)
+    if (o.key === e)
+      return r.next = o.next, o.next = t.next, t.next = o, o;
+}, mo = function(t, e) {
+  var r = ee(t, e);
+  return r && r.value;
+}, bo = function(t, e, r) {
+  var o = ee(t, e);
+  o ? o.value = r : t.next = {
+    // eslint-disable-line no-param-reassign
+    key: e,
+    next: t.next,
+    value: r
+  };
+}, go = function(t, e) {
+  return !!ee(t, e);
+}, vo = function() {
+  var t, e, r, o = {
+    assert: function(n) {
+      if (!o.has(n))
+        throw new lo("Side channel does not contain " + so(n));
+    },
+    get: function(n) {
+      if (gt && n && (typeof n == "object" || typeof n == "function")) {
+        if (t)
+          return uo(t, n);
+      } else if (vt) {
+        if (e)
+          return fo(e, n);
+      } else if (r)
+        return mo(r, n);
+    },
+    has: function(n) {
+      if (gt && n && (typeof n == "object" || typeof n == "function")) {
+        if (t)
+          return po(t, n);
+      } else if (vt) {
+        if (e)
+          return ho(e, n);
+      } else if (r)
+        return go(r, n);
+      return !1;
+    },
+    set: function(n, i) {
+      gt && n && (typeof n == "object" || typeof n == "function") ? (t || (t = new gt()), co(t, n, i)) : vt ? (e || (e = new vt()), yo(e, n, i)) : (r || (r = { key: {}, next: null }), bo(r, n, i));
+    }
+  };
+  return o;
+}, wo = String.prototype.replace, So = /%20/g, Nt = {
+  RFC1738: "RFC1738",
+  RFC3986: "RFC3986"
+}, re = {
+  default: Nt.RFC3986,
+  formatters: {
+    RFC1738: function(t) {
+      return wo.call(t, So, "+");
+    },
+    RFC3986: function(t) {
+      return String(t);
+    }
+  },
+  RFC1738: Nt.RFC1738,
+  RFC3986: Nt.RFC3986
+}, Ao = re, Ft = Object.prototype.hasOwnProperty, K = Array.isArray, B = function() {
+  for (var t = [], e = 0; e < 256; ++e)
+    t.push("%" + ((e < 16 ? "0" : "") + e.toString(16)).toUpperCase());
+  return t;
+}(), _o = function(t) {
+  for (; t.length > 1; ) {
+    var e = t.pop(), r = e.obj[e.prop];
+    if (K(r)) {
+      for (var o = [], n = 0; n < r.length; ++n)
+        typeof r[n] < "u" && o.push(r[n]);
+      e.obj[e.prop] = o;
+    }
+  }
+}, Je = function(t, e) {
+  for (var r = e && e.plainObjects ? /* @__PURE__ */ Object.create(null) : {}, o = 0; o < t.length; ++o)
+    typeof t[o] < "u" && (r[o] = t[o]);
+  return r;
+}, Oo = function t(e, r, o) {
+  if (!r)
+    return e;
+  if (typeof r != "object") {
+    if (K(e))
+      e.push(r);
+    else if (e && typeof e == "object")
+      (o && (o.plainObjects || o.allowPrototypes) || !Ft.call(Object.prototype, r)) && (e[r] = !0);
+    else
+      return [e, r];
+    return e;
+  }
+  if (!e || typeof e != "object")
+    return [e].concat(r);
+  var n = e;
+  return K(e) && !K(r) && (n = Je(e, o)), K(e) && K(r) ? (r.forEach(function(i, a) {
+    if (Ft.call(e, a)) {
+      var s = e[a];
+      s && typeof s == "object" && i && typeof i == "object" ? e[a] = t(s, i, o) : e.push(i);
+    } else
+      e[a] = i;
+  }), e) : Object.keys(r).reduce(function(i, a) {
+    var s = r[a];
+    return Ft.call(i, a) ? i[a] = t(i[a], s, o) : i[a] = s, i;
+  }, n);
+}, Eo = function(t, e) {
+  return Object.keys(e).reduce(function(r, o) {
+    return r[o] = e[o], r;
+  }, t);
+}, jo = function(t, e, r) {
+  var o = t.replace(/\+/g, " ");
+  if (r === "iso-8859-1")
+    return o.replace(/%[0-9a-f]{2}/gi, unescape);
+  try {
+    return decodeURIComponent(o);
+  } catch {
+    return o;
+  }
+}, To = function(t, e, r, o, n) {
+  if (t.length === 0)
+    return t;
+  var i = t;
+  if (typeof t == "symbol" ? i = Symbol.prototype.toString.call(t) : typeof t != "string" && (i = String(t)), r === "iso-8859-1")
+    return escape(i).replace(/%u[0-9a-f]{4}/gi, function(f) {
+      return "%26%23" + parseInt(f.slice(2), 16) + "%3B";
+    });
+  for (var a = "", s = 0; s < i.length; ++s) {
+    var u = i.charCodeAt(s);
+    if (u === 45 || u === 46 || u === 95 || u === 126 || u >= 48 && u <= 57 || u >= 65 && u <= 90 || u >= 97 && u <= 122 || n === Ao.RFC1738 && (u === 40 || u === 41)) {
+      a += i.charAt(s);
+      continue;
+    }
+    if (u < 128) {
+      a = a + B[u];
+      continue;
+    }
+    if (u < 2048) {
+      a = a + (B[192 | u >> 6] + B[128 | u & 63]);
+      continue;
+    }
+    if (u < 55296 || u >= 57344) {
+      a = a + (B[224 | u >> 12] + B[128 | u >> 6 & 63] + B[128 | u & 63]);
+      continue;
+    }
+    s += 1, u = 65536 + ((u & 1023) << 10 | i.charCodeAt(s) & 1023), a += B[240 | u >> 18] + B[128 | u >> 12 & 63] + B[128 | u >> 6 & 63] + B[128 | u & 63];
+  }
+  return a;
+}, Po = function(t) {
+  for (var e = [{ obj: { o: t }, prop: "o" }], r = [], o = 0; o < e.length; ++o)
+    for (var n = e[o], i = n.obj[n.prop], a = Object.keys(i), s = 0; s < a.length; ++s) {
+      var u = a[s], f = i[u];
+      typeof f == "object" && f !== null && r.indexOf(f) === -1 && (e.push({ obj: i, prop: u }), r.push(f));
+    }
+  return _o(e), t;
+}, xo = function(t) {
+  return Object.prototype.toString.call(t) === "[object RegExp]";
+}, ko = function(t) {
+  return !t || typeof t != "object" ? !1 : !!(t.constructor && t.constructor.isBuffer && t.constructor.isBuffer(t));
+}, Ro = function(t, e) {
+  return [].concat(t, e);
+}, Co = function(t, e) {
+  if (K(t)) {
+    for (var r = [], o = 0; o < t.length; o += 1)
+      r.push(e(t[o]));
+    return r;
+  }
+  return e(t);
+}, Ve = {
+  arrayToObject: Je,
+  assign: Eo,
+  combine: Ro,
+  compact: Po,
+  decode: jo,
+  encode: To,
+  isBuffer: ko,
+  isRegExp: xo,
+  maybeMap: Co,
+  merge: Oo
+}, Qe = vo, Jt = Ve, yt = re, Io = Object.prototype.hasOwnProperty, Se = {
+  brackets: function(t) {
+    return t + "[]";
+  },
+  comma: "comma",
+  indices: function(t, e) {
+    return t + "[" + e + "]";
+  },
+  repeat: function(t) {
+    return t;
+  }
+}, W = Array.isArray, No = String.prototype.split, Fo = Array.prototype.push, Ke = function(t, e) {
+  Fo.apply(t, W(e) ? e : [e]);
+}, Uo = Date.prototype.toISOString, Ae = yt.default, R = {
+  addQueryPrefix: !1,
+  allowDots: !1,
+  charset: "utf-8",
+  charsetSentinel: !1,
+  delimiter: "&",
+  encode: !0,
+  encoder: Jt.encode,
+  encodeValuesOnly: !1,
+  format: Ae,
+  formatter: yt.formatters[Ae],
+  // deprecated
+  indices: !1,
+  serializeDate: function(t) {
+    return Uo.call(t);
+  },
+  skipNulls: !1,
+  strictNullHandling: !1
+}, Do = function(t) {
+  return typeof t == "string" || typeof t == "number" || typeof t == "boolean" || typeof t == "symbol" || typeof t == "bigint";
+}, Ut = {}, Lo = function t(e, r, o, n, i, a, s, u, f, b, v, m, S, w, C, x) {
+  for (var h = e, k = x, F = 0, E = !1; (k = k.get(Ut)) !== void 0 && !E; ) {
+    var U = k.get(e);
+    if (F += 1, typeof U < "u") {
+      if (U === F)
+        throw new RangeError("Cyclic object value");
+      E = !0;
+    }
+    typeof k.get(Ut) > "u" && (F = 0);
+  }
+  if (typeof u == "function" ? h = u(r, h) : h instanceof Date ? h = v(h) : o === "comma" && W(h) && (h = Jt.maybeMap(h, function(N) {
+    return N instanceof Date ? v(N) : N;
+  })), h === null) {
+    if (i)
+      return s && !w ? s(r, R.encoder, C, "key", m) : r;
+    h = "";
+  }
+  if (Do(h) || Jt.isBuffer(h)) {
+    if (s) {
+      var M = w ? r : s(r, R.encoder, C, "key", m);
+      if (o === "comma" && w) {
+        for (var j = No.call(String(h), ","), T = "", _ = 0; _ < j.length; ++_)
+          T += (_ === 0 ? "" : ",") + S(s(j[_], R.encoder, C, "value", m));
+        return [S(M) + (n && W(h) && j.length === 1 ? "[]" : "") + "=" + T];
+      }
+      return [S(M) + "=" + S(s(h, R.encoder, C, "value", m))];
+    }
+    return [S(r) + "=" + S(String(h))];
+  }
+  var D = [];
+  if (typeof h > "u")
+    return D;
+  var q;
+  if (o === "comma" && W(h))
+    q = [{ value: h.length > 0 ? h.join(",") || null : void 0 }];
+  else if (W(u))
+    q = u;
+  else {
+    var $ = Object.keys(h);
+    q = f ? $.sort(f) : $;
+  }
+  for (var l = n && W(h) && h.length === 1 ? r + "[]" : r, c = 0; c < q.length; ++c) {
+    var p = q[c], y = typeof p == "object" && typeof p.value < "u" ? p.value : h[p];
+    if (!(a && y === null)) {
+      var d = W(h) ? typeof o == "function" ? o(l, p) : l : l + (b ? "." + p : "[" + p + "]");
+      x.set(e, F);
+      var g = Qe();
+      g.set(Ut, x), Ke(D, t(
+        y,
+        d,
+        o,
+        n,
+        i,
+        a,
+        s,
+        u,
+        f,
+        b,
+        v,
+        m,
+        S,
+        w,
+        C,
+        g
+      ));
+    }
+  }
+  return D;
+}, Mo = function(t) {
+  if (!t)
+    return R;
+  if (t.encoder !== null && typeof t.encoder < "u" && typeof t.encoder != "function")
+    throw new TypeError("Encoder has to be a function.");
+  var e = t.charset || R.charset;
+  if (typeof t.charset < "u" && t.charset !== "utf-8" && t.charset !== "iso-8859-1")
+    throw new TypeError("The charset option must be either utf-8, iso-8859-1, or undefined");
+  var r = yt.default;
+  if (typeof t.format < "u") {
+    if (!Io.call(yt.formatters, t.format))
+      throw new TypeError("Unknown format option provided.");
+    r = t.format;
+  }
+  var o = yt.formatters[r], n = R.filter;
+  return (typeof t.filter == "function" || W(t.filter)) && (n = t.filter), {
+    addQueryPrefix: typeof t.addQueryPrefix == "boolean" ? t.addQueryPrefix : R.addQueryPrefix,
+    allowDots: typeof t.allowDots > "u" ? R.allowDots : !!t.allowDots,
+    charset: e,
+    charsetSentinel: typeof t.charsetSentinel == "boolean" ? t.charsetSentinel : R.charsetSentinel,
+    delimiter: typeof t.delimiter > "u" ? R.delimiter : t.delimiter,
+    encode: typeof t.encode == "boolean" ? t.encode : R.encode,
+    encoder: typeof t.encoder == "function" ? t.encoder : R.encoder,
+    encodeValuesOnly: typeof t.encodeValuesOnly == "boolean" ? t.encodeValuesOnly : R.encodeValuesOnly,
+    filter: n,
+    format: r,
+    formatter: o,
+    serializeDate: typeof t.serializeDate == "function" ? t.serializeDate : R.serializeDate,
+    skipNulls: typeof t.skipNulls == "boolean" ? t.skipNulls : R.skipNulls,
+    sort: typeof t.sort == "function" ? t.sort : null,
+    strictNullHandling: typeof t.strictNullHandling == "boolean" ? t.strictNullHandling : R.strictNullHandling
+  };
+}, qo = function(t, e) {
+  var r = t, o = Mo(e), n, i;
+  typeof o.filter == "function" ? (i = o.filter, r = i("", r)) : W(o.filter) && (i = o.filter, n = i);
+  var a = [];
+  if (typeof r != "object" || r === null)
+    return "";
+  var s;
+  e && e.arrayFormat in Se ? s = e.arrayFormat : e && "indices" in e ? s = e.indices ? "indices" : "repeat" : s = "indices";
+  var u = Se[s];
+  if (e && "commaRoundTrip" in e && typeof e.commaRoundTrip != "boolean")
+    throw new TypeError("`commaRoundTrip` must be a boolean, or absent");
+  var f = u === "comma" && e && e.commaRoundTrip;
+  n || (n = Object.keys(r)), o.sort && n.sort(o.sort);
+  for (var b = Qe(), v = 0; v < n.length; ++v) {
+    var m = n[v];
+    o.skipNulls && r[m] === null || Ke(a, Lo(
+      r[m],
+      m,
+      u,
+      f,
+      o.strictNullHandling,
+      o.skipNulls,
+      o.encode ? o.encoder : null,
+      o.filter,
+      o.sort,
+      o.allowDots,
+      o.serializeDate,
+      o.format,
+      o.formatter,
+      o.encodeValuesOnly,
+      o.charset,
+      b
+    ));
+  }
+  var S = a.join(o.delimiter), w = o.addQueryPrefix === !0 ? "?" : "";
+  return o.charsetSentinel && (o.charset === "iso-8859-1" ? w += "utf8=%26%2310003%3B&" : w += "utf8=%E2%9C%93&"), S.length > 0 ? w + S : "";
+}, lt = Ve, Vt = Object.prototype.hasOwnProperty, Bo = Array.isArray, P = {
+  allowDots: !1,
+  allowPrototypes: !1,
+  allowSparse: !1,
+  arrayLimit: 20,
+  charset: "utf-8",
+  charsetSentinel: !1,
+  comma: !1,
+  decoder: lt.decode,
+  delimiter: "&",
+  depth: 5,
+  ignoreQueryPrefix: !1,
+  interpretNumericEntities: !1,
+  parameterLimit: 1e3,
+  parseArrays: !0,
+  plainObjects: !1,
+  strictNullHandling: !1
+}, zo = function(t) {
+  return t.replace(/&#(\d+);/g, function(e, r) {
+    return String.fromCharCode(parseInt(r, 10));
+  });
+}, Xe = function(t, e) {
+  return t && typeof t == "string" && e.comma && t.indexOf(",") > -1 ? t.split(",") : t;
+}, Ho = "utf8=%26%2310003%3B", $o = "utf8=%E2%9C%93", Wo = function(t, e) {
+  var r = {}, o = e.ignoreQueryPrefix ? t.replace(/^\?/, "") : t, n = e.parameterLimit === 1 / 0 ? void 0 : e.parameterLimit, i = o.split(e.delimiter, n), a = -1, s, u = e.charset;
+  if (e.charsetSentinel)
+    for (s = 0; s < i.length; ++s)
+      i[s].indexOf("utf8=") === 0 && (i[s] === $o ? u = "utf-8" : i[s] === Ho && (u = "iso-8859-1"), a = s, s = i.length);
+  for (s = 0; s < i.length; ++s)
+    if (s !== a) {
+      var f = i[s], b = f.indexOf("]="), v = b === -1 ? f.indexOf("=") : b + 1, m, S;
+      v === -1 ? (m = e.decoder(f, P.decoder, u, "key"), S = e.strictNullHandling ? null : "") : (m = e.decoder(f.slice(0, v), P.decoder, u, "key"), S = lt.maybeMap(
+        Xe(f.slice(v + 1), e),
+        function(w) {
+          return e.decoder(w, P.decoder, u, "value");
+        }
+      )), S && e.interpretNumericEntities && u === "iso-8859-1" && (S = zo(S)), f.indexOf("[]=") > -1 && (S = Bo(S) ? [S] : S), Vt.call(r, m) ? r[m] = lt.combine(r[m], S) : r[m] = S;
+    }
+  return r;
+}, Go = function(t, e, r, o) {
+  for (var n = o ? e : Xe(e, r), i = t.length - 1; i >= 0; --i) {
+    var a, s = t[i];
+    if (s === "[]" && r.parseArrays)
+      a = [].concat(n);
+    else {
+      a = r.plainObjects ? /* @__PURE__ */ Object.create(null) : {};
+      var u = s.charAt(0) === "[" && s.charAt(s.length - 1) === "]" ? s.slice(1, -1) : s, f = parseInt(u, 10);
+      !r.parseArrays && u === "" ? a = { 0: n } : !isNaN(f) && s !== u && String(f) === u && f >= 0 && r.parseArrays && f <= r.arrayLimit ? (a = [], a[f] = n) : u !== "__proto__" && (a[u] = n);
+    }
+    n = a;
+  }
+  return n;
+}, Jo = function(t, e, r, o) {
+  if (t) {
+    var n = r.allowDots ? t.replace(/\.([^.[]+)/g, "[$1]") : t, i = /(\[[^[\]]*])/, a = /(\[[^[\]]*])/g, s = r.depth > 0 && i.exec(n), u = s ? n.slice(0, s.index) : n, f = [];
+    if (u) {
+      if (!r.plainObjects && Vt.call(Object.prototype, u) && !r.allowPrototypes)
+        return;
+      f.push(u);
+    }
+    for (var b = 0; r.depth > 0 && (s = a.exec(n)) !== null && b < r.depth; ) {
+      if (b += 1, !r.plainObjects && Vt.call(Object.prototype, s[1].slice(1, -1)) && !r.allowPrototypes)
+        return;
+      f.push(s[1]);
+    }
+    return s && f.push("[" + n.slice(s.index) + "]"), Go(f, e, r, o);
+  }
+}, Vo = function(t) {
+  if (!t)
+    return P;
+  if (t.decoder !== null && t.decoder !== void 0 && typeof t.decoder != "function")
+    throw new TypeError("Decoder has to be a function.");
+  if (typeof t.charset < "u" && t.charset !== "utf-8" && t.charset !== "iso-8859-1")
+    throw new TypeError("The charset option must be either utf-8, iso-8859-1, or undefined");
+  var e = typeof t.charset > "u" ? P.charset : t.charset;
+  return {
+    allowDots: typeof t.allowDots > "u" ? P.allowDots : !!t.allowDots,
+    allowPrototypes: typeof t.allowPrototypes == "boolean" ? t.allowPrototypes : P.allowPrototypes,
+    allowSparse: typeof t.allowSparse == "boolean" ? t.allowSparse : P.allowSparse,
+    arrayLimit: typeof t.arrayLimit == "number" ? t.arrayLimit : P.arrayLimit,
+    charset: e,
+    charsetSentinel: typeof t.charsetSentinel == "boolean" ? t.charsetSentinel : P.charsetSentinel,
+    comma: typeof t.comma == "boolean" ? t.comma : P.comma,
+    decoder: typeof t.decoder == "function" ? t.decoder : P.decoder,
+    delimiter: typeof t.delimiter == "string" || lt.isRegExp(t.delimiter) ? t.delimiter : P.delimiter,
+    // eslint-disable-next-line no-implicit-coercion, no-extra-parens
+    depth: typeof t.depth == "number" || t.depth === !1 ? +t.depth : P.depth,
+    ignoreQueryPrefix: t.ignoreQueryPrefix === !0,
+    interpretNumericEntities: typeof t.interpretNumericEntities == "boolean" ? t.interpretNumericEntities : P.interpretNumericEntities,
+    parameterLimit: typeof t.parameterLimit == "number" ? t.parameterLimit : P.parameterLimit,
+    parseArrays: t.parseArrays !== !1,
+    plainObjects: typeof t.plainObjects == "boolean" ? t.plainObjects : P.plainObjects,
+    strictNullHandling: typeof t.strictNullHandling == "boolean" ? t.strictNullHandling : P.strictNullHandling
+  };
+}, Qo = function(t, e) {
+  var r = Vo(e);
+  if (t === "" || t === null || typeof t > "u")
+    return r.plainObjects ? /* @__PURE__ */ Object.create(null) : {};
+  for (var o = typeof t == "string" ? Wo(t, r) : t, n = r.plainObjects ? /* @__PURE__ */ Object.create(null) : {}, i = Object.keys(o), a = 0; a < i.length; ++a) {
+    var s = i[a], u = Jo(s, o[s], r, typeof t == "string");
+    n = lt.merge(n, u, r);
+  }
+  return r.allowSparse === !0 ? n : lt.compact(n);
+}, Ko = qo, Xo = Qo, Zo = re, Yo = {
+  formats: Zo,
+  parse: Xo,
+  stringify: Ko
+}, jt = {};
+(function(t) {
+  function e(n, i) {
+    var a = typeof Symbol < "u" && n[Symbol.iterator] || n["@@iterator"];
+    if (!a) {
+      if (Array.isArray(n) || (a = r(n)) || i && n && typeof n.length == "number") {
+        a && (n = a);
+        var s = 0, u = function() {
+        };
+        return { s: u, n: function() {
+          return s >= n.length ? { done: !0 } : { done: !1, value: n[s++] };
+        }, e: function(m) {
+          throw m;
+        }, f: u };
+      }
+      throw new TypeError(`Invalid attempt to iterate non-iterable instance.
+In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
+    }
+    var f = !0, b = !1, v;
+    return { s: function() {
+      a = a.call(n);
+    }, n: function() {
+      var m = a.next();
+      return f = m.done, m;
+    }, e: function(m) {
+      b = !0, v = m;
+    }, f: function() {
+      try {
+        !f && a.return != null && a.return();
+      } finally {
+        if (b)
+          throw v;
+      }
+    } };
+  }
+  function r(n, i) {
+    if (n) {
+      if (typeof n == "string")
+        return o(n, i);
+      var a = Object.prototype.toString.call(n).slice(8, -1);
+      if (a === "Object" && n.constructor && (a = n.constructor.name), a === "Map" || a === "Set")
+        return Array.from(n);
+      if (a === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(a))
+        return o(n, i);
+    }
+  }
+  function o(n, i) {
+    (i == null || i > n.length) && (i = n.length);
+    for (var a = 0, s = new Array(i); a < i; a++)
+      s[a] = n[a];
+    return s;
+  }
+  t.type = (n) => n.split(/ *; */).shift(), t.params = (n) => {
+    const i = {};
+    var a = e(n.split(/ *; */)), s;
+    try {
+      for (a.s(); !(s = a.n()).done; ) {
+        const u = s.value.split(/ *= */), f = u.shift(), b = u.shift();
+        f && b && (i[f] = b);
+      }
+    } catch (u) {
+      a.e(u);
+    } finally {
+      a.f();
+    }
+    return i;
+  }, t.parseLinks = (n) => {
+    const i = {};
+    var a = e(n.split(/ *, */)), s;
+    try {
+      for (a.s(); !(s = a.n()).done; ) {
+        const u = s.value.split(/ *; */), f = u[0].slice(1, -1), b = u[1].split(/ *= */)[1].slice(1, -1);
+        i[b] = f;
+      }
+    } catch (u) {
+      a.e(u);
+    } finally {
+      a.f();
+    }
+    return i;
+  }, t.cleanHeader = (n, i) => (delete n["content-type"], delete n["content-length"], delete n["transfer-encoding"], delete n.host, i && (delete n.authorization, delete n.cookie), n), t.isObject = (n) => n !== null && typeof n == "object", t.hasOwn = Object.hasOwn || function(n, i) {
+    if (n == null)
+      throw new TypeError("Cannot convert undefined or null to object");
+    return Object.prototype.hasOwnProperty.call(new Object(n), i);
+  }, t.mixin = (n, i) => {
+    for (const a in i)
+      t.hasOwn(i, a) && (n[a] = i[a]);
+  };
+})(jt);
+const _e = qe, Ze = jt, Et = Ze.isObject, dt = Ze.hasOwn;
+var tn = O;
+function O() {
+}
+O.prototype.clearTimeout = function() {
   return clearTimeout(this._timer), clearTimeout(this._responseTimeoutTimer), clearTimeout(this._uploadTimeoutTimer), delete this._timer, delete this._responseTimeoutTimer, delete this._uploadTimeoutTimer, this;
 };
-E.prototype.parse = function(i) {
-  return this._parser = i, this;
+O.prototype.parse = function(t) {
+  return this._parser = t, this;
 };
-E.prototype.responseType = function(i) {
-  return this._responseType = i, this;
+O.prototype.responseType = function(t) {
+  return this._responseType = t, this;
 };
-E.prototype.serialize = function(i) {
-  return this._serializer = i, this;
+O.prototype.serialize = function(t) {
+  return this._serializer = t, this;
 };
-E.prototype.timeout = function(i) {
-  if (!i || j(i) !== "object")
-    return this._timeout = i, this._responseTimeout = 0, this._uploadTimeout = 0, this;
-  for (var u in i)
-    if (Object.prototype.hasOwnProperty.call(i, u))
-      switch (u) {
+O.prototype.timeout = function(t) {
+  if (!t || typeof t != "object")
+    return this._timeout = t, this._responseTimeout = 0, this._uploadTimeout = 0, this;
+  for (const e in t)
+    if (dt(t, e))
+      switch (e) {
         case "deadline":
-          this._timeout = i.deadline;
+          this._timeout = t.deadline;
           break;
         case "response":
-          this._responseTimeout = i.response;
+          this._responseTimeout = t.response;
           break;
         case "upload":
-          this._uploadTimeout = i.upload;
+          this._uploadTimeout = t.upload;
           break;
         default:
-          console.warn("Unknown timeout option", u);
+          console.warn("Unknown timeout option", e);
       }
   return this;
 };
-E.prototype.retry = function(i, u) {
-  return (arguments.length === 0 || i === !0) && (i = 1), i <= 0 && (i = 0), this._maxRetries = i, this._retries = 0, this._retryCallback = u, this;
+O.prototype.retry = function(t, e) {
+  return (arguments.length === 0 || t === !0) && (t = 1), t <= 0 && (t = 0), this._maxRetries = t, this._retries = 0, this._retryCallback = e, this;
 };
-var Ye = ["ECONNRESET", "ETIMEDOUT", "EADDRINFO", "ESOCKETTIMEDOUT"];
-E.prototype._shouldRetry = function(i, u) {
+const en = /* @__PURE__ */ new Set(["ETIMEDOUT", "ECONNRESET", "EADDRINUSE", "ECONNREFUSED", "EPIPE", "ENOTFOUND", "ENETUNREACH", "EAI_AGAIN"]), rn = /* @__PURE__ */ new Set([408, 413, 429, 500, 502, 503, 504, 521, 522, 524]);
+O.prototype._shouldRetry = function(t, e) {
   if (!this._maxRetries || this._retries++ >= this._maxRetries)
     return !1;
   if (this._retryCallback)
     try {
-      var y = this._retryCallback(i, u);
-      if (y === !0)
+      const r = this._retryCallback(t, e);
+      if (r === !0)
         return !0;
-      if (y === !1)
+      if (r === !1)
         return !1;
-    } catch (l) {
-      console.error(l);
+    } catch (r) {
+      console.error(r);
     }
-  return !!(u && u.status && u.status >= 500 && u.status !== 501 || i && (i.code && Ye.includes(i.code) || i.timeout && i.code === "ECONNABORTED" || i.crossDomain));
+  return !!(e && e.status && rn.has(e.status) || t && (t.code && en.has(t.code) || t.timeout && t.code === "ECONNABORTED" || t.crossDomain));
 };
-E.prototype._retry = function() {
+O.prototype._retry = function() {
   return this.clearTimeout(), this.req && (this.req = null, this.req = this.request()), this._aborted = !1, this.timedout = !1, this.timedoutError = null, this._end();
 };
-E.prototype.then = function(i, u) {
-  var y = this;
+O.prototype.then = function(t, e) {
   if (!this._fullfilledPromise) {
-    var l = this;
-    this._endCalled && console.warn("Warning: superagent request was sent twice, because both .end() and .then() were called. Never call .end() if you use promises"), this._fullfilledPromise = new Promise(function(p, v) {
-      l.on("abort", function() {
-        if (!(y._maxRetries && y._maxRetries > y._retries)) {
-          if (y.timedout && y.timedoutError) {
-            v(y.timedoutError);
-            return;
-          }
-          var b = new Error("Aborted");
-          b.code = "ABORTED", b.status = y.status, b.method = y.method, b.url = y.url, v(b);
+    const r = this;
+    this._endCalled && console.warn("Warning: superagent request was sent twice, because both .end() and .then() were called. Never call .end() if you use promises"), this._fullfilledPromise = new Promise((o, n) => {
+      r.on("abort", () => {
+        if (this._maxRetries && this._maxRetries > this._retries)
+          return;
+        if (this.timedout && this.timedoutError) {
+          n(this.timedoutError);
+          return;
         }
-      }), l.end(function(b, w) {
-        b ? v(b) : p(w);
+        const i = new Error("Aborted");
+        i.code = "ABORTED", i.status = this.status, i.method = this.method, i.url = this.url, n(i);
+      }), r.end((i, a) => {
+        i ? n(i) : o(a);
       });
     });
   }
-  return this._fullfilledPromise.then(i, u);
+  return this._fullfilledPromise.then(t, e);
 };
-E.prototype.catch = function(i) {
-  return this.then(void 0, i);
+O.prototype.catch = function(t) {
+  return this.then(void 0, t);
 };
-E.prototype.use = function(i) {
-  return i(this), this;
+O.prototype.use = function(t) {
+  return t(this), this;
 };
-E.prototype.ok = function(i) {
-  if (typeof i != "function")
+O.prototype.ok = function(t) {
+  if (typeof t != "function")
     throw new Error("Callback required");
-  return this._okCallback = i, this;
+  return this._okCallback = t, this;
 };
-E.prototype._isResponseOK = function(i) {
-  return i ? this._okCallback ? this._okCallback(i) : i.status >= 200 && i.status < 300 : !1;
+O.prototype._isResponseOK = function(t) {
+  return t ? this._okCallback ? this._okCallback(t) : t.status >= 200 && t.status < 300 : !1;
 };
-E.prototype.get = function(i) {
-  return this._header[i.toLowerCase()];
+O.prototype.get = function(t) {
+  return this._header[t.toLowerCase()];
 };
-E.prototype.getHeader = E.prototype.get;
-E.prototype.set = function(i, u) {
-  if (W(i)) {
-    for (var y in i)
-      Object.prototype.hasOwnProperty.call(i, y) && this.set(y, i[y]);
+O.prototype.getHeader = O.prototype.get;
+O.prototype.set = function(t, e) {
+  if (Et(t)) {
+    for (const r in t)
+      dt(t, r) && this.set(r, t[r]);
     return this;
   }
-  return this._header[i.toLowerCase()] = u, this.header[i] = u, this;
+  return this._header[t.toLowerCase()] = e, this.header[t] = e, this;
 };
-E.prototype.unset = function(i) {
-  return delete this._header[i.toLowerCase()], delete this.header[i], this;
+O.prototype.unset = function(t) {
+  return delete this._header[t.toLowerCase()], delete this.header[t], this;
 };
-E.prototype.field = function(i, u) {
-  if (i == null)
+O.prototype.field = function(t, e, r) {
+  if (t == null)
     throw new Error(".field(name, val) name can not be empty");
   if (this._data)
     throw new Error(".field() can't be used if .send() is used. Please use only .send() or only .field() & .attach()");
-  if (W(i)) {
-    for (var y in i)
-      Object.prototype.hasOwnProperty.call(i, y) && this.field(y, i[y]);
+  if (Et(t)) {
+    for (const o in t)
+      dt(t, o) && this.field(o, t[o]);
     return this;
   }
-  if (Array.isArray(u)) {
-    for (var l in u)
-      Object.prototype.hasOwnProperty.call(u, l) && this.field(i, u[l]);
+  if (Array.isArray(e)) {
+    for (const o in e)
+      dt(e, o) && this.field(t, e[o]);
     return this;
   }
-  if (u == null)
+  if (e == null)
     throw new Error(".field(name, val) val can not be empty");
-  return typeof u == "boolean" && (u = String(u)), this._getFormData().append(i, u), this;
+  return typeof e == "boolean" && (e = String(e)), r ? this._getFormData().append(t, e, r) : this._getFormData().append(t, e), this;
 };
-E.prototype.abort = function() {
-  return this._aborted ? this : (this._aborted = !0, this.xhr && this.xhr.abort(), this.req && this.req.abort(), this.clearTimeout(), this.emit("abort"), this);
+O.prototype.abort = function() {
+  if (this._aborted)
+    return this;
+  if (this._aborted = !0, this.xhr && this.xhr.abort(), this.req) {
+    if (_e.gte(process.version, "v13.0.0") && _e.lt(process.version, "v14.0.0"))
+      throw new Error("Superagent does not work in v13 properly with abort() due to Node.js core changes");
+    this.req.abort();
+  }
+  return this.clearTimeout(), this.emit("abort"), this;
 };
-E.prototype._auth = function(i, u, y, l) {
-  switch (y.type) {
+O.prototype._auth = function(t, e, r, o) {
+  switch (r.type) {
     case "basic":
-      this.set("Authorization", "Basic ".concat(l("".concat(i, ":").concat(u))));
+      this.set("Authorization", `Basic ${o(`${t}:${e}`)}`);
       break;
     case "auto":
-      this.username = i, this.password = u;
+      this.username = t, this.password = e;
       break;
     case "bearer":
-      this.set("Authorization", "Bearer ".concat(i));
+      this.set("Authorization", `Bearer ${t}`);
       break;
   }
   return this;
 };
-E.prototype.withCredentials = function(i) {
-  return i === void 0 && (i = !0), this._withCredentials = i, this;
+O.prototype.withCredentials = function(t) {
+  return t === void 0 && (t = !0), this._withCredentials = t, this;
 };
-E.prototype.redirects = function(i) {
-  return this._maxRedirects = i, this;
+O.prototype.redirects = function(t) {
+  return this._maxRedirects = t, this;
 };
-E.prototype.maxResponseSize = function(i) {
-  if (typeof i != "number")
+O.prototype.maxResponseSize = function(t) {
+  if (typeof t != "number")
     throw new TypeError("Invalid argument");
-  return this._maxResponseSize = i, this;
+  return this._maxResponseSize = t, this;
 };
-E.prototype.toJSON = function() {
+O.prototype.toJSON = function() {
   return {
     method: this.method,
     url: this.url,
@@ -394,3178 +1583,889 @@ E.prototype.toJSON = function() {
     headers: this._header
   };
 };
-E.prototype.send = function(i) {
-  var u = W(i), y = this._header["content-type"];
+O.prototype.send = function(t) {
+  const e = Et(t);
+  let r = this._header["content-type"];
   if (this._formData)
     throw new Error(".send() can't be used if .attach() or .field() is used. Please use only .send() or only .field() & .attach()");
-  if (u && !this._data)
-    Array.isArray(i) ? this._data = [] : this._isHost(i) || (this._data = {});
-  else if (i && this._data && this._isHost(this._data))
+  if (e && !this._data)
+    Array.isArray(t) ? this._data = [] : this._isHost(t) || (this._data = {});
+  else if (t && this._data && this._isHost(this._data))
     throw new Error("Can't merge these send calls");
-  if (u && W(this._data))
-    for (var l in i)
-      Object.prototype.hasOwnProperty.call(i, l) && (this._data[l] = i[l]);
-  else
-    typeof i == "string" ? (y || this.type("form"), y = this._header["content-type"], y === "application/x-www-form-urlencoded" ? this._data = this._data ? "".concat(this._data, "&").concat(i) : i : this._data = (this._data || "") + i) : this._data = i;
-  return !u || this._isHost(i) ? this : (y || this.type("json"), this);
+  if (e && Et(this._data))
+    for (const o in t) {
+      if (typeof t[o] == "bigint" && !t[o].toJSON)
+        throw new Error("Cannot serialize BigInt value to json");
+      dt(t, o) && (this._data[o] = t[o]);
+    }
+  else {
+    if (typeof t == "bigint")
+      throw new Error("Cannot send value of type BigInt");
+    typeof t == "string" ? (r || this.type("form"), r = this._header["content-type"], r && (r = r.toLowerCase().trim()), r === "application/x-www-form-urlencoded" ? this._data = this._data ? `${this._data}&${t}` : t : this._data = (this._data || "") + t) : this._data = t;
+  }
+  return !e || this._isHost(t) ? this : (r || this.type("json"), this);
 };
-E.prototype.sortQuery = function(i) {
-  return this._sort = typeof i > "u" ? !0 : i, this;
+O.prototype.sortQuery = function(t) {
+  return this._sort = typeof t > "u" ? !0 : t, this;
 };
-E.prototype._finalizeQueryString = function() {
-  var i = this._query.join("&");
-  if (i && (this.url += (this.url.includes("?") ? "&" : "?") + i), this._query.length = 0, this._sort) {
-    var u = this.url.indexOf("?");
-    if (u >= 0) {
-      var y = this.url.slice(u + 1).split("&");
-      typeof this._sort == "function" ? y.sort(this._sort) : y.sort(), this.url = this.url.slice(0, u) + "?" + y.join("&");
+O.prototype._finalizeQueryString = function() {
+  const t = this._query.join("&");
+  if (t && (this.url += (this.url.includes("?") ? "&" : "?") + t), this._query.length = 0, this._sort) {
+    const e = this.url.indexOf("?");
+    if (e >= 0) {
+      const r = this.url.slice(e + 1).split("&");
+      typeof this._sort == "function" ? r.sort(this._sort) : r.sort(), this.url = this.url.slice(0, e) + "?" + r.join("&");
     }
   }
 };
-E.prototype._appendQueryString = function() {
+O.prototype._appendQueryString = () => {
   console.warn("Unsupported");
 };
-E.prototype._timeoutError = function(i, u, y) {
-  if (!this._aborted) {
-    var l = new Error("".concat(i + u, "ms exceeded"));
-    l.timeout = u, l.code = "ECONNABORTED", l.errno = y, this.timedout = !0, this.timedoutError = l, this.abort(), this.callback(l);
-  }
+O.prototype._timeoutError = function(t, e, r) {
+  if (this._aborted)
+    return;
+  const o = new Error(`${t + e}ms exceeded`);
+  o.timeout = e, o.code = "ECONNABORTED", o.errno = r, this.timedout = !0, this.timedoutError = o, this.abort(), this.callback(o);
 };
-E.prototype._setTimeouts = function() {
-  var i = this;
-  this._timeout && !this._timer && (this._timer = setTimeout(function() {
-    i._timeoutError("Timeout of ", i._timeout, "ETIME");
-  }, this._timeout)), this._responseTimeout && !this._responseTimeoutTimer && (this._responseTimeoutTimer = setTimeout(function() {
-    i._timeoutError("Response timeout of ", i._responseTimeout, "ETIMEDOUT");
+O.prototype._setTimeouts = function() {
+  const t = this;
+  this._timeout && !this._timer && (this._timer = setTimeout(() => {
+    t._timeoutError("Timeout of ", t._timeout, "ETIME");
+  }, this._timeout)), this._responseTimeout && !this._responseTimeoutTimer && (this._responseTimeoutTimer = setTimeout(() => {
+    t._timeoutError("Response timeout of ", t._responseTimeout, "ETIMEDOUT");
   }, this._responseTimeout));
 };
-var L = {};
-L.type = function(i) {
-  return i.split(/ *; */).shift();
-};
-L.params = function(i) {
-  return i.split(/ *; */).reduce(function(u, y) {
-    var l = y.split(/ *= */), p = l.shift(), v = l.shift();
-    return p && v && (u[p] = v), u;
-  }, {});
-};
-L.parseLinks = function(i) {
-  return i.split(/ *, */).reduce(function(u, y) {
-    var l = y.split(/ *; */), p = l[0].slice(1, -1), v = l[1].split(/ *= */)[1].slice(1, -1);
-    return u[v] = p, u;
-  }, {});
-};
-L.cleanHeader = function(i, u) {
-  return delete i["content-type"], delete i["content-length"], delete i["transfer-encoding"], delete i.host, u && (delete i.authorization, delete i.cookie), i;
-};
-var X = L, Ze = x;
-function x(i) {
-  if (i)
-    return et(i);
+const Dt = jt;
+var on = Tt;
+function Tt() {
 }
-function et(i) {
-  for (var u in x.prototype)
-    Object.prototype.hasOwnProperty.call(x.prototype, u) && (i[u] = x.prototype[u]);
-  return i;
-}
-x.prototype.get = function(i) {
-  return this.header[i.toLowerCase()];
+Tt.prototype.get = function(t) {
+  return this.header[t.toLowerCase()];
 };
-x.prototype._setHeaderProperties = function(i) {
-  var u = i["content-type"] || "";
-  this.type = X.type(u);
-  var y = X.params(u);
-  for (var l in y)
-    Object.prototype.hasOwnProperty.call(y, l) && (this[l] = y[l]);
+Tt.prototype._setHeaderProperties = function(t) {
+  const e = t["content-type"] || "";
+  this.type = Dt.type(e);
+  const r = Dt.params(e);
+  for (const o in r)
+    Object.prototype.hasOwnProperty.call(r, o) && (this[o] = r[o]);
   this.links = {};
   try {
-    i.link && (this.links = X.parseLinks(i.link));
+    t.link && (this.links = Dt.parseLinks(t.link));
   } catch {
   }
 };
-x.prototype._setStatusProperties = function(i) {
-  var u = i / 100 | 0;
-  this.statusCode = i, this.status = this.statusCode, this.statusType = u, this.info = u === 1, this.ok = u === 2, this.redirect = u === 3, this.clientError = u === 4, this.serverError = u === 5, this.error = u === 4 || u === 5 ? this.toError() : !1, this.created = i === 201, this.accepted = i === 202, this.noContent = i === 204, this.badRequest = i === 400, this.unauthorized = i === 401, this.notAcceptable = i === 406, this.forbidden = i === 403, this.notFound = i === 404, this.unprocessableEntity = i === 422;
+Tt.prototype._setStatusProperties = function(t) {
+  const e = Math.trunc(t / 100);
+  this.statusCode = t, this.status = this.statusCode, this.statusType = e, this.info = e === 1, this.ok = e === 2, this.redirect = e === 3, this.clientError = e === 4, this.serverError = e === 5, this.error = e === 4 || e === 5 ? this.toError() : !1, this.created = t === 201, this.accepted = t === 202, this.noContent = t === 204, this.badRequest = t === 400, this.unauthorized = t === 401, this.notAcceptable = t === 406, this.forbidden = t === 403, this.notFound = t === 404, this.unprocessableEntity = t === 422;
 };
-function tt(i) {
-  return ot(i) || it(i) || nt(i) || rt();
-}
-function rt() {
-  throw new TypeError(`Invalid attempt to spread non-iterable instance.
+function nn(t, e) {
+  var r = typeof Symbol < "u" && t[Symbol.iterator] || t["@@iterator"];
+  if (!r) {
+    if (Array.isArray(t) || (r = an(t)) || e && t && typeof t.length == "number") {
+      r && (t = r);
+      var o = 0, n = function() {
+      };
+      return { s: n, n: function() {
+        return o >= t.length ? { done: !0 } : { done: !1, value: t[o++] };
+      }, e: function(u) {
+        throw u;
+      }, f: n };
+    }
+    throw new TypeError(`Invalid attempt to iterate non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
+  }
+  var i = !0, a = !1, s;
+  return { s: function() {
+    r = r.call(t);
+  }, n: function() {
+    var u = r.next();
+    return i = u.done, u;
+  }, e: function(u) {
+    a = !0, s = u;
+  }, f: function() {
+    try {
+      !i && r.return != null && r.return();
+    } finally {
+      if (a)
+        throw s;
+    }
+  } };
 }
-function nt(i, u) {
-  if (i) {
-    if (typeof i == "string")
-      return re(i, u);
-    var y = Object.prototype.toString.call(i).slice(8, -1);
-    if (y === "Object" && i.constructor && (y = i.constructor.name), y === "Map" || y === "Set")
-      return Array.from(i);
-    if (y === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(y))
-      return re(i, u);
+function an(t, e) {
+  if (t) {
+    if (typeof t == "string")
+      return Oe(t, e);
+    var r = Object.prototype.toString.call(t).slice(8, -1);
+    if (r === "Object" && t.constructor && (r = t.constructor.name), r === "Map" || r === "Set")
+      return Array.from(t);
+    if (r === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(r))
+      return Oe(t, e);
   }
 }
-function it(i) {
-  if (typeof Symbol < "u" && Symbol.iterator in Object(i))
-    return Array.from(i);
+function Oe(t, e) {
+  (e == null || e > t.length) && (e = t.length);
+  for (var r = 0, o = new Array(e); r < e; r++)
+    o[r] = t[r];
+  return o;
 }
-function ot(i) {
-  if (Array.isArray(i))
-    return re(i);
-}
-function re(i, u) {
-  (u == null || u > i.length) && (u = i.length);
-  for (var y = 0, l = new Array(u); y < u; y++)
-    l[y] = i[y];
-  return l;
-}
-function ne() {
+function oe() {
   this._defaults = [];
 }
-["use", "on", "once", "set", "query", "type", "accept", "auth", "withCredentials", "sortQuery", "retry", "ok", "redirects", "timeout", "buffer", "serialize", "parse", "ca", "key", "pfx", "cert", "disableTLSCerts"].forEach(function(i) {
-  ne.prototype[i] = function() {
-    for (var u = arguments.length, y = new Array(u), l = 0; l < u; l++)
-      y[l] = arguments[l];
+for (var Lt = 0, Ee = ["use", "on", "once", "set", "query", "type", "accept", "auth", "withCredentials", "sortQuery", "retry", "ok", "redirects", "timeout", "buffer", "serialize", "parse", "ca", "key", "pfx", "cert", "disableTLSCerts"]; Lt < Ee.length; Lt++) {
+  const t = Ee[Lt];
+  oe.prototype[t] = function() {
+    for (var e = arguments.length, r = new Array(e), o = 0; o < e; o++)
+      r[o] = arguments[o];
     return this._defaults.push({
-      fn: i,
-      args: y
+      fn: t,
+      args: r
     }), this;
   };
-});
-ne.prototype._setDefaults = function(i) {
-  this._defaults.forEach(function(u) {
-    i[u.fn].apply(i, tt(u.args));
-  });
+}
+oe.prototype._setDefaults = function(t) {
+  var e = nn(this._defaults), r;
+  try {
+    for (e.s(); !(r = e.n()).done; ) {
+      const o = r.value;
+      t[o.fn](...o.args);
+    }
+  } catch (o) {
+    e.e(o);
+  } finally {
+    e.f();
+  }
 };
-var ut = ne;
-(function(i, u) {
-  function y(s) {
-    "@babel/helpers - typeof";
-    return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? y = function(m) {
-      return typeof m;
-    } : y = function(m) {
-      return m && typeof Symbol == "function" && m.constructor === Symbol && m !== Symbol.prototype ? "symbol" : typeof m;
-    }, y(s);
+var sn = oe;
+(function(t, e) {
+  function r(l, c) {
+    var p = typeof Symbol < "u" && l[Symbol.iterator] || l["@@iterator"];
+    if (!p) {
+      if (Array.isArray(l) || (p = o(l)) || c && l && typeof l.length == "number") {
+        p && (l = p);
+        var y = 0, d = function() {
+        };
+        return { s: d, n: function() {
+          return y >= l.length ? { done: !0 } : { done: !1, value: l[y++] };
+        }, e: function(G) {
+          throw G;
+        }, f: d };
+      }
+      throw new TypeError(`Invalid attempt to iterate non-iterable instance.
+In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
+    }
+    var g = !0, N = !1, et;
+    return { s: function() {
+      p = p.call(l);
+    }, n: function() {
+      var G = p.next();
+      return g = G.done, G;
+    }, e: function(G) {
+      N = !0, et = G;
+    }, f: function() {
+      try {
+        !g && p.return != null && p.return();
+      } finally {
+        if (N)
+          throw et;
+      }
+    } };
   }
-  var l;
-  typeof window < "u" ? l = window : typeof self > "u" ? (console.warn("Using browser-only version of superagent in non-browser environment"), l = void 0) : l = self;
-  var p = We, v = $e, b = Xe, w = Ie, T = Ze, S = ut;
-  function O() {
+  function o(l, c) {
+    if (l) {
+      if (typeof l == "string")
+        return n(l, c);
+      var p = Object.prototype.toString.call(l).slice(8, -1);
+      if (p === "Object" && l.constructor && (p = l.constructor.name), p === "Map" || p === "Set")
+        return Array.from(l);
+      if (p === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(p))
+        return n(l, c);
+    }
   }
-  i.exports = function(s, d) {
-    return typeof d == "function" ? new u.Request("GET", s).end(d) : arguments.length === 1 ? new u.Request("GET", s) : new u.Request(s, d);
-  }, u = i.exports;
-  var n = u;
-  u.Request = g, n.getXHR = function() {
-    if (l.XMLHttpRequest && (!l.location || l.location.protocol !== "file:" || !l.ActiveXObject))
-      return new XMLHttpRequest();
-    try {
-      return new ActiveXObject("Microsoft.XMLHTTP");
-    } catch {
-    }
-    try {
-      return new ActiveXObject("Msxml2.XMLHTTP.6.0");
-    } catch {
-    }
-    try {
-      return new ActiveXObject("Msxml2.XMLHTTP.3.0");
-    } catch {
-    }
-    try {
-      return new ActiveXObject("Msxml2.XMLHTTP");
-    } catch {
-    }
+  function n(l, c) {
+    (c == null || c > l.length) && (c = l.length);
+    for (var p = 0, y = new Array(c); p < c; p++)
+      y[p] = l[p];
+    return y;
+  }
+  let i;
+  typeof window < "u" ? i = window : typeof self > "u" ? (console.warn("Using browser-only version of superagent in non-browser environment"), i = void 0) : i = self;
+  const a = rr, s = or, u = Yo, f = tn, b = jt, v = b.isObject, m = b.mixin, S = b.hasOwn, w = on, C = sn;
+  function x() {
+  }
+  t.exports = function(l, c) {
+    return typeof c == "function" ? new e.Request("GET", l).end(c) : arguments.length === 1 ? new e.Request("GET", l) : new e.Request(l, c);
+  }, e = t.exports;
+  const h = e;
+  e.Request = _, h.getXHR = () => {
+    if (i.XMLHttpRequest)
+      return new i.XMLHttpRequest();
     throw new Error("Browser-only version of superagent could not find XHR");
   };
-  var t = "".trim ? function(s) {
-    return s.trim();
-  } : function(s) {
-    return s.replace(/(^\s*|\s*$)/g, "");
-  };
-  function r(s) {
-    if (!w(s))
-      return s;
-    var d = [];
-    for (var m in s)
-      Object.prototype.hasOwnProperty.call(s, m) && e(d, m, s[m]);
-    return d.join("&");
+  const k = "".trim ? (l) => l.trim() : (l) => l.replace(/(^\s*|\s*$)/g, "");
+  function F(l) {
+    if (!v(l))
+      return l;
+    const c = [];
+    for (const p in l)
+      S(l, p) && E(c, p, l[p]);
+    return c.join("&");
   }
-  function e(s, d, m) {
-    if (m !== void 0) {
-      if (m === null) {
-        s.push(encodeURI(d));
+  function E(l, c, p) {
+    if (p !== void 0) {
+      if (p === null) {
+        l.push(encodeURI(c));
         return;
       }
-      if (Array.isArray(m))
-        m.forEach(function(P) {
-          e(s, d, P);
-        });
-      else if (w(m))
-        for (var _ in m)
-          Object.prototype.hasOwnProperty.call(m, _) && e(s, "".concat(d, "[").concat(_, "]"), m[_]);
+      if (Array.isArray(p)) {
+        var y = r(p), d;
+        try {
+          for (y.s(); !(d = y.n()).done; ) {
+            const g = d.value;
+            E(l, c, g);
+          }
+        } catch (g) {
+          y.e(g);
+        } finally {
+          y.f();
+        }
+      } else if (v(p))
+        for (const g in p)
+          S(p, g) && E(l, `${c}[${g}]`, p[g]);
       else
-        s.push(encodeURI(d) + "=" + encodeURIComponent(m));
+        l.push(encodeURI(c) + "=" + encodeURIComponent(p));
     }
   }
-  n.serializeObject = r;
-  function o(s) {
-    for (var d = {}, m = s.split("&"), _, P, A = 0, C = m.length; A < C; ++A)
-      _ = m[A], P = _.indexOf("="), P === -1 ? d[decodeURIComponent(_)] = "" : d[decodeURIComponent(_.slice(0, P))] = decodeURIComponent(_.slice(P + 1));
-    return d;
+  h.serializeObject = F;
+  function U(l) {
+    const c = {}, p = l.split("&");
+    let y, d;
+    for (let g = 0, N = p.length; g < N; ++g)
+      y = p[g], d = y.indexOf("="), d === -1 ? c[decodeURIComponent(y)] = "" : c[decodeURIComponent(y.slice(0, d))] = decodeURIComponent(y.slice(d + 1));
+    return c;
   }
-  n.parseString = o, n.types = {
+  h.parseString = U, h.types = {
     html: "text/html",
     json: "application/json",
     xml: "text/xml",
     urlencoded: "application/x-www-form-urlencoded",
     form: "application/x-www-form-urlencoded",
     "form-data": "application/x-www-form-urlencoded"
-  }, n.serialize = {
-    "application/x-www-form-urlencoded": r,
-    "application/json": v
-  }, n.parse = {
-    "application/x-www-form-urlencoded": o,
+  }, h.serialize = {
+    "application/x-www-form-urlencoded": u.stringify,
+    "application/json": s
+  }, h.parse = {
+    "application/x-www-form-urlencoded": U,
     "application/json": JSON.parse
   };
-  function f(s) {
-    for (var d = s.split(/\r?\n/), m = {}, _, P, A, C, k = 0, I = d.length; k < I; ++k)
-      P = d[k], _ = P.indexOf(":"), _ !== -1 && (A = P.slice(0, _).toLowerCase(), C = t(P.slice(_ + 1)), m[A] = C);
-    return m;
+  function M(l) {
+    const c = l.split(/\r?\n/), p = {};
+    let y, d, g, N;
+    for (let et = 0, G = c.length; et < G; ++et)
+      d = c[et], y = d.indexOf(":"), y !== -1 && (g = d.slice(0, y).toLowerCase(), N = k(d.slice(y + 1)), p[g] = N);
+    return p;
   }
-  function a(s) {
-    return /[/+]json($|[^-\w])/.test(s);
+  function j(l) {
+    return /[/+]json($|[^-\w])/i.test(l);
   }
-  function c(s) {
-    this.req = s, this.xhr = this.req.xhr, this.text = this.req.method !== "HEAD" && (this.xhr.responseType === "" || this.xhr.responseType === "text") || typeof this.xhr.responseType > "u" ? this.xhr.responseText : null, this.statusText = this.req.xhr.statusText;
-    var d = this.xhr.status;
-    d === 1223 && (d = 204), this._setStatusProperties(d), this.headers = f(this.xhr.getAllResponseHeaders()), this.header = this.headers, this.header["content-type"] = this.xhr.getResponseHeader("content-type"), this._setHeaderProperties(this.header), this.text === null && s._responseType ? this.body = this.xhr.response : this.body = this.req.method === "HEAD" ? null : this._parseBody(this.text ? this.text : this.xhr.response);
+  function T(l) {
+    this.req = l, this.xhr = this.req.xhr, this.text = this.req.method !== "HEAD" && (this.xhr.responseType === "" || this.xhr.responseType === "text") || typeof this.xhr.responseType > "u" ? this.xhr.responseText : null, this.statusText = this.req.xhr.statusText;
+    let c = this.xhr.status;
+    c === 1223 && (c = 204), this._setStatusProperties(c), this.headers = M(this.xhr.getAllResponseHeaders()), this.header = this.headers, this.header["content-type"] = this.xhr.getResponseHeader("content-type"), this._setHeaderProperties(this.header), this.text === null && l._responseType ? this.body = this.xhr.response : this.body = this.req.method === "HEAD" ? null : this._parseBody(this.text ? this.text : this.xhr.response);
   }
-  T(c.prototype), c.prototype._parseBody = function(s) {
-    var d = n.parse[this.type];
-    return this.req._parser ? this.req._parser(this, s) : (!d && a(this.type) && (d = n.parse["application/json"]), d && s && (s.length > 0 || s instanceof Object) ? d(s) : null);
-  }, c.prototype.toError = function() {
-    var s = this.req, d = s.method, m = s.url, _ = "cannot ".concat(d, " ").concat(m, " (").concat(this.status, ")"), P = new Error(_);
-    return P.status = this.status, P.method = d, P.url = m, P;
-  }, n.Response = c;
-  function g(s, d) {
-    var m = this;
-    this._query = this._query || [], this.method = s, this.url = d, this.header = {}, this._header = {}, this.on("end", function() {
-      var _ = null, P = null;
+  m(T.prototype, w.prototype), T.prototype._parseBody = function(l) {
+    let c = h.parse[this.type];
+    return this.req._parser ? this.req._parser(this, l) : (!c && j(this.type) && (c = h.parse["application/json"]), c && l && (l.length > 0 || l instanceof Object) ? c(l) : null);
+  }, T.prototype.toError = function() {
+    const l = this.req, c = l.method, p = l.url, y = `cannot ${c} ${p} (${this.status})`, d = new Error(y);
+    return d.status = this.status, d.method = c, d.url = p, d;
+  }, h.Response = T;
+  function _(l, c) {
+    const p = this;
+    this._query = this._query || [], this.method = l, this.url = c, this.header = {}, this._header = {}, this.on("end", () => {
+      let y = null, d = null;
       try {
-        P = new c(m);
-      } catch (C) {
-        return _ = new Error("Parser is unable to parse the response"), _.parse = !0, _.original = C, m.xhr ? (_.rawResponse = typeof m.xhr.responseType > "u" ? m.xhr.responseText : m.xhr.response, _.status = m.xhr.status ? m.xhr.status : null, _.statusCode = _.status) : (_.rawResponse = null, _.status = null), m.callback(_);
+        d = new T(p);
+      } catch (N) {
+        return y = new Error("Parser is unable to parse the response"), y.parse = !0, y.original = N, p.xhr ? (y.rawResponse = typeof p.xhr.responseType > "u" ? p.xhr.responseText : p.xhr.response, y.status = p.xhr.status ? p.xhr.status : null, y.statusCode = y.status) : (y.rawResponse = null, y.status = null), p.callback(y);
       }
-      m.emit("response", P);
-      var A;
+      p.emit("response", d);
+      let g;
       try {
-        m._isResponseOK(P) || (A = new Error(P.statusText || P.text || "Unsuccessful HTTP response"));
-      } catch (C) {
-        A = C;
+        p._isResponseOK(d) || (g = new Error(d.statusText || d.text || "Unsuccessful HTTP response"));
+      } catch (N) {
+        g = N;
       }
-      A ? (A.original = _, A.response = P, A.status = P.status, m.callback(A, P)) : m.callback(null, P);
+      g ? (g.original = y, g.response = d, g.status = g.status || d.status, p.callback(g, d)) : p.callback(null, d);
     });
   }
-  p(g.prototype), b(g.prototype), g.prototype.type = function(s) {
-    return this.set("Content-Type", n.types[s] || s), this;
-  }, g.prototype.accept = function(s) {
-    return this.set("Accept", n.types[s] || s), this;
-  }, g.prototype.auth = function(s, d, m) {
-    arguments.length === 1 && (d = ""), y(d) === "object" && d !== null && (m = d, d = ""), m || (m = {
+  a(_.prototype), m(_.prototype, f.prototype), _.prototype.type = function(l) {
+    return this.set("Content-Type", h.types[l] || l), this;
+  }, _.prototype.accept = function(l) {
+    return this.set("Accept", h.types[l] || l), this;
+  }, _.prototype.auth = function(l, c, p) {
+    arguments.length === 1 && (c = ""), typeof c == "object" && c !== null && (p = c, c = ""), p || (p = {
       type: typeof btoa == "function" ? "basic" : "auto"
     });
-    var _ = function(A) {
+    const y = p.encoder ? p.encoder : (d) => {
       if (typeof btoa == "function")
-        return btoa(A);
+        return btoa(d);
       throw new Error("Cannot use basic auth, btoa is not a function");
     };
-    return this._auth(s, d, m, _);
-  }, g.prototype.query = function(s) {
-    return typeof s != "string" && (s = r(s)), s && this._query.push(s), this;
-  }, g.prototype.attach = function(s, d, m) {
-    if (d) {
+    return this._auth(l, c, p, y);
+  }, _.prototype.query = function(l) {
+    return typeof l != "string" && (l = F(l)), l && this._query.push(l), this;
+  }, _.prototype.attach = function(l, c, p) {
+    if (c) {
       if (this._data)
         throw new Error("superagent can't mix .send() and .attach()");
-      this._getFormData().append(s, d, m || d.name);
+      this._getFormData().append(l, c, p || c.name);
     }
     return this;
-  }, g.prototype._getFormData = function() {
-    return this._formData || (this._formData = new l.FormData()), this._formData;
-  }, g.prototype.callback = function(s, d) {
-    if (this._shouldRetry(s, d))
+  }, _.prototype._getFormData = function() {
+    return this._formData || (this._formData = new i.FormData()), this._formData;
+  }, _.prototype.callback = function(l, c) {
+    if (this._shouldRetry(l, c))
       return this._retry();
-    var m = this._callback;
-    this.clearTimeout(), s && (this._maxRetries && (s.retries = this._retries - 1), this.emit("error", s)), m(s, d);
-  }, g.prototype.crossDomainError = function() {
-    var s = new Error(`Request has been terminated
+    const p = this._callback;
+    this.clearTimeout(), l && (this._maxRetries && (l.retries = this._retries - 1), this.emit("error", l)), p(l, c);
+  }, _.prototype.crossDomainError = function() {
+    const l = new Error(`Request has been terminated
 Possible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.`);
-    s.crossDomain = !0, s.status = this.status, s.method = this.method, s.url = this.url, this.callback(s);
-  }, g.prototype.agent = function() {
+    l.crossDomain = !0, l.status = this.status, l.method = this.method, l.url = this.url, this.callback(l);
+  }, _.prototype.agent = function() {
     return console.warn("This is not supported in browser version of superagent"), this;
-  }, g.prototype.ca = g.prototype.agent, g.prototype.buffer = g.prototype.ca, g.prototype.write = function() {
+  }, _.prototype.ca = _.prototype.agent, _.prototype.buffer = _.prototype.ca, _.prototype.write = () => {
     throw new Error("Streaming is not supported in browser version of superagent");
-  }, g.prototype.pipe = g.prototype.write, g.prototype._isHost = function(s) {
-    return s && y(s) === "object" && !Array.isArray(s) && Object.prototype.toString.call(s) !== "[object Object]";
-  }, g.prototype.end = function(s) {
-    this._endCalled && console.warn("Warning: .end() was called twice. This is not supported in superagent"), this._endCalled = !0, this._callback = s || O, this._finalizeQueryString(), this._end();
-  }, g.prototype._setUploadTimeout = function() {
-    var s = this;
-    this._uploadTimeout && !this._uploadTimeoutTimer && (this._uploadTimeoutTimer = setTimeout(function() {
-      s._timeoutError("Upload timeout of ", s._uploadTimeout, "ETIMEDOUT");
+  }, _.prototype.pipe = _.prototype.write, _.prototype._isHost = function(l) {
+    return l && typeof l == "object" && !Array.isArray(l) && Object.prototype.toString.call(l) !== "[object Object]";
+  }, _.prototype.end = function(l) {
+    this._endCalled && console.warn("Warning: .end() was called twice. This is not supported in superagent"), this._endCalled = !0, this._callback = l || x, this._finalizeQueryString(), this._end();
+  }, _.prototype._setUploadTimeout = function() {
+    const l = this;
+    this._uploadTimeout && !this._uploadTimeoutTimer && (this._uploadTimeoutTimer = setTimeout(() => {
+      l._timeoutError("Upload timeout of ", l._uploadTimeout, "ETIMEDOUT");
     }, this._uploadTimeout));
-  }, g.prototype._end = function() {
+  }, _.prototype._end = function() {
     if (this._aborted)
       return this.callback(new Error("The request has been aborted even before .end() was called"));
-    var s = this;
-    this.xhr = n.getXHR();
-    var d = this.xhr, m = this._formData || this._data;
-    this._setTimeouts(), d.onreadystatechange = function() {
-      var k = d.readyState;
-      if (k >= 2 && s._responseTimeoutTimer && clearTimeout(s._responseTimeoutTimer), k === 4) {
-        var I;
-        try {
-          I = d.status;
-        } catch {
-          I = 0;
-        }
-        if (!I)
-          return s.timedout || s._aborted ? void 0 : s.crossDomainError();
-        s.emit("end");
+    const l = this;
+    this.xhr = h.getXHR();
+    const c = this.xhr;
+    let p = this._formData || this._data;
+    this._setTimeouts(), c.addEventListener("readystatechange", () => {
+      const d = c.readyState;
+      if (d >= 2 && l._responseTimeoutTimer && clearTimeout(l._responseTimeoutTimer), d !== 4)
+        return;
+      let g;
+      try {
+        g = c.status;
+      } catch {
+        g = 0;
       }
-    };
-    var _ = function(I, R) {
-      R.total > 0 && (R.percent = R.loaded / R.total * 100, R.percent === 100 && clearTimeout(s._uploadTimeoutTimer)), R.direction = I, s.emit("progress", R);
+      if (!g)
+        return l.timedout || l._aborted ? void 0 : l.crossDomainError();
+      l.emit("end");
+    });
+    const y = (d, g) => {
+      g.total > 0 && (g.percent = g.loaded / g.total * 100, g.percent === 100 && clearTimeout(l._uploadTimeoutTimer)), g.direction = d, l.emit("progress", g);
     };
     if (this.hasListeners("progress"))
       try {
-        d.addEventListener("progress", _.bind(null, "download")), d.upload && d.upload.addEventListener("progress", _.bind(null, "upload"));
+        c.addEventListener("progress", y.bind(null, "download")), c.upload && c.upload.addEventListener("progress", y.bind(null, "upload"));
       } catch {
       }
-    d.upload && this._setUploadTimeout();
+    c.upload && this._setUploadTimeout();
     try {
-      this.username && this.password ? d.open(this.method, this.url, !0, this.username, this.password) : d.open(this.method, this.url, !0);
-    } catch (k) {
-      return this.callback(k);
+      this.username && this.password ? c.open(this.method, this.url, !0, this.username, this.password) : c.open(this.method, this.url, !0);
+    } catch (d) {
+      return this.callback(d);
     }
-    if (this._withCredentials && (d.withCredentials = !0), !this._formData && this.method !== "GET" && this.method !== "HEAD" && typeof m != "string" && !this._isHost(m)) {
-      var P = this._header["content-type"], A = this._serializer || n.serialize[P ? P.split(";")[0] : ""];
-      !A && a(P) && (A = n.serialize["application/json"]), A && (m = A(m));
+    if (this._withCredentials && (c.withCredentials = !0), !this._formData && this.method !== "GET" && this.method !== "HEAD" && typeof p != "string" && !this._isHost(p)) {
+      const d = this._header["content-type"];
+      let g = this._serializer || h.serialize[d ? d.split(";")[0] : ""];
+      !g && j(d) && (g = h.serialize["application/json"]), g && (p = g(p));
     }
-    for (var C in this.header)
-      this.header[C] !== null && Object.prototype.hasOwnProperty.call(this.header, C) && d.setRequestHeader(C, this.header[C]);
-    this._responseType && (d.responseType = this._responseType), this.emit("request", this), d.send(typeof m > "u" ? null : m);
-  }, n.agent = function() {
-    return new S();
-  }, ["GET", "POST", "OPTIONS", "PATCH", "PUT", "DELETE"].forEach(function(s) {
-    S.prototype[s.toLowerCase()] = function(d, m) {
-      var _ = new n.Request(s, d);
-      return this._setDefaults(_), m && _.end(m), _;
+    for (const d in this.header)
+      this.header[d] !== null && S(this.header, d) && c.setRequestHeader(d, this.header[d]);
+    this._responseType && (c.responseType = this._responseType), this.emit("request", this), c.send(typeof p > "u" ? null : p);
+  }, h.agent = () => new C();
+  for (var D = 0, q = ["GET", "POST", "OPTIONS", "PATCH", "PUT", "DELETE"]; D < q.length; D++) {
+    const l = q[D];
+    C.prototype[l.toLowerCase()] = function(c, p) {
+      const y = new h.Request(l, c);
+      return this._setDefaults(y), p && y.end(p), y;
     };
-  }), S.prototype.del = S.prototype.delete, n.get = function(s, d, m) {
-    var _ = n("GET", s);
-    return typeof d == "function" && (m = d, d = null), d && _.query(d), m && _.end(m), _;
-  }, n.head = function(s, d, m) {
-    var _ = n("HEAD", s);
-    return typeof d == "function" && (m = d, d = null), d && _.query(d), m && _.end(m), _;
-  }, n.options = function(s, d, m) {
-    var _ = n("OPTIONS", s);
-    return typeof d == "function" && (m = d, d = null), d && _.send(d), m && _.end(m), _;
+  }
+  C.prototype.del = C.prototype.delete, h.get = (l, c, p) => {
+    const y = h("GET", l);
+    return typeof c == "function" && (p = c, c = null), c && y.query(c), p && y.end(p), y;
+  }, h.head = (l, c, p) => {
+    const y = h("HEAD", l);
+    return typeof c == "function" && (p = c, c = null), c && y.query(c), p && y.end(p), y;
+  }, h.options = (l, c, p) => {
+    const y = h("OPTIONS", l);
+    return typeof c == "function" && (p = c, c = null), c && y.send(c), p && y.end(p), y;
   };
-  function h(s, d, m) {
-    var _ = n("DELETE", s);
-    return typeof d == "function" && (m = d, d = null), d && _.send(d), m && _.end(m), _;
+  function $(l, c, p) {
+    const y = h("DELETE", l);
+    return typeof c == "function" && (p = c, c = null), c && y.send(c), p && y.end(p), y;
   }
-  n.del = h, n.delete = h, n.patch = function(s, d, m) {
-    var _ = n("PATCH", s);
-    return typeof d == "function" && (m = d, d = null), d && _.send(d), m && _.end(m), _;
-  }, n.post = function(s, d, m) {
-    var _ = n("POST", s);
-    return typeof d == "function" && (m = d, d = null), d && _.send(d), m && _.end(m), _;
-  }, n.put = function(s, d, m) {
-    var _ = n("PUT", s);
-    return typeof d == "function" && (m = d, d = null), d && _.send(d), m && _.end(m), _;
+  h.del = $, h.delete = $, h.patch = (l, c, p) => {
+    const y = h("PATCH", l);
+    return typeof c == "function" && (p = c, c = null), c && y.send(c), p && y.end(p), y;
+  }, h.post = (l, c, p) => {
+    const y = h("POST", l);
+    return typeof c == "function" && (p = c, c = null), c && y.send(c), p && y.end(p), y;
+  }, h.put = (l, c, p) => {
+    const y = h("PUT", l);
+    return typeof c == "function" && (p = c, c = null), c && y.send(c), p && y.end(p), y;
   };
-})(Z, Z.exports);
-var ft = Z.exports;
-const lt = {}, at = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: lt
-}, Symbol.toStringTag, { value: "Module" })), we = /* @__PURE__ */ Ue(at);
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = l(ft), y = l(we);
-  function l(t) {
-    return t && t.__esModule ? t : { default: t };
+})(Mt, Mt.exports);
+var ln = Mt.exports;
+const je = /* @__PURE__ */ tr(ln);
+class L {
+  /**
+   * The base URL against which to resolve every API call's (relative) path.
+   * Overrides the default value set in spec file if present
+   * @param {String} basePath
+   */
+  constructor(e = "https://api.flyo.cloud/nitro/v1") {
+    this.basePath = e.replace(/\/+$/, ""), this.authentications = {
+      ApiToken: { type: "apiKey", in: "query", name: "token" }
+    }, this.defaultHeaders = {
+      "User-Agent": "OpenAPI-Generator/1.0.0-beta.164/Javascript"
+    }, this.timeout = 6e4, this.cache = !0, this.enableCookies = !1, typeof window > "u" && (this.agent = new je.agent()), this.requestAgent = null, this.plugins = null;
   }
-  function p(t) {
-    "@babel/helpers - typeof";
-    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(r) {
-      return typeof r;
-    } : function(r) {
-      return r && typeof Symbol == "function" && r.constructor === Symbol && r !== Symbol.prototype ? "symbol" : typeof r;
-    }, p(t);
+  /**
+  * Returns a string representation for an actual parameter.
+  * @param param The actual parameter.
+  * @returns {String} The string representation of <code>param</code>.
+  */
+  paramToString(e) {
+    return e == null || e == null ? "" : e instanceof Date ? e.toJSON() : L.canBeJsonified(e) ? JSON.stringify(e) : e.toString();
   }
-  function v(t, r) {
-    if (!(t instanceof r))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function b(t, r) {
-    for (var e = 0; e < r.length; e++) {
-      var o = r[e];
-      o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(t, T(o.key), o);
+  /**
+  * Returns a boolean indicating if the parameter could be JSON.stringified
+  * @param param The actual parameter
+  * @returns {Boolean} Flag indicating if <code>param</code> can be JSON.stringified
+  */
+  static canBeJsonified(e) {
+    if (typeof e != "string" && typeof e != "object")
+      return !1;
+    try {
+      const r = e.toString();
+      return r === "[object Object]" || r === "[object Array]";
+    } catch {
+      return !1;
     }
   }
-  function w(t, r, e) {
-    return r && b(t.prototype, r), e && b(t, e), Object.defineProperty(t, "prototype", { writable: !1 }), t;
+  /**
+   * Builds full URL by appending the given path to the base URL and replacing path parameter place-holders with parameter values.
+   * NOTE: query parameters are not handled here.
+   * @param {String} path The path to append to the base URL.
+   * @param {Object} pathParams The parameter values to append.
+   * @param {String} apiBasePath Base path defined in the path, operation level to override the default one
+   * @returns {String} The encoded path with parameter values substituted.
+   */
+  buildUrl(e, r, o) {
+    e.match(/^\//) || (e = "/" + e);
+    var n = this.basePath + e;
+    return o != null && (n = o + e), n = n.replace(/\{([\w-\.]+)\}/g, (i, a) => {
+      var s;
+      return r.hasOwnProperty(a) ? s = this.paramToString(r[a]) : s = i, encodeURIComponent(s);
+    }), n;
   }
-  function T(t) {
-    var r = S(t, "string");
-    return p(r) === "symbol" ? r : String(r);
+  /**
+  * Checks whether the given content type represents JSON.<br>
+  * JSON content type examples:<br>
+  * <ul>
+  * <li>application/json</li>
+  * <li>application/json; charset=UTF8</li>
+  * <li>APPLICATION/JSON</li>
+  * </ul>
+  * @param {String} contentType The MIME content type to check.
+  * @returns {Boolean} <code>true</code> if <code>contentType</code> represents JSON, otherwise <code>false</code>.
+  */
+  isJsonMime(e) {
+    return !!(e != null && e.match(/^application\/json(;.*)?$/i));
   }
-  function S(t, r) {
-    if (p(t) !== "object" || t === null)
-      return t;
-    var e = t[Symbol.toPrimitive];
-    if (e !== void 0) {
-      var o = e.call(t, r || "default");
-      if (p(o) !== "object")
-        return o;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
+  /**
+  * Chooses a content type from the given array, with JSON preferred; i.e. return JSON if included, otherwise return the first.
+  * @param {Array.<String>} contentTypes
+  * @returns {String} The chosen content type, preferring JSON.
+  */
+  jsonPreferredMime(e) {
+    for (var r = 0; r < e.length; r++)
+      if (this.isJsonMime(e[r]))
+        return e[r];
+    return e[0];
+  }
+  /**
+  * Checks whether the given parameter value represents file-like content.
+  * @param param The parameter to check.
+  * @returns {Boolean} <code>true</code> if <code>param</code> represents a file.
+  */
+  isFileParam(e) {
+    if (typeof require == "function") {
+      let r;
+      try {
+        r = require("fs");
+      } catch {
+      }
+      if (r && r.ReadStream && e instanceof r.ReadStream)
+        return !0;
     }
-    return (r === "string" ? String : Number)(t);
+    return typeof Buffer == "function" && e instanceof Buffer || typeof Blob == "function" && e instanceof Blob || typeof File == "function" && e instanceof File;
   }
-  var O = /* @__PURE__ */ function() {
-    function t() {
-      var r = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : "https://api.flyo.cloud/nitro/v1";
-      v(this, t), this.basePath = r.replace(/\/+$/, ""), this.authentications = {
-        ApiToken: {
-          type: "apiKey",
-          in: "query",
-          name: "token"
-        }
-      }, this.defaultHeaders = {
-        "User-Agent": "OpenAPI-Generator/1.0.0-beta.162/Javascript"
-      }, this.timeout = 6e4, this.cache = !0, this.enableCookies = !1, typeof window > "u" && (this.agent = new u.default.agent()), this.requestAgent = null, this.plugins = null;
+  /**
+  * Normalizes parameter values:
+  * <ul>
+  * <li>remove nils</li>
+  * <li>keep files and arrays</li>
+  * <li>format to string with `paramToString` for other cases</li>
+  * </ul>
+  * @param {Object.<String, Object>} params The parameters as object properties.
+  * @returns {Object.<String, Object>} normalized parameters.
+  */
+  normalizeParams(e) {
+    var r = {};
+    for (var o in e)
+      if (e.hasOwnProperty(o) && e[o] != null && e[o] != null) {
+        var n = e[o];
+        this.isFileParam(n) || Array.isArray(n) ? r[o] = n : r[o] = this.paramToString(n);
+      }
+    return r;
+  }
+  /**
+  * Builds a string representation of an array-type actual parameter, according to the given collection format.
+  * @param {Array} param An array parameter.
+  * @param {module:ApiClient.CollectionFormatEnum} collectionFormat The array element separator strategy.
+  * @returns {String|Array} A string representation of the supplied collection, using the specified delimiter. Returns
+  * <code>param</code> as is if <code>collectionFormat</code> is <code>multi</code>.
+  */
+  buildCollectionParam(e, r) {
+    if (e == null)
+      return null;
+    switch (r) {
+      case "csv":
+        return e.map(this.paramToString, this).join(",");
+      case "ssv":
+        return e.map(this.paramToString, this).join(" ");
+      case "tsv":
+        return e.map(this.paramToString, this).join("	");
+      case "pipes":
+        return e.map(this.paramToString, this).join("|");
+      case "multi":
+        return e.map(this.paramToString, this);
+      case "passthrough":
+        return e;
+      default:
+        throw new Error("Unknown collection format: " + r);
     }
-    return w(t, [{
-      key: "paramToString",
-      value: function(e) {
-        return e == null || e == null ? "" : e instanceof Date ? e.toJSON() : t.canBeJsonified(e) ? JSON.stringify(e) : e.toString();
-      }
-      /**
-      * Returns a boolean indicating if the parameter could be JSON.stringified
-      * @param param The actual parameter
-      * @returns {Boolean} Flag indicating if <code>param</code> can be JSON.stringified
-      */
-    }, {
-      key: "buildUrl",
-      value: (
-        /**
-         * Builds full URL by appending the given path to the base URL and replacing path parameter place-holders with parameter values.
-         * NOTE: query parameters are not handled here.
-         * @param {String} path The path to append to the base URL.
-         * @param {Object} pathParams The parameter values to append.
-         * @param {String} apiBasePath Base path defined in the path, operation level to override the default one
-         * @returns {String} The encoded path with parameter values substituted.
-         */
-        function(e, o, f) {
-          var a = this;
-          e.match(/^\//) || (e = "/" + e);
-          var c = this.basePath + e;
-          return f != null && (c = f + e), c = c.replace(/\{([\w-\.]+)\}/g, function(g, h) {
-            var s;
-            return o.hasOwnProperty(h) ? s = a.paramToString(o[h]) : s = g, encodeURIComponent(s);
-          }), c;
-        }
-      )
-      /**
-      * Checks whether the given content type represents JSON.<br>
-      * JSON content type examples:<br>
-      * <ul>
-      * <li>application/json</li>
-      * <li>application/json; charset=UTF8</li>
-      * <li>APPLICATION/JSON</li>
-      * </ul>
-      * @param {String} contentType The MIME content type to check.
-      * @returns {Boolean} <code>true</code> if <code>contentType</code> represents JSON, otherwise <code>false</code>.
-      */
-    }, {
-      key: "isJsonMime",
-      value: function(e) {
-        return !!(e != null && e.match(/^application\/json(;.*)?$/i));
-      }
-      /**
-      * Chooses a content type from the given array, with JSON preferred; i.e. return JSON if included, otherwise return the first.
-      * @param {Array.<String>} contentTypes
-      * @returns {String} The chosen content type, preferring JSON.
-      */
-    }, {
-      key: "jsonPreferredMime",
-      value: function(e) {
-        for (var o = 0; o < e.length; o++)
-          if (this.isJsonMime(e[o]))
-            return e[o];
-        return e[0];
-      }
-      /**
-      * Checks whether the given parameter value represents file-like content.
-      * @param param The parameter to check.
-      * @returns {Boolean} <code>true</code> if <code>param</code> represents a file.
-      */
-    }, {
-      key: "isFileParam",
-      value: function(e) {
-        if (typeof Ke == "function") {
-          var o;
-          try {
-            o = we;
-          } catch {
+  }
+  /**
+  * Applies authentication headers to the request.
+  * @param {Object} request The request object created by a <code>superagent()</code> call.
+  * @param {Array.<String>} authNames An array of authentication method names.
+  */
+  applyAuthToRequest(e, r) {
+    r.forEach((o) => {
+      var n = this.authentications[o];
+      switch (n.type) {
+        case "basic":
+          (n.username || n.password) && e.auth(n.username || "", n.password || "");
+          break;
+        case "bearer":
+          if (n.accessToken) {
+            var i = typeof n.accessToken == "function" ? n.accessToken() : n.accessToken;
+            e.set({ Authorization: "Bearer " + i });
           }
-          if (o && o.ReadStream && e instanceof o.ReadStream)
-            return !0;
-        }
-        return typeof Buffer == "function" && e instanceof Buffer || typeof Blob == "function" && e instanceof Blob || typeof File == "function" && e instanceof File;
-      }
-      /**
-      * Normalizes parameter values:
-      * <ul>
-      * <li>remove nils</li>
-      * <li>keep files and arrays</li>
-      * <li>format to string with `paramToString` for other cases</li>
-      * </ul>
-      * @param {Object.<String, Object>} params The parameters as object properties.
-      * @returns {Object.<String, Object>} normalized parameters.
-      */
-    }, {
-      key: "normalizeParams",
-      value: function(e) {
-        var o = {};
-        for (var f in e)
-          if (e.hasOwnProperty(f) && e[f] != null && e[f] != null) {
-            var a = e[f];
-            this.isFileParam(a) || Array.isArray(a) ? o[f] = a : o[f] = this.paramToString(a);
+          break;
+        case "apiKey":
+          if (n.apiKey) {
+            var a = {};
+            n.apiKeyPrefix ? a[n.name] = n.apiKeyPrefix + " " + n.apiKey : a[n.name] = n.apiKey, n.in === "header" ? e.set(a) : e.query(a);
           }
-        return o;
+          break;
+        case "oauth2":
+          n.accessToken && e.set({ Authorization: "Bearer " + n.accessToken });
+          break;
+        default:
+          throw new Error("Unknown authentication type: " + n.type);
       }
-      /**
-      * Builds a string representation of an array-type actual parameter, according to the given collection format.
-      * @param {Array} param An array parameter.
-      * @param {module:ApiClient.CollectionFormatEnum} collectionFormat The array element separator strategy.
-      * @returns {String|Array} A string representation of the supplied collection, using the specified delimiter. Returns
-      * <code>param</code> as is if <code>collectionFormat</code> is <code>multi</code>.
-      */
-    }, {
-      key: "buildCollectionParam",
-      value: function(e, o) {
-        if (e == null)
-          return null;
-        switch (o) {
-          case "csv":
-            return e.map(this.paramToString, this).join(",");
-          case "ssv":
-            return e.map(this.paramToString, this).join(" ");
-          case "tsv":
-            return e.map(this.paramToString, this).join("	");
-          case "pipes":
-            return e.map(this.paramToString, this).join("|");
-          case "multi":
-            return e.map(this.paramToString, this);
-          case "passthrough":
-            return e;
-          default:
-            throw new Error("Unknown collection format: " + o);
+    });
+  }
+  /**
+   * Deserializes an HTTP response body into a value of the specified type.
+   * @param {Object} response A SuperAgent response object.
+   * @param {(String|Array.<String>|Object.<String, Object>|Function)} returnType The type to return. Pass a string for simple types
+   * or the constructor function for a complex type. Pass an array containing the type name to return an array of that type. To
+   * return an object, pass an object with one property whose name is the key type and whose value is the corresponding value type:
+   * all properties on <code>data<code> will be converted to this type.
+   * @returns A value of the specified type.
+   */
+  deserialize(e, r) {
+    if (e == null || r == null || e.status == 204)
+      return null;
+    var o = e.body;
+    return (o == null || typeof o == "object" && typeof o.length > "u" && !Object.keys(o).length) && (o = e.text), L.convertToType(o, r);
+  }
+  /**
+   * Invokes the REST service using the supplied settings and parameters.
+   * @param {String} path The base URL to invoke.
+   * @param {String} httpMethod The HTTP method to use.
+   * @param {Object.<String, String>} pathParams A map of path parameters and their values.
+   * @param {Object.<String, Object>} queryParams A map of query parameters and their values.
+   * @param {Object.<String, Object>} headerParams A map of header parameters and their values.
+   * @param {Object.<String, Object>} formParams A map of form parameters and their values.
+   * @param {Object} bodyParam The value to pass as the request body.
+   * @param {Array.<String>} authNames An array of authentication type names.
+   * @param {Array.<String>} contentTypes An array of request MIME types.
+   * @param {Array.<String>} accepts An array of acceptable response MIME types.
+   * @param {(String|Array|ObjectFunction)} returnType The required type to return; can be a string for simple types or the
+   * constructor for a complex type.
+   * @param {String} apiBasePath base path defined in the operation/path level to override the default one
+   * @returns {Promise} A {@link https://www.promisejs.org/|Promise} object.
+   */
+  callApi(e, r, o, n, i, a, s, u, f, b, v, m) {
+    var S = this.buildUrl(e, o, m), w = je(r, S);
+    if (this.plugins !== null)
+      for (var C in this.plugins)
+        this.plugins.hasOwnProperty(C) && w.use(this.plugins[C]);
+    this.applyAuthToRequest(w, u), r.toUpperCase() === "GET" && this.cache === !1 && (n._ = (/* @__PURE__ */ new Date()).getTime()), w.query(this.normalizeParams(n)), w.set(this.defaultHeaders).set(this.normalizeParams(i)), this.requestAgent && w.agent(this.requestAgent), w.timeout(this.timeout);
+    var x = this.jsonPreferredMime(f);
+    if (x && x != "multipart/form-data" && w.type(x), x === "application/x-www-form-urlencoded")
+      w.send(Me.stringify(this.normalizeParams(a)));
+    else if (x == "multipart/form-data") {
+      var h = this.normalizeParams(a);
+      for (var k in h)
+        if (h.hasOwnProperty(k)) {
+          let E = h[k];
+          this.isFileParam(E) ? w.attach(k, E) : Array.isArray(E) && E.length && this.isFileParam(E[0]) ? E.forEach((U) => w.attach(k, U)) : w.field(k, E);
         }
-      }
-      /**
-      * Applies authentication headers to the request.
-      * @param {Object} request The request object created by a <code>superagent()</code> call.
-      * @param {Array.<String>} authNames An array of authentication method names.
-      */
-    }, {
-      key: "applyAuthToRequest",
-      value: function(e, o) {
-        var f = this;
-        o.forEach(function(a) {
-          var c = f.authentications[a];
-          switch (c.type) {
-            case "basic":
-              (c.username || c.password) && e.auth(c.username || "", c.password || "");
-              break;
-            case "bearer":
-              if (c.accessToken) {
-                var g = typeof c.accessToken == "function" ? c.accessToken() : c.accessToken;
-                e.set({
-                  Authorization: "Bearer " + g
-                });
-              }
-              break;
-            case "apiKey":
-              if (c.apiKey) {
-                var h = {};
-                c.apiKeyPrefix ? h[c.name] = c.apiKeyPrefix + " " + c.apiKey : h[c.name] = c.apiKey, c.in === "header" ? e.set(h) : e.query(h);
-              }
-              break;
-            case "oauth2":
-              c.accessToken && e.set({
-                Authorization: "Bearer " + c.accessToken
-              });
-              break;
-            default:
-              throw new Error("Unknown authentication type: " + c.type);
-          }
-        });
-      }
-      /**
-       * Deserializes an HTTP response body into a value of the specified type.
-       * @param {Object} response A SuperAgent response object.
-       * @param {(String|Array.<String>|Object.<String, Object>|Function)} returnType The type to return. Pass a string for simple types
-       * or the constructor function for a complex type. Pass an array containing the type name to return an array of that type. To
-       * return an object, pass an object with one property whose name is the key type and whose value is the corresponding value type:
-       * all properties on <code>data<code> will be converted to this type.
-       * @returns A value of the specified type.
-       */
-    }, {
-      key: "deserialize",
-      value: function(e, o) {
-        if (e == null || o == null || e.status == 204)
-          return null;
-        var f = e.body;
-        return (f == null || p(f) === "object" && typeof f.length > "u" && !Object.keys(f).length) && (f = e.text), t.convertToType(f, o);
-      }
-      /**
-       * Invokes the REST service using the supplied settings and parameters.
-       * @param {String} path The base URL to invoke.
-       * @param {String} httpMethod The HTTP method to use.
-       * @param {Object.<String, String>} pathParams A map of path parameters and their values.
-       * @param {Object.<String, Object>} queryParams A map of query parameters and their values.
-       * @param {Object.<String, Object>} headerParams A map of header parameters and their values.
-       * @param {Object.<String, Object>} formParams A map of form parameters and their values.
-       * @param {Object} bodyParam The value to pass as the request body.
-       * @param {Array.<String>} authNames An array of authentication type names.
-       * @param {Array.<String>} contentTypes An array of request MIME types.
-       * @param {Array.<String>} accepts An array of acceptable response MIME types.
-       * @param {(String|Array|ObjectFunction)} returnType The required type to return; can be a string for simple types or the
-       * constructor for a complex type.
-       * @param {String} apiBasePath base path defined in the operation/path level to override the default one
-       * @returns {Promise} A {@link https://www.promisejs.org/|Promise} object.
-       */
-    }, {
-      key: "callApi",
-      value: function(e, o, f, a, c, g, h, s, d, m, _, P) {
-        var A = this, C = this.buildUrl(e, f, P), k = (0, u.default)(o, C);
-        if (this.plugins !== null)
-          for (var I in this.plugins)
-            this.plugins.hasOwnProperty(I) && k.use(this.plugins[I]);
-        this.applyAuthToRequest(k, s), o.toUpperCase() === "GET" && this.cache === !1 && (a._ = (/* @__PURE__ */ new Date()).getTime()), k.query(this.normalizeParams(a)), k.set(this.defaultHeaders).set(this.normalizeParams(c)), this.requestAgent && k.agent(this.requestAgent), k.timeout(this.timeout);
-        var R = this.jsonPreferredMime(d);
-        if (R && R != "multipart/form-data" && k.type(R), R === "application/x-www-form-urlencoded")
-          k.send(y.default.stringify(this.normalizeParams(g)));
-        else if (R == "multipart/form-data") {
-          var G = this.normalizeParams(g);
-          for (var F in G)
-            if (G.hasOwnProperty(F)) {
-              var J = G[F];
-              this.isFileParam(J) ? k.attach(F, J) : Array.isArray(J) && J.length && this.isFileParam(J[0]) ? J.forEach(function(V) {
-                return k.attach(F, V);
-              }) : k.field(F, J);
-            }
+    } else
+      s != null && (w.header["Content-Type"] || w.type("application/json"), w.send(s));
+    var F = this.jsonPreferredMime(b);
+    return F && w.accept(F), v === "Blob" ? w.responseType("blob") : v === "String" && w.responseType("text"), this.enableCookies && (typeof window > "u" ? this.agent._attachCookies(w) : w.withCredentials()), new Promise((E, U) => {
+      w.end((M, j) => {
+        if (M) {
+          var T = {};
+          j && (T.status = j.status, T.statusText = j.statusText, T.body = j.body, T.response = j), T.error = M, U(T);
         } else
-          h != null && (k.header["Content-Type"] || k.type("application/json"), k.send(h));
-        var ge = this.jsonPreferredMime(m);
-        return ge && k.accept(ge), _ === "Blob" ? k.responseType("blob") : _ === "String" && k.responseType("text"), this.enableCookies && (typeof window > "u" ? this.agent._attachCookies(k) : k.withCredentials()), new Promise(function(V, _e) {
-          k.end(function(be, q) {
-            if (be) {
-              var D = {};
-              q && (D.status = q.status, D.statusText = q.statusText, D.body = q.body, D.response = q), D.error = be, _e(D);
-            } else
-              try {
-                var He = A.deserialize(q, _);
-                A.enableCookies && typeof window > "u" && A.agent._saveCookies(q), V({
-                  data: He,
-                  response: q
-                });
-              } catch (Le) {
-                _e(Le);
-              }
-          });
-        });
-      }
-      /**
-      * Parses an ISO-8601 string representation or epoch representation of a date value.
-      * @param {String} str The date value as a string.
-      * @returns {Date} The parsed date object.
-      */
-    }, {
-      key: "hostSettings",
-      value: (
-        /**
-          * Gets an array of host settings
-          * @returns An array of host settings
-          */
-        function() {
-          return [{
-            url: "https://api.flyo.cloud/nitro/{version}",
-            description: "Production Server",
-            variables: {
-              version: {
-                description: "The api version currently supported is `v1`",
-                default_value: "v1"
-              }
-            }
-          }];
-        }
-      )
-    }, {
-      key: "getBasePathFromSettings",
-      value: function(e) {
-        var o = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, f = this.hostSettings();
-        if (e < 0 || e >= f.length)
-          throw new Error("Invalid index " + e + " when selecting the host settings. Must be less than " + f.length);
-        var a = f[e], c = a.url;
-        for (var g in a.variables)
-          if (g in o) {
-            var h = a.variables[g];
-            if (!("enum_values" in h) || h.enum_values.includes(o[g]))
-              c = c.replace("{" + g + "}", o[g]);
-            else
-              throw new Error("The variable `" + g + "` in the host URL has invalid value " + o[g] + ". Must be " + a.variables[g].enum_values + ".");
-          } else
-            c = c.replace("{" + g + "}", a.variables[g].default_value);
-        return c;
-      }
-      /**
-      * Constructs a new map or array model from REST data.
-      * @param data {Object|Array} The REST data.
-      * @param obj {Object|Array} The target object or array.
-      */
-    }], [{
-      key: "canBeJsonified",
-      value: function(e) {
-        if (typeof e != "string" && p(e) !== "object")
-          return !1;
-        try {
-          var o = e.toString();
-          return o === "[object Object]" || o === "[object Array]";
-        } catch {
-          return !1;
-        }
-      }
-    }, {
-      key: "parseDate",
-      value: function(e) {
-        return isNaN(e) ? new Date(e.replace(/(\d)(T)(\d)/i, "$1 $3")) : /* @__PURE__ */ new Date(+e);
-      }
-      /**
-      * Converts a value to the specified type.
-      * @param {(String|Object)} data The data to convert, as a string or object.
-      * @param {(String|Array.<String>|Object.<String, Object>|Function)} type The type to return. Pass a string for simple types
-      * or the constructor function for a complex type. Pass an array containing the type name to return an array of that type. To
-      * return an object, pass an object with one property whose name is the key type and whose value is the corresponding value type:
-      * all properties on <code>data<code> will be converted to this type.
-      * @returns An instance of the specified type or null or undefined if data is null or undefined.
-      */
-    }, {
-      key: "convertToType",
-      value: function(e, o) {
-        if (e == null)
-          return e;
-        switch (o) {
-          case "Boolean":
-            return !!e;
-          case "Integer":
-            return parseInt(e, 10);
-          case "Number":
-            return parseFloat(e);
-          case "String":
-            return String(e);
-          case "Date":
-            return t.parseDate(String(e));
-          case "Blob":
-            return e;
-          default:
-            if (o === Object)
-              return e;
-            if (typeof o.constructFromObject == "function")
-              return o.constructFromObject(e);
-            if (Array.isArray(o)) {
-              var f = o[0];
-              return e.map(function(m) {
-                return t.convertToType(m, f);
-              });
-            } else if (p(o) === "object") {
-              var a, c;
-              for (var g in o)
-                if (o.hasOwnProperty(g)) {
-                  a = g, c = o[g];
-                  break;
-                }
-              var h = {};
-              for (var g in e)
-                if (e.hasOwnProperty(g)) {
-                  var s = t.convertToType(g, a), d = t.convertToType(e[g], c);
-                  h[s] = d;
-                }
-              return h;
-            } else
-              return e;
-        }
-      }
-    }, {
-      key: "constructFromObject",
-      value: function(e, o, f) {
-        if (Array.isArray(e))
-          for (var a = 0; a < e.length; a++)
-            e.hasOwnProperty(a) && (o[a] = t.convertToType(e[a], f));
-        else
-          for (var c in e)
-            e.hasOwnProperty(c) && (o[c] = t.convertToType(e[c], f));
-      }
-    }]), t;
-  }();
-  O.CollectionFormatEnum = {
-    /**
-     * Comma-separated values. Value: <code>csv</code>
-     * @const
-     */
-    CSV: ",",
-    /**
-     * Space-separated values. Value: <code>ssv</code>
-     * @const
-     */
-    SSV: " ",
-    /**
-     * Tab-separated values. Value: <code>tsv</code>
-     * @const
-     */
-    TSV: "	",
-    /**
-     * Pipe(|)-separated values. Value: <code>pipes</code>
-     * @const
-     */
-    PIPES: "|",
-    /**
-     * Native array. Value: <code>multi</code>
-     * @const
-     */
-    MULTI: "multi"
-  }, O.instance = new O();
-  var n = O;
-  i.default = n;
-})(N);
-var Q = {}, Y = {}, Se;
-function qe() {
-  return Se || (Se = 1, function(i) {
-    Object.defineProperty(i, "__esModule", {
-      value: !0
-    }), i.default = void 0;
-    var u = l(N), y = l(ie());
-    function l(o) {
-      return o && o.__esModule ? o : { default: o };
-    }
-    function p(o) {
-      "@babel/helpers - typeof";
-      return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(f) {
-        return typeof f;
-      } : function(f) {
-        return f && typeof Symbol == "function" && f.constructor === Symbol && f !== Symbol.prototype ? "symbol" : typeof f;
-      }, p(o);
-    }
-    function v(o, f) {
-      var a = typeof Symbol < "u" && o[Symbol.iterator] || o["@@iterator"];
-      if (!a) {
-        if (Array.isArray(o) || (a = b(o)) || f && o && typeof o.length == "number") {
-          a && (o = a);
-          var c = 0, g = function() {
-          };
-          return { s: g, n: function() {
-            return c >= o.length ? { done: !0 } : { done: !1, value: o[c++] };
-          }, e: function(_) {
-            throw _;
-          }, f: g };
-        }
-        throw new TypeError(`Invalid attempt to iterate non-iterable instance.
-In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
-      }
-      var h = !0, s = !1, d;
-      return { s: function() {
-        a = a.call(o);
-      }, n: function() {
-        var _ = a.next();
-        return h = _.done, _;
-      }, e: function(_) {
-        s = !0, d = _;
-      }, f: function() {
-        try {
-          !h && a.return != null && a.return();
-        } finally {
-          if (s)
-            throw d;
-        }
-      } };
-    }
-    function b(o, f) {
-      if (o) {
-        if (typeof o == "string")
-          return w(o, f);
-        var a = Object.prototype.toString.call(o).slice(8, -1);
-        if (a === "Object" && o.constructor && (a = o.constructor.name), a === "Map" || a === "Set")
-          return Array.from(o);
-        if (a === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(a))
-          return w(o, f);
-      }
-    }
-    function w(o, f) {
-      (f == null || f > o.length) && (f = o.length);
-      for (var a = 0, c = new Array(f); a < f; a++)
-        c[a] = o[a];
-      return c;
-    }
-    function T(o, f) {
-      if (!(o instanceof f))
-        throw new TypeError("Cannot call a class as a function");
-    }
-    function S(o, f) {
-      for (var a = 0; a < f.length; a++) {
-        var c = f[a];
-        c.enumerable = c.enumerable || !1, c.configurable = !0, "value" in c && (c.writable = !0), Object.defineProperty(o, n(c.key), c);
-      }
-    }
-    function O(o, f, a) {
-      return f && S(o.prototype, f), a && S(o, a), Object.defineProperty(o, "prototype", { writable: !1 }), o;
-    }
-    function n(o) {
-      var f = t(o, "string");
-      return p(f) === "symbol" ? f : String(f);
-    }
-    function t(o, f) {
-      if (p(o) !== "object" || o === null)
-        return o;
-      var a = o[Symbol.toPrimitive];
-      if (a !== void 0) {
-        var c = a.call(o, f || "default");
-        if (p(c) !== "object")
-          return c;
-        throw new TypeError("@@toPrimitive must return a primitive value.");
-      }
-      return (f === "string" ? String : Number)(o);
-    }
-    var r = /* @__PURE__ */ function() {
-      function o() {
-        T(this, o), o.initialize(this);
-      }
-      return O(o, null, [{
-        key: "initialize",
-        value: function(a) {
-        }
-        /**
-         * Constructs a <code>BlockSlots</code> from a plain JavaScript object, optionally creating a new instance.
-         * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-         * @param {Object} data The plain JavaScript object bearing properties of interest.
-         * @param {module:model/BlockSlots} obj Optional instance to populate.
-         * @return {module:model/BlockSlots} The populated <code>BlockSlots</code> instance.
-         */
-      }, {
-        key: "constructFromObject",
-        value: function(a, c) {
-          return a && (c = c || new o(), a.hasOwnProperty("identifier") && (c.identifier = u.default.convertToType(a.identifier, "String")), a.hasOwnProperty("content") && (c.content = u.default.convertToType(a.content, [y.default]))), c;
-        }
-        /**
-         * Validates the JSON data with respect to <code>BlockSlots</code>.
-         * @param {Object} data The plain JavaScript object bearing properties of interest.
-         * @return {boolean} to indicate whether the JSON data is valid with respect to <code>BlockSlots</code>.
-         */
-      }, {
-        key: "validateJSON",
-        value: function(a) {
-          if (a.identifier && !(typeof a.identifier == "string" || a.identifier instanceof String))
-            throw new Error("Expected the field `identifier` to be a primitive type in the JSON string but got " + a.identifier);
-          if (a.content) {
-            if (!Array.isArray(a.content))
-              throw new Error("Expected the field `content` to be an array in the JSON data but got " + a.content);
-            var c = v(a.content), g;
-            try {
-              for (c.s(); !(g = c.n()).done; ) {
-                var h = g.value;
-                y.default.validateJSON(h);
-              }
-            } catch (s) {
-              c.e(s);
-            } finally {
-              c.f();
-            }
+          try {
+            var _ = this.deserialize(j, v);
+            this.enableCookies && typeof window > "u" && this.agent._saveCookies(j), E({ data: _, response: j });
+          } catch (D) {
+            U(D);
           }
-          return !0;
-        }
-      }]), o;
-    }();
-    r.prototype.identifier = void 0, r.prototype.content = void 0;
-    var e = r;
-    i.default = e;
-  }(Y)), Y;
-}
-var Oe;
-function ie() {
-  return Oe || (Oe = 1, function(i) {
-    Object.defineProperty(i, "__esModule", {
-      value: !0
-    }), i.default = void 0;
-    var u = l(N), y = l(qe());
-    function l(t) {
-      return t && t.__esModule ? t : { default: t };
-    }
-    function p(t) {
-      "@babel/helpers - typeof";
-      return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(r) {
-        return typeof r;
-      } : function(r) {
-        return r && typeof Symbol == "function" && r.constructor === Symbol && r !== Symbol.prototype ? "symbol" : typeof r;
-      }, p(t);
-    }
-    function v(t, r) {
-      if (!(t instanceof r))
-        throw new TypeError("Cannot call a class as a function");
-    }
-    function b(t, r) {
-      for (var e = 0; e < r.length; e++) {
-        var o = r[e];
-        o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(t, T(o.key), o);
-      }
-    }
-    function w(t, r, e) {
-      return r && b(t.prototype, r), e && b(t, e), Object.defineProperty(t, "prototype", { writable: !1 }), t;
-    }
-    function T(t) {
-      var r = S(t, "string");
-      return p(r) === "symbol" ? r : String(r);
-    }
-    function S(t, r) {
-      if (p(t) !== "object" || t === null)
-        return t;
-      var e = t[Symbol.toPrimitive];
-      if (e !== void 0) {
-        var o = e.call(t, r || "default");
-        if (p(o) !== "object")
-          return o;
-        throw new TypeError("@@toPrimitive must return a primitive value.");
-      }
-      return (r === "string" ? String : Number)(t);
-    }
-    var O = /* @__PURE__ */ function() {
-      function t() {
-        v(this, t), t.initialize(this);
-      }
-      return w(t, null, [{
-        key: "initialize",
-        value: function(e) {
-        }
-        /**
-         * Constructs a <code>Block</code> from a plain JavaScript object, optionally creating a new instance.
-         * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-         * @param {Object} data The plain JavaScript object bearing properties of interest.
-         * @param {module:model/Block} obj Optional instance to populate.
-         * @return {module:model/Block} The populated <code>Block</code> instance.
-         */
-      }, {
-        key: "constructFromObject",
-        value: function(e, o) {
-          return e && (o = o || new t(), e.hasOwnProperty("items") && (o.items = u.default.convertToType(e.items, [Object])), e.hasOwnProperty("content") && (o.content = u.default.convertToType(e.content, Object)), e.hasOwnProperty("config") && (o.config = u.default.convertToType(e.config, Object)), e.hasOwnProperty("identifier") && (o.identifier = u.default.convertToType(e.identifier, "String")), e.hasOwnProperty("uid") && (o.uid = u.default.convertToType(e.uid, "String")), e.hasOwnProperty("component") && (o.component = u.default.convertToType(e.component, "String")), e.hasOwnProperty("slots") && (o.slots = u.default.convertToType(e.slots, {
-            String: y.default
-          }))), o;
-        }
-        /**
-         * Validates the JSON data with respect to <code>Block</code>.
-         * @param {Object} data The plain JavaScript object bearing properties of interest.
-         * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Block</code>.
-         */
-      }, {
-        key: "validateJSON",
-        value: function(e) {
-          if (!Array.isArray(e.items))
-            throw new Error("Expected the field `items` to be an array in the JSON data but got " + e.items);
-          if (e.identifier && !(typeof e.identifier == "string" || e.identifier instanceof String))
-            throw new Error("Expected the field `identifier` to be a primitive type in the JSON string but got " + e.identifier);
-          if (e.uid && !(typeof e.uid == "string" || e.uid instanceof String))
-            throw new Error("Expected the field `uid` to be a primitive type in the JSON string but got " + e.uid);
-          if (e.component && !(typeof e.component == "string" || e.component instanceof String))
-            throw new Error("Expected the field `component` to be a primitive type in the JSON string but got " + e.component);
-          return !0;
-        }
-      }]), t;
-    }();
-    O.prototype.items = void 0, O.prototype.content = void 0, O.prototype.config = void 0, O.prototype.identifier = void 0, O.prototype.uid = void 0, O.prototype.component = void 0, O.prototype.slots = void 0;
-    var n = O;
-    i.default = n;
-  }(Q)), Q;
-}
-var oe = {}, ue = {}, fe = {};
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = y(N);
-  function y(e) {
-    return e && e.__esModule ? e : { default: e };
+      });
+    });
   }
-  function l(e) {
-    "@babel/helpers - typeof";
-    return l = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(o) {
-      return typeof o;
-    } : function(o) {
-      return o && typeof Symbol == "function" && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-    }, l(e);
+  /**
+  * Parses an ISO-8601 string representation or epoch representation of a date value.
+  * @param {String} str The date value as a string.
+  * @returns {Date} The parsed date object.
+  */
+  static parseDate(e) {
+    return isNaN(e) ? new Date(e.replace(/(\d)(T)(\d)/i, "$1 $3")) : /* @__PURE__ */ new Date(+e);
   }
-  function p(e, o) {
-    var f = typeof Symbol < "u" && e[Symbol.iterator] || e["@@iterator"];
-    if (!f) {
-      if (Array.isArray(e) || (f = v(e)) || o && e && typeof e.length == "number") {
-        f && (e = f);
-        var a = 0, c = function() {
-        };
-        return { s: c, n: function() {
-          return a >= e.length ? { done: !0 } : { done: !1, value: e[a++] };
-        }, e: function(m) {
-          throw m;
-        }, f: c };
-      }
-      throw new TypeError(`Invalid attempt to iterate non-iterable instance.
-In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
-    }
-    var g = !0, h = !1, s;
-    return { s: function() {
-      f = f.call(e);
-    }, n: function() {
-      var m = f.next();
-      return g = m.done, m;
-    }, e: function(m) {
-      h = !0, s = m;
-    }, f: function() {
-      try {
-        !g && f.return != null && f.return();
-      } finally {
-        if (h)
-          throw s;
-      }
-    } };
-  }
-  function v(e, o) {
-    if (e) {
-      if (typeof e == "string")
-        return b(e, o);
-      var f = Object.prototype.toString.call(e).slice(8, -1);
-      if (f === "Object" && e.constructor && (f = e.constructor.name), f === "Map" || f === "Set")
-        return Array.from(e);
-      if (f === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(f))
-        return b(e, o);
-    }
-  }
-  function b(e, o) {
-    (o == null || o > e.length) && (o = e.length);
-    for (var f = 0, a = new Array(o); f < o; f++)
-      a[f] = e[f];
-    return a;
-  }
-  function w(e, o) {
-    if (!(e instanceof o))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function T(e, o) {
-    for (var f = 0; f < o.length; f++) {
-      var a = o[f];
-      a.enumerable = a.enumerable || !1, a.configurable = !0, "value" in a && (a.writable = !0), Object.defineProperty(e, O(a.key), a);
-    }
-  }
-  function S(e, o, f) {
-    return o && T(e.prototype, o), f && T(e, f), Object.defineProperty(e, "prototype", { writable: !1 }), e;
-  }
-  function O(e) {
-    var o = n(e, "string");
-    return l(o) === "symbol" ? o : String(o);
-  }
-  function n(e, o) {
-    if (l(e) !== "object" || e === null)
+  /**
+  * Converts a value to the specified type.
+  * @param {(String|Object)} data The data to convert, as a string or object.
+  * @param {(String|Array.<String>|Object.<String, Object>|Function)} type The type to return. Pass a string for simple types
+  * or the constructor function for a complex type. Pass an array containing the type name to return an array of that type. To
+  * return an object, pass an object with one property whose name is the key type and whose value is the corresponding value type:
+  * all properties on <code>data<code> will be converted to this type.
+  * @returns An instance of the specified type or null or undefined if data is null or undefined.
+  */
+  static convertToType(e, r) {
+    if (e == null)
       return e;
-    var f = e[Symbol.toPrimitive];
-    if (f !== void 0) {
-      var a = f.call(e, o || "default");
-      if (l(a) !== "object")
-        return a;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (o === "string" ? String : Number)(e);
-  }
-  var t = /* @__PURE__ */ function() {
-    function e() {
-      w(this, e), e.initialize(this);
-    }
-    return S(e, null, [{
-      key: "initialize",
-      value: function(f) {
-      }
-      /**
-       * Constructs a <code>PagesInner</code> from a plain JavaScript object, optionally creating a new instance.
-       * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @param {module:model/PagesInner} obj Optional instance to populate.
-       * @return {module:model/PagesInner} The populated <code>PagesInner</code> instance.
-       */
-    }, {
-      key: "constructFromObject",
-      value: function(f, a) {
-        return f && (a = a || new e(), f.hasOwnProperty("type") && (a.type = u.default.convertToType(f.type, "String")), f.hasOwnProperty("target") && (a.target = u.default.convertToType(f.target, "String")), f.hasOwnProperty("label") && (a.label = u.default.convertToType(f.label, "String")), f.hasOwnProperty("href") && (a.href = u.default.convertToType(f.href, "String")), f.hasOwnProperty("slug") && (a.slug = u.default.convertToType(f.slug, "String")), f.hasOwnProperty("properties") && (a.properties = u.default.convertToType(f.properties, {
-          String: Object
-        })), f.hasOwnProperty("children") && (a.children = u.default.convertToType(f.children, [e]))), a;
-      }
-      /**
-       * Validates the JSON data with respect to <code>PagesInner</code>.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @return {boolean} to indicate whether the JSON data is valid with respect to <code>PagesInner</code>.
-       */
-    }, {
-      key: "validateJSON",
-      value: function(f) {
-        if (f.type && !(typeof f.type == "string" || f.type instanceof String))
-          throw new Error("Expected the field `type` to be a primitive type in the JSON string but got " + f.type);
-        if (f.target && !(typeof f.target == "string" || f.target instanceof String))
-          throw new Error("Expected the field `target` to be a primitive type in the JSON string but got " + f.target);
-        if (f.label && !(typeof f.label == "string" || f.label instanceof String))
-          throw new Error("Expected the field `label` to be a primitive type in the JSON string but got " + f.label);
-        if (f.href && !(typeof f.href == "string" || f.href instanceof String))
-          throw new Error("Expected the field `href` to be a primitive type in the JSON string but got " + f.href);
-        if (f.slug && !(typeof f.slug == "string" || f.slug instanceof String))
-          throw new Error("Expected the field `slug` to be a primitive type in the JSON string but got " + f.slug);
-        if (f.children) {
-          if (!Array.isArray(f.children))
-            throw new Error("Expected the field `children` to be an array in the JSON data but got " + f.children);
-          var a = p(f.children), c;
-          try {
-            for (a.s(); !(c = a.n()).done; ) {
-              var g = c.value;
-              e.validateJSON(g);
+    switch (r) {
+      case "Boolean":
+        return !!e;
+      case "Integer":
+        return parseInt(e, 10);
+      case "Number":
+        return parseFloat(e);
+      case "String":
+        return String(e);
+      case "Date":
+        return L.parseDate(String(e));
+      case "Blob":
+        return e;
+      default:
+        if (r === Object)
+          return e;
+        if (typeof r.constructFromObject == "function")
+          return r.constructFromObject(e);
+        if (Array.isArray(r)) {
+          var o = r[0];
+          return e.map((b) => L.convertToType(b, o));
+        } else if (typeof r == "object") {
+          var n, i;
+          for (var a in r)
+            if (r.hasOwnProperty(a)) {
+              n = a, i = r[a];
+              break;
             }
-          } catch (h) {
-            a.e(h);
-          } finally {
-            a.f();
+          var s = {};
+          for (var a in e)
+            if (e.hasOwnProperty(a)) {
+              var u = L.convertToType(a, n), f = L.convertToType(e[a], i);
+              s[u] = f;
+            }
+          return s;
+        } else
+          return e;
+    }
+  }
+  /**
+    * Gets an array of host settings
+    * @returns An array of host settings
+    */
+  hostSettings() {
+    return [
+      {
+        url: "https://api.flyo.cloud/nitro/{version}",
+        description: "Production Server",
+        variables: {
+          version: {
+            description: "The api version currently supported is `v1`",
+            default_value: "v1"
           }
         }
-        return !0;
       }
-    }]), e;
-  }();
-  t.prototype.type = void 0, t.prototype.target = void 0, t.prototype.label = void 0, t.prototype.href = void 0, t.prototype.slug = void 0, t.prototype.properties = void 0, t.prototype.children = void 0;
-  var r = t;
-  i.default = r;
-})(fe);
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = l(N), y = l(fe);
-  function l(o) {
-    return o && o.__esModule ? o : { default: o };
-  }
-  function p(o) {
-    "@babel/helpers - typeof";
-    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(f) {
-      return typeof f;
-    } : function(f) {
-      return f && typeof Symbol == "function" && f.constructor === Symbol && f !== Symbol.prototype ? "symbol" : typeof f;
-    }, p(o);
-  }
-  function v(o, f) {
-    var a = typeof Symbol < "u" && o[Symbol.iterator] || o["@@iterator"];
-    if (!a) {
-      if (Array.isArray(o) || (a = b(o)) || f && o && typeof o.length == "number") {
-        a && (o = a);
-        var c = 0, g = function() {
-        };
-        return { s: g, n: function() {
-          return c >= o.length ? { done: !0 } : { done: !1, value: o[c++] };
-        }, e: function(_) {
-          throw _;
-        }, f: g };
-      }
-      throw new TypeError(`Invalid attempt to iterate non-iterable instance.
-In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
-    }
-    var h = !0, s = !1, d;
-    return { s: function() {
-      a = a.call(o);
-    }, n: function() {
-      var _ = a.next();
-      return h = _.done, _;
-    }, e: function(_) {
-      s = !0, d = _;
-    }, f: function() {
-      try {
-        !h && a.return != null && a.return();
-      } finally {
-        if (s)
-          throw d;
-      }
-    } };
-  }
-  function b(o, f) {
-    if (o) {
-      if (typeof o == "string")
-        return w(o, f);
-      var a = Object.prototype.toString.call(o).slice(8, -1);
-      if (a === "Object" && o.constructor && (a = o.constructor.name), a === "Map" || a === "Set")
-        return Array.from(o);
-      if (a === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(a))
-        return w(o, f);
-    }
-  }
-  function w(o, f) {
-    (f == null || f > o.length) && (f = o.length);
-    for (var a = 0, c = new Array(f); a < f; a++)
-      c[a] = o[a];
-    return c;
-  }
-  function T(o, f) {
-    if (!(o instanceof f))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function S(o, f) {
-    for (var a = 0; a < f.length; a++) {
-      var c = f[a];
-      c.enumerable = c.enumerable || !1, c.configurable = !0, "value" in c && (c.writable = !0), Object.defineProperty(o, n(c.key), c);
-    }
-  }
-  function O(o, f, a) {
-    return f && S(o.prototype, f), a && S(o, a), Object.defineProperty(o, "prototype", { writable: !1 }), o;
-  }
-  function n(o) {
-    var f = t(o, "string");
-    return p(f) === "symbol" ? f : String(f);
-  }
-  function t(o, f) {
-    if (p(o) !== "object" || o === null)
-      return o;
-    var a = o[Symbol.toPrimitive];
-    if (a !== void 0) {
-      var c = a.call(o, f || "default");
-      if (p(c) !== "object")
-        return c;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (f === "string" ? String : Number)(o);
-  }
-  var r = /* @__PURE__ */ function() {
-    function o() {
-      T(this, o), o.initialize(this);
-    }
-    return O(o, null, [{
-      key: "initialize",
-      value: function(a) {
-      }
-      /**
-       * Constructs a <code>ConfigResponseContainersValue</code> from a plain JavaScript object, optionally creating a new instance.
-       * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @param {module:model/ConfigResponseContainersValue} obj Optional instance to populate.
-       * @return {module:model/ConfigResponseContainersValue} The populated <code>ConfigResponseContainersValue</code> instance.
-       */
-    }, {
-      key: "constructFromObject",
-      value: function(a, c) {
-        return a && (c = c || new o(), a.hasOwnProperty("items") && (c.items = u.default.convertToType(a.items, [y.default])), a.hasOwnProperty("uid") && (c.uid = u.default.convertToType(a.uid, "String")), a.hasOwnProperty("identifier") && (c.identifier = u.default.convertToType(a.identifier, "String")), a.hasOwnProperty("label") && (c.label = u.default.convertToType(a.label, "String"))), c;
-      }
-      /**
-       * Validates the JSON data with respect to <code>ConfigResponseContainersValue</code>.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @return {boolean} to indicate whether the JSON data is valid with respect to <code>ConfigResponseContainersValue</code>.
-       */
-    }, {
-      key: "validateJSON",
-      value: function(a) {
-        if (a.items) {
-          if (!Array.isArray(a.items))
-            throw new Error("Expected the field `items` to be an array in the JSON data but got " + a.items);
-          var c = v(a.items), g;
-          try {
-            for (c.s(); !(g = c.n()).done; ) {
-              var h = g.value;
-              y.default.validateJSON(h);
-            }
-          } catch (s) {
-            c.e(s);
-          } finally {
-            c.f();
-          }
-        }
-        if (a.uid && !(typeof a.uid == "string" || a.uid instanceof String))
-          throw new Error("Expected the field `uid` to be a primitive type in the JSON string but got " + a.uid);
-        if (a.identifier && !(typeof a.identifier == "string" || a.identifier instanceof String))
-          throw new Error("Expected the field `identifier` to be a primitive type in the JSON string but got " + a.identifier);
-        if (a.label && !(typeof a.label == "string" || a.label instanceof String))
-          throw new Error("Expected the field `label` to be a primitive type in the JSON string but got " + a.label);
-        return !0;
-      }
-    }]), o;
-  }();
-  r.prototype.items = void 0, r.prototype.uid = void 0, r.prototype.identifier = void 0, r.prototype.label = void 0;
-  var e = r;
-  i.default = e;
-})(ue);
-var le = {};
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = y(N);
-  function y(n) {
-    return n && n.__esModule ? n : { default: n };
-  }
-  function l(n) {
-    "@babel/helpers - typeof";
-    return l = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
-      return typeof t;
-    } : function(t) {
-      return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, l(n);
-  }
-  function p(n, t) {
-    if (!(n instanceof t))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function v(n, t) {
-    for (var r = 0; r < t.length; r++) {
-      var e = t[r];
-      e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
-    }
-  }
-  function b(n, t, r) {
-    return t && v(n.prototype, t), r && v(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
-  }
-  function w(n) {
-    var t = T(n, "string");
-    return l(t) === "symbol" ? t : String(t);
-  }
-  function T(n, t) {
-    if (l(n) !== "object" || n === null)
-      return n;
-    var r = n[Symbol.toPrimitive];
-    if (r !== void 0) {
-      var e = r.call(n, t || "default");
-      if (l(e) !== "object")
-        return e;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (t === "string" ? String : Number)(n);
-  }
-  var S = /* @__PURE__ */ function() {
-    function n() {
-      p(this, n), n.initialize(this);
-    }
-    return b(n, null, [{
-      key: "initialize",
-      value: function(r) {
-      }
-      /**
-       * Constructs a <code>ConfigResponseNitro</code> from a plain JavaScript object, optionally creating a new instance.
-       * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @param {module:model/ConfigResponseNitro} obj Optional instance to populate.
-       * @return {module:model/ConfigResponseNitro} The populated <code>ConfigResponseNitro</code> instance.
-       */
-    }, {
-      key: "constructFromObject",
-      value: function(r, e) {
-        return r && (e = e || new n(), r.hasOwnProperty("domain") && (e.domain = u.default.convertToType(r.domain, "String")), r.hasOwnProperty("slug") && (e.slug = u.default.convertToType(r.slug, "String")), r.hasOwnProperty("version") && (e.version = u.default.convertToType(r.version, "Number")), r.hasOwnProperty("updated_at") && (e.updated_at = u.default.convertToType(r.updated_at, "Number")), r.hasOwnProperty("language") && (e.language = u.default.convertToType(r.language, "String"))), e;
-      }
-      /**
-       * Validates the JSON data with respect to <code>ConfigResponseNitro</code>.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @return {boolean} to indicate whether the JSON data is valid with respect to <code>ConfigResponseNitro</code>.
-       */
-    }, {
-      key: "validateJSON",
-      value: function(r) {
-        if (r.domain && !(typeof r.domain == "string" || r.domain instanceof String))
-          throw new Error("Expected the field `domain` to be a primitive type in the JSON string but got " + r.domain);
-        if (r.slug && !(typeof r.slug == "string" || r.slug instanceof String))
-          throw new Error("Expected the field `slug` to be a primitive type in the JSON string but got " + r.slug);
-        if (r.language && !(typeof r.language == "string" || r.language instanceof String))
-          throw new Error("Expected the field `language` to be a primitive type in the JSON string but got " + r.language);
-        return !0;
-      }
-    }]), n;
-  }();
-  S.prototype.domain = void 0, S.prototype.slug = void 0, S.prototype.version = void 0, S.prototype.updated_at = void 0, S.prototype.language = void 0;
-  var O = S;
-  i.default = O;
-})(le);
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = p(N), y = p(ue), l = p(le);
-  function p(r) {
-    return r && r.__esModule ? r : { default: r };
-  }
-  function v(r) {
-    "@babel/helpers - typeof";
-    return v = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(e) {
-      return typeof e;
-    } : function(e) {
-      return e && typeof Symbol == "function" && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e;
-    }, v(r);
-  }
-  function b(r, e) {
-    if (!(r instanceof e))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function w(r, e) {
-    for (var o = 0; o < e.length; o++) {
-      var f = e[o];
-      f.enumerable = f.enumerable || !1, f.configurable = !0, "value" in f && (f.writable = !0), Object.defineProperty(r, S(f.key), f);
-    }
-  }
-  function T(r, e, o) {
-    return e && w(r.prototype, e), o && w(r, o), Object.defineProperty(r, "prototype", { writable: !1 }), r;
-  }
-  function S(r) {
-    var e = O(r, "string");
-    return v(e) === "symbol" ? e : String(e);
-  }
-  function O(r, e) {
-    if (v(r) !== "object" || r === null)
-      return r;
-    var o = r[Symbol.toPrimitive];
-    if (o !== void 0) {
-      var f = o.call(r, e || "default");
-      if (v(f) !== "object")
-        return f;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (e === "string" ? String : Number)(r);
-  }
-  var n = /* @__PURE__ */ function() {
-    function r() {
-      b(this, r), r.initialize(this);
-    }
-    return T(r, null, [{
-      key: "initialize",
-      value: function(o) {
-      }
-      /**
-       * Constructs a <code>ConfigResponse</code> from a plain JavaScript object, optionally creating a new instance.
-       * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @param {module:model/ConfigResponse} obj Optional instance to populate.
-       * @return {module:model/ConfigResponse} The populated <code>ConfigResponse</code> instance.
-       */
-    }, {
-      key: "constructFromObject",
-      value: function(o, f) {
-        return o && (f = f || new r(), o.hasOwnProperty("nitro") && (f.nitro = l.default.constructFromObject(o.nitro)), o.hasOwnProperty("pages") && (f.pages = u.default.convertToType(o.pages, ["String"])), o.hasOwnProperty("containers") && (f.containers = u.default.convertToType(o.containers, {
-          String: y.default
-        })), o.hasOwnProperty("globals") && (f.globals = u.default.convertToType(o.globals, Object))), f;
-      }
-      /**
-       * Validates the JSON data with respect to <code>ConfigResponse</code>.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @return {boolean} to indicate whether the JSON data is valid with respect to <code>ConfigResponse</code>.
-       */
-    }, {
-      key: "validateJSON",
-      value: function(o) {
-        if (o.nitro && l.default.validateJSON(o.nitro), !Array.isArray(o.pages))
-          throw new Error("Expected the field `pages` to be an array in the JSON data but got " + o.pages);
-        return !0;
-      }
-    }]), r;
-  }();
-  n.prototype.nitro = void 0, n.prototype.pages = void 0, n.prototype.containers = void 0, n.prototype.globals = void 0;
-  var t = n;
-  i.default = t;
-})(oe);
-var ae = {}, se = {}, ce = {};
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = y(N);
-  function y(n) {
-    return n && n.__esModule ? n : { default: n };
-  }
-  function l(n) {
-    "@babel/helpers - typeof";
-    return l = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
-      return typeof t;
-    } : function(t) {
-      return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, l(n);
-  }
-  function p(n, t) {
-    if (!(n instanceof t))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function v(n, t) {
-    for (var r = 0; r < t.length; r++) {
-      var e = t[r];
-      e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
-    }
-  }
-  function b(n, t, r) {
-    return t && v(n.prototype, t), r && v(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
-  }
-  function w(n) {
-    var t = T(n, "string");
-    return l(t) === "symbol" ? t : String(t);
-  }
-  function T(n, t) {
-    if (l(n) !== "object" || n === null)
-      return n;
-    var r = n[Symbol.toPrimitive];
-    if (r !== void 0) {
-      var e = r.call(n, t || "default");
-      if (l(e) !== "object")
-        return e;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (t === "string" ? String : Number)(n);
-  }
-  var S = /* @__PURE__ */ function() {
-    function n() {
-      p(this, n), n.initialize(this);
-    }
-    return b(n, null, [{
-      key: "initialize",
-      value: function(r) {
-      }
-      /**
-       * Constructs a <code>EntityMetric</code> from a plain JavaScript object, optionally creating a new instance.
-       * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @param {module:model/EntityMetric} obj Optional instance to populate.
-       * @return {module:model/EntityMetric} The populated <code>EntityMetric</code> instance.
-       */
-    }, {
-      key: "constructFromObject",
-      value: function(r, e) {
-        return r && (e = e || new n(), r.hasOwnProperty("api") && (e.api = u.default.convertToType(r.api, "String")), r.hasOwnProperty("image") && (e.image = u.default.convertToType(r.image, "String"))), e;
-      }
-      /**
-       * Validates the JSON data with respect to <code>EntityMetric</code>.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @return {boolean} to indicate whether the JSON data is valid with respect to <code>EntityMetric</code>.
-       */
-    }, {
-      key: "validateJSON",
-      value: function(r) {
-        if (r.api && !(typeof r.api == "string" || r.api instanceof String))
-          throw new Error("Expected the field `api` to be a primitive type in the JSON string but got " + r.api);
-        if (r.image && !(typeof r.image == "string" || r.image instanceof String))
-          throw new Error("Expected the field `image` to be a primitive type in the JSON string but got " + r.image);
-        return !0;
-      }
-    }]), n;
-  }();
-  S.prototype.api = void 0, S.prototype.image = void 0;
-  var O = S;
-  i.default = O;
-})(ce);
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = l(N), y = l(ce);
-  function l(t) {
-    return t && t.__esModule ? t : { default: t };
-  }
-  function p(t) {
-    "@babel/helpers - typeof";
-    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(r) {
-      return typeof r;
-    } : function(r) {
-      return r && typeof Symbol == "function" && r.constructor === Symbol && r !== Symbol.prototype ? "symbol" : typeof r;
-    }, p(t);
-  }
-  function v(t, r) {
-    if (!(t instanceof r))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function b(t, r) {
-    for (var e = 0; e < r.length; e++) {
-      var o = r[e];
-      o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(t, T(o.key), o);
-    }
-  }
-  function w(t, r, e) {
-    return r && b(t.prototype, r), e && b(t, e), Object.defineProperty(t, "prototype", { writable: !1 }), t;
-  }
-  function T(t) {
-    var r = S(t, "string");
-    return p(r) === "symbol" ? r : String(r);
-  }
-  function S(t, r) {
-    if (p(t) !== "object" || t === null)
-      return t;
-    var e = t[Symbol.toPrimitive];
-    if (e !== void 0) {
-      var o = e.call(t, r || "default");
-      if (p(o) !== "object")
-        return o;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (r === "string" ? String : Number)(t);
-  }
-  var O = /* @__PURE__ */ function() {
-    function t() {
-      v(this, t), t.initialize(this);
-    }
-    return w(t, null, [{
-      key: "initialize",
-      value: function(e) {
-      }
-      /**
-       * Constructs a <code>EntityInterface</code> from a plain JavaScript object, optionally creating a new instance.
-       * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @param {module:model/EntityInterface} obj Optional instance to populate.
-       * @return {module:model/EntityInterface} The populated <code>EntityInterface</code> instance.
-       */
-    }, {
-      key: "constructFromObject",
-      value: function(e, o) {
-        return e && (o = o || new t(), e.hasOwnProperty("_version") && (o._version = u.default.convertToType(e._version, "Number")), e.hasOwnProperty("entity_metric") && (o.entity_metric = y.default.constructFromObject(e.entity_metric)), e.hasOwnProperty("entity_unique_id") && (o.entity_unique_id = u.default.convertToType(e.entity_unique_id, "String")), e.hasOwnProperty("entity_id") && (o.entity_id = u.default.convertToType(e.entity_id, "String")), e.hasOwnProperty("entity_image") && (o.entity_image = u.default.convertToType(e.entity_image, "String")), e.hasOwnProperty("entity_slug") && (o.entity_slug = u.default.convertToType(e.entity_slug, "String")), e.hasOwnProperty("entity_teaser") && (o.entity_teaser = u.default.convertToType(e.entity_teaser, "String")), e.hasOwnProperty("entity_time_end") && (o.entity_time_end = u.default.convertToType(e.entity_time_end, "String")), e.hasOwnProperty("entity_time_start") && (o.entity_time_start = u.default.convertToType(e.entity_time_start, "String")), e.hasOwnProperty("entity_title") && (o.entity_title = u.default.convertToType(e.entity_title, "String")), e.hasOwnProperty("entity_type") && (o.entity_type = u.default.convertToType(e.entity_type, "String")), e.hasOwnProperty("entity_type_id") && (o.entity_type_id = u.default.convertToType(e.entity_type_id, "Number")), e.hasOwnProperty("updated_at") && (o.updated_at = u.default.convertToType(e.updated_at, "String")), e.hasOwnProperty("routes") && (o.routes = u.default.convertToType(e.routes, {
-          String: "String"
-        }))), o;
-      }
-      /**
-       * Validates the JSON data with respect to <code>EntityInterface</code>.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @return {boolean} to indicate whether the JSON data is valid with respect to <code>EntityInterface</code>.
-       */
-    }, {
-      key: "validateJSON",
-      value: function(e) {
-        if (e.entity_metric && y.default.validateJSON(e.entity_metric), e.entity_unique_id && !(typeof e.entity_unique_id == "string" || e.entity_unique_id instanceof String))
-          throw new Error("Expected the field `entity_unique_id` to be a primitive type in the JSON string but got " + e.entity_unique_id);
-        if (e.entity_id && !(typeof e.entity_id == "string" || e.entity_id instanceof String))
-          throw new Error("Expected the field `entity_id` to be a primitive type in the JSON string but got " + e.entity_id);
-        if (e.entity_image && !(typeof e.entity_image == "string" || e.entity_image instanceof String))
-          throw new Error("Expected the field `entity_image` to be a primitive type in the JSON string but got " + e.entity_image);
-        if (e.entity_slug && !(typeof e.entity_slug == "string" || e.entity_slug instanceof String))
-          throw new Error("Expected the field `entity_slug` to be a primitive type in the JSON string but got " + e.entity_slug);
-        if (e.entity_teaser && !(typeof e.entity_teaser == "string" || e.entity_teaser instanceof String))
-          throw new Error("Expected the field `entity_teaser` to be a primitive type in the JSON string but got " + e.entity_teaser);
-        if (e.entity_time_end && !(typeof e.entity_time_end == "string" || e.entity_time_end instanceof String))
-          throw new Error("Expected the field `entity_time_end` to be a primitive type in the JSON string but got " + e.entity_time_end);
-        if (e.entity_time_start && !(typeof e.entity_time_start == "string" || e.entity_time_start instanceof String))
-          throw new Error("Expected the field `entity_time_start` to be a primitive type in the JSON string but got " + e.entity_time_start);
-        if (e.entity_title && !(typeof e.entity_title == "string" || e.entity_title instanceof String))
-          throw new Error("Expected the field `entity_title` to be a primitive type in the JSON string but got " + e.entity_title);
-        if (e.entity_type && !(typeof e.entity_type == "string" || e.entity_type instanceof String))
-          throw new Error("Expected the field `entity_type` to be a primitive type in the JSON string but got " + e.entity_type);
-        if (e.updated_at && !(typeof e.updated_at == "string" || e.updated_at instanceof String))
-          throw new Error("Expected the field `updated_at` to be a primitive type in the JSON string but got " + e.updated_at);
-        return !0;
-      }
-    }]), t;
-  }();
-  O.prototype._version = void 0, O.prototype.entity_metric = void 0, O.prototype.entity_unique_id = void 0, O.prototype.entity_id = void 0, O.prototype.entity_image = void 0, O.prototype.entity_slug = void 0, O.prototype.entity_teaser = void 0, O.prototype.entity_time_end = void 0, O.prototype.entity_time_start = void 0, O.prototype.entity_title = void 0, O.prototype.entity_type = void 0, O.prototype.entity_type_id = void 0, O.prototype.updated_at = void 0, O.prototype.routes = void 0;
-  var n = O;
-  i.default = n;
-})(se);
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = l(N), y = l(se);
-  function l(t) {
-    return t && t.__esModule ? t : { default: t };
-  }
-  function p(t) {
-    "@babel/helpers - typeof";
-    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(r) {
-      return typeof r;
-    } : function(r) {
-      return r && typeof Symbol == "function" && r.constructor === Symbol && r !== Symbol.prototype ? "symbol" : typeof r;
-    }, p(t);
-  }
-  function v(t, r) {
-    if (!(t instanceof r))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function b(t, r) {
-    for (var e = 0; e < r.length; e++) {
-      var o = r[e];
-      o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(t, T(o.key), o);
-    }
-  }
-  function w(t, r, e) {
-    return r && b(t.prototype, r), e && b(t, e), Object.defineProperty(t, "prototype", { writable: !1 }), t;
-  }
-  function T(t) {
-    var r = S(t, "string");
-    return p(r) === "symbol" ? r : String(r);
-  }
-  function S(t, r) {
-    if (p(t) !== "object" || t === null)
-      return t;
-    var e = t[Symbol.toPrimitive];
-    if (e !== void 0) {
-      var o = e.call(t, r || "default");
-      if (p(o) !== "object")
-        return o;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (r === "string" ? String : Number)(t);
-  }
-  var O = /* @__PURE__ */ function() {
-    function t() {
-      v(this, t), t.initialize(this);
-    }
-    return w(t, null, [{
-      key: "initialize",
-      value: function(e) {
-      }
-      /**
-       * Constructs a <code>Entity</code> from a plain JavaScript object, optionally creating a new instance.
-       * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @param {module:model/Entity} obj Optional instance to populate.
-       * @return {module:model/Entity} The populated <code>Entity</code> instance.
-       */
-    }, {
-      key: "constructFromObject",
-      value: function(e, o) {
-        return e && (o = o || new t(), e.hasOwnProperty("entity") && (o.entity = y.default.constructFromObject(e.entity)), e.hasOwnProperty("model") && (o.model = u.default.convertToType(e.model, Object)), e.hasOwnProperty("language") && (o.language = u.default.convertToType(e.language, "String")), e.hasOwnProperty("jsonld") && (o.jsonld = u.default.convertToType(e.jsonld, Object))), o;
-      }
-      /**
-       * Validates the JSON data with respect to <code>Entity</code>.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Entity</code>.
-       */
-    }, {
-      key: "validateJSON",
-      value: function(e) {
-        if (e.entity && y.default.validateJSON(e.entity), e.language && !(typeof e.language == "string" || e.language instanceof String))
-          throw new Error("Expected the field `language` to be a primitive type in the JSON string but got " + e.language);
-        return !0;
-      }
-    }]), t;
-  }();
-  O.prototype.entity = void 0, O.prototype.model = void 0, O.prototype.language = void 0, O.prototype.jsonld = void 0;
-  var n = O;
-  i.default = n;
-})(ae);
-var $ = {};
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = y(N);
-  function y(n) {
-    return n && n.__esModule ? n : { default: n };
-  }
-  function l(n) {
-    "@babel/helpers - typeof";
-    return l = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
-      return typeof t;
-    } : function(t) {
-      return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, l(n);
-  }
-  function p(n, t) {
-    if (!(n instanceof t))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function v(n, t) {
-    for (var r = 0; r < t.length; r++) {
-      var e = t[r];
-      e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
-    }
-  }
-  function b(n, t, r) {
-    return t && v(n.prototype, t), r && v(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
-  }
-  function w(n) {
-    var t = T(n, "string");
-    return l(t) === "symbol" ? t : String(t);
-  }
-  function T(n, t) {
-    if (l(n) !== "object" || n === null)
-      return n;
-    var r = n[Symbol.toPrimitive];
-    if (r !== void 0) {
-      var e = r.call(n, t || "default");
-      if (l(e) !== "object")
-        return e;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (t === "string" ? String : Number)(n);
-  }
-  var S = /* @__PURE__ */ function() {
-    function n() {
-      p(this, n), n.initialize(this);
-    }
-    return b(n, null, [{
-      key: "initialize",
-      value: function(r) {
-      }
-      /**
-       * Constructs a <code>EntityinterfaceInner</code> from a plain JavaScript object, optionally creating a new instance.
-       * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @param {module:model/EntityinterfaceInner} obj Optional instance to populate.
-       * @return {module:model/EntityinterfaceInner} The populated <code>EntityinterfaceInner</code> instance.
-       */
-    }, {
-      key: "constructFromObject",
-      value: function(r, e) {
-        return r && (e = e || new n(), r.hasOwnProperty("entity_unique_id") && (e.entity_unique_id = u.default.convertToType(r.entity_unique_id, "String")), r.hasOwnProperty("entity_title") && (e.entity_title = u.default.convertToType(r.entity_title, "String")), r.hasOwnProperty("entity_teaser") && (e.entity_teaser = u.default.convertToType(r.entity_teaser, "String")), r.hasOwnProperty("entity_slug") && (e.entity_slug = u.default.convertToType(r.entity_slug, "String")), r.hasOwnProperty("entity_time_start") && (e.entity_time_start = u.default.convertToType(r.entity_time_start, "String")), r.hasOwnProperty("entity_type") && (e.entity_type = u.default.convertToType(r.entity_type, "String")), r.hasOwnProperty("entity_type_id") && (e.entity_type_id = u.default.convertToType(r.entity_type_id, "Number")), r.hasOwnProperty("entity_image") && (e.entity_image = u.default.convertToType(r.entity_image, "String")), r.hasOwnProperty("routes") && (e.routes = u.default.convertToType(r.routes, {
-          String: "String"
-        }))), e;
-      }
-      /**
-       * Validates the JSON data with respect to <code>EntityinterfaceInner</code>.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @return {boolean} to indicate whether the JSON data is valid with respect to <code>EntityinterfaceInner</code>.
-       */
-    }, {
-      key: "validateJSON",
-      value: function(r) {
-        if (r.entity_unique_id && !(typeof r.entity_unique_id == "string" || r.entity_unique_id instanceof String))
-          throw new Error("Expected the field `entity_unique_id` to be a primitive type in the JSON string but got " + r.entity_unique_id);
-        if (r.entity_title && !(typeof r.entity_title == "string" || r.entity_title instanceof String))
-          throw new Error("Expected the field `entity_title` to be a primitive type in the JSON string but got " + r.entity_title);
-        if (r.entity_teaser && !(typeof r.entity_teaser == "string" || r.entity_teaser instanceof String))
-          throw new Error("Expected the field `entity_teaser` to be a primitive type in the JSON string but got " + r.entity_teaser);
-        if (r.entity_slug && !(typeof r.entity_slug == "string" || r.entity_slug instanceof String))
-          throw new Error("Expected the field `entity_slug` to be a primitive type in the JSON string but got " + r.entity_slug);
-        if (r.entity_time_start && !(typeof r.entity_time_start == "string" || r.entity_time_start instanceof String))
-          throw new Error("Expected the field `entity_time_start` to be a primitive type in the JSON string but got " + r.entity_time_start);
-        if (r.entity_type && !(typeof r.entity_type == "string" || r.entity_type instanceof String))
-          throw new Error("Expected the field `entity_type` to be a primitive type in the JSON string but got " + r.entity_type);
-        if (r.entity_image && !(typeof r.entity_image == "string" || r.entity_image instanceof String))
-          throw new Error("Expected the field `entity_image` to be a primitive type in the JSON string but got " + r.entity_image);
-        return !0;
-      }
-    }]), n;
-  }();
-  S.prototype.entity_unique_id = void 0, S.prototype.entity_title = void 0, S.prototype.entity_teaser = void 0, S.prototype.entity_slug = void 0, S.prototype.entity_time_start = void 0, S.prototype.entity_type = void 0, S.prototype.entity_type_id = void 0, S.prototype.entity_image = void 0, S.prototype.routes = void 0;
-  var O = S;
-  i.default = O;
-})($);
-var ye = {};
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = y(N);
-  function y(n) {
-    return n && n.__esModule ? n : { default: n };
-  }
-  function l(n) {
-    "@babel/helpers - typeof";
-    return l = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
-      return typeof t;
-    } : function(t) {
-      return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, l(n);
-  }
-  function p(n, t) {
-    if (!(n instanceof t))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function v(n, t) {
-    for (var r = 0; r < t.length; r++) {
-      var e = t[r];
-      e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
-    }
-  }
-  function b(n, t, r) {
-    return t && v(n.prototype, t), r && v(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
-  }
-  function w(n) {
-    var t = T(n, "string");
-    return l(t) === "symbol" ? t : String(t);
-  }
-  function T(n, t) {
-    if (l(n) !== "object" || n === null)
-      return n;
-    var r = n[Symbol.toPrimitive];
-    if (r !== void 0) {
-      var e = r.call(n, t || "default");
-      if (l(e) !== "object")
-        return e;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (t === "string" ? String : Number)(n);
-  }
-  var S = /* @__PURE__ */ function() {
-    function n() {
-      p(this, n), n.initialize(this);
-    }
-    return b(n, null, [{
-      key: "initialize",
-      value: function(r) {
-      }
-      /**
-       * Constructs a <code>Meta</code> from a plain JavaScript object, optionally creating a new instance.
-       * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @param {module:model/Meta} obj Optional instance to populate.
-       * @return {module:model/Meta} The populated <code>Meta</code> instance.
-       */
-    }, {
-      key: "constructFromObject",
-      value: function(r, e) {
-        return r && (e = e || new n(), r.hasOwnProperty("description") && (e.description = u.default.convertToType(r.description, "String")), r.hasOwnProperty("image") && (e.image = u.default.convertToType(r.image, "String")), r.hasOwnProperty("title") && (e.title = u.default.convertToType(r.title, "String"))), e;
-      }
-      /**
-       * Validates the JSON data with respect to <code>Meta</code>.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Meta</code>.
-       */
-    }, {
-      key: "validateJSON",
-      value: function(r) {
-        if (r.description && !(typeof r.description == "string" || r.description instanceof String))
-          throw new Error("Expected the field `description` to be a primitive type in the JSON string but got " + r.description);
-        if (r.image && !(typeof r.image == "string" || r.image instanceof String))
-          throw new Error("Expected the field `image` to be a primitive type in the JSON string but got " + r.image);
-        if (r.title && !(typeof r.title == "string" || r.title instanceof String))
-          throw new Error("Expected the field `title` to be a primitive type in the JSON string but got " + r.title);
-        return !0;
-      }
-    }]), n;
-  }();
-  S.prototype.description = void 0, S.prototype.image = void 0, S.prototype.title = void 0;
-  var O = S;
-  i.default = O;
-})(ye);
-var pe = {}, he = {};
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = y(N);
-  function y(n) {
-    return n && n.__esModule ? n : { default: n };
-  }
-  function l(n) {
-    "@babel/helpers - typeof";
-    return l = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
-      return typeof t;
-    } : function(t) {
-      return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, l(n);
-  }
-  function p(n, t) {
-    if (!(n instanceof t))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function v(n, t) {
-    for (var r = 0; r < t.length; r++) {
-      var e = t[r];
-      e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
-    }
-  }
-  function b(n, t, r) {
-    return t && v(n.prototype, t), r && v(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
-  }
-  function w(n) {
-    var t = T(n, "string");
-    return l(t) === "symbol" ? t : String(t);
-  }
-  function T(n, t) {
-    if (l(n) !== "object" || n === null)
-      return n;
-    var r = n[Symbol.toPrimitive];
-    if (r !== void 0) {
-      var e = r.call(n, t || "default");
-      if (l(e) !== "object")
-        return e;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (t === "string" ? String : Number)(n);
-  }
-  var S = /* @__PURE__ */ function() {
-    function n() {
-      p(this, n), n.initialize(this);
-    }
-    return b(n, null, [{
-      key: "initialize",
-      value: function(r) {
-      }
-      /**
-       * Constructs a <code>PageBreadcrumbInner</code> from a plain JavaScript object, optionally creating a new instance.
-       * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @param {module:model/PageBreadcrumbInner} obj Optional instance to populate.
-       * @return {module:model/PageBreadcrumbInner} The populated <code>PageBreadcrumbInner</code> instance.
-       */
-    }, {
-      key: "constructFromObject",
-      value: function(r, e) {
-        return r && (e = e || new n(), r.hasOwnProperty("slug") && (e.slug = u.default.convertToType(r.slug, "String")), r.hasOwnProperty("title") && (e.title = u.default.convertToType(r.title, "String"))), e;
-      }
-      /**
-       * Validates the JSON data with respect to <code>PageBreadcrumbInner</code>.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @return {boolean} to indicate whether the JSON data is valid with respect to <code>PageBreadcrumbInner</code>.
-       */
-    }, {
-      key: "validateJSON",
-      value: function(r) {
-        if (r.slug && !(typeof r.slug == "string" || r.slug instanceof String))
-          throw new Error("Expected the field `slug` to be a primitive type in the JSON string but got " + r.slug);
-        if (r.title && !(typeof r.title == "string" || r.title instanceof String))
-          throw new Error("Expected the field `title` to be a primitive type in the JSON string but got " + r.title);
-        return !0;
-      }
-    }]), n;
-  }();
-  S.prototype.slug = void 0, S.prototype.title = void 0;
-  var O = S;
-  i.default = O;
-})(he);
-var me = {};
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = y(N);
-  function y(n) {
-    return n && n.__esModule ? n : { default: n };
-  }
-  function l(n) {
-    "@babel/helpers - typeof";
-    return l = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
-      return typeof t;
-    } : function(t) {
-      return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, l(n);
-  }
-  function p(n, t) {
-    if (!(n instanceof t))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function v(n, t) {
-    for (var r = 0; r < t.length; r++) {
-      var e = t[r];
-      e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
-    }
-  }
-  function b(n, t, r) {
-    return t && v(n.prototype, t), r && v(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
-  }
-  function w(n) {
-    var t = T(n, "string");
-    return l(t) === "symbol" ? t : String(t);
-  }
-  function T(n, t) {
-    if (l(n) !== "object" || n === null)
-      return n;
-    var r = n[Symbol.toPrimitive];
-    if (r !== void 0) {
-      var e = r.call(n, t || "default");
-      if (l(e) !== "object")
-        return e;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (t === "string" ? String : Number)(n);
-  }
-  var S = /* @__PURE__ */ function() {
-    function n() {
-      p(this, n), n.initialize(this);
-    }
-    return b(n, null, [{
-      key: "initialize",
-      value: function(r) {
-      }
-      /**
-       * Constructs a <code>PageProperty</code> from a plain JavaScript object, optionally creating a new instance.
-       * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @param {module:model/PageProperty} obj Optional instance to populate.
-       * @return {module:model/PageProperty} The populated <code>PageProperty</code> instance.
-       */
-    }, {
-      key: "constructFromObject",
-      value: function(r, e) {
-        return r && (e = e || new n(), r.hasOwnProperty("value") && (e.value = u.default.convertToType(r.value, Object)), r.hasOwnProperty("navigation") && (e.navigation = u.default.convertToType(r.navigation, "Boolean")), r.hasOwnProperty("propagate") && (e.propagate = u.default.convertToType(r.propagate, "Boolean"))), e;
-      }
-      /**
-       * Validates the JSON data with respect to <code>PageProperty</code>.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @return {boolean} to indicate whether the JSON data is valid with respect to <code>PageProperty</code>.
-       */
-    }, {
-      key: "validateJSON",
-      value: function(r) {
-        return !0;
-      }
-    }]), n;
-  }();
-  S.prototype.value = void 0, S.prototype.navigation = void 0, S.prototype.propagate = void 0;
-  var O = S;
-  i.default = O;
-})(me);
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = b(N), y = b(ie()), l = b(ye), p = b(he), v = b(me);
-  function b(c) {
-    return c && c.__esModule ? c : { default: c };
-  }
-  function w(c) {
-    "@babel/helpers - typeof";
-    return w = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(g) {
-      return typeof g;
-    } : function(g) {
-      return g && typeof Symbol == "function" && g.constructor === Symbol && g !== Symbol.prototype ? "symbol" : typeof g;
-    }, w(c);
-  }
-  function T(c, g) {
-    var h = typeof Symbol < "u" && c[Symbol.iterator] || c["@@iterator"];
-    if (!h) {
-      if (Array.isArray(c) || (h = S(c)) || g && c && typeof c.length == "number") {
-        h && (c = h);
-        var s = 0, d = function() {
-        };
-        return { s: d, n: function() {
-          return s >= c.length ? { done: !0 } : { done: !1, value: c[s++] };
-        }, e: function(C) {
-          throw C;
-        }, f: d };
-      }
-      throw new TypeError(`Invalid attempt to iterate non-iterable instance.
-In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
-    }
-    var m = !0, _ = !1, P;
-    return { s: function() {
-      h = h.call(c);
-    }, n: function() {
-      var C = h.next();
-      return m = C.done, C;
-    }, e: function(C) {
-      _ = !0, P = C;
-    }, f: function() {
-      try {
-        !m && h.return != null && h.return();
-      } finally {
-        if (_)
-          throw P;
-      }
-    } };
-  }
-  function S(c, g) {
-    if (c) {
-      if (typeof c == "string")
-        return O(c, g);
-      var h = Object.prototype.toString.call(c).slice(8, -1);
-      if (h === "Object" && c.constructor && (h = c.constructor.name), h === "Map" || h === "Set")
-        return Array.from(c);
-      if (h === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(h))
-        return O(c, g);
-    }
-  }
-  function O(c, g) {
-    (g == null || g > c.length) && (g = c.length);
-    for (var h = 0, s = new Array(g); h < g; h++)
-      s[h] = c[h];
-    return s;
-  }
-  function n(c, g) {
-    if (!(c instanceof g))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function t(c, g) {
-    for (var h = 0; h < g.length; h++) {
-      var s = g[h];
-      s.enumerable = s.enumerable || !1, s.configurable = !0, "value" in s && (s.writable = !0), Object.defineProperty(c, e(s.key), s);
-    }
-  }
-  function r(c, g, h) {
-    return g && t(c.prototype, g), h && t(c, h), Object.defineProperty(c, "prototype", { writable: !1 }), c;
-  }
-  function e(c) {
-    var g = o(c, "string");
-    return w(g) === "symbol" ? g : String(g);
-  }
-  function o(c, g) {
-    if (w(c) !== "object" || c === null)
-      return c;
-    var h = c[Symbol.toPrimitive];
-    if (h !== void 0) {
-      var s = h.call(c, g || "default");
-      if (w(s) !== "object")
-        return s;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (g === "string" ? String : Number)(c);
-  }
-  var f = /* @__PURE__ */ function() {
-    function c() {
-      n(this, c), c.initialize(this);
-    }
-    return r(c, null, [{
-      key: "initialize",
-      value: function(h) {
-      }
-      /**
-       * Constructs a <code>Page</code> from a plain JavaScript object, optionally creating a new instance.
-       * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @param {module:model/Page} obj Optional instance to populate.
-       * @return {module:model/Page} The populated <code>Page</code> instance.
-       */
-    }, {
-      key: "constructFromObject",
-      value: function(h, s) {
-        return h && (s = s || new c(), h.hasOwnProperty("id") && (s.id = u.default.convertToType(h.id, "Number")), h.hasOwnProperty("title") && (s.title = u.default.convertToType(h.title, "String")), h.hasOwnProperty("href") && (s.href = u.default.convertToType(h.href, "String")), h.hasOwnProperty("slug") && (s.slug = u.default.convertToType(h.slug, "String")), h.hasOwnProperty("json") && (s.json = u.default.convertToType(h.json, [y.default])), h.hasOwnProperty("depth") && (s.depth = u.default.convertToType(h.depth, "Number")), h.hasOwnProperty("is_home") && (s.is_home = u.default.convertToType(h.is_home, "Number")), h.hasOwnProperty("created_at") && (s.created_at = u.default.convertToType(h.created_at, "Number")), h.hasOwnProperty("updated_at") && (s.updated_at = u.default.convertToType(h.updated_at, "Number")), h.hasOwnProperty("is_visible") && (s.is_visible = u.default.convertToType(h.is_visible, "Number")), h.hasOwnProperty("meta_json") && (s.meta_json = l.default.constructFromObject(h.meta_json)), h.hasOwnProperty("properties") && (s.properties = u.default.convertToType(h.properties, {
-          String: v.default
-        })), h.hasOwnProperty("uid") && (s.uid = u.default.convertToType(h.uid, "String")), h.hasOwnProperty("type") && (s.type = u.default.convertToType(h.type, "String")), h.hasOwnProperty("target") && (s.target = u.default.convertToType(h.target, "String")), h.hasOwnProperty("container") && (s.container = u.default.convertToType(h.container, "String")), h.hasOwnProperty("breadcrumb") && (s.breadcrumb = u.default.convertToType(h.breadcrumb, [p.default]))), s;
-      }
-      /**
-       * Validates the JSON data with respect to <code>Page</code>.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Page</code>.
-       */
-    }, {
-      key: "validateJSON",
-      value: function(h) {
-        if (h.title && !(typeof h.title == "string" || h.title instanceof String))
-          throw new Error("Expected the field `title` to be a primitive type in the JSON string but got " + h.title);
-        if (h.href && !(typeof h.href == "string" || h.href instanceof String))
-          throw new Error("Expected the field `href` to be a primitive type in the JSON string but got " + h.href);
-        if (h.slug && !(typeof h.slug == "string" || h.slug instanceof String))
-          throw new Error("Expected the field `slug` to be a primitive type in the JSON string but got " + h.slug);
-        if (h.json) {
-          if (!Array.isArray(h.json))
-            throw new Error("Expected the field `json` to be an array in the JSON data but got " + h.json);
-          var s = T(h.json), d;
-          try {
-            for (s.s(); !(d = s.n()).done; ) {
-              var m = d.value;
-              y.default.validateJSON(m);
-            }
-          } catch (C) {
-            s.e(C);
-          } finally {
-            s.f();
-          }
-        }
-        if (h.meta_json && l.default.validateJSON(h.meta_json), h.uid && !(typeof h.uid == "string" || h.uid instanceof String))
-          throw new Error("Expected the field `uid` to be a primitive type in the JSON string but got " + h.uid);
-        if (h.type && !(typeof h.type == "string" || h.type instanceof String))
-          throw new Error("Expected the field `type` to be a primitive type in the JSON string but got " + h.type);
-        if (h.target && !(typeof h.target == "string" || h.target instanceof String))
-          throw new Error("Expected the field `target` to be a primitive type in the JSON string but got " + h.target);
-        if (h.container && !(typeof h.container == "string" || h.container instanceof String))
-          throw new Error("Expected the field `container` to be a primitive type in the JSON string but got " + h.container);
-        if (h.breadcrumb) {
-          if (!Array.isArray(h.breadcrumb))
-            throw new Error("Expected the field `breadcrumb` to be an array in the JSON data but got " + h.breadcrumb);
-          var _ = T(h.breadcrumb), P;
-          try {
-            for (_.s(); !(P = _.n()).done; ) {
-              var A = P.value;
-              p.default.validateJSON(A);
-            }
-          } catch (C) {
-            _.e(C);
-          } finally {
-            _.f();
-          }
-        }
-        return !0;
-      }
-    }]), c;
-  }();
-  f.prototype.id = void 0, f.prototype.title = void 0, f.prototype.href = void 0, f.prototype.slug = void 0, f.prototype.json = void 0, f.prototype.depth = void 0, f.prototype.is_home = void 0, f.prototype.created_at = void 0, f.prototype.updated_at = void 0, f.prototype.is_visible = void 0, f.prototype.meta_json = void 0, f.prototype.properties = void 0, f.prototype.uid = void 0, f.prototype.type = void 0, f.prototype.target = void 0, f.prototype.container = void 0, f.prototype.breadcrumb = void 0;
-  var a = f;
-  i.default = a;
-})(pe);
-var de = {};
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = y(N);
-  function y(n) {
-    return n && n.__esModule ? n : { default: n };
-  }
-  function l(n) {
-    "@babel/helpers - typeof";
-    return l = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
-      return typeof t;
-    } : function(t) {
-      return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, l(n);
-  }
-  function p(n, t) {
-    if (!(n instanceof t))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function v(n, t) {
-    for (var r = 0; r < t.length; r++) {
-      var e = t[r];
-      e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, w(e.key), e);
-    }
-  }
-  function b(n, t, r) {
-    return t && v(n.prototype, t), r && v(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
-  }
-  function w(n) {
-    var t = T(n, "string");
-    return l(t) === "symbol" ? t : String(t);
-  }
-  function T(n, t) {
-    if (l(n) !== "object" || n === null)
-      return n;
-    var r = n[Symbol.toPrimitive];
-    if (r !== void 0) {
-      var e = r.call(n, t || "default");
-      if (l(e) !== "object")
-        return e;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (t === "string" ? String : Number)(n);
-  }
-  var S = /* @__PURE__ */ function() {
-    function n() {
-      p(this, n), n.initialize(this);
-    }
-    return b(n, null, [{
-      key: "initialize",
-      value: function(r) {
-      }
-      /**
-       * Constructs a <code>VersionResponse</code> from a plain JavaScript object, optionally creating a new instance.
-       * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @param {module:model/VersionResponse} obj Optional instance to populate.
-       * @return {module:model/VersionResponse} The populated <code>VersionResponse</code> instance.
-       */
-    }, {
-      key: "constructFromObject",
-      value: function(r, e) {
-        return r && (e = e || new n(), r.hasOwnProperty("version") && (e.version = u.default.convertToType(r.version, "Number")), r.hasOwnProperty("updated_at") && (e.updated_at = u.default.convertToType(r.updated_at, "Number"))), e;
-      }
-      /**
-       * Validates the JSON data with respect to <code>VersionResponse</code>.
-       * @param {Object} data The plain JavaScript object bearing properties of interest.
-       * @return {boolean} to indicate whether the JSON data is valid with respect to <code>VersionResponse</code>.
-       */
-    }, {
-      key: "validateJSON",
-      value: function(r) {
-        return !0;
-      }
-    }]), n;
-  }();
-  S.prototype.version = void 0, S.prototype.updated_at = void 0;
-  var O = S;
-  i.default = O;
-})(de);
-var Je = {};
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = l(N), y = l(oe);
-  function l(n) {
-    return n && n.__esModule ? n : { default: n };
-  }
-  function p(n) {
-    "@babel/helpers - typeof";
-    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
-      return typeof t;
-    } : function(t) {
-      return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, p(n);
-  }
-  function v(n, t) {
-    if (!(n instanceof t))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function b(n, t) {
-    for (var r = 0; r < t.length; r++) {
-      var e = t[r];
-      e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, T(e.key), e);
-    }
-  }
-  function w(n, t, r) {
-    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
-  }
-  function T(n) {
-    var t = S(n, "string");
-    return p(t) === "symbol" ? t : String(t);
-  }
-  function S(n, t) {
-    if (p(n) !== "object" || n === null)
-      return n;
-    var r = n[Symbol.toPrimitive];
-    if (r !== void 0) {
-      var e = r.call(n, t || "default");
-      if (p(e) !== "object")
-        return e;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (t === "string" ? String : Number)(n);
-  }
-  var O = /* @__PURE__ */ function() {
-    function n(t) {
-      v(this, n), this.apiClient = t || u.default.instance;
-    }
-    return w(n, [{
-      key: "configWithHttpInfo",
-      value: function() {
-        var r = null, e = {}, o = {}, f = {}, a = {}, c = ["ApiToken"], g = [], h = ["application/json"], s = y.default;
-        return this.apiClient.callApi("/config", "GET", e, o, f, a, r, c, g, h, s, null);
-      }
-      /**
-       * Get Config
-       * The config API endpoint provides comprehensive information required for configuring the layout of websites. It encompasses various essential elements, including containers with pages, an extensive list of available slugs, globals containing content pool data, and crucial details about the Nitro configuration itself. By accessing this endpoint, developers can gather all the necessary data to effectively design and structure their websites. The endpoint offers a holistic view of the website's layout, empowering developers to tailor the user experience and optimize the overall design.
-       * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/ConfigResponse}
-       */
-    }, {
-      key: "config",
-      value: function() {
-        return this.configWithHttpInfo().then(function(r) {
-          return r.data;
-        });
-      }
-    }]), n;
-  }();
-  i.default = O;
-})(Je);
-var Me = {};
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = l(N), y = l(ae);
-  function l(n) {
-    return n && n.__esModule ? n : { default: n };
-  }
-  function p(n) {
-    "@babel/helpers - typeof";
-    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
-      return typeof t;
-    } : function(t) {
-      return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, p(n);
-  }
-  function v(n, t) {
-    if (!(n instanceof t))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function b(n, t) {
-    for (var r = 0; r < t.length; r++) {
-      var e = t[r];
-      e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, T(e.key), e);
-    }
-  }
-  function w(n, t, r) {
-    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
-  }
-  function T(n) {
-    var t = S(n, "string");
-    return p(t) === "symbol" ? t : String(t);
-  }
-  function S(n, t) {
-    if (p(n) !== "object" || n === null)
-      return n;
-    var r = n[Symbol.toPrimitive];
-    if (r !== void 0) {
-      var e = r.call(n, t || "default");
-      if (p(e) !== "object")
-        return e;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (t === "string" ? String : Number)(n);
-  }
-  var O = /* @__PURE__ */ function() {
-    function n(t) {
-      v(this, n), this.apiClient = t || u.default.instance;
-    }
-    return w(n, [{
-      key: "entityBySlugWithHttpInfo",
-      value: function(r, e) {
-        e = e || {};
-        var o = null;
-        if (r == null)
-          throw new Error("Missing the required parameter 'slug' when calling entityBySlug");
-        var f = {
-          slug: r
-        }, a = {
-          typeId: e.typeId
-        }, c = {}, g = {}, h = ["ApiToken"], s = [], d = ["application/json"], m = y.default;
-        return this.apiClient.callApi("/entities/slug/{slug}", "GET", f, a, c, g, o, h, s, d, m, null);
-      }
-      /**
-       * Find entity by slug and optional Type-ID
-       * 
-       * @param {String} slug When looking up an entity slug, it is advisable to provide the typeId parameter along with it, as slugs are not unique among other entities. Failing to include the typeId parameter may lead to unintended or incorrect results. By specifying the typeId, you can ensure more accurate and targeted retrieval of the desired entity.
-       * @param {Object} opts Optional parameters
-       * @param {Number} opts.typeId To ensure accurate lookup, it is considered a best practice to include the Type-ID of the entity associated with the slug. The Type-ID, alternatively referred to as the Entity-Definition-Schema ID, serves as a crucial identifier within the system. It uniquely distinguishes and categorizes the Entity-Definition-Schema.
-       * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Entity}
-       */
-    }, {
-      key: "entityBySlug",
-      value: function(r, e) {
-        return this.entityBySlugWithHttpInfo(r, e).then(function(o) {
-          return o.data;
-        });
-      }
-      /**
-       * Find entity by uniqueid
-       * The endpoint provides comprehensive information about a specified entity. An entity represents a collection of information pertaining to a specific data type and is defined by a key-value pair. You can use various data types such as blogs, events, or any other relevant data. However, in order to access an entity, it must be properly configured within the nitro config.
-       * @param {String} uniqueid The unique identifier of the given entity is a string composed solely of lowercase alphabetic characters (a-z) and numbers. This identifier is meticulously generated for each data row, ensuring its uniqueness and facilitating efficient data management and retrieval across content pools.
-       * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Entity} and HTTP response
-       */
-    }, {
-      key: "entityByUniqueidWithHttpInfo",
-      value: function(r) {
-        var e = null;
-        if (r == null)
-          throw new Error("Missing the required parameter 'uniqueid' when calling entityByUniqueid");
-        var o = {
-          uniqueid: r
-        }, f = {}, a = {}, c = {}, g = ["ApiToken"], h = [], s = ["application/json"], d = y.default;
-        return this.apiClient.callApi("/entities/uniqueid/{uniqueid}", "GET", o, f, a, c, e, g, h, s, d, null);
-      }
-      /**
-       * Find entity by uniqueid
-       * The endpoint provides comprehensive information about a specified entity. An entity represents a collection of information pertaining to a specific data type and is defined by a key-value pair. You can use various data types such as blogs, events, or any other relevant data. However, in order to access an entity, it must be properly configured within the nitro config.
-       * @param {String} uniqueid The unique identifier of the given entity is a string composed solely of lowercase alphabetic characters (a-z) and numbers. This identifier is meticulously generated for each data row, ensuring its uniqueness and facilitating efficient data management and retrieval across content pools.
-       * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Entity}
-       */
-    }, {
-      key: "entityByUniqueid",
-      value: function(r) {
-        return this.entityByUniqueidWithHttpInfo(r).then(function(e) {
-          return e.data;
-        });
-      }
-    }]), n;
-  }();
-  i.default = O;
-})(Me);
-var xe = {};
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = l(N), y = l(pe);
-  function l(n) {
-    return n && n.__esModule ? n : { default: n };
-  }
-  function p(n) {
-    "@babel/helpers - typeof";
-    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
-      return typeof t;
-    } : function(t) {
-      return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, p(n);
-  }
-  function v(n, t) {
-    if (!(n instanceof t))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function b(n, t) {
-    for (var r = 0; r < t.length; r++) {
-      var e = t[r];
-      e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, T(e.key), e);
-    }
-  }
-  function w(n, t, r) {
-    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
-  }
-  function T(n) {
-    var t = S(n, "string");
-    return p(t) === "symbol" ? t : String(t);
-  }
-  function S(n, t) {
-    if (p(n) !== "object" || n === null)
-      return n;
-    var r = n[Symbol.toPrimitive];
-    if (r !== void 0) {
-      var e = r.call(n, t || "default");
-      if (p(e) !== "object")
-        return e;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (t === "string" ? String : Number)(n);
-  }
-  var O = /* @__PURE__ */ function() {
-    function n(t) {
-      v(this, n), this.apiClient = t || u.default.instance;
-    }
-    return w(n, [{
-      key: "homeWithHttpInfo",
-      value: function() {
-        var r = null, e = {}, o = {}, f = {}, a = {}, c = ["ApiToken"], g = [], h = ["application/json"], s = y.default;
-        return this.apiClient.callApi("/pages/home", "GET", e, o, f, a, r, c, g, h, s, null);
-      }
-      /**
-       * Get Home
-       * This endpoint allows you to retrieve the designated homepage of a website. Alternatively, you can utilize the pages endpoint by specifying an empty slug parameter to achieve the same result. By using either of these methods, you can effectively access the desired homepage of the website.
-       * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Page}
-       */
-    }, {
-      key: "home",
-      value: function() {
-        return this.homeWithHttpInfo().then(function(r) {
-          return r.data;
-        });
-      }
-      /**
-       * Get Page by slug
-       * This endpoint retrieves comprehensive information from a specified page using either a slug or a path. The slug refers to a unique identifier for the page, while the path is the slug with a leading slash. By providing either the slug or the path as input, the function will gather all the relevant details associated with the page.
-       * @param {Object} opts Optional parameters
-       * @param {String} [slug] The function retrieves a specific page by its slug. If no slug is provided, it automatically returns the homepage. Moreover, it seamlessly handles paths with subpages, allowing for nested URLs like \"testpage/subpage\". In this way, a forward slash (\"/\") within the path is recognized as a valid character and processed accordingly.
-       * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Page} and HTTP response
-       */
-    }, {
-      key: "pageWithHttpInfo",
-      value: function(r) {
-        r = r || {};
-        var e = null, o = {}, f = {
-          slug: r.slug
-        }, a = {}, c = {}, g = ["ApiToken"], h = [], s = ["application/json"], d = y.default;
-        return this.apiClient.callApi("/pages", "GET", o, f, a, c, e, g, h, s, d, null);
-      }
-      /**
-       * Get Page by slug
-       * This endpoint retrieves comprehensive information from a specified page using either a slug or a path. The slug refers to a unique identifier for the page, while the path is the slug with a leading slash. By providing either the slug or the path as input, the function will gather all the relevant details associated with the page.
-       * @param {Object} opts Optional parameters
-       * @param {String} opts.slug The function retrieves a specific page by its slug. If no slug is provided, it automatically returns the homepage. Moreover, it seamlessly handles paths with subpages, allowing for nested URLs like \"testpage/subpage\". In this way, a forward slash (\"/\") within the path is recognized as a valid character and processed accordingly.
-       * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Page}
-       */
-    }, {
-      key: "page",
-      value: function(r) {
-        return this.pageWithHttpInfo(r).then(function(e) {
-          return e.data;
-        });
-      }
-    }]), n;
-  }();
-  i.default = O;
-})(xe);
-var Be = {};
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = l(N), y = l($);
-  function l(n) {
-    return n && n.__esModule ? n : { default: n };
-  }
-  function p(n) {
-    "@babel/helpers - typeof";
-    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
-      return typeof t;
-    } : function(t) {
-      return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, p(n);
-  }
-  function v(n, t) {
-    if (!(n instanceof t))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function b(n, t) {
-    for (var r = 0; r < t.length; r++) {
-      var e = t[r];
-      e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, T(e.key), e);
-    }
-  }
-  function w(n, t, r) {
-    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
-  }
-  function T(n) {
-    var t = S(n, "string");
-    return p(t) === "symbol" ? t : String(t);
-  }
-  function S(n, t) {
-    if (p(n) !== "object" || n === null)
-      return n;
-    var r = n[Symbol.toPrimitive];
-    if (r !== void 0) {
-      var e = r.call(n, t || "default");
-      if (p(e) !== "object")
-        return e;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (t === "string" ? String : Number)(n);
-  }
-  var O = /* @__PURE__ */ function() {
-    function n(t) {
-      v(this, n), this.apiClient = t || u.default.instance;
-    }
-    return w(n, [{
-      key: "searchWithHttpInfo",
-      value: function(r) {
-        var e = null;
-        if (r == null)
-          throw new Error("Missing the required parameter 'query' when calling search");
-        var o = {}, f = {
-          query: r
-        }, a = {}, c = {}, g = ["ApiToken"], h = [], s = ["application/json"], d = [y.default];
-        return this.apiClient.callApi("/search", "GET", o, f, a, c, e, g, h, s, d, null);
-      }
-      /**
-       * Get Search by query
-       * This endpoint offers a powerful capability to search through the websites sitemap, encompassing both pages and entities. With this endpoint, users can efficiently explore and retrieve information from your sitemap by creating a paginated search experience.
-       * @param {String} query The query keyword that needs to be looked up. It is important to ensure that the query is properly URL encoded for accurate processing and retrieval.
-       * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link Array.<module:model/EntityinterfaceInner>}
-       */
-    }, {
-      key: "search",
-      value: function(r) {
-        return this.searchWithHttpInfo(r).then(function(e) {
-          return e.data;
-        });
-      }
-    }]), n;
-  }();
-  i.default = O;
-})(Be);
-var De = {};
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = l(N), y = l($);
-  function l(n) {
-    return n && n.__esModule ? n : { default: n };
-  }
-  function p(n) {
-    "@babel/helpers - typeof";
-    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
-      return typeof t;
-    } : function(t) {
-      return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, p(n);
-  }
-  function v(n, t) {
-    if (!(n instanceof t))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function b(n, t) {
-    for (var r = 0; r < t.length; r++) {
-      var e = t[r];
-      e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, T(e.key), e);
-    }
-  }
-  function w(n, t, r) {
-    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
-  }
-  function T(n) {
-    var t = S(n, "string");
-    return p(t) === "symbol" ? t : String(t);
-  }
-  function S(n, t) {
-    if (p(n) !== "object" || n === null)
-      return n;
-    var r = n[Symbol.toPrimitive];
-    if (r !== void 0) {
-      var e = r.call(n, t || "default");
-      if (p(e) !== "object")
-        return e;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (t === "string" ? String : Number)(n);
-  }
-  var O = /* @__PURE__ */ function() {
-    function n(t) {
-      v(this, n), this.apiClient = t || u.default.instance;
-    }
-    return w(n, [{
-      key: "sitemapWithHttpInfo",
-      value: function() {
-        var r = null, e = {}, o = {}, f = {}, a = {}, c = ["ApiToken"], g = [], h = ["application/json"], s = [y.default];
-        return this.apiClient.callApi("/sitemap", "GET", e, o, f, a, r, c, g, h, s, null);
-      }
-      /**
-       * Get Sitemap
-       * This endpoint provides comprehensive data for generating the sitemap. It encompasses all the necessary information, including pages from containers, as well as all entities that have been mapped.
-       * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link Array.<module:model/EntityinterfaceInner>}
-       */
-    }, {
-      key: "sitemap",
-      value: function() {
-        return this.sitemapWithHttpInfo().then(function(r) {
-          return r.data;
-        });
-      }
-    }]), n;
-  }();
-  i.default = O;
-})(De);
-var ze = {};
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), i.default = void 0;
-  var u = l(N), y = l(de);
-  function l(n) {
-    return n && n.__esModule ? n : { default: n };
-  }
-  function p(n) {
-    "@babel/helpers - typeof";
-    return p = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t) {
-      return typeof t;
-    } : function(t) {
-      return t && typeof Symbol == "function" && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-    }, p(n);
-  }
-  function v(n, t) {
-    if (!(n instanceof t))
-      throw new TypeError("Cannot call a class as a function");
-  }
-  function b(n, t) {
-    for (var r = 0; r < t.length; r++) {
-      var e = t[r];
-      e.enumerable = e.enumerable || !1, e.configurable = !0, "value" in e && (e.writable = !0), Object.defineProperty(n, T(e.key), e);
-    }
-  }
-  function w(n, t, r) {
-    return t && b(n.prototype, t), r && b(n, r), Object.defineProperty(n, "prototype", { writable: !1 }), n;
-  }
-  function T(n) {
-    var t = S(n, "string");
-    return p(t) === "symbol" ? t : String(t);
-  }
-  function S(n, t) {
-    if (p(n) !== "object" || n === null)
-      return n;
-    var r = n[Symbol.toPrimitive];
-    if (r !== void 0) {
-      var e = r.call(n, t || "default");
-      if (p(e) !== "object")
-        return e;
-      throw new TypeError("@@toPrimitive must return a primitive value.");
-    }
-    return (t === "string" ? String : Number)(n);
-  }
-  var O = /* @__PURE__ */ function() {
-    function n(t) {
-      v(this, n), this.apiClient = t || u.default.instance;
-    }
-    return w(n, [{
-      key: "versionWithHttpInfo",
-      value: function() {
-        var r = null, e = {}, o = {}, f = {}, a = {}, c = ["ApiToken"], g = [], h = ["application/json"], s = y.default;
-        return this.apiClient.callApi("/version", "GET", e, o, f, a, r, c, g, h, s, null);
-      }
-      /**
-       * Get Version Information
-       * The Version API endpoint offers a highly efficient solution for evaluating the current caching status of your application's caching mechanism. This functionality allows you to cache the entire application configuration and page responses indefinitely. However, utilizing this endpoint enables you to assess the validity of the cache by sending a request to determine its current status. This caching endpoint is specifically designed for optimal performance when compared to the configuration endpoint, which requires more thorough evaluation and encompasses a substantial response body.
-       * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/VersionResponse}
-       */
-    }, {
-      key: "version",
-      value: function() {
-        return this.versionWithHttpInfo().then(function(r) {
-          return r.data;
-        });
-      }
-    }]), n;
-  }();
-  i.default = O;
-})(ze);
-(function(i) {
-  Object.defineProperty(i, "__esModule", {
-    value: !0
-  }), Object.defineProperty(i, "ApiClient", {
-    enumerable: !0,
-    get: function() {
-      return u.default;
-    }
-  }), Object.defineProperty(i, "Block", {
-    enumerable: !0,
-    get: function() {
-      return y.default;
-    }
-  }), Object.defineProperty(i, "BlockSlots", {
-    enumerable: !0,
-    get: function() {
-      return l.default;
-    }
-  }), Object.defineProperty(i, "ConfigApi", {
-    enumerable: !0,
-    get: function() {
-      return a.default;
-    }
-  }), Object.defineProperty(i, "ConfigResponse", {
-    enumerable: !0,
-    get: function() {
-      return p.default;
-    }
-  }), Object.defineProperty(i, "ConfigResponseContainersValue", {
-    enumerable: !0,
-    get: function() {
-      return v.default;
-    }
-  }), Object.defineProperty(i, "ConfigResponseNitro", {
-    enumerable: !0,
-    get: function() {
-      return b.default;
-    }
-  }), Object.defineProperty(i, "EntitiesApi", {
-    enumerable: !0,
-    get: function() {
-      return c.default;
-    }
-  }), Object.defineProperty(i, "Entity", {
-    enumerable: !0,
-    get: function() {
-      return w.default;
-    }
-  }), Object.defineProperty(i, "EntityInterface", {
-    enumerable: !0,
-    get: function() {
-      return T.default;
-    }
-  }), Object.defineProperty(i, "EntityMetric", {
-    enumerable: !0,
-    get: function() {
-      return S.default;
-    }
-  }), Object.defineProperty(i, "EntityinterfaceInner", {
-    enumerable: !0,
-    get: function() {
-      return O.default;
-    }
-  }), Object.defineProperty(i, "Meta", {
-    enumerable: !0,
-    get: function() {
-      return n.default;
-    }
-  }), Object.defineProperty(i, "Page", {
-    enumerable: !0,
-    get: function() {
-      return t.default;
-    }
-  }), Object.defineProperty(i, "PageBreadcrumbInner", {
-    enumerable: !0,
-    get: function() {
-      return r.default;
-    }
-  }), Object.defineProperty(i, "PageProperty", {
-    enumerable: !0,
-    get: function() {
-      return e.default;
-    }
-  }), Object.defineProperty(i, "PagesApi", {
-    enumerable: !0,
-    get: function() {
-      return g.default;
-    }
-  }), Object.defineProperty(i, "PagesInner", {
-    enumerable: !0,
-    get: function() {
-      return o.default;
-    }
-  }), Object.defineProperty(i, "SearchApi", {
-    enumerable: !0,
-    get: function() {
-      return h.default;
-    }
-  }), Object.defineProperty(i, "SitemapApi", {
-    enumerable: !0,
-    get: function() {
-      return s.default;
-    }
-  }), Object.defineProperty(i, "VersionApi", {
-    enumerable: !0,
-    get: function() {
-      return d.default;
-    }
-  }), Object.defineProperty(i, "VersionResponse", {
-    enumerable: !0,
-    get: function() {
-      return f.default;
-    }
-  });
-  var u = m(N), y = m(ie()), l = m(qe()), p = m(oe), v = m(ue), b = m(le), w = m(ae), T = m(se), S = m(ce), O = m($), n = m(ye), t = m(pe), r = m(he), e = m(me), o = m(fe), f = m(de), a = m(Je), c = m(Me), g = m(xe), h = m(Be), s = m(De), d = m(ze);
-  function m(_) {
-    return _ && _.__esModule ? _ : { default: _ };
-  }
-})(je);
-const st = /[\p{Lu}]/u, ct = /[\p{Ll}]/u, Te = /^[\p{Lu}](?![\p{Lu}])/gu, Fe = /([\p{Alpha}\p{N}_]|$)/u, ve = /[_.\- ]+/, yt = new RegExp("^" + ve.source), Pe = new RegExp(ve.source + Fe.source, "gu"), Ee = new RegExp("\\d+" + Fe.source, "gu"), pt = (i, u, y, l) => {
-  let p = !1, v = !1, b = !1, w = !1;
-  for (let T = 0; T < i.length; T++) {
-    const S = i[T];
-    w = T > 2 ? i[T - 3] === "-" : !0, p && st.test(S) ? (i = i.slice(0, T) + "-" + i.slice(T), p = !1, b = v, v = !0, T++) : v && b && ct.test(S) && (!w || l) ? (i = i.slice(0, T - 1) + "-" + i.slice(T - 1), b = v, v = !1, p = !0) : (p = u(S) === S && y(S) !== S, b = v, v = y(S) === S && u(S) !== S);
-  }
-  return i;
-}, ht = (i, u) => (Te.lastIndex = 0, i.replace(Te, (y) => u(y))), mt = (i, u) => (Pe.lastIndex = 0, Ee.lastIndex = 0, i.replace(Pe, (y, l) => u(l)).replace(Ee, (y) => u(y)));
-function dt(i, u) {
-  if (!(typeof i == "string" || Array.isArray(i)))
+    ];
+  }
+  getBasePathFromSettings(e, r = {}) {
+    var o = this.hostSettings();
+    if (e < 0 || e >= o.length)
+      throw new Error("Invalid index " + e + " when selecting the host settings. Must be less than " + o.length);
+    var n = o[e], i = n.url;
+    for (var a in n.variables)
+      if (a in r) {
+        let s = n.variables[a];
+        if (!("enum_values" in s) || s.enum_values.includes(r[a]))
+          i = i.replace("{" + a + "}", r[a]);
+        else
+          throw new Error("The variable `" + a + "` in the host URL has invalid value " + r[a] + ". Must be " + n.variables[a].enum_values + ".");
+      } else
+        i = i.replace("{" + a + "}", n.variables[a].default_value);
+    return i;
+  }
+  /**
+  * Constructs a new map or array model from REST data.
+  * @param data {Object|Array} The REST data.
+  * @param obj {Object|Array} The target object or array.
+  */
+  static constructFromObject(e, r, o) {
+    if (Array.isArray(e))
+      for (var n = 0; n < e.length; n++)
+        e.hasOwnProperty(n) && (r[n] = L.convertToType(e[n], o));
+    else
+      for (var i in e)
+        e.hasOwnProperty(i) && (r[i] = L.convertToType(e[i], o));
+  }
+}
+L.CollectionFormatEnum = {
+  /**
+   * Comma-separated values. Value: <code>csv</code>
+   * @const
+   */
+  CSV: ",",
+  /**
+   * Space-separated values. Value: <code>ssv</code>
+   * @const
+   */
+  SSV: " ",
+  /**
+   * Tab-separated values. Value: <code>tsv</code>
+   * @const
+   */
+  TSV: "	",
+  /**
+   * Pipe(|)-separated values. Value: <code>pipes</code>
+   * @const
+   */
+  PIPES: "|",
+  /**
+   * Native array. Value: <code>multi</code>
+   * @const
+   */
+  MULTI: "multi"
+};
+L.instance = new L();
+const un = /[\p{Lu}]/u, cn = /[\p{Ll}]/u, Te = /^[\p{Lu}](?![\p{Lu}])/gu, Ye = /([\p{Alpha}\p{N}_]|$)/u, ne = /[_.\- ]+/, pn = new RegExp("^" + ne.source), Pe = new RegExp(ne.source + Ye.source, "gu"), xe = new RegExp("\\d+" + Ye.source, "gu"), fn = (t, e, r, o) => {
+  let n = !1, i = !1, a = !1, s = !1;
+  for (let u = 0; u < t.length; u++) {
+    const f = t[u];
+    s = u > 2 ? t[u - 3] === "-" : !0, n && un.test(f) ? (t = t.slice(0, u) + "-" + t.slice(u), n = !1, a = i, i = !0, u++) : i && a && cn.test(f) && (!s || o) ? (t = t.slice(0, u - 1) + "-" + t.slice(u - 1), a = i, i = !1, n = !0) : (n = e(f) === f && r(f) !== f, a = i, i = r(f) === f && e(f) !== f);
+  }
+  return t;
+}, yn = (t, e) => (Te.lastIndex = 0, t.replace(Te, (r) => e(r))), hn = (t, e) => (Pe.lastIndex = 0, xe.lastIndex = 0, t.replace(Pe, (r, o) => e(o)).replace(xe, (r) => e(r)));
+function dn(t, e) {
+  if (!(typeof t == "string" || Array.isArray(t)))
     throw new TypeError("Expected the input to be `string | string[]`");
-  if (u = {
+  if (e = {
     pascalCase: !1,
     preserveConsecutiveUppercase: !1,
-    ...u
-  }, Array.isArray(i) ? i = i.map((v) => v.trim()).filter((v) => v.length).join("-") : i = i.trim(), i.length === 0)
+    ...e
+  }, Array.isArray(t) ? t = t.map((i) => i.trim()).filter((i) => i.length).join("-") : t = t.trim(), t.length === 0)
     return "";
-  const y = u.locale === !1 ? (v) => v.toLowerCase() : (v) => v.toLocaleLowerCase(u.locale), l = u.locale === !1 ? (v) => v.toUpperCase() : (v) => v.toLocaleUpperCase(u.locale);
-  return i.length === 1 ? ve.test(i) ? "" : u.pascalCase ? l(i) : y(i) : (i !== y(i) && (i = pt(i, y, l, u.preserveConsecutiveUppercase)), i = i.replace(yt, ""), i = u.preserveConsecutiveUppercase ? ht(i, y) : y(i), u.pascalCase && (i = l(i.charAt(0)) + i.slice(1)), mt(i, l));
+  const r = e.locale === !1 ? (i) => i.toLowerCase() : (i) => i.toLocaleLowerCase(e.locale), o = e.locale === !1 ? (i) => i.toUpperCase() : (i) => i.toLocaleUpperCase(e.locale);
+  return t.length === 1 ? ne.test(t) ? "" : e.pascalCase ? o(t) : r(t) : (t !== r(t) && (t = fn(t, r, o, e.preserveConsecutiveUppercase)), t = t.replace(pn, ""), t = e.preserveConsecutiveUppercase ? yn(t, r) : r(t), e.pascalCase && (t = o(t.charAt(0)) + t.slice(1)), hn(t, o));
 }
-function vt(i, u, y) {
-  const l = "virtual:flyo-components", p = "\0" + l;
+function mn(t, e, r) {
+  const o = "virtual:flyo-components", n = "\0" + o;
   return {
     name: "vite-plugin-flyo-components",
-    async resolveId(v) {
-      if (v === l)
-        return p;
+    async resolveId(i) {
+      if (i === o)
+        return n;
     },
-    async load(v) {
-      if (v === p) {
-        const b = [];
-        for (const [T, S] of Object.entries(u)) {
-          const O = await this.resolve(
-            "/" + i + "/" + S + ".astro"
+    async load(i) {
+      if (i === n) {
+        const a = [];
+        for (const [u, f] of Object.entries(e)) {
+          const b = await this.resolve(
+            "/" + t + "/" + f + ".astro"
           );
-          O && b.push(`export { default as ${dt(T)} } from "${O.id}"`);
+          b && a.push(`export { default as ${dn(u)} } from "${b.id}"`);
         }
-        let w = null;
-        return y && (w = await this.resolve(
-          "/" + i + "/" + y + ".astro"
-        )), w ? b.push(`export { default as fallback } from "${w.id}"`) : b.push('export { default as fallback } from "@flyo/nitro-astro/src/components/FallbackComponent.astro"'), b.join(";");
+        let s = null;
+        return r && (s = await this.resolve(
+          "/" + t + "/" + r + ".astro"
+        )), s ? a.push(`export { default as fallback } from "${s.id}"`) : a.push('export { default as fallback } from "@flyo/nitro-astro/src/components/FallbackComponent.astro"'), a.join(";");
       }
     }
   };
 }
-function gt() {
+function bn() {
   return globalThis.flyoNitroInstance || console.error("flyoNitroInstance has not been initialized correctly"), globalThis.flyoNitroInstance;
 }
-function _t(i) {
-  const u = {
+function gn(t) {
+  const e = {
     accessToken: !1,
     liveEdit: !1,
     fallbackComponent: null,
-    ...i
+    ...t
   };
   return {
     name: "@flyo/nitro-astro",
     hooks: {
-      "astro:config:setup": ({ injectScript: y, updateConfig: l }) => {
-        l({
+      "astro:config:setup": ({ injectScript: r, updateConfig: o }) => {
+        o({
           vite: {
             plugins: [
-              vt(
-                i.componentsDir,
-                i.components,
-                i.fallbackComponent
+              mn(
+                t.componentsDir,
+                t.components,
+                t.fallbackComponent
               )
             ]
           }
-        }), y(
+        }), r(
           "page-ssr",
           `
             import { ApiClient } from '@flyo/nitro-js'
@@ -3573,11 +2473,11 @@ function _t(i) {
             defaultClient.defaultHeaders = {}
 
             let ApiToken = defaultClient.authentications['ApiToken'];
-            ApiToken.apiKey = '${u.accessToken}';
+            ApiToken.apiKey = '${e.accessToken}';
 
             globalThis.flyoNitroInstance = defaultClient;
           `
-        ), u.liveEdit && y(
+        ), e.liveEdit && r(
           "page",
           `
               window.addEventListener("message", (event) => {
@@ -3608,6 +2508,6 @@ function _t(i) {
   };
 }
 export {
-  _t as default,
-  gt as useFlyoNitro
+  gn as default,
+  bn as useFlyoNitro
 };
