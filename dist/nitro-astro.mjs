@@ -205,9 +205,9 @@ function O(e, i) {
   };
 }
 function C(e) {
-  return M(e);
+  return F(e);
 }
-function M(e, i) {
+function F(e, i) {
   return e == null ? e : {
     items: n(e, "items") ? e.items : void 0,
     content: n(e, "content") ? e.content : void 0,
@@ -219,9 +219,9 @@ function M(e, i) {
   };
 }
 function T(e) {
-  return B(e);
+  return M(e);
 }
-function B(e, i) {
+function M(e, i) {
   return e == null ? e : {
     type: n(e, "type") ? e.type : void 0,
     target: n(e, "target") ? e.target : void 0,
@@ -232,7 +232,7 @@ function B(e, i) {
     children: n(e, "children") ? e.children.map(T) : void 0
   };
 }
-function F(e) {
+function B(e) {
   return D(e);
 }
 function D(e, i) {
@@ -262,7 +262,7 @@ function W(e, i) {
   return e == null ? e : {
     nitro: n(e, "nitro") ? G(e.nitro) : void 0,
     pages: n(e, "pages") ? e.pages : void 0,
-    containers: n(e, "containers") ? g(e.containers, F) : void 0,
+    containers: n(e, "containers") ? g(e.containers, B) : void 0,
     globals: n(e, "globals") ? e.globals : void 0
   };
 }
@@ -631,7 +631,7 @@ function be(e, i, t) {
   };
 }
 function p() {
-  return globalThis.flyoNitroInstance || console.error("flyoNitroInstance has not been initialized correctly"), globalThis.flyoNitroInstance;
+  return globalThis.flyoNitroInstance || console.error("The Flyo Typescript Configuration has not been initialized correctly"), globalThis.flyoNitroInstance;
 }
 function Re() {
   return new ce(p());

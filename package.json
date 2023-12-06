@@ -9,6 +9,21 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/nitro-astro.mjs",
       "require": "./dist/nitro-astro.js"
+    },
+    "./FallbackComponent.astro": {
+      "types": "./src/components/FallbackComponent.ts",
+      "import": "./src/components/FallbackComponent.ts",
+      "require": "./src/components/FallbackComponent.ts"
+    },
+    "./FlyoNitroBlock.astro": {
+      "types": "./src/components/FlyoNitroBlock.ts",
+      "import": "./src/components/FlyoNitroBlock.ts",
+      "require": "./src/components/FlyoNitroBlock.ts"
+    },
+    "./FlyoNitroPage.astro": {
+      "types": "./src/omponents/FlyoNitroPage.ts",
+      "import": "./src/components/FlyoNitroPage.ts",
+      "require": "./src/components/FlyoNitroPage.ts"
     }
   },
   "type": "module",
