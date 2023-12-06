@@ -11,25 +11,25 @@
       "require": "./dist/nitro-astro.js"
     },
     "./FallbackComponent.astro": {
-      "types": "./src/components/FallbackComponent.ts",
-      "import": "./src/components/FallbackComponent.ts",
-      "require": "./src/components/FallbackComponent.ts"
+      "types": "./components/FallbackComponent.ts",
+      "import": "./components/FallbackComponent.ts",
+      "require": "./components/FallbackComponent.ts"
     },
     "./FlyoNitroBlock.astro": {
-      "types": "./src/components/FlyoNitroBlock.ts",
-      "import": "./src/components/FlyoNitroBlock.ts",
-      "require": "./src/components/FlyoNitroBlock.ts"
+      "types": "./components/FlyoNitroBlock.ts",
+      "import": "./components/FlyoNitroBlock.ts",
+      "require": "./components/FlyoNitroBlock.ts"
     },
     "./FlyoNitroPage.astro": {
-      "types": "./src/components/FlyoNitroPage.ts",
-      "import": "./src/components/FlyoNitroPage.ts",
-      "require": "./src/components/FlyoNitroPage.ts"
+      "types": "./components/FlyoNitroPage.ts",
+      "import": "./components/FlyoNitroPage.ts",
+      "require": "./components/FlyoNitroPage.ts"
     }
   },
   "type": "module",
   "files": [
     "dist",
-    "src/components"
+    "components"
   ],
   "types": "./dist/index.d.ts",
   "author": "Basil Suter <git@nadar.io>",

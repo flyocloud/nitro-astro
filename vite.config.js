@@ -8,10 +8,15 @@ export default defineConfig(() => {
   return {
     build: {
       lib: {
-        entry: path.resolve(__dirname, "src/index.ts"),
+        entry: path.resolve(__dirname, "index.ts"),
         name: "flyoNitroIntegration",
         fileName: (format) => (format === "es" ? `${name}.mjs` : `${name}.js`),
-      }
+      },
+      rollupOptions: {
+        output: {
+          exports: "named", // Set the output.exports to 'named'
+        },
+      },
     },
     plugins: [
       // Other plugins...

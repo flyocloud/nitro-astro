@@ -625,7 +625,7 @@ function be(e, i, t) {
         let u = null;
         return t && (u = await this.resolve(
           "/" + e + "/" + t + ".astro"
-        )), u ? s.push(`export { default as fallback } from "${u.id}"`) : s.push('export { default as fallback } from "@flyo/nitro-astro/src/components/FallbackComponent.astro"'), s.join(";");
+        )), u ? s.push(`export { default as fallback } from "${u.id}"`) : s.push('export { default as fallback } from "@flyo/nitro-astro/components/FallbackComponent.astro"'), s.join(";");
       }
     }
   };
