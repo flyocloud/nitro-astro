@@ -1,5 +1,5 @@
 import type { AstroIntegration } from "astro";
-import { ApiClient } from '@flyo/nitro-js'
+import { Configuration } from '@flyo/nitro-typescript'
 import vitePluginFlyoComponents from "./vite-plugin-flyo-components";
 
 export type IntegrationOptions = {
@@ -10,7 +10,7 @@ export type IntegrationOptions = {
     fallbackComponent?: string
 };
 
-export function useFlyoNitro(): ApiClient {
+export function useFlyoNitro(): Configuration {
   if (!globalThis.flyoNitroInstance) {
     console.error("flyoNitroInstance has not been initialized correctly");
   }
@@ -47,14 +47,13 @@ export default function flyoNitroIntegration(
         injectScript(
           "page-ssr",
           `
-            import { ApiClient } from '@flyo/nitro-js'
-            var defaultClient = ApiClient.instance;
-            defaultClient.defaultHeaders = {}
+            import { Configuration } from '@flyo/nitro-typescript'
 
-            let ApiToken = defaultClient.authentications['ApiToken'];
-            ApiToken.apiKey = '${resolvedOptions.accessToken}';
+            var defaultConfig = Configuration({
+              apiKey: '${resolvedOptions.accessToken}'
+            })
 
-            globalThis.flyoNitroInstance = defaultClient;
+            globalThis.flyoNitroInstance = defaultConfig;
           `
         ); // do
 
