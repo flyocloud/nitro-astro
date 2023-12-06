@@ -11,6 +11,11 @@ export default defineConfig(() => {
         name: "flyoNitroIntegration",
         fileName: (format) => (format === "es" ? `${name}.mjs` : `${name}.js`),
       },
+      rollupOptions: {
+        output: {
+          exports: "named", // Set the output.exports to 'named'
+        },
+      },
     },
   };
 });
