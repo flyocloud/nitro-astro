@@ -1,14 +1,15 @@
 ---
+import { Page } from '@flyo/nitro-typescript';
 import FlyoNitroBlock from './FlyoNitroBlock.astro';
 
 interface Props {
-    page: object;
+    page: Page;
 }
 
 const { page } = Astro.props
 
 ---
 
-{page.json.map((block: object) => (
+{page?.json?.map((block: object) => (
     <FlyoNitroBlock block={block} />
 ))}
