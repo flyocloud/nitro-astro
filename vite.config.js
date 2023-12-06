@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import path from "path";
+import dts from 'vite-plugin-dts';
 
 const name = "nitro-astro";
 
@@ -17,5 +18,9 @@ export default defineConfig(() => {
         },
       },
     },
+    plugins: [
+      // Other plugins...
+      dts(),
+    ],
   };
 });

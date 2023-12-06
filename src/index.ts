@@ -1,5 +1,5 @@
 import type { AstroIntegration } from "astro";
-import { Configuration } from '@flyo/nitro-typescript'
+import { Configuration, ConfigApi, EntitiesApi, PagesApi, SearchApi, SitemapApi, VersionApi } from '@flyo/nitro-typescript'
 import vitePluginFlyoComponents from "./vite-plugin-flyo-components";
 
 export type IntegrationOptions = {
@@ -10,11 +10,35 @@ export type IntegrationOptions = {
     fallbackComponent?: string
 };
 
-export function useFlyoNitro(): Configuration {
+export function useConfiguration(): Configuration {
   if (!globalThis.flyoNitroInstance) {
     console.error("flyoNitroInstance has not been initialized correctly");
   }
   return globalThis.flyoNitroInstance;
+}
+
+export function useConfigApi() : ConfigApi {
+  return new ConfigApi(useConfiguration());
+}
+
+export function useEntitiesApi() : EntitiesApi {
+  return new EntitiesApi(useConfiguration());
+}
+
+export function usePagesApi() : PagesApi {
+  return new PagesApi(useConfiguration());
+}
+
+export function useSearchApi() : SearchApi {
+  return new SearchApi(useConfiguration());
+}
+
+export function useSitemapApi() : SitemapApi {
+  return new SitemapApi(useConfiguration());
+}
+
+export function useVersionApi() : VersionApi {
+  return new VersionApi(useConfiguration());
 }
 
 export default function flyoNitroIntegration(
@@ -49,7 +73,7 @@ export default function flyoNitroIntegration(
           `
             import { Configuration } from '@flyo/nitro-typescript'
 
-            var defaultConfig = Configuration({
+            var defaultConfig = new Configuration({
               apiKey: '${resolvedOptions.accessToken}'
             })
 

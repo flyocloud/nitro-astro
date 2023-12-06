@@ -9,6 +9,7 @@
     "dist",
     "src/components"
   ],
+  "typings": "./dist/index.d.ts",
   "author": "Basil Suter <git@nadar.io>",
   "license": "MIT",
   "scripts": {
@@ -26,6 +27,6 @@
     "url": "https://github.com/flyocloud/nitro-astro"
   },
   "dependencies": {
-    "@flyo/nitro-typescript": "^1.0.3"
+    "@flyo/nitro-typescript": "^1.0.5"
   }
 }
