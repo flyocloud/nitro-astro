@@ -49,6 +49,6 @@
     "url": "https://github.com/flyocloud/nitro-astro"
   },
   "dependencies": {
-    "@flyo/nitro-typescript": "^1.0.5"
+    "@flyo/nitro-typescript": "^1.0.6"
   }
 }
