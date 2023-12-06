@@ -1,6 +1,5 @@
-import { defineConfig, Plugin } from "vite";
+import { defineConfig } from "vite";
 import path from "path";
-import dts from "vite-plugin-dts";
 
 const name = "nitro-astro";
 
@@ -12,6 +11,6 @@ export default defineConfig(() => {
         name: "flyoNitroIntegration",
         fileName: (format) => (format === "es" ? `${name}.mjs` : `${name}.js`),
       },
-    }
+    },
   };
 });
