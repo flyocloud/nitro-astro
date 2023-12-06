@@ -31,7 +31,7 @@
     "dist",
     "src/components"
   ],
-  "typings": "./dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "author": "Basil Suter <git@nadar.io>",
   "license": "MIT",
   "scripts": {

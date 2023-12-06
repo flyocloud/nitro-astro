@@ -11,12 +11,7 @@ export default defineConfig(() => {
         entry: path.resolve(__dirname, "src/index.ts"),
         name: "flyoNitroIntegration",
         fileName: (format) => (format === "es" ? `${name}.mjs` : `${name}.js`),
-      },
-      rollupOptions: {
-        output: {
-          exports: "named", // Set the output.exports to 'named'
-        },
-      },
+      }
     },
     plugins: [
       // Other plugins...
