@@ -3,16 +3,16 @@ import { Configuration, ConfigApi, EntitiesApi, PagesApi, SearchApi, SitemapApi,
 import vitePluginFlyoComponents from "./vite-plugin-flyo-components";
 
 export type IntegrationOptions = {
-    accessToken: string,
-    liveEdit: boolean,
-    componentsDir: string,
-    components: object,
-    fallbackComponent?: string
+  accessToken: string,
+  liveEdit: boolean,
+  componentsDir: string,
+  components: object,
+  fallbackComponent?: string
 };
 
 export function useConfiguration(): Configuration {
   if (!globalThis.flyoNitroInstance) {
-    console.error("flyoNitroInstance has not been initialized correctly");
+    console.error("The Flyo Typescript Configuration has not been initialized correctly");
   }
   return globalThis.flyoNitroInstance;
 }
