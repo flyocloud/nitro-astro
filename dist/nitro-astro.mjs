@@ -664,7 +664,7 @@ function Se(e) {
       "astro:config:setup": ({ injectScript: i, updateConfig: r, injectRoute: a }) => {
         a({
           pattern: "/sitemap.xml",
-          entrypoint: "/sitemap.js"
+          entrypoint: "./sitemap.js"
         }), r({
           vite: {
             plugins: [
