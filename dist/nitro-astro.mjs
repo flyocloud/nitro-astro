@@ -110,7 +110,7 @@ const P = new x(), b = class E {
     let r = this.configuration.basePath + t.path;
     t.query !== void 0 && Object.keys(t.query).length !== 0 && (r += "?" + this.configuration.queryParamsStringify(t.query));
     const a = Object.assign({}, this.configuration.headers, t.headers);
-    Object.keys(a).forEach((h) => a[h] === void 0 ? delete a[h] : {});
+    Object.keys(a).forEach((y) => a[y] === void 0 ? delete a[y] : {});
     const o = typeof i == "function" ? i : async () => i, s = {
       method: t.method,
       headers: a,
@@ -158,7 +158,7 @@ class N extends Error {
     super(i), this.cause = t, this.name = "FetchError";
   }
 }
-class y extends Error {
+class h extends Error {
   constructor(t, i) {
     super(i), this.field = t, this.name = "RequiredError";
   }
@@ -416,7 +416,7 @@ class de extends f {
    */
   async entityBySlugRaw(t, i) {
     if (t.slug === null || t.slug === void 0)
-      throw new y("slug", "Required parameter requestParameters.slug was null or undefined when calling entityBySlug.");
+      throw new h("slug", "Required parameter requestParameters.slug was null or undefined when calling entityBySlug.");
     const r = {};
     t.typeId !== void 0 && (r.typeId = t.typeId);
     const a = {};
@@ -442,7 +442,7 @@ class de extends f {
    */
   async entityByUniqueidRaw(t, i) {
     if (t.uniqueid === null || t.uniqueid === void 0)
-      throw new y("uniqueid", "Required parameter requestParameters.uniqueid was null or undefined when calling entityByUniqueid.");
+      throw new h("uniqueid", "Required parameter requestParameters.uniqueid was null or undefined when calling entityByUniqueid.");
     const r = {}, a = {};
     this.configuration && this.configuration.apiKey && (r.token = this.configuration.apiKey("token"));
     const o = await this.request({
@@ -516,7 +516,7 @@ class fe extends f {
    */
   async searchRaw(t, i) {
     if (t.query === null || t.query === void 0)
-      throw new y("query", "Required parameter requestParameters.query was null or undefined when calling search.");
+      throw new h("query", "Required parameter requestParameters.query was null or undefined when calling search.");
     const r = {};
     t.query !== void 0 && (r.query = t.query);
     const a = {};
@@ -561,7 +561,7 @@ class pe extends f {
     return await (await this.sitemapRaw(t)).value();
   }
 }
-class he extends f {
+class ye extends f {
   /**
    * The Version API endpoint offers a highly efficient solution for evaluating the current caching status of your application\'s caching mechanism. This functionality allows you to cache the entire application configuration and page responses indefinitely. However, utilizing this endpoint enables you to assess the validity of the cache by sending a request to determine its current status. This caching endpoint is specifically designed for optimal performance when compared to the configuration endpoint, which requires more thorough evaluation and encompasses a substantial response body.
    * Get Version Information
@@ -585,11 +585,11 @@ class he extends f {
     return await (await this.versionRaw(t)).value();
   }
 }
-const ye = /[\p{Lu}]/u, ge = /[\p{Ll}]/u, _ = /^[\p{Lu}](?![\p{Lu}])/gu, T = /([\p{Alpha}\p{N}_]|$)/u, v = /[_.\- ]+/, ve = new RegExp("^" + v.source), q = new RegExp(v.source + T.source, "gu"), R = new RegExp("\\d+" + T.source, "gu"), me = (e, t, i, r) => {
+const he = /[\p{Lu}]/u, ge = /[\p{Ll}]/u, _ = /^[\p{Lu}](?![\p{Lu}])/gu, T = /([\p{Alpha}\p{N}_]|$)/u, v = /[_.\- ]+/, ve = new RegExp("^" + v.source), q = new RegExp(v.source + T.source, "gu"), R = new RegExp("\\d+" + T.source, "gu"), me = (e, t, i, r) => {
   let a = !1, o = !1, s = !1, u = !1;
   for (let c = 0; c < e.length; c++) {
     const d = e[c];
-    u = c > 2 ? e[c - 3] === "-" : !0, a && ye.test(d) ? (e = e.slice(0, c) + "-" + e.slice(c), a = !1, s = o, o = !0, c++) : o && s && ge.test(d) && (!u || r) ? (e = e.slice(0, c - 1) + "-" + e.slice(c - 1), s = o, o = !1, a = !0) : (a = t(d) === d && i(d) !== d, s = o, o = i(d) === d && t(d) !== d);
+    u = c > 2 ? e[c - 3] === "-" : !0, a && he.test(d) ? (e = e.slice(0, c) + "-" + e.slice(c), a = !1, s = o, o = !0, c++) : o && s && ge.test(d) && (!u || r) ? (e = e.slice(0, c - 1) + "-" + e.slice(c - 1), s = o, o = !1, a = !0) : (a = t(d) === d && i(d) !== d, s = o, o = i(d) === d && t(d) !== d);
   }
   return e;
 }, we = (e, t) => (_.lastIndex = 0, e.replace(_, (i) => t(i))), _e = (e, t) => (q.lastIndex = 0, R.lastIndex = 0, e.replace(q, (i, r) => t(r)).replace(R, (i) => t(i)));
@@ -617,10 +617,10 @@ function Re(e, t, i) {
       if (o === a) {
         const s = [];
         for (const [c, d] of Object.entries(t)) {
-          const h = await this.resolve(
+          const y = await this.resolve(
             "/" + e + "/" + d + ".astro"
           );
-          h && s.push(`export { default as ${qe(c)} } from "${h.id}"`);
+          y && s.push(`export { default as ${qe(c)} } from "${y.id}"`);
         }
         let u = null;
         return i && (u = await this.resolve(
@@ -649,7 +649,7 @@ function Ae() {
   return new pe(p());
 }
 function ke() {
-  return new he(p());
+  return new ye(p());
 }
 function Se(e) {
   const t = {
@@ -664,7 +664,8 @@ function Se(e) {
       "astro:config:setup": ({ injectScript: i, updateConfig: r, injectRoute: a }) => {
         a({
           pattern: "/sitemap.xml",
-          entrypoint: "sitemap.ts"
+          entrypoint: "@flyo/nitro-astro/sitemap.ts",
+          prerender: !1
         }), r({
           vite: {
             plugins: [
