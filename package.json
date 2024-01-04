@@ -1,6 +1,6 @@
 {
   "name": "@flyo/nitro-astro",
-  "version": "1.1.1",
+  "version": "1.0.18",
   "description": "Astro Framework",
   "main": "./dist/nitro-astro.js",
   "module": "./dist/nitro-astro.mjs",
@@ -29,7 +29,8 @@
   "type": "module",
   "files": [
     "dist",
-    "components"
+    "components",
+    "sitemap.ts"
   ],
   "types": "./dist/index.d.ts",
   "author": "Basil Suter <git@nadar.io>",
@@ -39,10 +40,10 @@
     "build": "vite build"
   },
   "devDependencies": {
-    "astro": "^4.0.9",
-    "typescript": "5.3.3",
-    "vite": "^5.0.10",
-    "vite-plugin-dts": "^3.7.0"
+    "astro": "^4.0.2",
+    "typescript": "5.3.2",
+    "vite": "^5.0.6",
+    "vite-plugin-dts": "^3.6.4"
   },
   "repository": {
     "type": "git",
