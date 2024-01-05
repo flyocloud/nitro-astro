@@ -24,7 +24,8 @@
       "types": "./components/FlyoNitroPage.ts",
       "import": "./components/FlyoNitroPage.ts",
       "require": "./components/FlyoNitroPage.ts"
-    }
+    },
+    "./sitemap.js": "./sitemap.js"
   },
   "type": "module",
   "files": [
