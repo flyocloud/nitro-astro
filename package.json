@@ -1,6 +1,6 @@
 {
   "name": "@flyo/nitro-astro",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Astro Framework",
   "main": "./dist/nitro-astro.js",
   "module": "./dist/nitro-astro.mjs",
