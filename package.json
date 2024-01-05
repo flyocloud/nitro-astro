@@ -30,7 +30,7 @@
   "files": [
     "dist",
     "components",
-    "sitemap.ts"
+    "sitemap.js"
   ],
   "types": "./dist/index.d.ts",
   "author": "Basil Suter <git@nadar.io>",

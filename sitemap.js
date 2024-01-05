@@ -4,7 +4,7 @@ function buildUrl(path, domain) {
   return `${domain.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
 }
 
-export async function GET(config: any) {
+export async function GET(config) {
   const sitemap = await useSitemapApi().sitemap();
 
   let xml = '<?xml version="1.0" encoding="UTF-8"?>';
