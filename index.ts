@@ -58,8 +58,8 @@ export default function flyoNitroIntegration(
       "astro:config:setup": ({ injectScript, updateConfig, injectRoute }) => {
 
         injectRoute({
-          pattern: '/sitemap.xml',
-          entrypoint: '@flyo/nitro-astro/sitemap.js'
+          pattern: 'sitemap.xml',
+          entrypoint: '@flyo/nitro-astro/sitemap'
         })
 
         updateConfig({

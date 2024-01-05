@@ -41,8 +41,8 @@ class x {
     return this.configuration.credentials;
   }
 }
-const j = new x(), b = class E {
-  constructor(t = j) {
+const P = new x(), b = class E {
+  constructor(t = P) {
     this.configuration = t, this.fetchApi = async (i, r) => {
       let a = { url: i, init: r };
       for (const s of this.middleware)
@@ -124,7 +124,7 @@ const j = new x(), b = class E {
       })
     };
     let c;
-    L(u.body) || u.body instanceof URLSearchParams || P(u.body) ? c = u.body : this.isJsonMime(a["Content-Type"]) ? c = JSON.stringify(u.body) : c = u.body;
+    L(u.body) || u.body instanceof URLSearchParams || j(u.body) ? c = u.body : this.isJsonMime(a["Content-Type"]) ? c = JSON.stringify(u.body) : c = u.body;
     const d = {
       ...u,
       body: c
@@ -142,7 +142,7 @@ const j = new x(), b = class E {
 };
 b.jsonRegex = new RegExp("^(:?application/json|[^;/ 	]+/[^;/ 	]+[+]json)[ 	]*(:?;.*)?$", "i");
 let f = b;
-function P(e) {
+function j(e) {
   return typeof Blob < "u" && e instanceof Blob;
 }
 function L(e) {
@@ -663,8 +663,8 @@ function Se(e) {
     hooks: {
       "astro:config:setup": ({ injectScript: i, updateConfig: r, injectRoute: a }) => {
         a({
-          pattern: "/sitemap.xml",
-          entrypoint: "@flyo/nitro-astro/sitemap.js"
+          pattern: "sitemap.xml",
+          entrypoint: "@flyo/nitro-astro/sitemap"
         }), r({
           vite: {
             plugins: [
