@@ -57,12 +57,18 @@ export default function flyoNitroIntegration(
     hooks: {
       "astro:config:setup": ({ injectScript, updateConfig, injectRoute }) => {
 
+        
         injectRoute({
           pattern: 'sitemap.xml',
           entrypoint: '@flyo/nitro-astro/sitemap.js'
         })
 
         updateConfig({
+          image: {
+            service: {
+              entrypoint: '@flyo/nitro-astro/cdn.ts'
+            }
+          },
           vite: {
             plugins: [
               vitePluginFlyoComponents(

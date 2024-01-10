@@ -25,13 +25,15 @@
       "import": "./components/FlyoNitroPage.ts",
       "require": "./components/FlyoNitroPage.ts"
     },
-    "./sitemap.js": "./sitemap.js"
+    "./sitemap.js": "./sitemap.js",
+    "./cdn.ts": "./cdn.ts"
   },
   "type": "module",
   "files": [
     "dist",
     "components",
-    "sitemap.js"
+    "sitemap.js",
+    "cdn.ts"
   ],
   "types": "./dist/index.d.ts",
   "author": "Basil Suter <git@nadar.io>",

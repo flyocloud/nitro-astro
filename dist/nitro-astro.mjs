@@ -666,6 +666,11 @@ function Se(e) {
           pattern: "sitemap.xml",
           entrypoint: "@flyo/nitro-astro/sitemap.js"
         }), r({
+          image: {
+            service: {
+              entrypoint: "@flyo/nitro-astro/cdn.ts"
+            }
+          },
           vite: {
             plugins: [
               Re(
