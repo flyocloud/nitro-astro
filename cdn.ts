@@ -5,7 +5,27 @@ import type { ExternalImageService, ImageTransform } from "astro";
 
 const service: ExternalImageService = {
   getURL(options: ImageTransform) {
-    return `https://https://storage.flyo.cloud/${options.src}/thumb/${options.width}x${options.height}?format=${options.format}`;
+
+    // check if the options.src contains already https://storage.flyo.cloud
+    let url = options.src.includes('https://storage.flyo.cloud') ? options.src : `https://storage.flyo.cloud/${options.src}`
+
+    // if either width or height are defined we add the /thumb/$widthx$height path to it.
+    let width: string | number | null = options.width ? options.width : null;
+    let height: string | number | null = options.height ? options.height : null;
+
+    if (width || height) {
+      if (width === null) {
+        width = 'null';
+      }
+      if (height === null) {
+        height = 'null';
+      }
+      url += `/thumb/${width}x${height}`;
+    }
+    
+    const format = options.format ? options.format : 'webp';
+
+    return `${url}?format=${format}`;
   },
 };
 
