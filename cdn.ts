@@ -27,6 +27,15 @@ const service: ExternalImageService = {
 
     return `${url}?format=${format}`;
   },
+
+  getHTMLAttributes(options) {
+    const { ...attributes } = options;
+    return {
+      ...attributes,
+      loading: options.loading ?? 'lazy',
+      decoding: options.decoding ?? 'async',
+    };
+  }
 };
 
 export default service;
