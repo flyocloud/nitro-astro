@@ -32,6 +32,8 @@ const service: ExternalImageService = {
     const { ...attributes } = options;
     return {
       ...attributes,
+      width: options.width ?? null, // width and height are required to prevent CLS and enable lazy loading for chrome.
+      height: options.height ?? null, // width and height are required to prevent CLS and enable lazy loading for chrome.
       loading: options.loading ?? 'lazy',
       decoding: options.decoding ?? 'async',
     };
