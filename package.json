@@ -25,11 +25,17 @@
       "import": "./components/FlyoNitroPage.ts",
       "require": "./components/FlyoNitroPage.ts"
     },
+    "./BlockSlot.astro": {
+      "types": "./components/BlockSlot.ts",
+      "import": "./components/BlockSlot.ts",
+      "require": "./components/BlockSlot.ts"
+    },
     "./sitemap.ts": "./sitemap.ts",
     "./cdn.ts": "./cdn.ts"
   },
   "type": "module",
   "files": [
+    "module.d.ts",
     "dist",
     "components",
     "sitemap.ts",
