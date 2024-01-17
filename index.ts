@@ -136,11 +136,8 @@ export default function flyoNitroIntegration(
               // Find all elements with the 'data-flyo-block-uid' attribute
               const elements = document.querySelectorAll('[data-flyo-block-uid]');
 
-              // Add a click event listener to each element
               elements.forEach(element => {
                   element.addEventListener('click', function() {
-                      // On click, alert the value of 'data-flyo-block-uid'
-                      console.log('open', this.getAttribute('data-flyo-block-uid'))
                       openBlockInFlyo(this.getAttribute('data-flyo-block-uid'))
                   });
               });
