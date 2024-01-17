@@ -74,10 +74,12 @@ Entity Detail Example
 import { EntitiesApi } from '@flyo/nitro-js'
 
 const { slug } = Astro.params;
-const entity = await new EntitiesApi().entityBySlug(slug);
+const data = await new EntitiesApi().entityBySlug(slug);
+const isProd = import.meta.env.PROD;
 ---
 <h1>{ slug }</h1>
-<img src={ entity.model.image.source } style="width:100%" />
+<img src={ data.model.image.source } style="width:100%" />
+{ isProd && <script is:inline define:vars={{ api: data.entity.entity_metric.api }}>fetch(api)</script> }
 ```
 
 Block Component Example:
