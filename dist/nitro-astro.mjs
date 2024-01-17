@@ -633,7 +633,7 @@ function qe(e, t, i) {
 function Re(e) {
   const t = "virtual:flyo-user-config", i = "\0" + t;
   return {
-    name: "vite-plugin-flyo-components",
+    name: "vite-plugin-flyo-user-config",
     async resolveId(o) {
       if (o === t)
         return i;

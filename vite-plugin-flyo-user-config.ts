@@ -16,7 +16,7 @@ export default function vitePluginFlyoUserConfig(
     const resolvedVirtualModuleId = '\0' + virtualModuleId
 
     return {
-        name: 'vite-plugin-flyo-components',
+        name: 'vite-plugin-flyo-user-config',
         async resolveId(id: string) {
             if (id === virtualModuleId) {
                 return resolvedVirtualModuleId
