@@ -1,1 +1,1 @@
-export function GET(config: any): Promise<Response>;
+export declare function GET(config: any): Promise<Response>;

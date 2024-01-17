@@ -1,10 +1,10 @@
 import { useSitemapApi } from "@flyo/nitro-astro"
 
-function buildUrl(path, domain) {
+function buildUrl(path: string, domain: string) {
   return `${domain.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
 }
 
-export async function GET(config) {
+export async function GET(config: any) {
   const sitemap = await useSitemapApi().sitemap();
 
   let xml = '<?xml version="1.0" encoding="UTF-8"?>';

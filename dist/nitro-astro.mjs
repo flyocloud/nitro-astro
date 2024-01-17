@@ -16,7 +16,7 @@ class T {
     return this.configuration.middleware || [];
   }
   get queryParamsStringify() {
-    return this.configuration.queryParamsStringify || k;
+    return this.configuration.queryParamsStringify || C;
   }
   get username() {
     return this.configuration.username;
@@ -166,10 +166,10 @@ class h extends Error {
 function n(e, t) {
   return e[t] != null;
 }
-function k(e, t = "") {
-  return Object.keys(e).map((i) => C(i, e[i], t)).filter((i) => i.length > 0).join("&");
+function C(e, t = "") {
+  return Object.keys(e).map((i) => I(i, e[i], t)).filter((i) => i.length > 0).join("&");
 }
-function C(e, t, i = "") {
+function I(e, t, i = "") {
   const o = i + (i.length ? `[${e}]` : e);
   if (t instanceof Array) {
     const a = t.map((r) => encodeURIComponent(String(r))).join(`&${encodeURIComponent(o)}=`);
@@ -177,9 +177,9 @@ function C(e, t, i = "") {
   }
   if (t instanceof Set) {
     const a = Array.from(t);
-    return C(e, a, i);
+    return I(e, a, i);
   }
-  return t instanceof Date ? `${encodeURIComponent(o)}=${encodeURIComponent(t.toISOString())}` : t instanceof Object ? k(t, o) : `${encodeURIComponent(o)}=${encodeURIComponent(String(t))}`;
+  return t instanceof Date ? `${encodeURIComponent(o)}=${encodeURIComponent(t.toISOString())}` : t instanceof Object ? C(t, o) : `${encodeURIComponent(o)}=${encodeURIComponent(String(t))}`;
 }
 function g(e, t) {
   return Object.keys(e).reduce(
@@ -195,19 +195,19 @@ class d {
     return this.transformer(await this.raw.json());
   }
 }
-function O(e) {
-  return $(e);
-}
-function $(e, t) {
-  return e == null ? e : {
-    identifier: n(e, "identifier") ? e.identifier : void 0,
-    content: n(e, "content") ? e.content.map(I) : void 0
-  };
-}
-function I(e) {
+function $(e) {
   return F(e);
 }
 function F(e, t) {
+  return e == null ? e : {
+    identifier: n(e, "identifier") ? e.identifier : void 0,
+    content: n(e, "content") ? e.content.map(k) : void 0
+  };
+}
+function k(e) {
+  return O(e);
+}
+function O(e, t) {
   return e == null ? e : {
     items: n(e, "items") ? e.items : void 0,
     content: n(e, "content") ? e.content : void 0,
@@ -215,7 +215,7 @@ function F(e, t) {
     identifier: n(e, "identifier") ? e.identifier : void 0,
     uid: n(e, "uid") ? e.uid : void 0,
     component: n(e, "component") ? e.component : void 0,
-    slots: n(e, "slots") ? g(e.slots, O) : void 0
+    slots: n(e, "slots") ? g(e.slots, $) : void 0
   };
 }
 function A(e) {
@@ -361,7 +361,7 @@ function ae(e, t) {
     title: n(e, "title") ? e.title : void 0,
     href: n(e, "href") ? e.href : void 0,
     slug: n(e, "slug") ? e.slug : void 0,
-    json: n(e, "json") ? e.json.map(I) : void 0,
+    json: n(e, "json") ? e.json.map(k) : void 0,
     depth: n(e, "depth") ? e.depth : void 0,
     is_home: n(e, "is_home") ? e.is_home : void 0,
     created_at: n(e, "created_at") ? e.created_at : void 0,
@@ -650,13 +650,13 @@ function p() {
 function Ee() {
   return new ce(p());
 }
-function ke() {
+function Ce() {
   return new le(p());
 }
-function Ce() {
+function Ie() {
   return new de(p());
 }
-function Ie() {
+function ke() {
   return new fe(p());
 }
 function Ae() {
@@ -683,7 +683,7 @@ function xe(e) {
       "astro:config:setup": ({ injectScript: i, updateConfig: o, injectRoute: a }) => {
         a({
           pattern: "sitemap.xml",
-          entrypoint: "@flyo/nitro-astro/sitemap.js"
+          entrypoint: "@flyo/nitro-astro/sitemap.ts"
         }), o({
           image: {
             service: {
@@ -739,11 +739,8 @@ function xe(e) {
               // Find all elements with the 'data-flyo-block-uid' attribute
               const elements = document.querySelectorAll('[data-flyo-block-uid]');
 
-              // Add a click event listener to each element
               elements.forEach(element => {
                   element.addEventListener('click', function() {
-                      // On click, alert the value of 'data-flyo-block-uid'
-                      console.log('open', this.getAttribute('data-flyo-block-uid'))
                       openBlockInFlyo(this.getAttribute('data-flyo-block-uid'))
                   });
               });
@@ -758,9 +755,9 @@ export {
   Ue as editableBlock,
   Ee as useConfigApi,
   p as useConfiguration,
-  ke as useEntitiesApi,
-  Ce as usePagesApi,
-  Ie as useSearchApi,
+  Ce as useEntitiesApi,
+  Ie as usePagesApi,
+  ke as useSearchApi,
   Ae as useSitemapApi,
   Se as useVersionApi
 };
