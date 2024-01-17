@@ -89,7 +89,7 @@ export default function flyoNitroIntegration(
                 options.components,
                 options.fallbackComponent
               ),
-              vitePluginFlyoUserConfig(resolvedOptions)
+              /*vitePluginFlyoUserConfig(resolvedOptions) // tmp disable the unused user config plugin */
             ],
           },
         })
