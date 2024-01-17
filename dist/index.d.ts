@@ -1,8 +1,8 @@
 import type { AstroIntegration } from "astro";
-import { Configuration, ConfigApi, EntitiesApi, PagesApi, SearchApi, SitemapApi, VersionApi } from '@flyo/nitro-typescript';
+import { Configuration, ConfigApi, EntitiesApi, PagesApi, SearchApi, SitemapApi, VersionApi, Block } from '@flyo/nitro-typescript';
 export type IntegrationOptions = {
     accessToken: string;
-    liveEdit: boolean;
+    liveEdit: any;
     componentsDir: string;
     components: object;
     fallbackComponent?: string;
@@ -14,4 +14,5 @@ export declare function usePagesApi(): PagesApi;
 export declare function useSearchApi(): SearchApi;
 export declare function useSitemapApi(): SitemapApi;
 export declare function useVersionApi(): VersionApi;
+export declare function editableBlock(block: Block): object;
 export default function flyoNitroIntegration(options: IntegrationOptions): AstroIntegration;

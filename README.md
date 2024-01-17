@@ -1,5 +1,5 @@
 # nitro-astro
-Flyo Nitro for Astro Framework
+Flyo Nitro for Astro Framework [foo]
 
 ## Install
 

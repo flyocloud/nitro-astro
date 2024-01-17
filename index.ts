@@ -1,10 +1,11 @@
 import type { AstroIntegration } from "astro";
-import { Configuration, ConfigApi, EntitiesApi, PagesApi, SearchApi, SitemapApi, VersionApi } from '@flyo/nitro-typescript'
+import { Configuration, ConfigApi, EntitiesApi, PagesApi, SearchApi, SitemapApi, VersionApi, Block } from '@flyo/nitro-typescript'
 import vitePluginFlyoComponents from "./vite-plugin-flyo-components";
+import vitePluginFlyoUserConfig from "./vite-plugin-flyo-user-config";
 
 export type IntegrationOptions = {
   accessToken: string,
-  liveEdit: boolean,
+  liveEdit: any,
   componentsDir: string,
   components: object,
   fallbackComponent?: string
@@ -41,6 +42,12 @@ export function useVersionApi() : VersionApi {
   return new VersionApi(useConfiguration());
 }
 
+export function editableBlock(block: Block) : object {
+  return {
+    'data-flyo-block-uid': block.uid,
+  };
+}
+
 export default function flyoNitroIntegration(
     options: IntegrationOptions
   ): AstroIntegration {
@@ -51,6 +58,12 @@ export default function flyoNitroIntegration(
     fallbackComponent: null,
     ...options,
   };
+
+  if (resolvedOptions.liveEdit === 'true') {
+    resolvedOptions.liveEdit = true;
+  } else if (resolvedOptions.liveEdit === 'false') {
+    resolvedOptions.liveEdit = false;
+  }
 
   return {
     name: "@flyo/nitro-astro",
@@ -75,7 +88,8 @@ export default function flyoNitroIntegration(
                 options.componentsDir,
                 options.components,
                 options.fallbackComponent
-              )
+              ),
+              vitePluginFlyoUserConfig(resolvedOptions)
             ],
           },
         })
@@ -118,6 +132,18 @@ export default function flyoNitroIntegration(
                     data: JSON.parse(JSON.stringify({item:{uid: blockUid}}))
                 }, 'https://flyo.cloud')
               }
+
+              // Find all elements with the 'data-flyo-block-uid' attribute
+              const elements = document.querySelectorAll('[data-flyo-block-uid]');
+
+              // Add a click event listener to each element
+              elements.forEach(element => {
+                  element.addEventListener('click', function() {
+                      // On click, alert the value of 'data-flyo-block-uid'
+                      console.log('open', this.getAttribute('data-flyo-block-uid'))
+                      openBlockInFlyo(this.getAttribute('data-flyo-block-uid'))
+                  });
+              });
             `
           );
         }
