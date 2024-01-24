@@ -1,9 +1,24 @@
-# nitro-astro
-Flyo Nitro for Astro Framework [foo]
+# Enhanced Flyo Nitro Astro Framework Integration Guide
 
-## Install
+The Flyo Nitro Astro Framework Integration provides a comprehensive solution for implementing the Flyo Nitro CMS within the Astro (astro.build) environment. This guide details the integration process, emphasizing the use of Nitro [configurations](https://dev.flyo.cloud/dev/nitro/#die-grundlagen-von-nitro) within the Astro layout framework. Key highlights include:
 
-The astro.config.mjs file:
++ **Nitro Configuration in Astro**: This section explores methods for incorporating Nitro configurations into the Astro layout, offering step-by-step instructions for seamless integration that leverages the strengths of both systems.
++ **Page Resolution and Block Integration**: Learn to manage and resolve pages within the Astro framework, including integrating Nitro's dynamic [blocks](https://dev.flyo.cloud/dev/nitro/block.html). This part provides insights into creating responsive and interactive web pages using Nitro block technology.
++ **Fetching Entity Details**: Focus on techniques for retrieving and displaying detailed information about entities within Astro. This segment covers data fetching, handling, and presentation methods.
++ **Image Service Integration**: Understand the integration of Flyo Storage's image service, as detailed in [Flyo Storage Documentation](https://dev.flyo.cloud/dev/infos/images.html). This section delves into working with images in Astro, including uploading, retrieving, and displaying images from Flyo Storage.
++ **Meta Information Extraction**: The guide concludes with extracting and utilizing meta information, discussing the importance of meta tags for SEO and user engagement within the Astro framework.
+
+This guide targets developers and web designers aiming to combine Flyo Nitro CMS and Astro framework capabilities to create dynamic, efficient, and feature-rich websites.
+
+## Installation
+
+To install the package, execute the following command:
+
+```bash
+astro add @flyo/nitro-astro
+```
+
+Then, revise and adjust the configuration in your `astro.config.mjs`:
 
 ```js
 import flyoNitroIntegration from '@flyo/nitro-astro';
@@ -11,11 +26,11 @@ import flyoNitroIntegration from '@flyo/nitro-astro';
 export default defineConfig({
   integrations: [
     flyoNitroIntegration({
-      accessToken: 'N0vxfdfd275jSoEvFion7dfdfsdfasdfasd4n95zFroAZ', // switch between dev and prod token depending on the enviroment
-      liveEdit: true, // on dev and preview system this should be enabled, as this allows to reload the application inside the flyo preview frame when things change
+      accessToken: 'ADD_YOUR_TOKEN_HERE', // Switch between dev and prod tokens depending on the environment
+      liveEdit: true, // Enable on dev and preview systems for application reloading in the Flyo preview frame upon changes
       components: { 
-        // define where the flyo components are located the suffix .astro is no required. Object key is the value from flyo, while object value is the component inside astro components folder
-        // [!] Adding new elements requires the dev process to restart (it seems)
+        // Define where the Flyo components are located. The suffix .astro is not required. The object key is the value from Flyo, while the object value is the component in the Astro components folder
+        // [!] Adding new elements requires restarting the development process
         "FlyoElementName": "AstroElementName",
         "AnotherFlyoElement": "subfolder/AnotherFlyoElement"
       }
@@ -24,35 +39,49 @@ export default defineConfig({
 });
 ```
 
-Add a `[...slug].astro` file in pages directory with the following exmaple content as a catch all cms handler:
+### Pages
+
+Add a `[...slug].astro` file in the pages directory with the following example content as a catch-all CMS handler:
 
 ```astro
 ---
 import Layout from '../layouts/Layout.astro';
-import { PagesApi } from '@flyo/nitro-js'
+import { usePagesApi } from '@flyo/nitro-astro';
 import FlyoNitroPage from '@flyo/nitro-astro/FlyoNitroPage.astro'
+import MetaInfoPage from '@flyo/nitro-astro/MetaInfoPage.astro';
 
 const { slug } = Astro.params;
-const page = await new PagesApi().page({slug: slug === undefined ? '' : slug})
+let page;
+try {
+	page = await usePagesApi().page({slug: slug === undefined ? '' : slug})
+} catch (e) {
+	return new Response(e.body.name, {
+		status: e.status,
+		statusText: 'Not Found'
+	});
+}
 ---
 <Layout title={page.title}>
+  <MetaInfoPage page={page} slot="head" />
 	<FlyoNitroPage page={page} />
 </Layout>
 ```
 
-To recieve the config in the layout:
+To receive the config in the layout:
 
 ```astro
 ---
-import { ConfigApi } from '@flyo/nitro-js';
+import { useConfigApi } from "@flyo/nitro-astro";
 
-const config = await new ConfigApi().config()
+const config = await useConfigApi().config();
 const { title } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
 	<head>
 		<title>{title}</title>
+    <!-- Auto-inject meta information for pages and entities -->
+    <slot name="head" />
 	</head>
 	<body>
 		{config.containers.nav.items.map((item: object) => (
@@ -67,46 +96,64 @@ const { title } = Astro.props;
 </html>
 ```
 
-Entity Detail Example
-
-```astro
----
-import { EntitiesApi } from '@flyo/nitro-js'
-
-const { slug } = Astro.params;
-const data = await new EntitiesApi().entityBySlug(slug);
-const isProd = import.meta.env.PROD;
----
-<h1>{ slug }</h1>
-<img src={ data.model.image.source } style="width:100%" />
-{ isProd && <script is:inline define:vars={{ api: data.entity.entity_metric.api }}>fetch(api)</script> }
-```
+### Blocks
 
 Block Component Example:
 
 ```astro
 ---
-import FlyoNitroBlock from '@flyo/nitro-astro/FlyoNitroBlock.astro';
-const { block } = Astro.props
+import { Image } from "astro:assets"
+import { editableBlock } from '@flyo/nitro-astro'
+import BlockSlot from '@flyo/nitro-astro/BlockSlot.astro'
+const { block } = Astro.props;
 ---
-<!-- content variable -->
-<div set:html={block.content.content.html} />
+<!-- Make the block editable if necessary -->
+<div {...editableBlock(block)}>
 
-<!-- handling items -->
-{block.items.map((item: object) => (
+  <!-- Content variable -->
+  <div set:html={block.content.content.html} />
+
+  <!-- Handling items -->
+  {block.items.map((item: object) => (
     <div>
-        { item.title }
-        <a href={item.link.routes.detail}>Go to Detail</a>
+      { item.title }
+      <a href={item.link.routes.detail}>Go to Detail</a>
     </div>
-))}
+  ))}
 
-<!-- handling slots -->
-{block.slots.slotcontainername.content.map((block: object) => (
-    <FlyoNitroBlock block={block} />
-))}
+  <!-- Image Proxy -->
+  <Image src={block.content.image.source} alt={block.content.alt ?? ''} width={1920} height={768} />
+
+  <!-- Handling slots -->
+  <BlockSlot slot={block.slots.mysuperslotname} />
+</div>
 ```
 
-## Development
+### Entities
 
-1. `npm install`
-2. `npm run build`
+Entity Detail Example:
+
+```astro
+---
+import { useEntitiesApi } from '@flyo/nitro-astro';
+import MetaInfoEntity from '@flyo/nitro-astro/MetaInfoEntity.astro';
+
+const { slug } = Astro.params;
+let response = null;
+try {
+  response = await useEntitiesApi().entityBySlug({ slug });
+} catch (e) {
+  return new Response(e.body, {
+		status: e.status,
+		statusText: 'Not Found'
+	});
+}
+const isProd = import.meta.env.PROD;
+---
+<Layout>
+  <MetaInfoEntity response={response} slot="head" />
+  <h1>{ slug }</h1>
+  <img src={ response.model.image.source } style="width:100%" />
+</Layout>
+{ isProd && <script is:inline define:vars={{ api: response.entity.entity_metric.api }}>fetch(api)</script> }
+```
