@@ -1,4 +1,4 @@
-# Enhanced Flyo Nitro Astro Framework Integration Guide
+# Flyo Nitro Astro Framework Integration
 
 The Flyo Nitro Astro Framework Integration provides a comprehensive solution for implementing the Flyo Nitro CMS within the Astro (astro.build) environment. This guide details the integration process, emphasizing the use of Nitro [configurations](https://dev.flyo.cloud/dev/nitro/#die-grundlagen-von-nitro) within the Astro layout framework. Key highlights include:
 
@@ -53,17 +53,17 @@ import MetaInfoPage from '@flyo/nitro-astro/MetaInfoPage.astro';
 const { slug } = Astro.params;
 let page;
 try {
-	page = await usePagesApi().page({slug: slug === undefined ? '' : slug})
+  page = await usePagesApi().page({slug: slug === undefined ? '' : slug})
 } catch (e) {
-	return new Response(e.body.name, {
-		status: e.status,
-		statusText: 'Not Found'
-	});
+  return new Response(e.body.name, {
+    status: e.status,
+    statusText: 'Not Found'
+  });
 }
 ---
 <Layout title={page.title}>
   <MetaInfoPage page={page} slot="head" />
-	<FlyoNitroPage page={page} />
+  <FlyoNitroPage page={page} />
 </Layout>
 ```
 
@@ -78,21 +78,21 @@ const { title } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
-	<head>
-		<title>{title}</title>
+  <head>
+    <title>{title}</title>
     <!-- Auto-inject meta information for pages and entities -->
     <slot name="head" />
-	</head>
-	<body>
-		{config.containers.nav.items.map((item: object) => (
-			<a style="background-color: red; color: white" href={item.href}>
-				{item.label}<br />
-			</a>
-		))}
-		<div class="container">
-			<slot />
-		</div>
-	</body>
+  </head>
+  <body>
+    {config.containers.nav.items.map((item: object) => (
+      <a style="background-color: red; color: white" href={item.href}>
+        {item.label}<br />
+      </a>
+    ))}
+    <div class="container">
+      <slot />
+    </div>
+  </body>
 </html>
 ```
 
@@ -144,9 +144,9 @@ try {
   response = await useEntitiesApi().entityBySlug({ slug });
 } catch (e) {
   return new Response(e.body, {
-		status: e.status,
-		statusText: 'Not Found'
-	});
+    status: e.status,
+    statusText: 'Not Found'
+  });
 }
 const isProd = import.meta.env.PROD;
 ---
