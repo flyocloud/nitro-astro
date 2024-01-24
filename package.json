@@ -30,6 +30,21 @@
       "import": "./components/BlockSlot.ts",
       "require": "./components/BlockSlot.ts"
     },
+    "./MetaInfo.astro": {
+      "types": "./components/MetaInfo.ts",
+      "import": "./components/MetaInfo.ts",
+      "require": "./components/MetaInfo.ts"
+    },
+    "./MetaInfoEntity.astro": {
+      "types": "./components/MetaInfoEntity.ts",
+      "import": "./components/MetaInfoEntity.ts",
+      "require": "./components/MetaInfoEntity.ts"
+    },
+    "./MetaInfoPage.astro": {
+      "types": "./components/MetaInfoPage.ts",
+      "import": "./components/MetaInfoPage.ts",
+      "require": "./components/MetaInfoPage.ts"
+    },
     "./sitemap.ts": "./sitemap.ts",
     "./cdn.ts": "./cdn.ts"
   },
@@ -49,10 +64,10 @@
     "build": "vite build"
   },
   "devDependencies": {
-    "astro": "^4.1.3",
+    "astro": "^4.2.4",
     "typescript": "5.3.3",
-    "vite": "^5.0.11",
-    "vite-plugin-dts": "^3.7.1"
+    "vite": "^5.0.12",
+    "vite-plugin-dts": "^3.7.2"
   },
   "repository": {
     "type": "git",
