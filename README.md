@@ -36,8 +36,11 @@ export default defineConfig({
       }
     })
   ],
+  output: 'server'
 });
 ```
+
+> The nitro astro integration requires an SSR setup which is done by using `output: 'server'`.
 
 ### Pages
 
@@ -80,6 +83,8 @@ const { title } = Astro.props;
 <html lang="en">
   <head>
     <title>{title}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
     <!-- Auto-inject meta information for pages and entities -->
     <slot name="head" />
   </head>
