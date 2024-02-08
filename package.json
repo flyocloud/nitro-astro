@@ -4,6 +4,16 @@
   "description": "Astro Framework",
   "main": "./dist/nitro-astro.js",
   "module": "./dist/nitro-astro.mjs",
+  "keywords": [
+		"astro-integration",
+		"astro-component",
+		"astro",
+    "flyo",
+    "headless",
+    "cms",
+    "nitro",
+		"withastro"
+	],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
