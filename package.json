@@ -1,19 +1,19 @@
 {
   "name": "@flyo/nitro-astro",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Astro Framework",
   "main": "./dist/nitro-astro.js",
   "module": "./dist/nitro-astro.mjs",
   "keywords": [
-		"astro-integration",
-		"astro-component",
-		"astro",
+    "astro-integration",
+    "astro-component",
+    "astro",
     "flyo",
     "headless",
     "cms",
     "nitro",
-		"withastro"
-	],
+    "withastro"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
