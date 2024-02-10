@@ -56,6 +56,7 @@ export default function flyoNitroIntegration(
     accessToken: false,
     liveEdit: false,
     fallbackComponent: null,
+    componentsDir: 'src/components/flyo',
     ...options,
   };
 
