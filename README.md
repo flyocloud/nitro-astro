@@ -103,7 +103,7 @@ const { title } = Astro.props;
 
 ### Blocks
 
-Block Component Example:
+Block Component Example (which are mostly located in `src/components/flyo`):
 
 ```astro
 ---
@@ -136,10 +136,11 @@ const { block } = Astro.props;
 
 ### Entities
 
-Entity Detail Example:
+Entity Detail Example, for a file which is located in `src/pages/blog/[slug].astro`:
 
 ```astro
 ---
+import Layout from '../../layouts/Layout.astro';
 import { useEntitiesApi } from '@flyo/nitro-astro';
 import MetaInfoEntity from '@flyo/nitro-astro/MetaInfoEntity.astro';
 
