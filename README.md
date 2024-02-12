@@ -70,7 +70,7 @@ try {
 </Layout>
 ```
 
-To receive the config in the layout:
+To receive the config in the layout in `src/layouts/Layout.astro`:
 
 ```astro
 ---
@@ -78,6 +78,7 @@ import { useConfigApi } from "@flyo/nitro-astro";
 
 const config = await useConfigApi().config();
 const { title } = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
 <!doctype html>
 <html lang="en">
@@ -90,7 +91,7 @@ const { title } = Astro.props;
   </head>
   <body>
     {config.containers.nav.items.map((item: object) => (
-      <a style="background-color: red; color: white" href={item.href}>
+      <a style="background-color: red; color: white" href={item.href} class={`nav-class ${currentPath === item.href ? 'text-red' : ''}`}>
         {item.label}<br />
       </a>
     ))}
