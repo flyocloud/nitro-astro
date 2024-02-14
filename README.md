@@ -24,6 +24,7 @@ Then, revise and adjust the configuration in your `astro.config.mjs`:
 import flyoNitroIntegration from '@flyo/nitro-astro';
 
 export default defineConfig({
+  site: "https://myflyowebsite.com", // required to make the sitemap.xml work
   integrations: [
     flyoNitroIntegration({
       accessToken: 'ADD_YOUR_TOKEN_HERE', // Switch between dev and prod tokens depending on the environment
