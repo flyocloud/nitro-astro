@@ -9,7 +9,7 @@ export type IntegrationOptions = {
 };
 export declare function useConfiguration(): Configuration;
 export declare function useConfigApi(): ConfigApi;
-export declare function useConfig(): Promise<boolean | ConfigResponse>;
+export declare function useConfig(): Promise<ConfigResponse>;
 export declare function useEntitiesApi(): EntitiesApi;
 export declare function usePagesApi(): PagesApi;
 export declare function useSearchApi(): SearchApi;

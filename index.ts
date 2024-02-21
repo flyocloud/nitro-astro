@@ -22,9 +22,9 @@ export function useConfigApi() : ConfigApi {
   return new ConfigApi(useConfiguration());
 }
 
-const configStore = atom<ConfigResponse | boolean>(false);
+const configStore = atom<ConfigResponse|boolean>(false);
 
-export async function useConfig() {
+export async function useConfig() : Promise<ConfigResponse> {
   if (!configStore.get()) {
     configStore.set(await useConfigApi().config())
   }
