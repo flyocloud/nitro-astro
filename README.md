@@ -60,8 +60,8 @@ try {
   page = await usePagesApi().page({slug: slug === undefined ? '' : slug})
 } catch (e) {
   return new Response(e.body.name, {
-    status: e.status,
-    statusText: 'Not Found'
+    status: 404,
+    statusText: 'Page Not Found'
   });
 }
 ---
@@ -152,8 +152,8 @@ try {
   response = await useEntitiesApi().entityBySlug({ slug });
 } catch (e) {
   return new Response(e.body, {
-    status: e.status,
-    statusText: 'Not Found'
+    status: 404,
+    statusText: 'Entity Not Found'
   });
 }
 const isProd = import.meta.env.PROD;

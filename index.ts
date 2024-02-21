@@ -1,7 +1,7 @@
 import type { AstroIntegration } from "astro";
-import { Configuration, ConfigApi, EntitiesApi, PagesApi, SearchApi, SitemapApi, VersionApi, Block } from '@flyo/nitro-typescript'
+import { Configuration, ConfigApi, EntitiesApi, PagesApi, SearchApi, SitemapApi, VersionApi, Block, ConfigResponse } from '@flyo/nitro-typescript'
 import vitePluginFlyoComponents from "./vite-plugin-flyo-components";
-import vitePluginFlyoUserConfig from "./vite-plugin-flyo-user-config";
+import { atom } from 'nanostores';
 
 export type IntegrationOptions = {
   accessToken: string,
@@ -20,6 +20,16 @@ export function useConfiguration(): Configuration {
 
 export function useConfigApi() : ConfigApi {
   return new ConfigApi(useConfiguration());
+}
+
+const configStore = atom<ConfigResponse | boolean>(false);
+
+export async function useConfig() {
+  if (!configStore.get()) {
+    configStore.set(await useConfigApi().config())
+  }
+
+  return configStore.get();
 }
 
 export function useEntitiesApi() : EntitiesApi {
@@ -89,8 +99,7 @@ export default function flyoNitroIntegration(
                 options.componentsDir,
                 options.components,
                 options.fallbackComponent
-              ),
-              /*vitePluginFlyoUserConfig(resolvedOptions) // tmp disable the unused user config plugin */
+              )
             ],
           },
         })

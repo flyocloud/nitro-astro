@@ -1,5 +1,5 @@
 import type { AstroIntegration } from "astro";
-import { Configuration, ConfigApi, EntitiesApi, PagesApi, SearchApi, SitemapApi, VersionApi, Block } from '@flyo/nitro-typescript';
+import { Configuration, ConfigApi, EntitiesApi, PagesApi, SearchApi, SitemapApi, VersionApi, Block, ConfigResponse } from '@flyo/nitro-typescript';
 export type IntegrationOptions = {
     accessToken: string;
     liveEdit: any;
@@ -9,6 +9,7 @@ export type IntegrationOptions = {
 };
 export declare function useConfiguration(): Configuration;
 export declare function useConfigApi(): ConfigApi;
+export declare function useConfig(): Promise<boolean | ConfigResponse>;
 export declare function useEntitiesApi(): EntitiesApi;
 export declare function usePagesApi(): PagesApi;
 export declare function useSearchApi(): SearchApi;
