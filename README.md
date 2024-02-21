@@ -50,14 +50,24 @@ Add a `[...slug].astro` file in the pages directory with the following example c
 ```astro
 ---
 import Layout from '../layouts/Layout.astro';
-import { usePagesApi } from '@flyo/nitro-astro';
+import { usePagesApi, useConfig } from '@flyo/nitro-astro';
 import FlyoNitroPage from '@flyo/nitro-astro/FlyoNitroPage.astro'
 import MetaInfoPage from '@flyo/nitro-astro/MetaInfoPage.astro';
 
 const { slug } = Astro.params;
+const resolveSlug = slug === undefined ? '' : slug
+const config = await useConfig()
 let page;
+
 try {
-  page = await usePagesApi().page({slug: slug === undefined ? '' : slug})
+  if (!config.pages.includes(resolveSlug)) {
+		return new Response('Not Found', {
+			status: 404,
+			statusText: 'Page Not Found'
+		});
+	}
+
+  page = await usePagesApi().page({slug: resolveSlug})
 } catch (e) {
   return new Response(e.body.name, {
     status: 404,
@@ -75,9 +85,9 @@ To receive the config in the layout in `src/layouts/Layout.astro`:
 
 ```astro
 ---
-import { useConfigApi } from "@flyo/nitro-astro";
+import { useConfig } from "@flyo/nitro-astro";
 
-const config = await useConfigApi().config();
+const config = await useConfig();
 const { title } = Astro.props;
 const currentPath = Astro.url.pathname;
 ---
