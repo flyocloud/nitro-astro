@@ -74,17 +74,17 @@
     "build": "vite build"
   },
   "devDependencies": {
-    "astro": "^4.2.4",
-    "typescript": "5.3.3",
-    "vite": "^5.0.12",
-    "vite-plugin-dts": "^3.7.2"
+    "astro": "^4.6.3",
+    "typescript": "5.4.5",
+    "vite": "^5.2.10",
+    "vite-plugin-dts": "^3.9.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/flyocloud/nitro-astro"
   },
   "dependencies": {
-    "@flyo/nitro-typescript": "^1.0.7",
-    "nanostores": "^0.10.0"
+    "@flyo/nitro-typescript": "^1.0.9",
+    "nanostores": "^0.10.3"
   }
 }

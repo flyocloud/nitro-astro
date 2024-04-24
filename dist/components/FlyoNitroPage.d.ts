@@ -1,2 +1,3 @@
-import FlyoNitroPage from "./FlyoNitroPage.astro";
+import { default as FlyoNitroPage } from './FlyoNitroPage.astro';
+
 export default FlyoNitroPage;

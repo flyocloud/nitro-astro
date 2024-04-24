@@ -1,5 +1,5 @@
 import type { AstroIntegration } from "astro";
-import { Configuration, ConfigApi, EntitiesApi, PagesApi, SearchApi, SitemapApi, VersionApi, Block, ConfigResponse } from '@flyo/nitro-typescript'
+import { Configuration, ConfigApi, EntitiesApi, PagesApi, SearchApi, SitemapApi, VersionApi, type Block, type ConfigResponse } from '@flyo/nitro-typescript'
 import vitePluginFlyoComponents from "./vite-plugin-flyo-components";
 import { atom } from 'nanostores';
 
@@ -22,14 +22,20 @@ export function useConfigApi() : ConfigApi {
   return new ConfigApi(useConfiguration());
 }
 
-const configStore = atom<ConfigResponse|boolean>(false);
+const configStore = atom<ConfigResponse | boolean>(false);
 
-export async function useConfig() : Promise<ConfigResponse> {
-  if (!configStore.get()) {
-    configStore.set(await useConfigApi().config())
+export async function useConfig(lang: string | null = null): Promise<ConfigResponse> {
+  // using nano store should only used in development environment
+  // since it requires the node process to restart
+  // therefore if live edit is enabled, whe always fetch the config
+  if (!configStore.get() || globalThis.flyoNitroIntegrationOptions.liveEdit) {
+    // if (globalThis.flyoNitroIntegrationOptions.liveEdit) {
+    //  console.log('The live edit is enabled, always fetching the config')
+    // }
+    configStore.set(await useConfigApi().config({ lang: lang }));
   }
 
-  return configStore.get();
+  return configStore.get() as ConfigResponse;
 }
 
 export function useEntitiesApi() : EntitiesApi {
@@ -81,12 +87,13 @@ export default function flyoNitroIntegration(
     hooks: {
       "astro:config:setup": ({ injectScript, updateConfig, injectRoute }) => {
 
-        
+        // inject the sitemap xml generator
         injectRoute({
           pattern: 'sitemap.xml',
           entrypoint: '@flyo/nitro-astro/sitemap.ts'
         })
 
+        // inject the image cdn service
         updateConfig({
           image: {
             service: {
@@ -114,8 +121,11 @@ export default function flyoNitroIntegration(
             })
 
             globalThis.flyoNitroInstance = defaultConfig;
+            globalThis.flyoNitroIntegrationOptions = {
+              liveEdit: ${resolvedOptions.liveEdit}
+            };
           `
-        ); // do
+        );
 
         if (resolvedOptions.liveEdit) {
           injectScript(

@@ -1,13 +1,13 @@
-const j = "https://api.flyo.cloud/nitro/v1".replace(/\/+$/, "");
-class P {
-  constructor(t = {}) {
-    this.configuration = t;
+const U = "https://api.flyo.cloud/nitro/v1".replace(/\/+$/, "");
+class j {
+  constructor(n = {}) {
+    this.configuration = n;
   }
-  set config(t) {
-    this.configuration = t;
+  set config(n) {
+    this.configuration = n;
   }
   get basePath() {
-    return this.configuration.basePath != null ? this.configuration.basePath : j;
+    return this.configuration.basePath != null ? this.configuration.basePath : U;
   }
   get fetchApi() {
     return this.configuration.fetchApi;
@@ -16,7 +16,7 @@ class P {
     return this.configuration.middleware || [];
   }
   get queryParamsStringify() {
-    return this.configuration.queryParamsStringify || A;
+    return this.configuration.queryParamsStringify || I;
   }
   get username() {
     return this.configuration.username;
@@ -25,14 +25,14 @@ class P {
     return this.configuration.password;
   }
   get apiKey() {
-    const t = this.configuration.apiKey;
-    if (t)
-      return typeof t == "function" ? t : () => t;
+    const n = this.configuration.apiKey;
+    if (n)
+      return typeof n == "function" ? n : () => n;
   }
   get accessToken() {
-    const t = this.configuration.accessToken;
-    if (t)
-      return typeof t == "function" ? t : async () => t;
+    const n = this.configuration.accessToken;
+    if (n)
+      return typeof n == "function" ? n : async () => n;
   }
   get headers() {
     return this.configuration.headers;
@@ -41,51 +41,51 @@ class P {
     return this.configuration.credentials;
   }
 }
-const L = new P(), C = class k {
-  constructor(t = L) {
-    this.configuration = t, this.fetchApi = async (i, o) => {
-      let a = { url: i, init: o };
-      for (const s of this.middleware)
-        s.pre && (a = await s.pre({
+const L = new j(), R = class C {
+  constructor(n = L) {
+    this.configuration = n, this.fetchApi = async (t, i) => {
+      let r = { url: t, init: i };
+      for (const a of this.middleware)
+        a.pre && (r = await a.pre({
           fetch: this.fetchApi,
-          ...a
-        }) || a);
-      let r;
-      try {
-        r = await (this.configuration.fetchApi || fetch)(a.url, a.init);
-      } catch (s) {
-        for (const u of this.middleware)
-          u.onError && (r = await u.onError({
-            fetch: this.fetchApi,
-            url: a.url,
-            init: a.init,
-            error: s,
-            response: r ? r.clone() : void 0
-          }) || r);
-        if (r === void 0)
-          throw s instanceof Error ? new $(s, "The request failed and the interceptors did not return an alternative response") : s;
-      }
-      for (const s of this.middleware)
-        s.post && (r = await s.post({
-          fetch: this.fetchApi,
-          url: a.url,
-          init: a.init,
-          response: r.clone()
+          ...r
         }) || r);
-      return r;
-    }, this.middleware = t.middleware;
+      let o;
+      try {
+        o = await (this.configuration.fetchApi || fetch)(r.url, r.init);
+      } catch (a) {
+        for (const l of this.middleware)
+          l.onError && (o = await l.onError({
+            fetch: this.fetchApi,
+            url: r.url,
+            init: r.init,
+            error: a,
+            response: o ? o.clone() : void 0
+          }) || o);
+        if (o === void 0)
+          throw a instanceof Error ? new O(a, "The request failed and the interceptors did not return an alternative response") : a;
+      }
+      for (const a of this.middleware)
+        a.post && (o = await a.post({
+          fetch: this.fetchApi,
+          url: r.url,
+          init: r.init,
+          response: o.clone()
+        }) || o);
+      return o;
+    }, this.middleware = n.middleware;
   }
-  withMiddleware(...t) {
-    const i = this.clone();
-    return i.middleware = i.middleware.concat(...t), i;
+  withMiddleware(...n) {
+    const t = this.clone();
+    return t.middleware = t.middleware.concat(...n), t;
   }
-  withPreMiddleware(...t) {
-    const i = t.map((o) => ({ pre: o }));
-    return this.withMiddleware(...i);
+  withPreMiddleware(...n) {
+    const t = n.map((i) => ({ pre: i }));
+    return this.withMiddleware(...t);
   }
-  withPostMiddleware(...t) {
-    const i = t.map((o) => ({ post: o }));
-    return this.withMiddleware(...i);
+  withPostMiddleware(...n) {
+    const t = n.map((i) => ({ post: i }));
+    return this.withMiddleware(...t);
   }
   /**
    * Check if the given MIME is a JSON MIME.
@@ -97,647 +97,664 @@ const L = new P(), C = class k {
    * @param mime - MIME (Multipurpose Internet Mail Extensions)
    * @return True if the given MIME is JSON, false otherwise.
    */
-  isJsonMime(t) {
-    return t ? k.jsonRegex.test(t) : !1;
+  isJsonMime(n) {
+    return n ? C.jsonRegex.test(n) : !1;
   }
-  async request(t, i) {
-    const { url: o, init: a } = await this.createFetchParams(t, i), r = await this.fetchApi(o, a);
-    if (r && r.status >= 200 && r.status < 300)
-      return r;
-    throw new O(r, "Response returned an error code");
+  async request(n, t) {
+    const { url: i, init: r } = await this.createFetchParams(n, t), o = await this.fetchApi(i, r);
+    if (o && o.status >= 200 && o.status < 300)
+      return o;
+    throw new K(o, "Response returned an error code");
   }
-  async createFetchParams(t, i) {
-    let o = this.configuration.basePath + t.path;
-    t.query !== void 0 && Object.keys(t.query).length !== 0 && (o += "?" + this.configuration.queryParamsStringify(t.query));
-    const a = Object.assign({}, this.configuration.headers, t.headers);
-    Object.keys(a).forEach((h) => a[h] === void 0 ? delete a[h] : {});
-    const r = typeof i == "function" ? i : async () => i, s = {
-      method: t.method,
-      headers: a,
-      body: t.body,
+  async createFetchParams(n, t) {
+    let i = this.configuration.basePath + n.path;
+    n.query !== void 0 && Object.keys(n.query).length !== 0 && (i += "?" + this.configuration.queryParamsStringify(n.query));
+    const r = Object.assign({}, this.configuration.headers, n.headers);
+    Object.keys(r).forEach((g) => r[g] === void 0 ? delete r[g] : {});
+    const o = typeof t == "function" ? t : async () => t, a = {
+      method: n.method,
+      headers: r,
+      body: n.body,
       credentials: this.configuration.credentials
-    }, u = {
-      ...s,
-      ...await r({
-        init: s,
-        context: t
+    }, l = {
+      ...a,
+      ...await o({
+        init: a,
+        context: n
       })
     };
-    let c;
-    N(u.body) || u.body instanceof URLSearchParams || K(u.body) ? c = u.body : this.isJsonMime(a["Content-Type"]) ? c = JSON.stringify(u.body) : c = u.body;
-    const l = {
-      ...u,
-      body: c
+    let s;
+    N(l.body) || l.body instanceof URLSearchParams || P(l.body) ? s = l.body : this.isJsonMime(r["Content-Type"]) ? s = JSON.stringify(l.body) : s = l.body;
+    const u = {
+      ...l,
+      body: s
     };
-    return { url: o, init: l };
+    return { url: i, init: u };
   }
   /**
    * Create a shallow clone of `this` by constructing a new instance
    * and then shallow cloning data members.
    */
   clone() {
-    const t = this.constructor, i = new t(this.configuration);
-    return i.middleware = this.middleware.slice(), i;
+    const n = this.constructor, t = new n(this.configuration);
+    return t.middleware = this.middleware.slice(), t;
   }
 };
-C.jsonRegex = new RegExp("^(:?application/json|[^;/ 	]+/[^;/ 	]+[+]json)[ 	]*(:?;.*)?$", "i");
-let p = C;
-function K(e) {
+R.jsonRegex = new RegExp("^(:?application/json|[^;/ 	]+/[^;/ 	]+[+]json)[ 	]*(:?;.*)?$", "i");
+let f = R;
+function P(e) {
   return typeof Blob < "u" && e instanceof Blob;
 }
 function N(e) {
   return typeof FormData < "u" && e instanceof FormData;
 }
+class K extends Error {
+  constructor(n, t) {
+    super(t), this.response = n, this.name = "ResponseError";
+  }
+}
 class O extends Error {
-  constructor(t, i) {
-    super(i), this.response = t, this.name = "ResponseError";
+  constructor(n, t) {
+    super(t), this.cause = n, this.name = "FetchError";
   }
 }
-class $ extends Error {
-  constructor(t, i) {
-    super(i), this.cause = t, this.name = "FetchError";
+class h extends Error {
+  constructor(n, t) {
+    super(t), this.field = n, this.name = "RequiredError";
   }
 }
-class v extends Error {
-  constructor(t, i) {
-    super(i), this.field = t, this.name = "RequiredError";
+function I(e, n = "") {
+  return Object.keys(e).map((t) => k(t, e[t], n)).filter((t) => t.length > 0).join("&");
+}
+function k(e, n, t = "") {
+  const i = t + (t.length ? `[${e}]` : e);
+  if (n instanceof Array) {
+    const r = n.map((o) => encodeURIComponent(String(o))).join(`&${encodeURIComponent(i)}=`);
+    return `${encodeURIComponent(i)}=${r}`;
   }
-}
-function n(e, t) {
-  return e[t] != null;
-}
-function A(e, t = "") {
-  return Object.keys(e).map((i) => I(i, e[i], t)).filter((i) => i.length > 0).join("&");
-}
-function I(e, t, i = "") {
-  const o = i + (i.length ? `[${e}]` : e);
-  if (t instanceof Array) {
-    const a = t.map((r) => encodeURIComponent(String(r))).join(`&${encodeURIComponent(o)}=`);
-    return `${encodeURIComponent(o)}=${a}`;
+  if (n instanceof Set) {
+    const r = Array.from(n);
+    return k(e, r, t);
   }
-  if (t instanceof Set) {
-    const a = Array.from(t);
-    return I(e, a, i);
-  }
-  return t instanceof Date ? `${encodeURIComponent(o)}=${encodeURIComponent(t.toISOString())}` : t instanceof Object ? A(t, o) : `${encodeURIComponent(o)}=${encodeURIComponent(String(t))}`;
+  return n instanceof Date ? `${encodeURIComponent(i)}=${encodeURIComponent(n.toISOString())}` : n instanceof Object ? I(n, i) : `${encodeURIComponent(i)}=${encodeURIComponent(String(n))}`;
 }
-function m(e, t) {
+function v(e, n) {
   return Object.keys(e).reduce(
-    (i, o) => ({ ...i, [o]: t(e[o]) }),
+    (t, i) => ({ ...t, [i]: n(e[i]) }),
     {}
   );
 }
-class f {
-  constructor(t, i = (o) => o) {
-    this.raw = t, this.transformer = i;
+class d {
+  constructor(n, t = (i) => i) {
+    this.raw = n, this.transformer = t;
   }
   async value() {
     return this.transformer(await this.raw.json());
   }
 }
-function F(e) {
+function $(e) {
   return B(e);
 }
-function B(e, t) {
+function B(e, n) {
   return e == null ? e : {
-    identifier: n(e, "identifier") ? e.identifier : void 0,
-    content: n(e, "content") ? e.content.map(S) : void 0
+    identifier: e.identifier == null ? void 0 : e.identifier,
+    content: e.content == null ? void 0 : e.content.map(A)
+  };
+}
+function A(e) {
+  return F(e);
+}
+function F(e, n) {
+  return e == null ? e : {
+    items: e.items == null ? void 0 : e.items,
+    content: e.content == null ? void 0 : e.content,
+    config: e.config == null ? void 0 : e.config,
+    identifier: e.identifier == null ? void 0 : e.identifier,
+    uid: e.uid == null ? void 0 : e.uid,
+    component: e.component == null ? void 0 : e.component,
+    slots: e.slots == null ? void 0 : v(e.slots, $)
   };
 }
 function S(e) {
   return D(e);
 }
-function D(e, t) {
+function D(e, n) {
   return e == null ? e : {
-    items: n(e, "items") ? e.items : void 0,
-    content: n(e, "content") ? e.content : void 0,
-    config: n(e, "config") ? e.config : void 0,
-    identifier: n(e, "identifier") ? e.identifier : void 0,
-    uid: n(e, "uid") ? e.uid : void 0,
-    component: n(e, "component") ? e.component : void 0,
-    slots: n(e, "slots") ? m(e.slots, F) : void 0
+    type: e.type == null ? void 0 : e.type,
+    target: e.target == null ? void 0 : e.target,
+    label: e.label == null ? void 0 : e.label,
+    href: e.href == null ? void 0 : e.href,
+    slug: e.slug == null ? void 0 : e.slug,
+    properties: e.properties == null ? void 0 : e.properties,
+    children: e.children == null ? void 0 : e.children.map(S)
   };
 }
-function x(e) {
-  return M(e);
+function M(e) {
+  return G(e);
 }
-function M(e, t) {
+function G(e, n) {
   return e == null ? e : {
-    type: n(e, "type") ? e.type : void 0,
-    target: n(e, "target") ? e.target : void 0,
-    label: n(e, "label") ? e.label : void 0,
-    href: n(e, "href") ? e.href : void 0,
-    slug: n(e, "slug") ? e.slug : void 0,
-    properties: n(e, "properties") ? e.properties : void 0,
-    children: n(e, "children") ? e.children.map(x) : void 0
+    items: e.items == null ? void 0 : e.items.map(S),
+    uid: e.uid == null ? void 0 : e.uid,
+    identifier: e.identifier == null ? void 0 : e.identifier,
+    label: e.label == null ? void 0 : e.label
   };
 }
-function G(e) {
-  return J(e);
+function J(e) {
+  return V(e);
 }
-function J(e, t) {
+function V(e, n) {
   return e == null ? e : {
-    items: n(e, "items") ? e.items.map(x) : void 0,
-    uid: n(e, "uid") ? e.uid : void 0,
-    identifier: n(e, "identifier") ? e.identifier : void 0,
-    label: n(e, "label") ? e.label : void 0
+    domain: e.domain == null ? void 0 : e.domain,
+    slug: e.slug == null ? void 0 : e.slug,
+    version: e.version == null ? void 0 : e.version,
+    updated_at: e.updated_at == null ? void 0 : e.updated_at,
+    language: e.language == null ? void 0 : e.language,
+    primary_language: e.primary_language == null ? void 0 : e.primary_language
   };
 }
-function V(e) {
-  return W(e);
+function W(e) {
+  return Q(e);
 }
-function W(e, t) {
+function Q(e, n) {
   return e == null ? e : {
-    domain: n(e, "domain") ? e.domain : void 0,
-    slug: n(e, "slug") ? e.slug : void 0,
-    version: n(e, "version") ? e.version : void 0,
-    updated_at: n(e, "updated_at") ? e.updated_at : void 0,
-    language: n(e, "language") ? e.language : void 0
+    nitro: e.nitro == null ? void 0 : J(e.nitro),
+    pages: e.pages == null ? void 0 : e.pages,
+    containers: e.containers == null ? void 0 : v(e.containers, M),
+    globals: e.globals == null ? void 0 : e.globals
   };
 }
 function z(e) {
-  return Q(e);
+  return H(e);
 }
-function Q(e, t) {
+function H(e, n) {
   return e == null ? e : {
-    nitro: n(e, "nitro") ? V(e.nitro) : void 0,
-    pages: n(e, "pages") ? e.pages : void 0,
-    containers: n(e, "containers") ? m(e.containers, G) : void 0,
-    globals: n(e, "globals") ? e.globals : void 0
+    api: e.api == null ? void 0 : e.api,
+    image: e.image == null ? void 0 : e.image
   };
 }
-function H(e) {
+function Y(e) {
+  return Z(e);
+}
+function Z(e, n) {
+  return e == null ? e : {
+    _version: e._version == null ? void 0 : e._version,
+    entity_metric: e.entity_metric == null ? void 0 : z(e.entity_metric),
+    entity_unique_id: e.entity_unique_id == null ? void 0 : e.entity_unique_id,
+    entity_id: e.entity_id == null ? void 0 : e.entity_id,
+    entity_image: e.entity_image == null ? void 0 : e.entity_image,
+    entity_slug: e.entity_slug == null ? void 0 : e.entity_slug,
+    entity_teaser: e.entity_teaser == null ? void 0 : e.entity_teaser,
+    entity_time_end: e.entity_time_end == null ? void 0 : e.entity_time_end,
+    entity_time_start: e.entity_time_start == null ? void 0 : e.entity_time_start,
+    entity_title: e.entity_title == null ? void 0 : e.entity_title,
+    entity_type: e.entity_type == null ? void 0 : e.entity_type,
+    entity_type_id: e.entity_type_id == null ? void 0 : e.entity_type_id,
+    updated_at: e.updated_at == null ? void 0 : e.updated_at,
+    routes: e.routes == null ? void 0 : e.routes
+  };
+}
+function w(e) {
   return X(e);
 }
-function X(e, t) {
+function X(e, n) {
   return e == null ? e : {
-    api: n(e, "api") ? e.api : void 0,
-    image: n(e, "image") ? e.image : void 0
+    entity: e.entity == null ? void 0 : Y(e.entity),
+    model: e.model == null ? void 0 : e.model,
+    language: e.language == null ? void 0 : e.language,
+    jsonld: e.jsonld == null ? void 0 : e.jsonld
   };
 }
-function Z(e) {
-  return Y(e);
-}
-function Y(e, t) {
-  return e == null ? e : {
-    _version: n(e, "_version") ? e._version : void 0,
-    entity_metric: n(e, "entity_metric") ? H(e.entity_metric) : void 0,
-    entity_unique_id: n(e, "entity_unique_id") ? e.entity_unique_id : void 0,
-    entity_id: n(e, "entity_id") ? e.entity_id : void 0,
-    entity_image: n(e, "entity_image") ? e.entity_image : void 0,
-    entity_slug: n(e, "entity_slug") ? e.entity_slug : void 0,
-    entity_teaser: n(e, "entity_teaser") ? e.entity_teaser : void 0,
-    entity_time_end: n(e, "entity_time_end") ? e.entity_time_end : void 0,
-    entity_time_start: n(e, "entity_time_start") ? e.entity_time_start : void 0,
-    entity_title: n(e, "entity_title") ? e.entity_title : void 0,
-    entity_type: n(e, "entity_type") ? e.entity_type : void 0,
-    entity_type_id: n(e, "entity_type_id") ? e.entity_type_id : void 0,
-    updated_at: n(e, "updated_at") ? e.updated_at : void 0,
-    routes: n(e, "routes") ? e.routes : void 0
-  };
-}
-function _(e) {
+function x(e) {
   return ee(e);
 }
-function ee(e, t) {
+function ee(e, n) {
   return e == null ? e : {
-    entity: n(e, "entity") ? Z(e.entity) : void 0,
-    model: n(e, "model") ? e.model : void 0,
-    language: n(e, "language") ? e.language : void 0,
-    jsonld: n(e, "jsonld") ? e.jsonld : void 0
+    entity_unique_id: e.entity_unique_id == null ? void 0 : e.entity_unique_id,
+    entity_title: e.entity_title == null ? void 0 : e.entity_title,
+    entity_teaser: e.entity_teaser == null ? void 0 : e.entity_teaser,
+    entity_slug: e.entity_slug == null ? void 0 : e.entity_slug,
+    entity_time_start: e.entity_time_start == null ? void 0 : e.entity_time_start,
+    entity_type: e.entity_type == null ? void 0 : e.entity_type,
+    entity_type_id: e.entity_type_id == null ? void 0 : e.entity_type_id,
+    entity_image: e.entity_image == null ? void 0 : e.entity_image,
+    routes: e.routes == null ? void 0 : e.routes
   };
 }
-function T(e) {
+function ne(e) {
   return te(e);
 }
-function te(e, t) {
+function te(e, n) {
   return e == null ? e : {
-    entity_unique_id: n(e, "entity_unique_id") ? e.entity_unique_id : void 0,
-    entity_title: n(e, "entity_title") ? e.entity_title : void 0,
-    entity_teaser: n(e, "entity_teaser") ? e.entity_teaser : void 0,
-    entity_slug: n(e, "entity_slug") ? e.entity_slug : void 0,
-    entity_time_start: n(e, "entity_time_start") ? e.entity_time_start : void 0,
-    entity_type: n(e, "entity_type") ? e.entity_type : void 0,
-    entity_type_id: n(e, "entity_type_id") ? e.entity_type_id : void 0,
-    entity_image: n(e, "entity_image") ? e.entity_image : void 0,
-    routes: n(e, "routes") ? e.routes : void 0
+    description: e.description == null ? void 0 : e.description,
+    image: e.image == null ? void 0 : e.image,
+    title: e.title == null ? void 0 : e.title
   };
 }
 function ie(e) {
-  return ne(e);
+  return oe(e);
 }
-function ne(e, t) {
+function oe(e, n) {
   return e == null ? e : {
-    description: n(e, "description") ? e.description : void 0,
-    image: n(e, "image") ? e.image : void 0,
-    title: n(e, "title") ? e.title : void 0
+    slug: e.slug == null ? void 0 : e.slug,
+    title: e.title == null ? void 0 : e.title
   };
 }
-function oe(e) {
-  return re(e);
+function re(e) {
+  return ae(e);
 }
-function re(e, t) {
+function ae(e, n) {
   return e == null ? e : {
-    slug: n(e, "slug") ? e.slug : void 0,
-    title: n(e, "title") ? e.title : void 0
+    value: e.value == null ? void 0 : e.value,
+    navigation: e.navigation == null ? void 0 : e.navigation,
+    propagate: e.propagate == null ? void 0 : e.propagate
   };
 }
-function ae(e) {
-  return se(e);
-}
-function se(e, t) {
-  return e == null ? e : {
-    value: n(e, "value") ? e.value : void 0,
-    navigation: n(e, "navigation") ? e.navigation : void 0,
-    propagate: n(e, "propagate") ? e.propagate : void 0
-  };
-}
-function b(e) {
-  return ue(e);
-}
-function ue(e, t) {
-  return e == null ? e : {
-    id: n(e, "id") ? e.id : void 0,
-    title: n(e, "title") ? e.title : void 0,
-    href: n(e, "href") ? e.href : void 0,
-    slug: n(e, "slug") ? e.slug : void 0,
-    json: n(e, "json") ? e.json.map(S) : void 0,
-    depth: n(e, "depth") ? e.depth : void 0,
-    is_home: n(e, "is_home") ? e.is_home : void 0,
-    created_at: n(e, "created_at") ? e.created_at : void 0,
-    updated_at: n(e, "updated_at") ? e.updated_at : void 0,
-    is_visible: n(e, "is_visible") ? e.is_visible : void 0,
-    meta_json: n(e, "meta_json") ? ie(e.meta_json) : void 0,
-    properties: n(e, "properties") ? m(e.properties, ae) : void 0,
-    uid: n(e, "uid") ? e.uid : void 0,
-    type: n(e, "type") ? e.type : void 0,
-    target: n(e, "target") ? e.target : void 0,
-    container: n(e, "container") ? e.container : void 0,
-    breadcrumb: n(e, "breadcrumb") ? e.breadcrumb.map(oe) : void 0
-  };
-}
-function ce(e) {
+function _(e) {
   return le(e);
 }
-function le(e, t) {
+function le(e, n) {
   return e == null ? e : {
-    version: n(e, "version") ? e.version : void 0,
-    updated_at: n(e, "updated_at") ? e.updated_at : void 0
+    id: e.id == null ? void 0 : e.id,
+    title: e.title == null ? void 0 : e.title,
+    href: e.href == null ? void 0 : e.href,
+    slug: e.slug == null ? void 0 : e.slug,
+    json: e.json == null ? void 0 : e.json.map(A),
+    depth: e.depth == null ? void 0 : e.depth,
+    is_home: e.is_home == null ? void 0 : e.is_home,
+    created_at: e.created_at == null ? void 0 : e.created_at,
+    updated_at: e.updated_at == null ? void 0 : e.updated_at,
+    is_visible: e.is_visible == null ? void 0 : e.is_visible,
+    meta_json: e.meta_json == null ? void 0 : ne(e.meta_json),
+    properties: e.properties == null ? void 0 : v(e.properties, re),
+    uid: e.uid == null ? void 0 : e.uid,
+    type: e.type == null ? void 0 : e.type,
+    target: e.target == null ? void 0 : e.target,
+    container: e.container == null ? void 0 : e.container,
+    breadcrumb: e.breadcrumb == null ? void 0 : e.breadcrumb.map(ie)
   };
 }
-class de extends p {
+function se(e) {
+  return ue(e);
+}
+function ue(e, n) {
+  return e == null ? e : {
+    version: e.version == null ? void 0 : e.version,
+    updated_at: e.updated_at == null ? void 0 : e.updated_at
+  };
+}
+class ce extends f {
   /**
    * The config API endpoint provides comprehensive information required for configuring the layout of websites. It encompasses various essential elements, including containers with pages, an extensive list of available slugs, globals containing content pool data, and crucial details about the Nitro configuration itself. By accessing this endpoint, developers can gather all the necessary data to effectively design and structure their websites. The endpoint offers a holistic view of the website\'s layout, empowering developers to tailor the user experience and optimize the overall design.
    * Get Config
    */
-  async configRaw(t) {
-    const i = {}, o = {};
-    this.configuration && this.configuration.apiKey && (i.token = this.configuration.apiKey("token"));
-    const a = await this.request({
+  async configRaw(n, t) {
+    const i = {};
+    n.lang != null && (i.lang = n.lang);
+    const r = {};
+    this.configuration && this.configuration.apiKey && (i.token = await this.configuration.apiKey("token"));
+    const o = await this.request({
       path: "/config",
       method: "GET",
-      headers: o,
+      headers: r,
       query: i
     }, t);
-    return new f(a, (r) => z(r));
+    return new d(o, (a) => W(a));
   }
   /**
    * The config API endpoint provides comprehensive information required for configuring the layout of websites. It encompasses various essential elements, including containers with pages, an extensive list of available slugs, globals containing content pool data, and crucial details about the Nitro configuration itself. By accessing this endpoint, developers can gather all the necessary data to effectively design and structure their websites. The endpoint offers a holistic view of the website\'s layout, empowering developers to tailor the user experience and optimize the overall design.
    * Get Config
    */
-  async config(t) {
-    return await (await this.configRaw(t)).value();
+  async config(n = {}, t) {
+    return await (await this.configRaw(n, t)).value();
   }
 }
-class fe extends p {
+class de extends f {
   /**
-   * 
-   * Find entity by slug and optional Type-ID
+   * The endpoint allows for the retrieval of entities based on their slug, with an optional Entity-Type-ID for more accurate results. The endpoint requires a `slug` parameter to be passed in the path, which is necessary for identifying the entity. However, since slugs are not unique across different entities, it is highly recommended to also provide the `typeId` parameter through the query to avoid incorrect or unintended results. This `typeId` serves as an Entity-Definition-Schema ID, ensuring a more precise and targeted entity retrieval by distinguishing the entities more clearly. The `slug` parameter is mandatory and should be a string (e.g., \'hello-world\'), while the `typeId` parameter is optional and should be an integer (e.g., 123), representing the Entity-Definition-Schema ID.
+   * Find entity by slug and optional Entity-Type-ID
    */
-  async entityBySlugRaw(t, i) {
-    if (t.slug === null || t.slug === void 0)
-      throw new v("slug", "Required parameter requestParameters.slug was null or undefined when calling entityBySlug.");
-    const o = {};
-    t.typeId !== void 0 && (o.typeId = t.typeId);
-    const a = {};
-    this.configuration && this.configuration.apiKey && (o.token = this.configuration.apiKey("token"));
-    const r = await this.request({
-      path: "/entities/slug/{slug}".replace("{slug}", encodeURIComponent(String(t.slug))),
+  async entityBySlugRaw(n, t) {
+    if (n.slug == null)
+      throw new h(
+        "slug",
+        'Required parameter "slug" was null or undefined when calling entityBySlug().'
+      );
+    const i = {};
+    n.lang != null && (i.lang = n.lang), n.typeId != null && (i.typeId = n.typeId);
+    const r = {};
+    this.configuration && this.configuration.apiKey && (i.token = await this.configuration.apiKey("token"));
+    const o = await this.request({
+      path: "/entities/slug/{slug}".replace("{slug}", encodeURIComponent(String(n.slug))),
       method: "GET",
-      headers: a,
-      query: o
-    }, i);
-    return new f(r, (s) => _(s));
+      headers: r,
+      query: i
+    }, t);
+    return new d(o, (a) => w(a));
   }
   /**
-   * 
-   * Find entity by slug and optional Type-ID
+   * The endpoint allows for the retrieval of entities based on their slug, with an optional Entity-Type-ID for more accurate results. The endpoint requires a `slug` parameter to be passed in the path, which is necessary for identifying the entity. However, since slugs are not unique across different entities, it is highly recommended to also provide the `typeId` parameter through the query to avoid incorrect or unintended results. This `typeId` serves as an Entity-Definition-Schema ID, ensuring a more precise and targeted entity retrieval by distinguishing the entities more clearly. The `slug` parameter is mandatory and should be a string (e.g., \'hello-world\'), while the `typeId` parameter is optional and should be an integer (e.g., 123), representing the Entity-Definition-Schema ID.
+   * Find entity by slug and optional Entity-Type-ID
    */
-  async entityBySlug(t, i) {
-    return await (await this.entityBySlugRaw(t, i)).value();
+  async entityBySlug(n, t) {
+    return await (await this.entityBySlugRaw(n, t)).value();
   }
   /**
    * The endpoint provides comprehensive information about a specified entity. An entity represents a collection of information pertaining to a specific data type and is defined by a key-value pair. You can use various data types such as blogs, events, or any other relevant data. However, in order to access an entity, it must be properly configured within the nitro config.
    * Find entity by uniqueid
    */
-  async entityByUniqueidRaw(t, i) {
-    if (t.uniqueid === null || t.uniqueid === void 0)
-      throw new v("uniqueid", "Required parameter requestParameters.uniqueid was null or undefined when calling entityByUniqueid.");
-    const o = {}, a = {};
-    this.configuration && this.configuration.apiKey && (o.token = this.configuration.apiKey("token"));
-    const r = await this.request({
-      path: "/entities/uniqueid/{uniqueid}".replace("{uniqueid}", encodeURIComponent(String(t.uniqueid))),
+  async entityByUniqueidRaw(n, t) {
+    if (n.uniqueid == null)
+      throw new h(
+        "uniqueid",
+        'Required parameter "uniqueid" was null or undefined when calling entityByUniqueid().'
+      );
+    const i = {};
+    n.lang != null && (i.lang = n.lang);
+    const r = {};
+    this.configuration && this.configuration.apiKey && (i.token = await this.configuration.apiKey("token"));
+    const o = await this.request({
+      path: "/entities/uniqueid/{uniqueid}".replace("{uniqueid}", encodeURIComponent(String(n.uniqueid))),
       method: "GET",
-      headers: a,
-      query: o
-    }, i);
-    return new f(r, (s) => _(s));
+      headers: r,
+      query: i
+    }, t);
+    return new d(o, (a) => w(a));
   }
   /**
    * The endpoint provides comprehensive information about a specified entity. An entity represents a collection of information pertaining to a specific data type and is defined by a key-value pair. You can use various data types such as blogs, events, or any other relevant data. However, in order to access an entity, it must be properly configured within the nitro config.
    * Find entity by uniqueid
    */
-  async entityByUniqueid(t, i) {
-    return await (await this.entityByUniqueidRaw(t, i)).value();
+  async entityByUniqueid(n, t) {
+    return await (await this.entityByUniqueidRaw(n, t)).value();
   }
 }
-class pe extends p {
+class fe extends f {
   /**
    * This endpoint allows you to retrieve the designated homepage of a website. Alternatively, you can utilize the pages endpoint by specifying an empty slug parameter to achieve the same result. By using either of these methods, you can effectively access the desired homepage of the website.
    * Get Home
    */
-  async homeRaw(t) {
-    const i = {}, o = {};
-    this.configuration && this.configuration.apiKey && (i.token = this.configuration.apiKey("token"));
-    const a = await this.request({
+  async homeRaw(n, t) {
+    const i = {};
+    n.lang != null && (i.lang = n.lang);
+    const r = {};
+    this.configuration && this.configuration.apiKey && (i.token = await this.configuration.apiKey("token"));
+    const o = await this.request({
       path: "/pages/home",
       method: "GET",
-      headers: o,
+      headers: r,
       query: i
     }, t);
-    return new f(a, (r) => b(r));
+    return new d(o, (a) => _(a));
   }
   /**
    * This endpoint allows you to retrieve the designated homepage of a website. Alternatively, you can utilize the pages endpoint by specifying an empty slug parameter to achieve the same result. By using either of these methods, you can effectively access the desired homepage of the website.
    * Get Home
    */
-  async home(t) {
-    return await (await this.homeRaw(t)).value();
+  async home(n = {}, t) {
+    return await (await this.homeRaw(n, t)).value();
   }
   /**
    * This endpoint retrieves comprehensive information from a specified page using either a slug or a path. The slug refers to a unique identifier for the page, while the path is the slug with a leading slash. By providing either the slug or the path as input, the function will gather all the relevant details associated with the page.
    * Get Page by slug
    */
-  async pageRaw(t, i) {
-    const o = {};
-    t.slug !== void 0 && (o.slug = t.slug);
-    const a = {};
-    this.configuration && this.configuration.apiKey && (o.token = this.configuration.apiKey("token"));
-    const r = await this.request({
+  async pageRaw(n, t) {
+    const i = {};
+    n.lang != null && (i.lang = n.lang), n.slug != null && (i.slug = n.slug);
+    const r = {};
+    this.configuration && this.configuration.apiKey && (i.token = await this.configuration.apiKey("token"));
+    const o = await this.request({
       path: "/pages",
       method: "GET",
-      headers: a,
-      query: o
-    }, i);
-    return new f(r, (s) => b(s));
+      headers: r,
+      query: i
+    }, t);
+    return new d(o, (a) => _(a));
   }
   /**
    * This endpoint retrieves comprehensive information from a specified page using either a slug or a path. The slug refers to a unique identifier for the page, while the path is the slug with a leading slash. By providing either the slug or the path as input, the function will gather all the relevant details associated with the page.
    * Get Page by slug
    */
-  async page(t = {}, i) {
-    return await (await this.pageRaw(t, i)).value();
+  async page(n = {}, t) {
+    return await (await this.pageRaw(n, t)).value();
   }
 }
-class ye extends p {
+class pe extends f {
   /**
    * This endpoint offers a powerful capability to search through the websites sitemap, encompassing both pages and entities. With this endpoint, users can efficiently explore and retrieve information from your sitemap by creating a paginated search experience.
    * Get Search by query
    */
-  async searchRaw(t, i) {
-    if (t.query === null || t.query === void 0)
-      throw new v("query", "Required parameter requestParameters.query was null or undefined when calling search.");
-    const o = {};
-    t.query !== void 0 && (o.query = t.query);
-    const a = {};
-    this.configuration && this.configuration.apiKey && (o.token = this.configuration.apiKey("token"));
-    const r = await this.request({
+  async searchRaw(n, t) {
+    if (n.query == null)
+      throw new h(
+        "query",
+        'Required parameter "query" was null or undefined when calling search().'
+      );
+    const i = {};
+    n.lang != null && (i.lang = n.lang), n.query != null && (i.query = n.query);
+    const r = {};
+    this.configuration && this.configuration.apiKey && (i.token = await this.configuration.apiKey("token"));
+    const o = await this.request({
       path: "/search",
       method: "GET",
-      headers: a,
-      query: o
-    }, i);
-    return new f(r, (s) => s.map(T));
+      headers: r,
+      query: i
+    }, t);
+    return new d(o, (a) => a.map(x));
   }
   /**
    * This endpoint offers a powerful capability to search through the websites sitemap, encompassing both pages and entities. With this endpoint, users can efficiently explore and retrieve information from your sitemap by creating a paginated search experience.
    * Get Search by query
    */
-  async search(t, i) {
-    return await (await this.searchRaw(t, i)).value();
+  async search(n, t) {
+    return await (await this.searchRaw(n, t)).value();
   }
 }
-class he extends p {
+class ge extends f {
   /**
    * This endpoint provides comprehensive data for generating the sitemap. It encompasses all the necessary information, including pages from containers, as well as all entities that have been mapped.
    * Get Sitemap
    */
-  async sitemapRaw(t) {
-    const i = {}, o = {};
-    this.configuration && this.configuration.apiKey && (i.token = this.configuration.apiKey("token"));
-    const a = await this.request({
+  async sitemapRaw(n, t) {
+    const i = {};
+    n.lang != null && (i.lang = n.lang);
+    const r = {};
+    this.configuration && this.configuration.apiKey && (i.token = await this.configuration.apiKey("token"));
+    const o = await this.request({
       path: "/sitemap",
       method: "GET",
-      headers: o,
+      headers: r,
       query: i
     }, t);
-    return new f(a, (r) => r.map(T));
+    return new d(o, (a) => a.map(x));
   }
   /**
    * This endpoint provides comprehensive data for generating the sitemap. It encompasses all the necessary information, including pages from containers, as well as all entities that have been mapped.
    * Get Sitemap
    */
-  async sitemap(t) {
-    return await (await this.sitemapRaw(t)).value();
+  async sitemap(n = {}, t) {
+    return await (await this.sitemapRaw(n, t)).value();
   }
 }
-class ge extends p {
+class ye extends f {
   /**
    * The Version API endpoint offers a highly efficient solution for evaluating the current caching status of your application\'s caching mechanism. This functionality allows you to cache the entire application configuration and page responses indefinitely. However, utilizing this endpoint enables you to assess the validity of the cache by sending a request to determine its current status. This caching endpoint is specifically designed for optimal performance when compared to the configuration endpoint, which requires more thorough evaluation and encompasses a substantial response body.
    * Get Version Information
    */
-  async versionRaw(t) {
-    const i = {}, o = {};
-    this.configuration && this.configuration.apiKey && (i.token = this.configuration.apiKey("token"));
-    const a = await this.request({
+  async versionRaw(n, t) {
+    const i = {};
+    n.lang != null && (i.lang = n.lang);
+    const r = {};
+    this.configuration && this.configuration.apiKey && (i.token = await this.configuration.apiKey("token"));
+    const o = await this.request({
       path: "/version",
       method: "GET",
-      headers: o,
+      headers: r,
       query: i
     }, t);
-    return new f(a, (r) => ce(r));
+    return new d(o, (a) => se(a));
   }
   /**
    * The Version API endpoint offers a highly efficient solution for evaluating the current caching status of your application\'s caching mechanism. This functionality allows you to cache the entire application configuration and page responses indefinitely. However, utilizing this endpoint enables you to assess the validity of the cache by sending a request to determine its current status. This caching endpoint is specifically designed for optimal performance when compared to the configuration endpoint, which requires more thorough evaluation and encompasses a substantial response body.
    * Get Version Information
    */
-  async version(t) {
-    return await (await this.versionRaw(t)).value();
+  async version(n = {}, t) {
+    return await (await this.versionRaw(n, t)).value();
   }
 }
-const ve = /[\p{Lu}]/u, me = /[\p{Ll}]/u, q = /^[\p{Lu}](?![\p{Lu}])/gu, U = /([\p{Alpha}\p{N}_]|$)/u, w = /[_.\- ]+/, we = new RegExp("^" + w.source), E = new RegExp(w.source + U.source, "gu"), R = new RegExp("\\d+" + U.source, "gu"), _e = (e, t, i, o) => {
-  let a = !1, r = !1, s = !1, u = !1;
-  for (let c = 0; c < e.length; c++) {
-    const l = e[c];
-    u = c > 2 ? e[c - 3] === "-" : !0, a && ve.test(l) ? (e = e.slice(0, c) + "-" + e.slice(c), a = !1, s = r, r = !0, c++) : r && s && me.test(l) && (!u || o) ? (e = e.slice(0, c - 1) + "-" + e.slice(c - 1), s = r, r = !1, a = !0) : (a = t(l) === l && i(l) !== l, s = r, r = i(l) === l && t(l) !== l);
+const he = /[\p{Lu}]/u, ve = /[\p{Ll}]/u, b = /^[\p{Lu}](?![\p{Lu}])/gu, T = /([\p{Alpha}\p{N}_]|$)/u, m = /[_.\- ]+/, me = new RegExp("^" + m.source), E = new RegExp(m.source + T.source, "gu"), q = new RegExp("\\d+" + T.source, "gu"), we = (e, n, t, i) => {
+  let r = !1, o = !1, a = !1, l = !1;
+  for (let s = 0; s < e.length; s++) {
+    const u = e[s];
+    l = s > 2 ? e[s - 3] === "-" : !0, r && he.test(u) ? (e = e.slice(0, s) + "-" + e.slice(s), r = !1, a = o, o = !0, s++) : o && a && ve.test(u) && (!l || i) ? (e = e.slice(0, s - 1) + "-" + e.slice(s - 1), a = o, o = !1, r = !0) : (r = n(u) === u && t(u) !== u, a = o, o = t(u) === u && n(u) !== u);
   }
   return e;
-}, be = (e, t) => (q.lastIndex = 0, e.replace(q, (i) => t(i))), qe = (e, t) => (E.lastIndex = 0, R.lastIndex = 0, e.replace(E, (i, o) => t(o)).replace(R, (i) => t(i)));
-function Ee(e, t) {
+}, _e = (e, n) => (b.lastIndex = 0, e.replace(b, (t) => n(t))), be = (e, n) => (E.lastIndex = 0, q.lastIndex = 0, e.replace(E, (t, i) => n(i)).replace(q, (t) => n(t)));
+function Ee(e, n) {
   if (!(typeof e == "string" || Array.isArray(e)))
     throw new TypeError("Expected the input to be `string | string[]`");
-  if (t = {
+  if (n = {
     pascalCase: !1,
     preserveConsecutiveUppercase: !1,
-    ...t
-  }, Array.isArray(e) ? e = e.map((r) => r.trim()).filter((r) => r.length).join("-") : e = e.trim(), e.length === 0)
+    ...n
+  }, Array.isArray(e) ? e = e.map((o) => o.trim()).filter((o) => o.length).join("-") : e = e.trim(), e.length === 0)
     return "";
-  const i = t.locale === !1 ? (r) => r.toLowerCase() : (r) => r.toLocaleLowerCase(t.locale), o = t.locale === !1 ? (r) => r.toUpperCase() : (r) => r.toLocaleUpperCase(t.locale);
-  return e.length === 1 ? w.test(e) ? "" : t.pascalCase ? o(e) : i(e) : (e !== i(e) && (e = _e(e, i, o, t.preserveConsecutiveUppercase)), e = e.replace(we, ""), e = t.preserveConsecutiveUppercase ? be(e, i) : i(e), t.pascalCase && (e = o(e.charAt(0)) + e.slice(1)), qe(e, o));
+  const t = n.locale === !1 ? (o) => o.toLowerCase() : (o) => o.toLocaleLowerCase(n.locale), i = n.locale === !1 ? (o) => o.toUpperCase() : (o) => o.toLocaleUpperCase(n.locale);
+  return e.length === 1 ? m.test(e) ? "" : n.pascalCase ? i(e) : t(e) : (e !== t(e) && (e = we(e, t, i, n.preserveConsecutiveUppercase)), e = e.replace(me, ""), e = n.preserveConsecutiveUppercase ? _e(e, t) : t(e), n.pascalCase && (e = i(e.charAt(0)) + e.slice(1)), be(e, i));
 }
-function Re(e, t, i) {
-  const o = "virtual:flyo-components", a = "\0" + o;
+function qe(e, n, t) {
+  const i = "virtual:flyo-components", r = "\0" + i;
   return {
     name: "vite-plugin-flyo-components",
-    async resolveId(r) {
-      if (r === o)
-        return a;
+    async resolveId(o) {
+      if (o === i)
+        return r;
     },
-    async load(r) {
-      if (r === a) {
-        const s = [];
-        for (const [c, l] of Object.entries(t)) {
-          const h = await this.resolve(
-            "/" + e + "/" + l + ".astro"
+    async load(o) {
+      if (o === r) {
+        const a = [];
+        for (const [s, u] of Object.entries(n)) {
+          const g = await this.resolve(
+            "/" + e + "/" + u + ".astro"
           );
-          h && s.push(`export { default as ${Ee(c)} } from "${h.id}"`);
+          g && a.push(`export { default as ${Ee(s)} } from "${g.id}"`);
         }
-        let u = null;
-        return i && (u = await this.resolve(
-          "/" + e + "/" + i + ".astro"
-        )), u ? s.push(`export { default as fallback } from "${u.id}"`) : s.push('export { default as fallback } from "@flyo/nitro-astro/FallbackComponent.astro"'), s.join(";");
+        let l = null;
+        return t && (l = await this.resolve(
+          "/" + e + "/" + t + ".astro"
+        )), l ? a.push(`export { default as fallback } from "${l.id}"`) : a.push('export { default as fallback } from "@flyo/nitro-astro/FallbackComponent.astro"'), a.join(";");
       }
     }
   };
 }
-let Ce = Symbol("clean"), d = [], ke = (e, t) => {
-  let i = [], o = {
+let Re = Symbol("clean"), c = [], Ce = (e, n) => {
+  let t = [], i = {
     get() {
-      return o.lc || o.listen(() => {
-      })(), o.value;
+      return i.lc || i.listen(() => {
+      })(), i.value;
     },
-    l: t || 0,
+    l: n || 0,
     lc: 0,
-    listen(a, r) {
-      return o.lc = i.push(a, r || o.l) / 2, () => {
-        let s = i.indexOf(a);
-        ~s && (i.splice(s, 2), --o.lc || o.off());
+    listen(r, o) {
+      return i.lc = t.push(r, o || i.l) / 2, () => {
+        let a = t.indexOf(r);
+        ~a && (t.splice(a, 2), --i.lc || i.off());
       };
     },
-    notify(a, r) {
-      let s = !d.length;
-      for (let u = 0; u < i.length; u += 2)
-        d.push(
-          i[u],
-          i[u + 1],
-          o.value,
-          a,
-          r
+    notify(r, o) {
+      let a = !c.length;
+      for (let l = 0; l < t.length; l += 2)
+        c.push(
+          t[l],
+          t[l + 1],
+          i.value,
+          r,
+          o
         );
-      if (s) {
-        for (let u = 0; u < d.length; u += 5) {
-          let c;
-          for (let l = u + 1; !c && (l += 5) < d.length; )
-            d[l] < d[u + 1] && (c = d.push(
-              d[u],
-              d[u + 1],
-              d[u + 2],
-              d[u + 3],
-              d[u + 4]
+      if (a) {
+        for (let l = 0; l < c.length; l += 5) {
+          let s;
+          for (let u = l + 1; !s && (u += 5) < c.length; )
+            c[u] < c[l + 1] && (s = c.push(
+              c[l],
+              c[l + 1],
+              c[l + 2],
+              c[l + 3],
+              c[l + 4]
             ));
-          c || d[u](
-            d[u + 2],
-            d[u + 3],
-            d[u + 4]
+          s || c[l](
+            c[l + 2],
+            c[l + 3],
+            c[l + 4]
           );
         }
-        d.length = 0;
+        c.length = 0;
       }
     },
     /* It will be called on last listener unsubscribing.
        We will redefine it in onMount and onStop. */
     off() {
     },
-    set(a) {
-      let r = o.value;
-      r !== a && (o.value = a, o.notify(r));
+    set(r) {
+      let o = i.value;
+      o !== r && (i.value = r, i.notify(o));
     },
-    subscribe(a, r) {
-      let s = o.listen(a, r);
-      return a(o.value), s;
+    subscribe(r, o) {
+      let a = i.listen(r, o);
+      return r(i.value), a;
     },
     value: e
   };
-  return process.env.NODE_ENV !== "production" && (o[Ce] = () => {
-    i = [], o.lc = 0, o.off();
-  }), o;
+  return process.env.NODE_ENV !== "production" && (i[Re] = () => {
+    t = [], i.lc = 0, i.off();
+  }), i;
 };
-function y() {
+function p() {
   return globalThis.flyoNitroInstance || console.error("The Flyo Typescript Configuration has not been initialized correctly"), globalThis.flyoNitroInstance;
 }
-function Ae() {
-  return new de(y());
+function Ie() {
+  return new ce(p());
 }
-const g = ke(!1);
-async function Ie() {
-  return g.get() || g.set(await Ae().config()), g.get();
+const y = Ce(!1);
+async function ke(e = null) {
+  return (!y.get() || globalThis.flyoNitroIntegrationOptions.liveEdit) && y.set(await Ie().config({ lang: e })), y.get();
+}
+function Ae() {
+  return new de(p());
 }
 function Se() {
-  return new fe(y());
+  return new fe(p());
 }
 function xe() {
-  return new pe(y());
+  return new pe(p());
 }
 function Te() {
-  return new ye(y());
+  return new ge(p());
 }
 function Ue() {
-  return new he(y());
+  return new ye(p());
 }
-function je() {
-  return new ge(y());
-}
-function Pe(e) {
+function je(e) {
   return {
     "data-flyo-block-uid": e.uid
   };
 }
 function Le(e) {
-  const t = {
+  const n = {
     accessToken: !1,
     liveEdit: !1,
     fallbackComponent: null,
     componentsDir: "src/components/flyo",
     ...e
   };
-  return t.liveEdit === "true" ? t.liveEdit = !0 : t.liveEdit === "false" && (t.liveEdit = !1), {
+  return n.liveEdit === "true" ? n.liveEdit = !0 : n.liveEdit === "false" && (n.liveEdit = !1), {
     name: "@flyo/nitro-astro",
     hooks: {
-      "astro:config:setup": ({ injectScript: i, updateConfig: o, injectRoute: a }) => {
-        a({
+      "astro:config:setup": ({ injectScript: t, updateConfig: i, injectRoute: r }) => {
+        r({
           pattern: "sitemap.xml",
           entrypoint: "@flyo/nitro-astro/sitemap.ts"
-        }), o({
+        }), i({
           image: {
             service: {
               entrypoint: "@flyo/nitro-astro/cdn.ts"
@@ -745,25 +762,28 @@ function Le(e) {
           },
           vite: {
             plugins: [
-              Re(
+              qe(
                 e.componentsDir,
                 e.components,
                 e.fallbackComponent
               )
             ]
           }
-        }), i(
+        }), t(
           "page-ssr",
           `
             import { Configuration } from '@flyo/nitro-typescript'
 
             var defaultConfig = new Configuration({
-              apiKey: '${t.accessToken}'
+              apiKey: '${n.accessToken}'
             })
 
             globalThis.flyoNitroInstance = defaultConfig;
+            globalThis.flyoNitroIntegrationOptions = {
+              liveEdit: ${n.liveEdit}
+            };
           `
-        ), t.liveEdit && i(
+        ), n.liveEdit && t(
           "page",
           `
               window.addEventListener("message", (event) => {
@@ -804,13 +824,13 @@ function Le(e) {
 }
 export {
   Le as default,
-  Pe as editableBlock,
-  Ie as useConfig,
-  Ae as useConfigApi,
-  y as useConfiguration,
-  Se as useEntitiesApi,
-  xe as usePagesApi,
-  Te as useSearchApi,
-  Ue as useSitemapApi,
-  je as useVersionApi
+  je as editableBlock,
+  ke as useConfig,
+  Ie as useConfigApi,
+  p as useConfiguration,
+  Ae as useEntitiesApi,
+  Se as usePagesApi,
+  xe as useSearchApi,
+  Te as useSitemapApi,
+  Ue as useVersionApi
 };

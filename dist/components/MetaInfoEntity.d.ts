@@ -1,2 +1,3 @@
-import MetaInfoEntity from "./MetaInfoEntity.astro";
+import { default as MetaInfoEntity } from './MetaInfoEntity.astro';
+
 export default MetaInfoEntity;

@@ -7,7 +7,9 @@ const service: ExternalImageService = {
   getURL(options: ImageTransform) {
 
     // check if the options.src contains already https://storage.flyo.cloud
-    let url = options.src.includes('https://storage.flyo.cloud') ? options.src : `https://storage.flyo.cloud/${options.src}`
+    // if not we add it to the url
+
+    let url = typeof options.src === 'string' && options.src.includes('https://storage.flyo.cloud') ? options.src : `https://storage.flyo.cloud/${options.src}`
 
     // if either width or height are defined we add the /thumb/$widthx$height path to it.
     let width: string | number | null = options.width ? options.width : null;

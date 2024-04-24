@@ -1,2 +1,3 @@
-import MetaInfo from "./MetaInfo.astro";
+import { default as MetaInfo } from './MetaInfo.astro';
+
 export default MetaInfo;

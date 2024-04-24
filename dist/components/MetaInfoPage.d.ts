@@ -1,2 +1,3 @@
-import MetaInfoPage from "./MetaInfoPage.astro";
+import { default as MetaInfoPage } from './MetaInfoPage.astro';
+
 export default MetaInfoPage;

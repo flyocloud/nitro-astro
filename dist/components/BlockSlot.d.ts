@@ -1,2 +1,3 @@
-import BlockSlot from "./BlockSlot.astro";
+import { default as BlockSlot } from './BlockSlot.astro';
+
 export default BlockSlot;
