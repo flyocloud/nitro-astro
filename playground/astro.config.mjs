@@ -16,7 +16,6 @@ export default defineConfig({
             accessToken: FLYO_ACCESS_TOKEN,
             liveEdit: FLYO_LIVE_EDIT,
             componentsDir: 'src/components/flyo',
-            liveEdit: true, // Enable on dev and preview systems for application reloading in the Flyo preview frame upon changes
             components: { 
                 Text: "Text",
                 CardsGrid: "CardsGrid",

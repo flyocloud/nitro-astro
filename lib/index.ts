@@ -11,11 +11,23 @@ export type IntegrationOptions = {
   fallbackComponent?: string
 };
 
-export function useConfiguration(): Configuration {
+export type FlyoIntegration = {
+  config: Configuration,
+  options: {
+    liveEdit: boolean,
+    componentsDir: string
+  }
+}
+
+export function useFlyoIntegration(): FlyoIntegration {
   if (!globalThis.flyoNitroInstance) {
     console.error("The Flyo Typescript Configuration has not been initialized correctly");
   }
   return globalThis.flyoNitroInstance;
+}
+
+export function useConfiguration(): Configuration {
+  return useFlyoIntegration().config;
 }
 
 export function useConfigApi() : ConfigApi {
@@ -29,7 +41,7 @@ export async function useConfig(lang: string | null = null): Promise<ConfigRespo
   // using nano store should only used in development environment
   // since it requires the node process to restart
   // therefore if live edit is enabled, whe always fetch the config
-  if (!configStore.get() || globalThis.flyoNitroIntegrationOptions.liveEdit) {
+  if (!configStore.get() || useFlyoIntegration().options.liveEdit) {
     // if (globalThis.flyoNitroIntegrationOptions.liveEdit) {
     //  console.log('The live edit is enabled, always fetching the config')
     // }
@@ -121,9 +133,12 @@ export default function flyoNitroIntegration(
               apiKey: '${resolvedOptions.accessToken}'
             })
 
-            globalThis.flyoNitroInstance = defaultConfig;
-            globalThis.flyoNitroIntegrationOptions = {
-              liveEdit: ${resolvedOptions.liveEdit}
+            globalThis.flyoNitroInstance = {
+              config: defaultConfig,
+              options: {
+                liveEdit: ${resolvedOptions.liveEdit},
+                componentsDir: '${resolvedOptions.componentsDir}',
+              }
             };
           `
         );
