@@ -1,4 +1,4 @@
-import { useSitemapApi } from "@flyo/nitro-astro"
+import { useSitemapApi } from "./index.ts"
 
 function buildUrl(path: string, domain: string) {
   return `${domain.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;

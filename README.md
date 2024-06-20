@@ -178,6 +178,4 @@ const isProd = import.meta.env.PROD;
 
 # Nitro Astro Integration Local Development
 
-1. for yarn go into the example app and replace the dependecie with: `"@flyo/nitro-astro": "file:../nitro-astro"`
-2. always run the `yarn build` command in the nitro-astro package after making changes
-2. don't forget to run `rm -rf node_modules/ && yarn && yarn dev` in the example app whenever you like to test changes.
+> Workspaces with npm => https://docs.npmjs.com/cli/v10/using-npm/workspaces

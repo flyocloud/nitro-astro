@@ -25,6 +25,7 @@ export function useConfigApi() : ConfigApi {
 const configStore = atom<ConfigResponse | boolean>(false);
 
 export async function useConfig(lang: string | null = null): Promise<ConfigResponse> {
+  
   // using nano store should only used in development environment
   // since it requires the node process to restart
   // therefore if live edit is enabled, whe always fetch the config
