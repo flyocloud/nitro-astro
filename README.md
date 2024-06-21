@@ -179,3 +179,9 @@ const isProd = import.meta.env.PROD;
 # Nitro Astro Integration Local Development
 
 > Workspaces with npm => https://docs.npmjs.com/cli/v10/using-npm/workspaces
+
+1. `npm install`
+2. `npm run dev`
+3. localhost:4321
+
+> `npm cache clean --force` fixed an issue where the astro project did not start due to missing dependencies.
