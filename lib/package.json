@@ -9,8 +9,7 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@flyo/nitro-typescript": "^1.0.9",
-    "nanostores": "^0.10.3"
+    "@flyo/nitro-typescript": "^1.0.9"
   },
   "devDependencies": {
     "astro": "^4.10.1",
@@ -61,6 +60,7 @@
       "require": "./components/MetaInfoPage.ts"
     },
     "./sitemap.ts": "./sitemap.ts",
+    "./middleware.ts": "./middleware.ts",
     "./cdn.ts": "./cdn.ts"
   },
   "type": "module",
@@ -69,7 +69,8 @@
     "dist",
     "components",
     "sitemap.ts",
-    "cdn.ts"
+    "cdn.ts",
+    "middleware.ts"
   ],
   "types": "./dist/index.d.ts",
   "author": "Basil Suter <git@nadar.io>",

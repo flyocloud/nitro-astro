@@ -7,8 +7,40 @@
     "./playground"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace=lib & npm run playground",
-    "libbuild" : "npm run build --workspace=lib",
-    "playground": "npm run dev --workspace=playground"
+    "dev": "npm run dev --workspace=lib",
+    "libbuild": "npm run build --workspace=lib",
+    "playground": "npm run dev --workspace=playground",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.13.0"
+  },
+  "lint-staged": {
+    "*.{astro,js,css}": [
+      "prettier --write"
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": false,
+    "plugins": [
+      "prettier-plugin-astro"
+    ],
+    "overrides": [
+      {
+        "files": "**/*.astro",
+        "options": {
+          "parser": "astro"
+        }
+      }
+    ]
   }
 }

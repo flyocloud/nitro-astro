@@ -1,27 +1,38 @@
-import type { AstroIntegration } from "astro";
-import { Configuration, ConfigApi, EntitiesApi, PagesApi, SearchApi, SitemapApi, VersionApi, type Block, type ConfigResponse } from '@flyo/nitro-typescript'
+import type { AstroIntegration, AstroGlobal } from "astro";
+import {
+  Configuration,
+  ConfigApi,
+  EntitiesApi,
+  PagesApi,
+  SearchApi,
+  SitemapApi,
+  VersionApi,
+  type Block,
+  type ConfigResponse,
+} from "@flyo/nitro-typescript";
 import vitePluginFlyoComponents from "./vite-plugin-flyo-components";
-import { atom } from 'nanostores';
 
 export type IntegrationOptions = {
-  accessToken: string,
-  liveEdit: any,
-  componentsDir: string,
-  components: object,
-  fallbackComponent?: string
+  accessToken: string;
+  liveEdit: any;
+  componentsDir: string;
+  components: object;
+  fallbackComponent?: string;
 };
 
 export type FlyoIntegration = {
-  config: Configuration,
+  config: Configuration;
   options: {
-    liveEdit: boolean,
-    componentsDir: string
-  }
-}
+    liveEdit: boolean;
+    componentsDir: string;
+  };
+};
 
 export function useFlyoIntegration(): FlyoIntegration {
   if (!globalThis.flyoNitroInstance) {
-    console.error("The Flyo Typescript Configuration has not been initialized correctly");
+    console.error(
+      "The Flyo Typescript Configuration has not been initialized correctly"
+    );
   }
   return globalThis.flyoNitroInstance;
 }
@@ -30,88 +41,83 @@ export function useConfiguration(): Configuration {
   return useFlyoIntegration().config;
 }
 
-export function useConfigApi() : ConfigApi {
+export function useConfigApi(): ConfigApi {
   return new ConfigApi(useConfiguration());
 }
 
-const configStore = atom<ConfigResponse | boolean>(false);
-
-export async function useConfig(lang: string | null = null): Promise<ConfigResponse> {
-  
-  // using nano store should only used in development environment
-  // since it requires the node process to restart
-  // therefore if live edit is enabled, whe always fetch the config
-  if (!configStore.get() || useFlyoIntegration().options.liveEdit) {
-    // if (globalThis.flyoNitroIntegrationOptions.liveEdit) {
-    //  console.log('The live edit is enabled, always fetching the config')
-    // }
-    configStore.set(await useConfigApi().config({ lang: lang }));
-  }
-
-  return configStore.get() as ConfigResponse;
+export function useConfig(astro: AstroGlobal): ConfigResponse {
+  return astro.locals.config;
 }
 
-export function useEntitiesApi() : EntitiesApi {
+export function useEntitiesApi(): EntitiesApi {
   return new EntitiesApi(useConfiguration());
 }
 
-export function usePagesApi() : PagesApi {
+export function usePagesApi(): PagesApi {
   return new PagesApi(useConfiguration());
 }
 
-export function useSearchApi() : SearchApi {
+export function useSearchApi(): SearchApi {
   return new SearchApi(useConfiguration());
 }
 
-export function useSitemapApi() : SitemapApi {
+export function useSitemapApi(): SitemapApi {
   return new SitemapApi(useConfiguration());
 }
 
-export function useVersionApi() : VersionApi {
+export function useVersionApi(): VersionApi {
   return new VersionApi(useConfiguration());
 }
 
-export function editableBlock(block: Block) : object {
+export function editableBlock(block: Block): object {
   return {
-    'data-flyo-block-uid': block.uid,
+    "data-flyo-block-uid": block.uid,
   };
 }
 
 export default function flyoNitroIntegration(
-    options: IntegrationOptions
-  ): AstroIntegration {
-
+  options: IntegrationOptions
+): AstroIntegration {
   const resolvedOptions = {
     accessToken: false,
     liveEdit: false,
     fallbackComponent: null,
-    componentsDir: 'src/components/flyo',
+    componentsDir: "src/components/flyo",
     ...options,
   };
 
-  if (resolvedOptions.liveEdit === 'true') {
+  if (resolvedOptions.liveEdit === "true") {
     resolvedOptions.liveEdit = true;
-  } else if (resolvedOptions.liveEdit === 'false') {
+  } else if (resolvedOptions.liveEdit === "false") {
     resolvedOptions.liveEdit = false;
   }
 
   return {
     name: "@flyo/nitro-astro",
     hooks: {
-      "astro:config:setup": ({ injectScript, updateConfig, injectRoute }) => {
-
+      "astro:config:setup": ({
+        injectScript,
+        updateConfig,
+        injectRoute,
+        addMiddleware,
+      }) => {
         // inject the sitemap xml generator
         injectRoute({
-          pattern: 'sitemap.xml',
-          entrypoint: '@flyo/nitro-astro/sitemap.ts'
-        })
+          pattern: "sitemap.xml",
+          entrypoint: "@flyo/nitro-astro/sitemap.ts",
+        });
+
+        addMiddleware({
+          entrypoint: "@flyo/nitro-astro/middleware.ts",
+          order: "post",
+        });
 
         // inject the image cdn service
         updateConfig({
           image: {
             service: {
-              entrypoint: '@flyo/nitro-astro/cdn.ts'
-            }
+              entrypoint: "@flyo/nitro-astro/cdn.ts",
+            },
           },
           vite: {
             plugins: [
@@ -119,10 +125,10 @@ export default function flyoNitroIntegration(
                 options.componentsDir,
                 options.components,
                 options.fallbackComponent
-              )
+              ),
             ],
           },
-        })
+        });
 
         injectScript(
           "page-ssr",

@@ -1,13 +1,17 @@
 ---
-import { Entity } from '@flyo/nitro-typescript';
-import MetaInfo from './MetaInfo.astro';
-
+import { Entity } from "@flyo/nitro-typescript";
+import MetaInfo from "./MetaInfo.astro";
 
 interface Props {
-    response: Entity;
+  response: Entity;
 }
 
-const { response } = Astro.props
-
+const { response } = Astro.props;
 ---
-<MetaInfo title={response.entity?.entity_title} description={response.entity?.entity_teaser} image={response.entity?.entity_image} jsonld={response.jsonld} />
+
+<MetaInfo
+  title={response.entity?.entity_title}
+  description={response.entity?.entity_teaser}
+  image={response.entity?.entity_image}
+  jsonld={response.jsonld}
+/>

@@ -1,16 +1,13 @@
 ---
-import FlyoNitroBlock from './FlyoNitroBlock.astro';
+import FlyoNitroBlock from "./FlyoNitroBlock.astro";
 
 interface Props {
-    slot: {
-        content?: object[]; // Add the content property with type object[]
-    };
+  slot: {
+    content?: object[]; // Add the content property with type object[]
+  };
 }
 
-const { slot } = Astro.props
-
+const { slot } = Astro.props;
 ---
 
-{slot?.content?.map((block: object) => (
-    <FlyoNitroBlock block={block} />
-))}
+{slot?.content?.map((block: object) => <FlyoNitroBlock block={block} />)}

@@ -1,2 +1,2 @@
-import FallbackComponent from "./FallbackComponent.astro"
-export default FallbackComponent
+import FallbackComponent from "./FallbackComponent.astro";
+export default FallbackComponent;

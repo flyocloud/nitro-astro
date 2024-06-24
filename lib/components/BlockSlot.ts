@@ -1,2 +1,2 @@
-import BlockSlot from "./BlockSlot.astro"
-export default BlockSlot
+import BlockSlot from "./BlockSlot.astro";
+export default BlockSlot;

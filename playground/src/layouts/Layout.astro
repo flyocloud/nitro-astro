@@ -1,10 +1,10 @@
 ---
 import { useConfig } from "@flyo/nitro-astro";
 
-const config = await useConfig(Astro.currentLocale);
+const config = useConfig(Astro);
 const { title } = Astro.props;
 const currentPath = Astro.url.pathname;
-const currentLocal = Astro.currentLocale
+const currentLocal = Astro.currentLocale;
 ---
 
 <!doctype html>
@@ -19,25 +19,24 @@ const currentLocal = Astro.currentLocale
     <slot name="head" />
   </head>
   <body>
-		<div class="container mx-auto mb-3 pt-3">
-			<div class="flex flex-row gap-2 justify-center">
-			{
-				config.containers.nav.items.map((item) => (
-					<a
-
-						href={item.href}
-						class={`p-2 m-2 rounded-lg bg-gray-200 ${currentPath === item.href ? "text-red" : ""}`}
-					>
-						{item.label}
-						<br />
-					</a>
-				))
-			}
-			</div>
-		</div>
+    <div class="container mx-auto mb-3 pt-3">
+      <div class="flex flex-row gap-2 justify-center">
+        {
+          config.containers.nav.items.map((item) => (
+            <a
+              href={item.href}
+              class={`p-2 m-2 rounded-lg bg-gray-200 ${currentPath === item.href ? "text-red" : ""}`}
+            >
+              {item.label}
+              <br />
+            </a>
+          ))
+        }
+      </div>
+    </div>
     <div class="container mx-auto">
       <slot />
-			<div class="text-xs mt-4">Current locale: { currentLocal }</div>
+      <div class="text-xs mt-4">Current locale: {currentLocal}</div>
     </div>
   </body>
 </html>

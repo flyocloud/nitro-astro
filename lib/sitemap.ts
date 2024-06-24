@@ -1,7 +1,7 @@
-import { useSitemapApi } from "./index.ts"
+import { useSitemapApi } from "./index.ts";
 
 function buildUrl(path: string, domain: string) {
-  return `${domain.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
+  return `${domain.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
 }
 
 export async function GET(config: any) {
@@ -12,22 +12,22 @@ export async function GET(config: any) {
 
   const routes = [];
   for (const item of sitemap) {
-    if (item.entity_type === 'nitro-page') {
+    if (item.entity_type === "nitro-page") {
       if (routes.includes(item.entity_slug)) {
         continue;
       }
       routes.push(item.entity_slug);
       xml += `<url><loc>${buildUrl(item.entity_slug, config.site.origin)}</loc></url>`;
     } else if (item.routes?.detail) {
-      xml += `<url><loc>${buildUrl(item.routes['detail'], config.site.origin)}</loc></url>`;
+      xml += `<url><loc>${buildUrl(item.routes["detail"], config.site.origin)}</loc></url>`;
     }
   }
 
-  xml += '</urlset>';
+  xml += "</urlset>";
 
   return new Response(xml, {
     headers: {
-      'Content-Type': 'application/xml'
-    }
-  })
+      "Content-Type": "application/xml",
+    },
+  });
 }

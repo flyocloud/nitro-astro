@@ -1,20 +1,21 @@
 ---
-import { Block } from '@flyo/nitro-typescript';
-import { useFlyoIntegration } from './../index.ts'
+import { Block } from "@flyo/nitro-typescript";
+import { useFlyoIntegration } from "./../index.ts";
 interface Props {
-	block: Block
+  block: Block;
 }
 
-const { block } = Astro.props
-
-console.log(block)
+const { block } = Astro.props;
 
 const isLiveEdit = useFlyoIntegration().options.liveEdit || false;
 const folder = useFlyoIntegration().options.componentsDir;
 ---
 
-{ isLiveEdit && (
+{
+  isLiveEdit && (
     <div style="margin: 20px 0; padding: 10px; border-radius: 5px; background-color: #DC143C; color: white;">
-        Can't find <strong>{block.component}.astro</strong> file in the folder <strong>{folder}</strong>, please make sure the component exists.
+      Can't find <strong>{block.component}.astro</strong> file in the folder{" "}
+      <strong>{folder}</strong>, please make sure the component exists.
     </div>
-)}
+  )
+}
