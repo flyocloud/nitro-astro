@@ -1,10 +1,12 @@
 import { useSitemapApi } from "./index.ts";
+import type { AstroGlobal } from "astro";
+
 
 function buildUrl(path: string, domain: string) {
   return `${domain.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
 }
 
-export async function GET(config: any) {
+export async function GET(config: AstroGlobal) {
   const sitemap = await useSitemapApi().sitemap();
 
   let xml = '<?xml version="1.0" encoding="UTF-8"?>';

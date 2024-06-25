@@ -14,7 +14,7 @@ import vitePluginFlyoComponents from "./vite-plugin-flyo-components";
 
 export type IntegrationOptions = {
   accessToken: string;
-  liveEdit: any;
+  liveEdit: string | boolean | number;
   componentsDir: string;
   components: object;
   fallbackComponent?: string;
