@@ -123,7 +123,7 @@ export default function flyoNitroIntegration(
             plugins: [
               vitePluginFlyoComponents(
                 options.componentsDir,
-                options.components,
+                options.components || {},
                 options.fallbackComponent
               ),
             ],
