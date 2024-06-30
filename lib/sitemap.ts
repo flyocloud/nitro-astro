@@ -1,7 +1,6 @@
 import { useSitemapApi } from "./index.ts";
 import type { AstroGlobal } from "astro";
 
-
 function buildUrl(path: string, domain: string) {
   return `${domain.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
 }

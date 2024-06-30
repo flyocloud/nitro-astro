@@ -56,7 +56,7 @@ import MetaInfoPage from "@flyo/nitro-astro/MetaInfoPage.astro";
 
 const { slug } = Astro.params;
 const resolveSlug = slug === undefined ? "" : slug;
-const config = useConfig(Astro);
+const config = await useConfig(Astro);
 let page;
 
 try {
@@ -88,7 +88,7 @@ To receive the config in the layout in `src/layouts/Layout.astro`:
 ---
 import { useConfig } from "@flyo/nitro-astro";
 
-const config = useConfig(Astro);
+const config = await useConfig(Astro);
 const { title } = Astro.props;
 const currentPath = Astro.url.pathname;
 ---
@@ -207,5 +207,6 @@ const isProd = import.meta.env.PROD;
 2. `npm run dev`
 3. `npm run playground`
 4. localhost:4321
+5. `npx prettier . --write`
 
 > `npm cache clean --force` fixed an issue where the astro project did not start due to missing dependencies.

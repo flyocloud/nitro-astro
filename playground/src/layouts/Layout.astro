@@ -1,7 +1,7 @@
 ---
 import { useConfig } from "@flyo/nitro-astro";
 
-const config = useConfig(Astro);
+const config = await useConfig(Astro);
 const { title } = Astro.props;
 const currentPath = Astro.url.pathname;
 const currentLocal = Astro.currentLocale;

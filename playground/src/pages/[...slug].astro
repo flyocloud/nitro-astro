@@ -6,7 +6,7 @@ import MetaInfoPage from "@flyo/nitro-astro/MetaInfoPage.astro";
 
 const { slug } = Astro.params;
 const resolveSlug = slug === undefined ? "" : slug;
-const config = useConfig(Astro);
+const config = await useConfig(Astro);
 let page;
 
 try {

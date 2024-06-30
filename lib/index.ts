@@ -45,8 +45,8 @@ export function useConfigApi(): ConfigApi {
   return new ConfigApi(useConfiguration());
 }
 
-export function useConfig(astro: AstroGlobal): ConfigResponse {
-  return astro.locals.config;
+export async function useConfig(astro: AstroGlobal): Promise<ConfigResponse> {
+  return await astro.locals.config;
 }
 
 export function useEntitiesApi(): EntitiesApi {
