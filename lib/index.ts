@@ -37,16 +37,25 @@ export function useFlyoIntegration(): FlyoIntegration {
   return globalThis.flyoNitroInstance;
 }
 
+/**
+ * Returns the API main configuration which is used by the SDK.
+ * It holds the access key and is globally available.
+ */
 export function useConfiguration(): Configuration {
   return useFlyoIntegration().config;
 }
 
-export function useConfigApi(): ConfigApi {
-  return new ConfigApi(useConfiguration());
-}
-
+/**
+ * Resolves (if not done) and returns the main configuration object of
+ * the SDK, which is done in the middleware.ts and using the useConfigApi()
+ * function.
+ */
 export async function useConfig(astro: AstroGlobal): Promise<ConfigResponse> {
   return await astro.locals.config;
+}
+
+export function useConfigApi(): ConfigApi {
+  return new ConfigApi(useConfiguration());
 }
 
 export function useEntitiesApi(): EntitiesApi {
