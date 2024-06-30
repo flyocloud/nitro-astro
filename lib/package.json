@@ -61,7 +61,8 @@
     },
     "./sitemap.ts": "./sitemap.ts",
     "./middleware.ts": "./middleware.ts",
-    "./cdn.ts": "./cdn.ts"
+    "./cdn.ts": "./cdn.ts",
+    "./toolbar.ts": "./toolbar.ts"
   },
   "type": "module",
   "files": [
