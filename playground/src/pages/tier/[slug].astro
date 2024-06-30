@@ -1,0 +1,46 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { useEntitiesApi } from "@flyo/nitro-astro";
+import MetaInfoEntity from "@flyo/nitro-astro/MetaInfoEntity.astro";
+import { Image } from "astro:assets";
+
+const { slug } = Astro.params;
+
+let response = null;
+try {
+  response = await useEntitiesApi().entityBySlug({
+    slug,
+    lang: Astro.currentLocale,
+    typeId: 54,
+  });
+} catch (e) {
+  console.log(e);
+  return new Response(e.body, {
+    status: 404,
+    statusText: "Entity Not Found",
+  });
+}
+const isProd = import.meta.env.PROD;
+---
+
+<Layout title={response.entity.entity_title}>
+  <MetaInfoEntity response={response} slot="head" />
+  <h1>{response.entity.entity_title}</h1>
+  {
+    response.model.image && (
+      <Image
+        src={response.model.image.source}
+        alt={response.model.image.caption ?? ""}
+        width="400"
+        height="400"
+      />
+    )
+  }
+</Layout>
+{
+  isProd && (
+    <script is:inline define:vars={{ api: response.entity.entity_metric.api }}>
+      fetch(api)
+    </script>
+  )
+}
