@@ -210,3 +210,5 @@ const isProd = import.meta.env.PROD;
 5. `npx prettier . --write`
 
 > `npm cache clean --force` fixed an issue where the astro project did not start due to missing dependencies.
+
+Releasing: https://semantic-release.gitbook.io/semantic-release
