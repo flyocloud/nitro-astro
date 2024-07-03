@@ -1,6 +1,6 @@
 {
   "name": "@flyo/nitro-astro",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "Nitro Astro connecting Flyo Headless to Astro",
   "main": "./dist/nitro-astro.js",
   "module": "./dist/nitro-astro.mjs",
