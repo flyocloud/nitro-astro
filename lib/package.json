@@ -24,6 +24,11 @@
       "import": "./dist/nitro-astro.mjs",
       "require": "./dist/nitro-astro.js"
     },
+    "./BlockSlot.astro": {
+      "types": "./components/BlockSlot.ts",
+      "import": "./components/BlockSlot.ts",
+      "require": "./components/BlockSlot.ts"
+    },
     "./FallbackComponent.astro": {
       "types": "./components/FallbackComponent.ts",
       "import": "./components/FallbackComponent.ts",
@@ -38,11 +43,6 @@
       "types": "./components/FlyoNitroPage.ts",
       "import": "./components/FlyoNitroPage.ts",
       "require": "./components/FlyoNitroPage.ts"
-    },
-    "./BlockSlot.astro": {
-      "types": "./components/BlockSlot.ts",
-      "import": "./components/BlockSlot.ts",
-      "require": "./components/BlockSlot.ts"
     },
     "./MetaInfo.astro": {
       "types": "./components/MetaInfo.ts",
@@ -59,9 +59,9 @@
       "import": "./components/MetaInfoPage.ts",
       "require": "./components/MetaInfoPage.ts"
     },
-    "./sitemap.ts": "./sitemap.ts",
-    "./middleware.ts": "./middleware.ts",
     "./cdn.ts": "./cdn.ts",
+    "./middleware.ts": "./middleware.ts",
+    "./sitemap.ts": "./sitemap.ts",
     "./toolbar.ts": "./toolbar.ts"
   },
   "type": "module",
@@ -69,9 +69,10 @@
     "module.d.ts",
     "dist",
     "components",
-    "sitemap.ts",
     "cdn.ts",
-    "middleware.ts"
+    "middleware.ts",
+    "sitemap.ts",
+    "toolbar.ts"
   ],
   "types": "./dist/index.d.ts",
   "author": "Basil Suter <git@nadar.io>",
