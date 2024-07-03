@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspace=lib",
-    "libbuild": "npm run build --workspace=lib",
+    "build": "npm run build --workspace=lib",
     "playground": "npm run dev --workspace=playground",
     "prepare": "husky"
   },
