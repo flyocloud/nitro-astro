@@ -2,7 +2,7 @@
 
 This document will help you upgrading from a Version into another.
 
-## 1.x to 2.x
+## from 1.x to 2.x
 
 - BREAKING CHANGE: useConfig() param signature has changed. The language parameter when accessing the config has been removed and the full Astro context object is now required.
 
