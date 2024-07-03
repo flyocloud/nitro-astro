@@ -12,12 +12,45 @@ import {
 } from "@flyo/nitro-typescript";
 import vitePluginFlyoComponents from "./vite-plugin-flyo-components";
 
+/**
+ * Options for configuring the integration.
+ */
 export type IntegrationOptions = {
+  /**
+   * Access token for authentication.
+   * This is either the production or development token from the flyo cloud interface. Keep in mind that requests for production accessToken will be effectivly cached from the flyo cdn, but the development accessToken requests will not be cached.
+   */
   accessToken: string;
+
+  /**
+   * Enables live editing mode.
+   * If enabled, the user can interact with the components, also it represents the application to be in development mode.
+   */
   liveEdit: string | boolean | number;
+
+  /** Directory path for components. */
   componentsDir: string;
+
+  /** Object containing component definitions. */
   components: object;
+
+  /**
+   * (Optional) Fallback component name.
+   * If provided, this component will be used as a fallback. This fallback component will be used when the requested component is not found and only in live editing mode.
+   */
   fallbackComponent?: string;
+
+  /**
+   * TTL (Time-To-Live) for client-side cache headers, in seconds.
+   * Default is 900 seconds (15 minutes) its only availble if the liveEdit is disabled. Use 0 to disable client caching.
+   */
+  clientCacheHeaderTtl: number;
+
+  /**
+   * TTL (Time-To-Live) for server-side cache headers, in seconds.
+   * Default is 1200 seconds (20 minutes) its only availble if the liveEdit is disabled. Use 0 to disable server caching.
+   */
+  serverCacheHeaderTtl: number;
 };
 
 export type FlyoIntegration = {
@@ -25,6 +58,8 @@ export type FlyoIntegration = {
   options: {
     liveEdit: boolean;
     componentsDir: string;
+    clientCacheHeaderTtl: number;
+    serverCacheHeaderTtl: number;
   };
 };
 
@@ -125,6 +160,8 @@ export default function flyoNitroIntegration(
     liveEdit: false,
     fallbackComponent: null,
     componentsDir: "src/components/flyo",
+    serverCacheHeaderTtl: 1200, // 20 minutes
+    clientCacheHeaderTtl: 900, // 15 minutes
     ...options,
   };
 
@@ -196,6 +233,8 @@ export default function flyoNitroIntegration(
               options: {
                 liveEdit: ${resolvedOptions.liveEdit},
                 componentsDir: '${resolvedOptions.componentsDir}',
+                clientCacheHeaderTtl: ${resolvedOptions.clientCacheHeaderTtl},
+                serverCacheHeaderTtl: ${resolvedOptions.serverCacheHeaderTtl}
               }
             };
           `
