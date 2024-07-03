@@ -2,7 +2,6 @@ import { defineToolbarApp } from "astro/toolbar";
 
 export default defineToolbarApp({
   init(canvas) {
-
     const windowElement = document.createElement("astro-dev-toolbar-window");
 
     const links = [
