@@ -1,0 +1,83 @@
+{
+  "name": "@flyo/nitro-astro",
+  "version": "0.0.1",
+  "description": "Nitro Astro connecting Flyo Headless to Astro",
+  "main": "./dist/nitro-astro.js",
+  "module": "./dist/nitro-astro.mjs",
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@flyo/nitro-typescript": "^1.0.9"
+  },
+  "devDependencies": {
+    "astro": "^4.10.1",
+    "typescript": "5.4.5",
+    "@types/node": "20.12.11",
+    "vite": "^5.2.13",
+    "vite-plugin-dts": "^3.9.1"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/nitro-astro.mjs",
+      "require": "./dist/nitro-astro.js"
+    },
+    "./FallbackComponent.astro": {
+      "types": "./components/FallbackComponent.ts",
+      "import": "./components/FallbackComponent.ts",
+      "require": "./components/FallbackComponent.ts"
+    },
+    "./FlyoNitroBlock.astro": {
+      "types": "./components/FlyoNitroBlock.ts",
+      "import": "./components/FlyoNitroBlock.ts",
+      "require": "./components/FlyoNitroBlock.ts"
+    },
+    "./FlyoNitroPage.astro": {
+      "types": "./components/FlyoNitroPage.ts",
+      "import": "./components/FlyoNitroPage.ts",
+      "require": "./components/FlyoNitroPage.ts"
+    },
+    "./BlockSlot.astro": {
+      "types": "./components/BlockSlot.ts",
+      "import": "./components/BlockSlot.ts",
+      "require": "./components/BlockSlot.ts"
+    },
+    "./MetaInfo.astro": {
+      "types": "./components/MetaInfo.ts",
+      "import": "./components/MetaInfo.ts",
+      "require": "./components/MetaInfo.ts"
+    },
+    "./MetaInfoEntity.astro": {
+      "types": "./components/MetaInfoEntity.ts",
+      "import": "./components/MetaInfoEntity.ts",
+      "require": "./components/MetaInfoEntity.ts"
+    },
+    "./MetaInfoPage.astro": {
+      "types": "./components/MetaInfoPage.ts",
+      "import": "./components/MetaInfoPage.ts",
+      "require": "./components/MetaInfoPage.ts"
+    },
+    "./sitemap.ts": "./sitemap.ts",
+    "./middleware.ts": "./middleware.ts",
+    "./cdn.ts": "./cdn.ts",
+    "./toolbar.ts": "./toolbar.ts"
+  },
+  "type": "module",
+  "files": [
+    "module.d.ts",
+    "dist",
+    "components",
+    "sitemap.ts",
+    "cdn.ts",
+    "middleware.ts"
+  ],
+  "types": "./dist/index.d.ts",
+  "author": "Basil Suter <git@nadar.io>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flyocloud/nitro-astro"
+  }
+}

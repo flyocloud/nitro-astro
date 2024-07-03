@@ -1,90 +1,50 @@
 {
-  "name": "@flyo/nitro-astro",
-  "version": "1.5.0",
-  "description": "Astro Framework",
-  "main": "./dist/nitro-astro.js",
-  "module": "./dist/nitro-astro.mjs",
-  "keywords": [
-    "astro-integration",
-    "astro-component",
-    "astro",
-    "flyo",
-    "headless",
-    "cms",
-    "nitro",
-    "withastro"
+  "name": "@flyo/nitro-astro-workspace",
+  "private": true,
+  "version": "0.0.1",
+  "workspaces": [
+    "./lib",
+    "./playground"
   ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/nitro-astro.mjs",
-      "require": "./dist/nitro-astro.js"
-    },
-    "./FallbackComponent.astro": {
-      "types": "./components/FallbackComponent.ts",
-      "import": "./components/FallbackComponent.ts",
-      "require": "./components/FallbackComponent.ts"
-    },
-    "./FlyoNitroBlock.astro": {
-      "types": "./components/FlyoNitroBlock.ts",
-      "import": "./components/FlyoNitroBlock.ts",
-      "require": "./components/FlyoNitroBlock.ts"
-    },
-    "./FlyoNitroPage.astro": {
-      "types": "./components/FlyoNitroPage.ts",
-      "import": "./components/FlyoNitroPage.ts",
-      "require": "./components/FlyoNitroPage.ts"
-    },
-    "./BlockSlot.astro": {
-      "types": "./components/BlockSlot.ts",
-      "import": "./components/BlockSlot.ts",
-      "require": "./components/BlockSlot.ts"
-    },
-    "./MetaInfo.astro": {
-      "types": "./components/MetaInfo.ts",
-      "import": "./components/MetaInfo.ts",
-      "require": "./components/MetaInfo.ts"
-    },
-    "./MetaInfoEntity.astro": {
-      "types": "./components/MetaInfoEntity.ts",
-      "import": "./components/MetaInfoEntity.ts",
-      "require": "./components/MetaInfoEntity.ts"
-    },
-    "./MetaInfoPage.astro": {
-      "types": "./components/MetaInfoPage.ts",
-      "import": "./components/MetaInfoPage.ts",
-      "require": "./components/MetaInfoPage.ts"
-    },
-    "./sitemap.ts": "./sitemap.ts",
-    "./cdn.ts": "./cdn.ts"
-  },
-  "type": "module",
-  "files": [
-    "module.d.ts",
-    "dist",
-    "components",
-    "sitemap.ts",
-    "cdn.ts"
-  ],
-  "types": "./dist/index.d.ts",
-  "author": "Basil Suter <git@nadar.io>",
-  "license": "MIT",
   "scripts": {
-    "release": "npm publish --access=public",
-    "build": "vite build"
+    "dev": "npm run dev --workspace=lib",
+    "build": "npm run build --workspace=lib",
+    "playground": "npm run dev --workspace=playground",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "astro": "^4.10.1",
-    "typescript": "5.4.5",
-    "vite": "^5.2.13",
-    "vite-plugin-dts": "^3.9.1"
+    "@eslint/js": "^9.5.0",
+    "eslint": "^9.5.0",
+    "globals": "^15.6.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.13.0",
+    "typescript-eslint": "^7.14.1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/flyocloud/nitro-astro"
+  "lint-staged": {
+    "*.{astro,js,css}": [
+      "prettier --write"
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
   },
-  "dependencies": {
-    "@flyo/nitro-typescript": "^1.0.9",
-    "nanostores": "^0.10.3"
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": false,
+    "plugins": [
+      "prettier-plugin-astro"
+    ],
+    "overrides": [
+      {
+        "files": "**/*.astro",
+        "options": {
+          "parser": "astro"
+        }
+      }
+    ]
   }
 }
