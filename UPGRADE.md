@@ -18,4 +18,4 @@ now (in 2.x):
 const config = await useConfig(Astro);
 ```
 
-The config is typically requested in the Layout of your Astro Project.
+The config is typically requested in the Layout of your Astro Project. See the `src/layouts` folder
