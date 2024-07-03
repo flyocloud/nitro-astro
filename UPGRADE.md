@@ -17,3 +17,5 @@ now (in 2.x):
 ```astro
 const config = await useConfig(Astro);
 ```
+
+The config is typically requested in the Layout of your Astro Project.
