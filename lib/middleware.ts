@@ -18,6 +18,11 @@ async function getConfigPromise(context) {
 }
 
 export const onRequest = defineMiddleware(async (context, next) => {
+  // ensure that on each request, the resolved config is cleared, otherwise the
+  // node server needs to be restarted to get the new config
+  // this could be an option, but its hard for developers to understand, but good for performance
+  resolvedValue = null
+
   context.locals.config = getConfigPromise(context);
 
   const liveEditEnabled = useFlyoIntegration().options.liveEdit;
