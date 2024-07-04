@@ -1,4 +1,4 @@
-import { useSitemapApi } from "./index.ts";
+import { useSitemapApi } from "@flyo/nitro-astro";
 import type { AstroGlobal } from "astro";
 
 function buildUrl(path: string, domain: string) {

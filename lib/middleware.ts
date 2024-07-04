@@ -1,5 +1,5 @@
 import { defineMiddleware } from "astro/middleware";
-import { useConfigApi, useFlyoIntegration } from "./index.ts";
+import { useConfigApi, useFlyoIntegration } from "@flyo/nitro-astro";
 
 let resolvedValue;
 
