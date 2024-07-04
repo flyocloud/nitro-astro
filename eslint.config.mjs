@@ -9,10 +9,24 @@ export default [
     files: ["**/*.{js,mjs,cjs,ts}"],
   },
   {
-    ignores: ["lib/dist/", "playground/"],
+    ignores: ["lib/dist/", "playground/", "dist/", "node_modules/"],
   },
-  { languageOptions: { globals: globals.node } },
+  { languageOptions: {
+    globals: globals.node,
+    parserOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+    },
+  } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  // ...eslintPluginAstro.configs.recommended,
+  {
+    files: ["*.astro"],
+    languageOptions: {
+      eslintPluginAstro,
+      parserOptions: {
+        parser: "@typescript-eslint/parser",
+      },
+    },
+  },
 ];
