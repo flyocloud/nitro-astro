@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, Plugin } from "vite";
 import path from "path";
 import dts from "vite-plugin-dts";
 
@@ -12,15 +12,11 @@ export default defineConfig(() => {
         name: "flyoNitroIntegration",
         fileName: (format) => (format === "es" ? `${name}.mjs` : `${name}.js`),
       },
-      rollupOptions: {
-        output: {
-          exports: "named", // Set the output.exports to 'named'
-        },
-      },
     },
     plugins: [
-      // Other plugins...
-      dts(),
+      dts({
+        outDir: "dist/types",
+      }) as unknown as Plugin,
     ],
   };
 });

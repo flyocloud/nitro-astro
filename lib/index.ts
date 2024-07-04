@@ -15,7 +15,7 @@ import vitePluginFlyoComponents from "./vite-plugin-flyo-components";
 /**
  * Options for configuring the integration.
  */
-export type IntegrationOptions = {
+export interface IntegrationOptions {
   /**
    * Access token for authentication.
    * This is either the production or development token from the flyo cloud interface. Keep in mind that requests for production accessToken will be effectivly cached from the flyo cdn, but the development accessToken requests will not be cached.
@@ -51,9 +51,9 @@ export type IntegrationOptions = {
    * Default is 1200 seconds (20 minutes) its only availble if the liveEdit is disabled. Use 0 to disable server caching.
    */
   serverCacheHeaderTtl: number;
-};
+}
 
-export type FlyoIntegration = {
+export interface FlyoIntegration {
   config: Configuration;
   options: {
     liveEdit: boolean;
@@ -61,7 +61,7 @@ export type FlyoIntegration = {
     clientCacheHeaderTtl: number;
     serverCacheHeaderTtl: number;
   };
-};
+}
 
 export function useFlyoIntegration(): FlyoIntegration {
   if (!globalThis.flyoNitroInstance) {

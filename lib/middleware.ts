@@ -1,4 +1,4 @@
-import { defineMiddleware } from "astro:middleware";
+import { defineMiddleware } from "astro/middleware";
 import { useConfigApi, useFlyoIntegration } from "./index.ts";
 
 let resolvedValue;
