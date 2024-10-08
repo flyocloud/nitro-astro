@@ -75,7 +75,6 @@
     "sitemap.ts",
     "toolbar.ts"
   ],
-  ],
   "types": "./dist/types/index.d.ts",
   "author": "Basil Suter <git@nadar.io>",
   "license": "MIT",
