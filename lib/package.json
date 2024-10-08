@@ -1,7 +1,10 @@
 {
   "name": "@flyo/nitro-astro",
   "version": "1.0.0",
-  "description": "Nitro Astro connecting Flyo Headless to Astro",
+  "description": "Connecting Flyo Headless Content Hub into your Astro project.",
+  "keywords": [
+    "withastro"
+  ],
   "main": "./dist/nitro-astro.js",
   "module": "./dist/nitro-astro.mjs",
   "scripts": {
@@ -71,6 +74,7 @@
     "middleware.ts",
     "sitemap.ts",
     "toolbar.ts"
+  ],
   ],
   "types": "./dist/types/index.d.ts",
   "author": "Basil Suter <git@nadar.io>",
