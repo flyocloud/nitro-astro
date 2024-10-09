@@ -13,7 +13,7 @@ export default defineConfig({
   site: "https://myflyowebsite.com", // required to make the sitemap.xml work
   i18n: {
     defaultLocale: "de",
-    locales: ["de", "en"],
+    locales: ["de", "fr"],
   },
   integrations: [
     flyoNitroIntegration({

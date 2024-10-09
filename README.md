@@ -229,7 +229,7 @@ import { defineConfig } from "astro/config"
 export default defineConfig({
   i18n: {
     defaultLocale: "en",
-    locales: ["es", "en", "pt-br"],
+    locales: ["en", "fr"],
   }
 })
 ```
@@ -244,6 +244,20 @@ All endpoints accept a `lang` parameter to retrieve data in the desired language
   ```js
   await useEntitiesApi().entityByUniqueid({ uniqueid, lang: Astro.currentLocale });
   ```
+
+Note: If your entity details are internationalized (i18n), you need to create separate detail pages for each language.
+
+```
+.
+├── de
+│   └── detail
+│       └── [slug].astro
+├── fr
+│   └── detail
+│       └── [slug].astro
+```
+
+The above structure would be `/de/detail/[slug].astro` and `/fr/detail/[slug].astro`.
 
 # Nitro Astro Integration Local Development
 
