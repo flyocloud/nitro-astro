@@ -12,13 +12,13 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@flyo/nitro-typescript": "^1.0.9"
+    "@flyo/nitro-typescript": "^1.0.10"
   },
   "devDependencies": {
-    "astro": "^4.11.4",
-    "typescript": "5.5.3",
-    "@types/node": "20.14.9",
-    "vite": "^5.3.3",
+    "astro": "^4.15.12",
+    "typescript": "5.6.3",
+    "@types/node": "20.16.11",
+    "vite": "^5.4.8",
     "vite-plugin-dts": "^3.9.1"
   },
   "exports": {
