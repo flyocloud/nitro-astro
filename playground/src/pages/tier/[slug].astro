@@ -4,7 +4,7 @@ import { useEntitiesApi } from "@flyo/nitro-astro";
 import MetaInfoEntity from "@flyo/nitro-astro/MetaInfoEntity.astro";
 import { Image } from "astro:assets";
 
-const { slug } = Astro.params;
+const { slug = "" } = Astro.params;
 
 let response = null;
 try {

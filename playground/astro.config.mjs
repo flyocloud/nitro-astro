@@ -11,6 +11,10 @@ const { FLYO_ACCESS_TOKEN, FLYO_LIVE_EDIT } = loadEnv(
 export default defineConfig({
   compressHTML: true,
   site: "https://myflyowebsite.com", // required to make the sitemap.xml work
+  i18n: {
+    defaultLocale: "de",
+    locales: ["de", "en"],
+  },
   integrations: [
     flyoNitroIntegration({
       accessToken: FLYO_ACCESS_TOKEN,

@@ -164,7 +164,11 @@ const { block } = Astro.props;
 
 ### Entities
 
-Entity Detail Example, for a file which is located in `src/pages/blog/[slug].astro`:
+The **Entity Details** API provides all the information about an entity and the associated model data configured in the Flyo interface. You can request detail pages either by using a slug (with an additional schema ID) or by a unique ID.
+
+#### Example: Request by slug (type ID 9999)
+
+For a blog post, use `src/pages/blog/[slug].astro` with `entityBySlug`. Since slugs can be unique within an entity but may not be unique across the entire system, it’s recommended to include the schema ID to fetch the correct entity.
 
 ```astro
 ---
@@ -175,7 +179,11 @@ import MetaInfoEntity from "@flyo/nitro-astro/MetaInfoEntity.astro";
 const { slug } = Astro.params;
 let response = null;
 try {
-  response = await useEntitiesApi().entityBySlug({ slug });
+  response = await useEntitiesApi().entityBySlug({ 
+    slug,
+    lang: Astro.currentLocale,
+    typeId: 9999,
+  });
 } catch (e) {
   return new Response(e.body, {
     status: 404,
@@ -198,6 +206,44 @@ const isProd = import.meta.env.PROD;
   )
 }
 ```
+
+#### Example: Request by unique ID
+
+For fetching by unique ID, use `src/pages/blog/[uniqueid].astro` with `entityByUniqueid`. The unique ID is globally unique across the entire system, making it reliable for fetching specific entities.
+
+```astro
+const { uniqueid } = Astro.params;
+// ....
+await useEntitiesApi().entityByUniqueid({ 
+    uniqueid,
+    lang: Astro.currentLocale,
+  });
+```
+
+### Multiple Languages (i18n)
+
+Refer to the [Astro internationalization documentation](https://docs.astro.build/en/guides/internationalization/) to configure languages. Ensure that the languages used in Flyo are defined in the `locales` array, and set the default language in `defaultLocale` in `astro.config.mjs`.
+
+```astro
+import { defineConfig } from "astro/config"
+export default defineConfig({
+  i18n: {
+    defaultLocale: "en",
+    locales: ["es", "en", "pt-br"],
+  }
+})
+```
+
+All endpoints accept a `lang` parameter to retrieve data in the desired language. The **Nitro Astro** package handles this automatically. However, since the Entity Details page is custom-built, you need to manually pass the language parameter.
+
++ For slug-based requests: 
+  ```js
+  await useEntitiesApi().entityBySlug({ slug, lang: Astro.currentLocale });
+  ```
++ For unique ID-based requests: 
+  ```js
+  await useEntitiesApi().entityByUniqueid({ uniqueid, lang: Astro.currentLocale });
+  ```
 
 # Nitro Astro Integration Local Development
 
