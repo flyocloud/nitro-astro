@@ -9,7 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.15.12",
+    "astro": "^4.16.7",
     "@astrojs/check": "^0.9.4",
     "typescript": "^5.6.3",
     "@flyo/nitro-astro": "2.0.6"
