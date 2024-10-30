@@ -28,10 +28,24 @@ export interface IntegrationOptions {
    */
   liveEdit: string | boolean | number;
 
-  /** Directory path for components. */
+  /** 
+   * Directory path for components.
+   * By default the flyo components are located in `src/components/flyo`.
+   */
   componentsDir: string;
 
-  /** Object containing component definitions. */
+  /** 
+   * Object containing component definitions.
+   * The key is the component name defined in Flyo Interface, while the value is the name of the component inside the components directory.
+   * ```json
+   * components: {
+   *  FlyoComponentName: "FlyoComponentName",
+   *  AnotherFlyoComponent "subfolder/AnotherFlyoComponent",
+   * }
+   * ```
+   * > The suffix .astro is not required.
+   * > Adding new elements to components section, requires restarting the development server.
+   */
   components: object;
 
   /**
