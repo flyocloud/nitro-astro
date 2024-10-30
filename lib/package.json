@@ -2,8 +2,9 @@
   "name": "@flyo/nitro-astro",
   "version": "1.0.0",
   "description": "Connecting Flyo Headless Content Hub into your Astro project.",
+  "homepage": "https://dev.flyo.cloud/nitro",
   "keywords": [
-    "withastro"
+    "withastro", "astro-adapter"
   ],
   "main": "./dist/nitro-astro.js",
   "module": "./dist/nitro-astro.mjs",
