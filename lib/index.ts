@@ -225,9 +225,9 @@ export default function flyoNitroIntegration(
           vite: {
             plugins: [
               vitePluginFlyoComponents(
-                options.componentsDir,
-                options.components || {},
-                options.fallbackComponent
+                resolvedOptions.componentsDir,
+                resolvedOptions.components || {},
+                resolvedOptions.fallbackComponent
               ),
             ],
           },
