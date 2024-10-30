@@ -196,6 +196,12 @@ export default function flyoNitroIntegration(
         addMiddleware,
         addDevToolbarApp,
       }) => {
+        // if there is no accessToken or empty we should trhow an
+        // throw new AstroError(AstroErrorData.ImageMissingAlt);
+        if (!resolvedOptions.accessToken || resolvedOptions.accessToken.length == 0 ) {
+          throw new Error("The Flyo Nitro Integration requires an accessToken");
+        }
+
         addDevToolbarApp({
           id: "flyo-nitro",
           name: "Flyo Nitro",
