@@ -51,6 +51,7 @@ export interface IntegrationOptions {
   /**
    * (Optional) Fallback component name.
    * If provided, this component will be used as a fallback. This fallback component will be used when the requested component is not found and only in live editing mode.
+   * An example for a fallback component could be `BlockNotFound` where the flyo is placed in `{componentsDir}/BlockNotFound.astro`.
    */
   fallbackComponent?: string;
 
