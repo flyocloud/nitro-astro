@@ -12,10 +12,11 @@ This guide targets developers and web designers aiming to combine Flyo Nitro CMS
 
 ## Installation
 
-To install the package, execute the following command:
+To install the `@flyo/nitro-astro` package, execute the following command:
 
 ```bash
-astro add @flyo/nitro-astro
+npm install @flyo/nitro-astro
+# yarn add @flyo/nitro-astro
 ```
 
 Then, revise and adjust the configuration in your `astro.config.mjs`:
@@ -41,6 +42,7 @@ export default defineConfig({
 });
 ```
 
+> [!WARNING]
 > The nitro astro integration requires an SSR setup which is done by using `output: 'server'`.
 
 ### Pages
@@ -245,7 +247,8 @@ All endpoints accept a `lang` parameter to retrieve data in the desired language
   await useEntitiesApi().entityByUniqueid({ uniqueid, lang: Astro.currentLocale });
   ```
 
-Note: If your entity details are internationalized (i18n), you need to create separate detail pages for each language.
+> [!NOTE]  
+> If your entity details are internationalized (i18n), you need to create separate detail pages for each language.
 
 ```
 .
