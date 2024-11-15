@@ -9,6 +9,12 @@ async function getConfigPromise(context) {
     return resolvedValue;
   }
 
+  // check if useFlyoIntegration is available and configured correctly
+  if (!useFlyoIntegration()?.config || false) {
+    console.error("useFlyoIntegration is not available or not configured correctly.");
+    return null;
+  }
+
   // Fetch the config and store the resolved value
   const value = await useConfigApi().config({
     lang: context.currentLocale,
@@ -25,7 +31,13 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   context.locals.config = getConfigPromise(context);
 
-  const liveEditEnabled = useFlyoIntegration().options.liveEdit;
+  let liveEditEnabled = false;
+  try {
+    // Safely retrieve options from useFlyoIntegration
+    liveEditEnabled = useFlyoIntegration()?.options?.liveEdit || false;
+  } catch (error) {
+    console.error("Error in useFlyoIntegration:", error);
+  }
 
   if (!liveEditEnabled) {
     const response = await next();
