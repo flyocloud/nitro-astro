@@ -232,9 +232,16 @@ export default defineConfig({
   i18n: {
     defaultLocale: "en",
     locales: ["en", "fr"],
+    routing: {
+      prefixDefaultLocale: true,
+      redirectToDefaultLocale: false
+    }
   }
 })
 ```
+
+> [!NOTE]  
+> Flyo's i18n setup always prefixes the default language, making it essential to configure this in the i18n routing to avoid errors with adapters like Vercel.
 
 All endpoints accept a `lang` parameter to retrieve data in the desired language. The **Nitro Astro** package handles this automatically. However, since the Entity Details page is custom-built, you need to manually pass the language parameter.
 
