@@ -56,25 +56,20 @@ import { usePagesApi, useConfig } from "@flyo/nitro-astro";
 import FlyoNitroPage from "@flyo/nitro-astro/FlyoNitroPage.astro";
 import MetaInfoPage from "@flyo/nitro-astro/MetaInfoPage.astro";
 
-const { slug } = Astro.params;
-const resolveSlug = slug === undefined ? "" : slug;
+const slug = Astro.params.slug ?? "";
 const config = await useConfig(Astro);
+
+if (!config.pages.includes(slug)) {
+  throw Astro.redirect("/404", 404);
+}
+
 let page;
 
 try {
-  if (!config.pages.includes(resolveSlug)) {
-    return new Response("Not Found", {
-      status: 404,
-      statusText: "Page Not Found",
-    });
-  }
-
-  page = await usePagesApi().page({ slug: resolveSlug });
+  const pagesApi = usePagesApi();
+  page = await pagesApi.page({ slug });
 } catch (e) {
-  return new Response(e.body.name, {
-    status: 404,
-    statusText: "Page Not Found",
-  });
+  throw Astro.redirect("/404", 404);
 }
 ---
 
