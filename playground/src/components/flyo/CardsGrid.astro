@@ -1,12 +1,12 @@
 ---
 import { Image } from "astro:assets";
-
+import { editableBlock } from "@flyo/nitro-astro";
 const { block } = Astro.props;
 ---
 
 {
   block.items.map((item: any) => (
-    <div style="background-color:#F0F0F0; padding:20px; margin-bottom:10px;">
+    <div {...editableBlock(block)} style="background-color:#F0F0F0; padding:20px; margin-bottom:10px;" >
       <h2 class="text-xl">{item.title}</h2>
       {item.image && (
         <Image

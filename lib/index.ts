@@ -130,7 +130,7 @@ export function useVersionApi(): VersionApi {
 
 export function editableBlock(block: Block): object {
   return {
-    "data-flyo-block-uid": block.uid,
+    "data-flyo-uid": block.uid,
   };
 }
 
@@ -265,36 +265,27 @@ export default function flyoNitroIntegration(
           injectScript(
             "page",
             `
-              window.addEventListener("message", (event) => {
-                if (event.data?.action === 'pageRefresh') {
-                    window.location.reload(true);
-                }
-              })
+              import { reload, highlightAndClick } from '@flyo/nitro-js-bridge';
 
-              function getActualWindow() {
-                if (window === window.top) {
-                  return window;
-                } else if (window.parent) {
-                  return window.parent;
-                }
-                return window;
+              // Enable pageRefresh handling
+              reload();
+
+              // Wire all elements with the 'data-flyo-uid' attribute
+              function wire() {
+                const elements = document.querySelectorAll('[data-flyo-uid]');
+                elements.forEach(el => {
+                  const uid = el.getAttribute('data-flyo-uid');
+                  if (uid) {
+                    highlightAndClick(uid, el);
+                  }
+                });
               }
 
-              window.openBlockInFlyo = function(blockUid) {
-                getActualWindow().postMessage({
-                    action: 'openEdit',
-                    data: JSON.parse(JSON.stringify({item:{uid: blockUid}}))
-                }, 'https://flyo.cloud')
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', wire, { once: true });
+              } else {
+                wire();
               }
-
-              // Find all elements with the 'data-flyo-block-uid' attribute
-              const elements = document.querySelectorAll('[data-flyo-block-uid]');
-
-              elements.forEach(element => {
-                  element.addEventListener('click', function() {
-                      openBlockInFlyo(this.getAttribute('data-flyo-block-uid'))
-                  });
-              });
             `
           );
         }
