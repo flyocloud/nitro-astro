@@ -14,7 +14,8 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@flyo/nitro-typescript": "^1.1.0"
+    "@flyo/nitro-typescript": "^1.1.0",
+    "@flyo/nitro-js-bridge": "^1.1.2"
   },
   "devDependencies": {
     "astro": "^4.16.7",
