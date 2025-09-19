@@ -1,9 +1,9 @@
 ---
-import { editableBlock } from "@flyo/nitro-astro";
+import { editable } from "@flyo/nitro-astro";
 const { block } = Astro.props;
 ---
 
 <!-- Make the block editable if necessary -->
-<div {...editableBlock(block)}>
+<div {...editable(block)}>
   <div class="p-4" set:html={block.content.content.html} />
 </div>

@@ -128,11 +128,14 @@ export function useVersionApi(): VersionApi {
   return new VersionApi(useConfiguration());
 }
 
-export function editableBlock(block: Block): object {
+export function editable(block: Block): object {
   return {
     "data-flyo-uid": block.uid,
   };
 }
+
+// Backwards compatible alias for older code: editableBlock -> editable
+export const editableBlock = editable;
 
 const flyoSvg = `
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 163.4 88.5">

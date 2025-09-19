@@ -126,13 +126,13 @@ Block Component Example (which are mostly located in `src/components/flyo`):
 ```astro
 ---
 import { Image } from "astro:assets";
-import { editableBlock } from "@flyo/nitro-astro";
+import { editable } from "@flyo/nitro-astro";
 import BlockSlot from "@flyo/nitro-astro/BlockSlot.astro";
 const { block } = Astro.props;
 ---
 
 <!-- Make the block editable if necessary -->
-<div {...editableBlock(block)}>
+<div {...editable(block)}>
   <!-- Content variable -->
   <div set:html={block.content.content.html} />
 
