@@ -159,6 +159,37 @@ const { block } = Astro.props;
 </div>
 ```
 
+### Wysiwyg
+
+The `FlyoWysiwyg` component renders ProseMirror/TipTap JSON content. It handles standard nodes automatically and allows you to provide custom components for specific node types.
+
+```astro
+---
+import FlyoWysiwyg from "@flyo/nitro-astro/FlyoWysiwyg.astro";
+import CustomImage from "./CustomImage.astro";
+
+const { block } = Astro.props;
+---
+
+<FlyoWysiwyg 
+  json={block.content.json} 
+  components={{
+    image: CustomImage
+  }} 
+/>
+```
+
+And here is an example of how the `CustomImage.astro` component could look like:
+
+```astro
+---
+const { node } = Astro.props;
+const { src, alt, title } = node.attrs;
+---
+
+<img src={src} alt={alt} title={title} style="max-width: 100%; height: auto;" />
+```
+
 ### Entities
 
 The **Entity Details** API provides all the information about an entity and the associated model data configured in the Flyo interface. You can request detail pages either by using a slug (with an additional schema ID) or by a unique ID.

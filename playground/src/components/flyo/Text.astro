@@ -1,9 +1,19 @@
 ---
 import { editable } from "@flyo/nitro-astro";
+import FlyoWysiwyg from "@flyo/nitro-astro/FlyoWysiwyg.astro";
+import Image from "./wysiwyg/Image.astro";
+
 const { block } = Astro.props;
 ---
 
 <!-- Make the block editable if necessary -->
 <div {...editable(block)}>
-  <div class="p-4" set:html={block.content.content.html} />
+  <div class="p-4">
+    <FlyoWysiwyg 
+      json={block.content.content.json} 
+      components={{
+        image: Image
+      }}
+    />
+  </div>
 </div>

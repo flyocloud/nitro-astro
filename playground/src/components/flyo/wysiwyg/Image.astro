@@ -1,0 +1,6 @@
+---
+const { node } = Astro.props;
+const { src, alt, title } = node.attrs;
+---
+
+<img src={src.source} alt={alt} title={title} style="max-width: 100%; height: auto; border:2px solid red" />

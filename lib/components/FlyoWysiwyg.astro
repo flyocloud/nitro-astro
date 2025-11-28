@@ -1,0 +1,32 @@
+---
+import { wysiwyg } from '@flyo/nitro-js-bridge';
+
+interface Props {
+  json: any;
+  components?: Record<string, any>;
+}
+
+const { json, components = {} } = Astro.props;
+
+let nodes: any[] = [];
+
+if (json) {
+  if (json.type === 'doc' && Array.isArray(json.content)) {
+    nodes = json.content;
+  } else if (Array.isArray(json)) {
+    nodes = json;
+  } else {
+    nodes = [json];
+  }
+}
+---
+
+{nodes.map((node: any) => {
+  const Component = components[node.type];
+  if (Component) {
+    return <Component node={node} />
+  }
+  
+  const html = wysiwyg(node);
+  return <Fragment set:html={html} />
+})}
