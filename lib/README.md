@@ -22,14 +22,20 @@ npm install @flyo/nitro-astro
 Then, revise and adjust the configuration in your `astro.config.mjs`:
 
 ```js
+import { loadEnv } from "vite"
 import flyoNitroIntegration from "@flyo/nitro-astro";
+
+const {
+  FLYO_ACCESS_TOKEN,
+  FLYO_LIVE_EDIT
+} = loadEnv(process.env.NODE_ENV, process.cwd() + "/", "");
 
 export default defineConfig({
   site: "https://myflyowebsite.com", // required to make the sitemap.xml work
   integrations: [
     flyoNitroIntegration({
-      accessToken: "ADD_YOUR_TOKEN_HERE", // Switch between dev and prod tokens depending on the environment
-      liveEdit: true, // Enable on dev and preview systems for application reloading in the Flyo preview frame upon changes
+      accessToken: FLYO_ACCESS_TOKEN, // Switch between dev and prod tokens depending on the environment
+      liveEdit: FLYO_LIVE_EDIT, // Enable on dev and preview systems for application reloading in the Flyo preview frame upon changes
       components: {
         // Define where the Flyo components are located. The suffix .astro is not required. The object key is the value from Flyo, while the object value is the component in the Astro components folder
         // [!] Adding new elements requires restarting the development process
