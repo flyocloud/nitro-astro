@@ -3,6 +3,27 @@ import { useConfigApi, useFlyoIntegration } from "@flyo/nitro-astro";
 
 let resolvedValue;
 
+function applyFrameAncestorHeaders(response) {
+  const allowed = "frame-ancestors https://flyo.cloud";
+  const existing = response.headers.get("Content-Security-Policy");
+
+  if (existing) {
+    const directives = existing
+      .split(";")
+      .map((dir) => dir.trim())
+      .filter(Boolean)
+      .filter((dir) => !dir.toLowerCase().startsWith("frame-ancestors"));
+
+    directives.push(allowed);
+    response.headers.set("Content-Security-Policy", directives.join("; "));
+  } else {
+    response.headers.set("Content-Security-Policy", allowed);
+  }
+
+  // Avoid conflicts: browsers prioritize CSP frame-ancestors over X-Frame-Options
+  response.headers.delete("X-Frame-Options");
+}
+
 async function getConfigPromise(context) {
   if (resolvedValue) {
     // If the value is already resolved, return a resolved promise with the value
@@ -31,10 +52,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   context.locals.config = getConfigPromise(context);
 
+  const integration = useFlyoIntegration();
+
   let liveEditEnabled = false;
   try {
     // Safely retrieve options from useFlyoIntegration
-    liveEditEnabled = useFlyoIntegration()?.options?.liveEdit || false;
+    liveEditEnabled = integration?.options?.liveEdit || false;
   } catch (error) {
     console.error("Error in useFlyoIntegration:", error);
   }
@@ -42,21 +65,27 @@ export const onRequest = defineMiddleware(async (context, next) => {
   if (!liveEditEnabled) {
     const response = await next();
 
-    response.headers.set(
-      "Vercel-CDN-Cache-Control",
-      `max-age=${useFlyoIntegration().options.serverCacheHeaderTtl}`
-    );
-    response.headers.set(
-      "CDN-Cache-Control",
-      `max-age=${useFlyoIntegration().options.serverCacheHeaderTtl}`
-    );
-    response.headers.set(
-      "Cache-Control",
-      `max-age=${useFlyoIntegration().options.clientCacheHeaderTtl}`
-    );
+    if (integration?.options) {
+      response.headers.set(
+        "Vercel-CDN-Cache-Control",
+        `max-age=${integration.options.serverCacheHeaderTtl}`
+      );
+      response.headers.set(
+        "CDN-Cache-Control",
+        `max-age=${integration.options.serverCacheHeaderTtl}`
+      );
+      response.headers.set(
+        "Cache-Control",
+        `max-age=${integration.options.clientCacheHeaderTtl}`
+      );
+    }
+
+    applyFrameAncestorHeaders(response);
 
     return response;
   }
 
-  return next();
+  const response = await next();
+  applyFrameAncestorHeaders(response);
+  return response;
 });
