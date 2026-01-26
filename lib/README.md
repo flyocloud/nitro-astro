@@ -23,6 +23,7 @@ Then, revise and adjust the configuration in your `astro.config.mjs`:
 
 ```js
 import { loadEnv } from "vite"
+import { defineConfig } from "astro/config";
 import flyoNitroIntegration from "@flyo/nitro-astro";
 
 const {
@@ -50,6 +51,59 @@ export default defineConfig({
 
 > [!WARNING]
 > The nitro astro integration requires an SSR setup which is done by using `output: 'server'`.
+
+## Configuration Options
+
+The `flyoNitroIntegration` accepts the following configuration options:
+
+### Required Options
+
+- **`accessToken`** (string, required): Your Flyo access token for authentication. This is either the production or development token from the Flyo Cloud interface. Keep in mind that requests with production accessToken will be effectively cached by the Flyo CDN, but development accessToken requests will not be cached.
+
+- **`components`** (object, required): Object containing component definitions where the key is the component name defined in the Flyo Interface, and the value is the name of the component inside the components directory. The `.astro` suffix is not required.
+  ```js
+  components: {
+    Text: "Text",
+    CardsGrid: "CardsGrid",
+    SlotContainer: "subfolder/SlotContainer",
+  }
+  ```
+
+### Optional Options
+
+- **`liveEdit`** (string | boolean | number, default: `false`): Enables live editing mode. If enabled, the application will reload when changes are made in the Flyo preview frame. This should be enabled on dev and preview systems.
+
+- **`componentsDir`** (string, default: `"src/components/flyo"`): Directory path where your Flyo components are located.
+
+- **`fallbackComponent`** (string, optional): Name of a fallback component to use when a requested component is not found. This component will only be used in live editing mode. Example: `"BlockNotFound"` would reference `{componentsDir}/BlockNotFound.astro`.
+
+- **`clientCacheHeaderTtl`** (number, default: `900`): TTL (Time-To-Live) for client-side cache headers, in seconds. Default is 900 seconds (15 minutes). Only available if `liveEdit` is disabled. Use `0` to disable client caching.
+
+- **`serverCacheHeaderTtl`** (number, default: `1200`): TTL (Time-To-Live) for server-side cache headers, in seconds. Default is 1200 seconds (20 minutes). Only available if `liveEdit` is disabled. Use `0` to disable server caching.
+
+### Complete Configuration Example
+
+```js
+export default defineConfig({
+  site: "https://myflyowebsite.com",
+  integrations: [
+    flyoNitroIntegration({
+      accessToken: FLYO_ACCESS_TOKEN,
+      liveEdit: FLYO_LIVE_EDIT,
+      componentsDir: "src/components/flyo",
+      fallbackComponent: "BlockNotFound",
+      clientCacheHeaderTtl: 600,  // 10 minutes
+      serverCacheHeaderTtl: 1800, // 30 minutes
+      components: {
+        Text: "Text",
+        CardsGrid: "CardsGrid",
+        SlotContainer: "SlotContainer",
+      },
+    }),
+  ],
+  output: "server",
+});
+```
 
 ### Pages
 
@@ -127,7 +181,26 @@ const currentPath = Astro.url.pathname;
 
 ### Blocks
 
-Block Component Example (which are mostly located in `src/components/flyo`):
+Block components are the building blocks of your Flyo pages. They receive a `block` prop containing all the data from Flyo.
+
+#### Basic Block Component Example
+
+Located in `src/components/flyo/Text.astro`:
+
+```astro
+---
+import { editable } from "@flyo/nitro-astro";
+const { block } = Astro.props;
+---
+
+<!-- Make the block editable if necessary -->
+<div {...editable(block)}>
+  <!-- Content variable -->
+  <div set:html={block.content.content.html} />
+</div>
+```
+
+#### Block with Items and Images
 
 ```astro
 ---
@@ -165,14 +238,163 @@ const { block } = Astro.props;
 </div>
 ```
 
+#### Cards Grid Component Example
+
+Example of a component that displays a grid of cards with items (`src/components/flyo/CardsGrid.astro`):
+
+```astro
+---
+import { Image } from "astro:assets";
+import { editable } from "@flyo/nitro-astro";
+const { block } = Astro.props;
+---
+
+{
+  block.items.map((item: any) => (
+    <div {...editable(block)} style="background-color:#F0F0F0; padding:20px; margin-bottom:10px;">
+      <h2 class="text-xl">{item.title}</h2>
+      {item.image && (
+        <Image
+          src={item.image.source}
+          alt={item.title}
+          width="200"
+          height="200"
+        />
+      )}
+      <a href={item.link.routes.detail} class="underline">
+        Go to Detail
+      </a>
+    </div>
+  ))
+}
+```
+
+#### Slot Container Component Example
+
+Slots allow you to nest blocks within blocks (`src/components/flyo/SlotContainer.astro`):
+
+```astro
+---
+import BlockSlot from "@flyo/nitro-astro/BlockSlot.astro";
+const { block } = Astro.props;
+---
+
+<BlockSlot slot={block.slots.slotcontainername} />
+```
+
+## Available Components
+
+### Core Components
+
+These components are provided by the package and can be imported directly:
+
+#### `FlyoNitroPage`
+
+Renders an entire Flyo page with all its blocks.
+
+```astro
+---
+import FlyoNitroPage from "@flyo/nitro-astro/FlyoNitroPage.astro";
+const page = await usePagesApi().page({ slug });
+---
+
+<FlyoNitroPage page={page} />
+```
+
+#### `FlyoNitroBlock`
+
+Renders a single Flyo block. This component automatically maps the block's component name to your custom components.
+
+```astro
+---
+import FlyoNitroBlock from "@flyo/nitro-astro/FlyoNitroBlock.astro";
+---
+
+<FlyoNitroBlock block={block} />
+```
+
+#### `BlockSlot`
+
+Renders the contents of a Flyo block slot, allowing for nested block structures.
+
+```astro
+---
+import BlockSlot from "@flyo/nitro-astro/BlockSlot.astro";
+---
+
+<BlockSlot slot={block.slots.myslotname} />
+```
+
+#### `MetaInfo`
+
+Generic component for adding meta tags (title, description, image, JSON-LD).
+
+```astro
+---
+import MetaInfo from "@flyo/nitro-astro/MetaInfo.astro";
+---
+
+<MetaInfo
+  title="Page Title"
+  description="Page description"
+  image="https://example.com/image.jpg"
+  jsonld={jsonldObject}
+  slot="head"
+/>
+```
+
+#### `MetaInfoPage`
+
+Specialized meta component for Flyo pages.
+
+```astro
+---
+import MetaInfoPage from "@flyo/nitro-astro/MetaInfoPage.astro";
+---
+
+<MetaInfoPage page={page} slot="head" />
+```
+
+#### `MetaInfoEntity`
+
+Specialized meta component for Flyo entities.
+
+```astro
+---
+import MetaInfoEntity from "@flyo/nitro-astro/MetaInfoEntity.astro";
+---
+
+<MetaInfoEntity response={entityResponse} slot="head" />
+```
+
+#### `FallbackComponent`
+
+Automatically used when a component is not found (only in live edit mode). You can customize this behavior with the `fallbackComponent` configuration option.
+
 ### Wysiwyg
 
 The `FlyoWysiwyg` component renders ProseMirror/TipTap JSON content. It handles standard nodes automatically and allows you to provide custom components for specific node types.
 
+#### Basic Usage
+
 ```astro
 ---
 import FlyoWysiwyg from "@flyo/nitro-astro/FlyoWysiwyg.astro";
-import CustomImage from "./CustomImage.astro";
+const { block } = Astro.props;
+---
+
+<FlyoWysiwyg json={block.content.json} />
+```
+
+#### Custom Node Components
+
+You can override the default rendering of specific node types by providing custom components:
+
+```astro
+---
+import FlyoWysiwyg from "@flyo/nitro-astro/FlyoWysiwyg.astro";
+import CustomImage from "./wysiwyg/CustomImage.astro";
+import CustomVideo from "./wysiwyg/CustomVideo.astro";
 
 const { block } = Astro.props;
 ---
@@ -180,12 +402,15 @@ const { block } = Astro.props;
 <FlyoWysiwyg 
   json={block.content.json} 
   components={{
-    image: CustomImage
+    image: CustomImage,
+    video: CustomVideo
   }} 
 />
 ```
 
-And here is an example of how the `CustomImage.astro` component could look like:
+#### Custom Image Component Example
+
+Here's an example of a custom image component (`src/components/flyo/wysiwyg/Image.astro`):
 
 ```astro
 ---
@@ -193,7 +418,35 @@ const { node } = Astro.props;
 const { src, alt, title } = node.attrs;
 ---
 
-<img src={src} alt={alt} title={title} style="max-width: 100%; height: auto;" />
+<img src={src.source} alt={alt} title={title} style="max-width: 100%; height: auto;" />
+```
+
+The `node` prop contains all attributes from the ProseMirror node. For images, you typically get:
+- `src`: The image source (can be an object with a `source` property when using Flyo storage)
+- `alt`: Alternative text
+- `title`: Image title
+
+#### Complete Text Block with Wysiwyg Example
+
+```astro
+---
+import { editable } from "@flyo/nitro-astro";
+import FlyoWysiwyg from "@flyo/nitro-astro/FlyoWysiwyg.astro";
+import Image from "./wysiwyg/Image.astro";
+
+const { block } = Astro.props;
+---
+
+<div {...editable(block)}>
+  <div class="p-4">
+    <FlyoWysiwyg 
+      json={block.content.content.json} 
+      components={{
+        image: Image
+      }}
+    />
+  </div>
+</div>
 ```
 
 ### Entities
@@ -300,3 +553,270 @@ All endpoints accept a `lang` parameter to retrieve data in the desired language
 ```
 
 The above structure would be `/de/detail/[slug].astro` and `/fr/detail/[slug].astro`.
+
+## API Functions
+
+The Flyo Nitro Astro package provides several API functions to interact with the Flyo Nitro CMS:
+
+### Configuration APIs
+
+#### `useConfig(astro: AstroGlobal)`
+
+Returns the resolved configuration object that includes navigation containers and other config data. This is typically used in layouts and pages.
+
+```astro
+---
+import { useConfig } from "@flyo/nitro-astro";
+
+const config = await useConfig(Astro);
+// Access navigation items
+config.containers.nav.items.map((item) => ...)
+// Access available pages
+config.pages.includes(slug)
+---
+```
+
+#### `useConfigApi()`
+
+Returns the ConfigApi instance for making custom configuration requests.
+
+```astro
+---
+import { useConfigApi } from "@flyo/nitro-astro";
+
+const configApi = useConfigApi();
+const config = await configApi.config({ lang: "en" });
+---
+```
+
+#### `useConfiguration()`
+
+Returns the API main configuration which holds the access key and is globally available.
+
+```typescript
+import { useConfiguration } from "@flyo/nitro-astro";
+
+const configuration = useConfiguration();
+```
+
+### Page APIs
+
+#### `usePagesApi()`
+
+Returns the PagesApi instance for fetching Flyo pages.
+
+```astro
+---
+import { usePagesApi } from "@flyo/nitro-astro";
+
+const pagesApi = usePagesApi();
+const page = await pagesApi.page({ slug: "about" });
+---
+```
+
+### Entity APIs
+
+#### `useEntitiesApi()`
+
+Returns the EntitiesApi instance for fetching entity details.
+
+```astro
+---
+import { useEntitiesApi } from "@flyo/nitro-astro";
+
+// Fetch by slug and type ID
+const entity = await useEntitiesApi().entityBySlug({
+  slug: "my-post",
+  lang: Astro.currentLocale,
+  typeId: 54
+});
+
+// Or fetch by unique ID
+const entity = await useEntitiesApi().entityByUniqueid({
+  uniqueid: "abc123",
+  lang: Astro.currentLocale
+});
+---
+```
+
+### Search APIs
+
+#### `useSearchApi()`
+
+Returns the SearchApi instance for performing search operations.
+
+```astro
+---
+import { useSearchApi } from "@flyo/nitro-astro";
+
+const searchApi = useSearchApi();
+// Use the search API for custom search functionality
+---
+```
+
+### Sitemap APIs
+
+#### `useSitemapApi()`
+
+Returns the SitemapApi instance. The sitemap is automatically generated at `/sitemap.xml`, but you can use this API for custom sitemap functionality.
+
+```astro
+---
+import { useSitemapApi } from "@flyo/nitro-astro";
+
+const sitemapApi = useSitemapApi();
+const sitemap = await sitemapApi.sitemap();
+---
+```
+
+### Version APIs
+
+#### `useVersionApi()`
+
+Returns the VersionApi instance for checking API versions.
+
+```astro
+---
+import { useVersionApi } from "@flyo/nitro-astro";
+
+const versionApi = useVersionApi();
+// Use for version-specific functionality
+---
+```
+
+### Helper Functions
+
+#### `editable(block)`
+
+Makes a block editable in the Flyo live edit mode. Returns an object with the `data-flyo-uid` attribute.
+
+```astro
+---
+import { editable } from "@flyo/nitro-astro";
+const { block } = Astro.props;
+---
+
+<div {...editable(block)}>
+  <!-- Block content -->
+</div>
+```
+
+> **Note**: `editableBlock` is also available as a backwards-compatible alias for `editable`.
+
+## Built-in Features
+
+### Automatic Sitemap Generation
+
+The integration automatically creates a `/sitemap.xml` route that includes all your Flyo pages and entities. Make sure to set the `site` property in your `astro.config.mjs`:
+
+```js
+export default defineConfig({
+  site: "https://myflyowebsite.com",
+  // ... rest of config
+});
+```
+
+### Image Service Integration
+
+The package includes an automatic image service that integrates with Flyo Storage's image transformation capabilities. Images are automatically processed through Flyo's CDN with support for:
+
+- Dynamic resizing (`width` and `height`)
+- Format conversion (defaults to WebP)
+- Lazy loading
+- Proper dimensions to prevent CLS
+
+```astro
+---
+import { Image } from "astro:assets";
+---
+
+<Image
+  src={block.content.image.source}
+  alt="Description"
+  width={1920}
+  height={768}
+/>
+```
+
+The image URL is automatically transformed to: `https://storage.flyo.cloud/image_xxx.jpg/thumb/1920x768?format=webp`
+
+### Development Toolbar
+
+When running in development mode, the integration adds a custom toolbar with quick links to:
+- Flyo Cloud Login
+- Flyo Nitro Developer Portal
+- Flyo Nitro API Documentation
+
+### Middleware & Caching
+
+The integration automatically adds middleware that:
+- Resolves the Flyo configuration on each request
+- Sets appropriate cache headers for production (configurable via `clientCacheHeaderTtl` and `serverCacheHeaderTtl`)
+- Disables caching when `liveEdit` is enabled
+
+Cache headers set:
+- `Cache-Control`: Client-side caching
+- `CDN-Cache-Control`: CDN caching
+- `Vercel-CDN-Cache-Control`: Vercel-specific caching
+
+### Live Edit Mode
+
+When `liveEdit` is enabled, the integration:
+- Injects JavaScript to enable page refresh from the Flyo interface
+- Wires up all elements with `data-flyo-uid` for direct editing
+- Highlights and enables click-to-edit functionality
+- Shows fallback components when blocks are missing
+
+## Best Practices
+
+### Component Organization
+
+Organize your Flyo components in a dedicated directory (default: `src/components/flyo`):
+
+```
+src/
+  components/
+    flyo/
+      Text.astro
+      CardsGrid.astro
+      Hero.astro
+      wysiwyg/
+        Image.astro
+        Video.astro
+```
+
+### Error Handling
+
+Always wrap API calls in try-catch blocks and return appropriate responses:
+
+```astro
+---
+let page;
+try {
+  page = await usePagesApi().page({ slug });
+} catch (e) {
+  return new Response("Not Found", {
+    status: 404,
+    statusText: "Page Not Found"
+  });
+}
+---
+```
+
+### Environment Variables
+
+Use environment variables for sensitive configuration:
+
+```bash
+# .env
+FLYO_ACCESS_TOKEN=your_token_here
+FLYO_LIVE_EDIT=true
+```
+
+### TypeScript Support
+
+The package is fully typed and exports TypeScript types from `@flyo/nitro-typescript`:
+
+```typescript
+import type { Block, Page, Entity } from "@flyo/nitro-typescript";
+```
