@@ -1,0 +1,43 @@
+---
+import { useFlyoIntegration, useConfig } from "../index";
+
+const integration = useFlyoIntegration();
+const config = await useConfig(Astro);
+
+// Get environment variables
+const mode = import.meta.env.MODE;
+const vercelDeploymentId = import.meta.env.VERCEL_DEPLOYMENT_ID || '-';
+const vercelGitCommitSha = import.meta.env.VERCEL_GIT_COMMIT_SHA || '-';
+
+// Get token and determine type
+const token = integration.options.accessToken || '';
+const tokenType = token.startsWith('p-') ? 'production' : (token.startsWith('d-') ? 'develop' : 'unknown');
+
+// Get live edit / debug status
+const debug = integration.options.liveEdit;
+
+// Get API version from config.nitro
+const apiVersion = config.nitro?.version?.toString() || '-';
+const apiLastUpdate = config.nitro?.updated_at 
+  ? new Date(config.nitro.updated_at * 1000).toLocaleString('de-CH', { 
+      day: '2-digit', 
+      month: '2-digit', 
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  : '-';
+
+const debugInfo = [
+  `liveedit:${debug}`,
+  `mode:${mode}`,
+  `apiversion:${apiVersion}`,
+  `apiversiondate:${apiLastUpdate}`,
+  `tokentype:${tokenType}`,
+  `did:${vercelDeploymentId}`,
+  `csha:${vercelGitCommitSha}`
+].join(' | ');
+
+---
+
+<Fragment set:html={`<!-- ${debugInfo} -->`} />

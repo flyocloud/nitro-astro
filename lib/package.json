@@ -73,6 +73,11 @@
       "import": "./components/FlyoWysiwyg.ts",
       "require": "./components/FlyoWysiwyg.ts"
     },
+    "./DebugInfo.astro": {
+      "types": "./components/DebugInfo.ts",
+      "import": "./components/DebugInfo.ts",
+      "require": "./components/DebugInfo.ts"
+    },
     "./cdn.ts": "./cdn.ts",
     "./middleware.ts": "./middleware.ts",
     "./sitemap.ts": "./sitemap.ts",

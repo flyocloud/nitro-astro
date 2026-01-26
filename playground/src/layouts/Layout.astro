@@ -1,5 +1,6 @@
 ---
 import { useConfig } from "@flyo/nitro-astro";
+import DebugInfo from "@flyo/nitro-astro/DebugInfo.astro";
 
 const config = await useConfig(Astro);
 const { title } = Astro.props;
@@ -10,6 +11,7 @@ const currentLocal = Astro.currentLocale;
 <!doctype html>
 <html lang="en">
   <head>
+    <DebugInfo />
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />

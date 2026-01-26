@@ -71,6 +71,7 @@ export interface IntegrationOptions {
 export interface FlyoIntegration {
   config: Configuration;
   options: {
+    accessToken: string;
     liveEdit: boolean;
     componentsDir: string;
     clientCacheHeaderTtl: number;
@@ -255,6 +256,7 @@ export default function flyoNitroIntegration(
             globalThis.flyoNitroInstance = {
               config: defaultConfig,
               options: {
+                accessToken: '${resolvedOptions.accessToken}',
                 liveEdit: ${resolvedOptions.liveEdit},
                 componentsDir: '${resolvedOptions.componentsDir}',
                 clientCacheHeaderTtl: ${resolvedOptions.clientCacheHeaderTtl},
