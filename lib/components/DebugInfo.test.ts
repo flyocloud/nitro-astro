@@ -60,7 +60,7 @@ describe('DebugInfo', () => {
     } as any);
 
     const integration = useFlyoIntegration();
-    const token = integration.options.accessToken;
+    const token = integration.options.accessToken as string;
     const tokenType = token.startsWith('p-') ? 'production' : (token.startsWith('d-') ? 'develop' : 'unknown');
     
     expect(tokenType).toBe('production');
@@ -80,7 +80,7 @@ describe('DebugInfo', () => {
     } as any);
 
     const integration = useFlyoIntegration();
-    const token = integration.options.accessToken;
+    const token = integration.options.accessToken as string;
     const tokenType = token.startsWith('p-') ? 'production' : (token.startsWith('d-') ? 'develop' : 'unknown');
     
     expect(tokenType).toBe('unknown');
