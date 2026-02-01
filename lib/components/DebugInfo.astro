@@ -8,6 +8,7 @@ const config = await useConfig(Astro);
 const mode = import.meta.env.MODE;
 const vercelDeploymentId = import.meta.env.VERCEL_DEPLOYMENT_ID || '-';
 const vercelGitCommitSha = import.meta.env.VERCEL_GIT_COMMIT_SHA || '-';
+const version = import.meta.env.VERSION || '';
 
 // Get token and determine type
 const token = integration.options.accessToken || '';
@@ -28,15 +29,21 @@ const apiLastUpdate = config.nitro?.updated_at
     })
   : '-';
 
-const debugInfo = [
+const debugInfoParts = [
   `liveedit:${debug}`,
-  `mode:${mode}`,
-  `apiversion:${apiVersion}`,
-  `apiversiondate:${apiLastUpdate}`,
+  `env:${mode}`,
+  `version:${apiVersion}`,
+  `versiondate:${apiLastUpdate}`,
   `tokentype:${tokenType}`,
   `did:${vercelDeploymentId}`,
   `csha:${vercelGitCommitSha}`
-].join(' | ');
+];
+
+if (version) {
+  debugInfoParts.push(`release:${version}`);
+}
+
+const debugInfo = debugInfoParts.join(' | ');
 
 ---
 
