@@ -26,7 +26,7 @@ const mode = readEnv("MODE", "-");
 const vercelDeploymentId = readEnv("VERCEL_DEPLOYMENT_ID", "-");
 
 // prefer your own sha, otherwise Vercel's
-const gitSha = readEnv("VERCEL_GIT_COMMIT_SHA", "-");
+const vercelGitCommitSha = readEnv("VERCEL_GIT_COMMIT_SHA", "-");
 
 // prefer your own release/version, otherwise empty
 const version = readEnv("VERSION", "");
