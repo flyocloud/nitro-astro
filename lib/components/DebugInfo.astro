@@ -5,10 +5,31 @@ const integration = useFlyoIntegration();
 const config = await useConfig(Astro);
 
 // Get environment variables
-const mode = import.meta.env.MODE;
-const vercelDeploymentId = import.meta.env.VERCEL_DEPLOYMENT_ID || '-';
-const vercelGitCommitSha = import.meta.env.VERCEL_GIT_COMMIT_SHA || '-';
-const version = import.meta.env.VERSION || '';
+// helper: build (import.meta.env) first, then runtime (process.env)
+const env = import.meta.env; // Astro/Vite env access
+const readEnv = (key, fallback = "") => {
+  const fromBuild = env?.[key];
+  if (fromBuild !== undefined && fromBuild !== "") {
+    return String(fromBuild);
+  }
+
+  const fromRuntime = typeof process !== "undefined" && process.env ? process.env[key] : undefined;
+  if (fromRuntime !== undefined && fromRuntime !== "") {
+    return String(fromRuntime);
+  }
+
+  return fallback;
+};
+
+// Get environment variables
+const mode = readEnv("MODE", "-");
+const vercelDeploymentId = readEnv("VERCEL_DEPLOYMENT_ID", "-");
+
+// prefer your own sha, otherwise Vercel's
+const gitSha = readEnv("VERCEL_GIT_COMMIT_SHA", "-");
+
+// prefer your own release/version, otherwise empty
+const version = readEnv("VERSION", "");
 
 // Get token and determine type
 const token = integration.options.accessToken || '';
