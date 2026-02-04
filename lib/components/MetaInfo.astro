@@ -5,6 +5,8 @@ const jsonLdString = jsonld ? JSON.stringify(jsonld) : null;
 // Transform image to 1200x600 jpg for optimal social media display
 const transformedImage = `${image}/thumb/1200x630?format=jpg`
 const transformedTwitterImage = `${image}/thumb/1200x600?format=jpg`
+
+const ogUrl = Astro.url.href; // absolute URL
 ---
 
 {
@@ -37,3 +39,5 @@ const transformedTwitterImage = `${image}/thumb/1200x600?format=jpg`
 {jsonLdString && <script type="application/ld+json" set:html={jsonLdString} />}
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary_large_image" />
+<meta property="og:url" content={ogUrl} />
+<link rel="canonical" href={ogUrl} />
