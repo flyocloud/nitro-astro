@@ -343,6 +343,8 @@ import MetaInfo from "@flyo/nitro-astro/MetaInfo.astro";
 />
 ```
 
+> The image must be a flyo cdn url and will be automatically transformed to the correct format (1200x600 jpg)
+
 #### `MetaInfoPage`
 
 Specialized meta component for Flyo pages.
