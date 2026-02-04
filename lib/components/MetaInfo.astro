@@ -3,7 +3,8 @@ const { title, image, description, jsonld } = Astro.props;
 const jsonLdString = jsonld ? JSON.stringify(jsonld) : null;
 
 // Transform image to 1200x600 jpg for optimal social media display
-const transformedImage = `${image}/thumb/1200x600?format=jpg`
+const transformedImage = `${image}/thumb/1200x630?format=jpg`
+const transformedTwitterImage = `${image}/thumb/1200x600?format=jpg`
 ---
 
 {
@@ -29,7 +30,7 @@ const transformedImage = `${image}/thumb/1200x600?format=jpg`
     <>
       <meta name="image" content={transformedImage} />
       <meta property="og:image" content={transformedImage} />
-      <meta name="twitter:image" content={transformedImage} />
+      <meta name="twitter:image" content={transformedTwitterImage} />
     </>
   )
 }
