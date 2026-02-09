@@ -38,45 +38,90 @@
       "import": "./components/BlockSlot.ts",
       "require": "./components/BlockSlot.ts"
     },
+    "./components/BlockSlot.astro": {
+      "types": "./components/BlockSlot.ts",
+      "import": "./components/BlockSlot.astro",
+      "require": "./components/BlockSlot.astro"
+    },
     "./FallbackComponent.astro": {
       "types": "./components/FallbackComponent.ts",
       "import": "./components/FallbackComponent.ts",
       "require": "./components/FallbackComponent.ts"
+    },
+    "./components/FallbackComponent.astro": {
+      "types": "./components/FallbackComponent.ts",
+      "import": "./components/FallbackComponent.astro",
+      "require": "./components/FallbackComponent.astro"
     },
     "./FlyoNitroBlock.astro": {
       "types": "./components/FlyoNitroBlock.ts",
       "import": "./components/FlyoNitroBlock.ts",
       "require": "./components/FlyoNitroBlock.ts"
     },
+    "./components/FlyoNitroBlock.astro": {
+      "types": "./components/FlyoNitroBlock.ts",
+      "import": "./components/FlyoNitroBlock.astro",
+      "require": "./components/FlyoNitroBlock.astro"
+    },
     "./FlyoNitroPage.astro": {
       "types": "./components/FlyoNitroPage.ts",
       "import": "./components/FlyoNitroPage.ts",
       "require": "./components/FlyoNitroPage.ts"
+    },
+    "./components/FlyoNitroPage.astro": {
+      "types": "./components/FlyoNitroPage.ts",
+      "import": "./components/FlyoNitroPage.astro",
+      "require": "./components/FlyoNitroPage.astro"
     },
     "./MetaInfo.astro": {
       "types": "./components/MetaInfo.ts",
       "import": "./components/MetaInfo.ts",
       "require": "./components/MetaInfo.ts"
     },
+    "./components/MetaInfo.astro": {
+      "types": "./components/MetaInfo.ts",
+      "import": "./components/MetaInfo.astro",
+      "require": "./components/MetaInfo.astro"
+    },
     "./MetaInfoEntity.astro": {
       "types": "./components/MetaInfoEntity.ts",
       "import": "./components/MetaInfoEntity.ts",
       "require": "./components/MetaInfoEntity.ts"
+    },
+    "./components/MetaInfoEntity.astro": {
+      "types": "./components/MetaInfoEntity.ts",
+      "import": "./components/MetaInfoEntity.astro",
+      "require": "./components/MetaInfoEntity.astro"
     },
     "./MetaInfoPage.astro": {
       "types": "./components/MetaInfoPage.ts",
       "import": "./components/MetaInfoPage.ts",
       "require": "./components/MetaInfoPage.ts"
     },
+    "./components/MetaInfoPage.astro": {
+      "types": "./components/MetaInfoPage.ts",
+      "import": "./components/MetaInfoPage.astro",
+      "require": "./components/MetaInfoPage.astro"
+    },
     "./FlyoWysiwyg.astro": {
       "types": "./components/FlyoWysiwyg.ts",
       "import": "./components/FlyoWysiwyg.ts",
       "require": "./components/FlyoWysiwyg.ts"
     },
+    "./components/FlyoWysiwyg.astro": {
+      "types": "./components/FlyoWysiwyg.ts",
+      "import": "./components/FlyoWysiwyg.astro",
+      "require": "./components/FlyoWysiwyg.astro"
+    },
     "./DebugInfo.astro": {
       "types": "./components/DebugInfo.ts",
       "import": "./components/DebugInfo.ts",
       "require": "./components/DebugInfo.ts"
+    },
+    "./components/DebugInfo.astro": {
+      "types": "./components/DebugInfo.ts",
+      "import": "./components/DebugInfo.astro",
+      "require": "./components/DebugInfo.astro"
     },
     "./cdn.ts": "./cdn.ts",
     "./middleware.ts": "./middleware.ts",
