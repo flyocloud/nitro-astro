@@ -120,7 +120,7 @@ const slug = Astro.params.slug ?? "";
 const config = await useConfig(Astro);
 
 if (!config.pages.includes(slug)) {
-  throw Astro.redirect("/404", 404);
+  return Astro.rewrite("/404");
 }
 
 let page;
@@ -129,7 +129,7 @@ try {
   const pagesApi = usePagesApi();
   page = await pagesApi.page({ slug });
 } catch (e) {
-  throw Astro.redirect("/404", 404);
+  return Astro.rewrite("/404");
 }
 ---
 
@@ -474,10 +474,7 @@ try {
     typeId: 9999,
   });
 } catch (e) {
-  return new Response(e.body, {
-    status: 404,
-    statusText: "Entity Not Found",
-  });
+  return Astro.rewrite("/404");
 }
 const isProd = import.meta.env.PROD;
 ---
