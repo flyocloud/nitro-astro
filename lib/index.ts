@@ -270,10 +270,13 @@ export default function flyoNitroIntegration(
           injectScript(
             "page",
             `
-              import { reload, highlightAndClick } from '@flyo/nitro-js-bridge';
+              import { reload, scrollTo, highlightAndClick } from '@flyo/nitro-js-bridge';
 
               // Enable pageRefresh handling
               reload();
+
+              // Enable scrollTo handling
+              scrollTo();
 
               // Wire all elements with the 'data-flyo-uid' attribute
               function wire() {
