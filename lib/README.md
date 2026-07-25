@@ -764,7 +764,14 @@ When `liveEdit` is enabled, the integration:
 - Injects JavaScript to enable page refresh from the Flyo interface
 - Wires up all elements with `data-flyo-uid` for direct editing
 - Highlights and enables click-to-edit functionality
+- Announces the preview connection to the Flyo editor, so it can tell a working live
+  preview apart from a blocked frame or a production URL without live edit
 - Shows fallback components when blocks are missing
+
+The injected script imports `@flyo/nitro-js-bridge`, which is resolved from your project's
+installed version at build time. Version `>= 1.4.0` is required for the connection
+announcement; with an older bridge the Flyo editor reports "no connection to the live
+preview" even when the preview renders correctly.
 
 ## Best Practices
 

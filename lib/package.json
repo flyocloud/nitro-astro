@@ -16,7 +16,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@flyo/nitro-js-bridge": "^1.2.0",
+    "@flyo/nitro-js-bridge": "^1.4.0",
     "@flyo/nitro-typescript": "^1.1.0"
   },
   "devDependencies": {
