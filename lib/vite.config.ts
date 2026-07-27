@@ -16,6 +16,11 @@ export default defineConfig(() => {
     plugins: [
       dts({
         outDir: "dist/types",
+        // Only the bundle entry needs generated declarations: `exports` in
+        // package.json resolves every other subpath (./cdn.ts, ./middleware.ts,
+        // ./sitemap.ts, ./toolbar.ts and the components) to the shipped source,
+        // so declarations for those were emitted but never resolved by anyone.
+        include: ["index.ts"],
       }) as unknown as Plugin,
     ],
   };

@@ -131,6 +131,7 @@
   "files": [
     "dist",
     "components",
+    "!components/**/*.test.ts",
     "cdn.ts",
     "middleware.ts",
     "sitemap.ts",
