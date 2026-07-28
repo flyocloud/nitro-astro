@@ -9,7 +9,8 @@ const pkg = JSON.parse(readFileSync(path.join(libDir, "package.json"), "utf8"));
 
 /**
  * Every path package.json promises to consumers: `main`, `module`, `types` and
- * every string leaf of `exports` (the condition objects nest arbitrarily deep).
+ * every string leaf of `exports` and `typesVersions` (the condition objects nest
+ * arbitrarily deep).
  */
 function declaredTargets(): string[] {
   const out = new Set<string>();
@@ -21,7 +22,15 @@ function declaredTargets(): string[] {
   add(pkg.module);
   add(pkg.types);
   add(pkg.exports);
+  add(pkg.typesVersions);
   return [...out];
+}
+
+/** The `.astro` subpaths in `exports`, without the leading `./`. */
+function astroSubpaths(): string[] {
+  return Object.keys(pkg.exports)
+    .filter((key) => key.endsWith(".astro"))
+    .map((key) => key.replace(/^\.\//, ""));
 }
 
 /** Files that must never reach npm, even when their directory is listed in `files`. */
@@ -32,7 +41,11 @@ const JUNK = [
     label: "build tooling configs",
     pattern: /(^|\/)(vite|vitest|eslint)[^/]*\.config\.[cm]?[jt]s$/,
   },
-  { label: "declaration files outside dist/", pattern: /^(?!dist\/).*\.d\.ts$/ },
+  // components/X.astro.d.ts is deliberate — see the typesVersions/`tsc` tests below.
+  {
+    label: "declaration files outside dist/",
+    pattern: /^(?!dist\/)(?!components\/[^/]+\.astro\.d\.ts$).*\.d\.ts$/,
+  },
 ];
 
 let shipped: string[];
@@ -67,5 +80,37 @@ describe("published package", () => {
     const declared = declaredTargets().filter((target) => target.startsWith("dist/types/"));
     const actual = shipped.filter((file) => file.startsWith("dist/types/"));
     expect(actual.sort()).toEqual(declared.sort());
+  });
+});
+
+describe("type resolution for consumers", () => {
+  // `exports` is invisible to TypeScript's legacy ("node10"/classic) resolution,
+  // which every consumer gets whose tsconfig does not extend astro/tsconfigs/*
+  // — or who has no tsconfig at all. Without a typesVersions fallback such a
+  // project cannot resolve `@flyo/nitro-astro/BlockSlot.astro` and reports
+  // TS2307, because no file of that name exists at the package root.
+  it("mirrors every .astro subpath in typesVersions", () => {
+    const fallbacks = pkg.typesVersions?.["*"] ?? {};
+    const missing = astroSubpaths().filter((subpath) => !fallbacks[subpath]);
+    expect(missing).toEqual([]);
+  });
+
+  it("points every typesVersions fallback at the same shim as exports", () => {
+    const fallbacks = pkg.typesVersions["*"];
+    const mismatched = astroSubpaths().filter(
+      (subpath) => fallbacks[subpath]?.[0] !== pkg.exports[`./${subpath}`].types
+    );
+    expect(mismatched).toEqual([]);
+  });
+
+  it("declares every .astro a shim imports, so plain tsc can follow it", () => {
+    // Astro tooling resolves the real `.astro` (keeping its `Props`) and ignores
+    // these; `tsc` has no Astro plugin, and would otherwise report TS2307 from
+    // inside node_modules. `skipLibCheck` does not help — the shims are `.ts`.
+    const missing = astroSubpaths()
+      .map((subpath) => `${pkg.exports[`./${subpath}`].types.replace(/\.ts$/, "")}.astro.d.ts`)
+      .map((declaration) => declaration.replace(/^\.\//, ""))
+      .filter((declaration) => !shipped.includes(declaration));
+    expect([...new Set(missing)]).toEqual([]);
   });
 });
