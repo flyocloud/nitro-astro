@@ -5,13 +5,7 @@ declare module "virtual:*" {
   export default component;
 }
 
-// Astro ships no ambient declaration for `.astro` files: inside an Astro project
-// they are resolved by the Astro TypeScript language-service plugin, which the
-// plain `tsc` run behind vite-plugin-dts does not use. This keeps the `.ts`
-// re-export shims in `components/` resolvable when building the declarations.
-// Not published (see `files` in package.json), so consumers keep the richer
-// per-component prop types from their own Astro tooling.
-declare module "*.astro" {
-  const component: (props: Record<string, any>) => any;
-  export default component;
-}
+// `.astro` imports are not declared here: an ambient `*.astro` module would only
+// fix the shims for our own build, and it cannot be published without flattening
+// every consumer's component props to `any`. Each shim gets a sibling
+// `components/X.astro.d.ts` instead, which ships. See AGENTS.md.
