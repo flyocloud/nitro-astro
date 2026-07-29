@@ -506,10 +506,10 @@ The service:
 - Converts to WebP by default (override with the `format` attribute)
 - Emits `width`, `height`, `loading="lazy"` and `decoding="async"` to prevent layout shift
 
+Use `<Image />` and `<Picture />` from `astro:assets` as you normally would — the service is configured globally by the integration, so there is nothing to pass per image.
+
 > [!IMPORTANT]
-> **There is no `FlyoImage` component and no loader to pass** — use `<Image />` (or `<Picture />`) from `astro:assets` directly. Frameworks without a pluggable image service need a per-usage loader or a wrapper component; Astro does not, because the service is configured globally by the integration.
->
-> For the same reason, do not set `image.service` in your own `astro.config.mjs`. Overriding it (with `sharp`, `squoosh` or `passthrough`) replaces the Flyo service and disables CDN transformation for the whole project.
+> Do not set `image.service` in your own `astro.config.mjs`. Overriding it (with `sharp`, `squoosh` or `passthrough`) replaces the Flyo service and disables CDN transformation for the whole project.
 
 `width` and `height` are required for remote images — they are what the CDN transformation uses. CMS image fields can be empty, so guard the usage:
 
@@ -546,7 +546,7 @@ const { block } = Astro.props;
 </div>
 ```
 
-`BlockSlot` handles iterating over the nested blocks, resolving each component and unlimited nesting depth. Unlike React-based integrations there is no client/server split in Astro — `editable()` and `BlockSlot` can be used in the same component.
+`BlockSlot` handles iterating over the nested blocks, resolving each component and unlimited nesting depth. Everything renders on the server, so `editable()` and `BlockSlot` work in the same component.
 
 ### 11. Entity Detail Pages
 
