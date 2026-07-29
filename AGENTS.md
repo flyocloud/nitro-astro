@@ -84,6 +84,15 @@ So a forgotten export or a junk file is a red CI run, not a broken release. If y
 - **Live-edit code is an injected string** in [lib/index.ts](lib/index.ts), not a normal import: it is emitted into the consumer's page and resolved from _their_ `node_modules`. That is why bumping `@flyo/nitro-js-bridge` here is not needed for clients to receive a new bridge — their `npm update` picks it up through the semver range.
 - `tsconfig.json` excludes `./vite*.ts`, which is why the vite plugin files get no declarations.
 
+## Docs
+
+Three files, three audiences — keep them in sync when the public API changes:
+
+- [README.md](README.md) — the documentation. Usage guide, configuration options, API and component reference. This is what users read on GitHub.
+- [lib/README.md](lib/README.md) — the npm package page. Stays short and links back to the repo; npm publishes it regardless of the `files` array.
+- [ai-instructions-astro.md](ai-instructions-astro.md) — the integration advisory for AI coding agents working in a consumer project. Linked from the README.
+- [UPGRADE.md](UPGRADE.md) — breaking changes per release.
+
 ## Commands
 
 ```bash

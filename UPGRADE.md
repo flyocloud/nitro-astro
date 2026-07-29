@@ -104,4 +104,4 @@ Symptom of a stale bridge: the preview renders, but the Flyo editor reports no c
 
 **Use `2.4.3` or newer if you import components.** Earlier versions raised `TS2307: Cannot find module '@flyo/nitro-astro/BlockSlot.astro'` in projects whose `tsconfig.json` did not extend `astro/tsconfigs/*`. If you added an ambient `declare module "*.astro"` to work around it, delete it — it flattens the props of your own components to `any`.
 
-For the full API and component reference see [lib/README.md](lib/README.md).
+For the full API and component reference see [README.md](README.md).
