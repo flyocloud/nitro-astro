@@ -30,7 +30,6 @@ src/components/layout/Header.astro           # neutral layout components
 src/components/layout/Footer.astro
 src/components/flyo/                         # Flyo block components (componentsDir)
 src/components/flyo/wysiwyg/AppWysiwyg.astro
-src/components/flyo/FlyoImage.astro
 src/generated/flyo.ts                        # generated CMS types
 ```
 
@@ -420,60 +419,41 @@ const { json, class: className = "wysiwyg" } = Astro.props;
 
 Use this wrapper in Flyo block components whenever a block contains WYSIWYG JSON. Custom node components receive the node as a `node` prop.
 
-### 8. Create a Flyo image component
+### 8. Images — use `astro:assets`, do not build an image component
 
-The integration registers a Flyo CDN image service for `astro:assets`, so the built-in `<Image />` component already transforms Flyo storage URLs — no loader configuration is needed. Add a thin wrapper so blocks do not repeat the null checks and defaults.
-
-Create:
-
-```
-src/components/flyo/FlyoImage.astro
-```
-
-Use:
+**Nothing to create in this step.** The integration registers the Flyo Storage CDN as Astro's image service (`image.service.entrypoint` → `@flyo/nitro-astro/cdn.ts`), so the built-in `<Image />` component from `astro:assets` already transforms Flyo storage URLs:
 
 ```
 ---
 import { Image } from "astro:assets";
-
-interface Props {
-  src?: string;
-  alt?: string;
-  width: number | string;
-  height: number | string;
-  class?: string;
-  loading?: "lazy" | "eager";
-}
-
-const { src, alt = "", width, height, class: className, loading } = Astro.props;
 ---
 
-{
-  src && (
-    <Image
-      src={src}
-      alt={alt}
-      width={width}
-      height={height}
-      class={className}
-      loading={loading}
-    />
-  )
-}
-```
-
-Example usage inside a future block component:
-
-```
-<FlyoImage
-  src={block.content?.image?.source}
-  alt={block.content?.image?.caption ?? ""}
+<Image
+  src={block.content.image.source}
+  alt={block.content.image.caption ?? ""}
   width={800}
   height={600}
 />
 ```
 
-`width` and `height` are required — they are what the CDN uses for the `/thumb/{width}x{height}` transformation and what prevents layout shift.
+This renders `https://storage.flyo.cloud/<image>/thumb/800x600?format=webp` with `loading="lazy"` and `decoding="async"` already applied.
+
+Rules to follow:
+
+- Use `<Image />` (or `<Picture />`) from `astro:assets` directly in block components. Do **not** create a `FlyoImage` wrapper, a custom loader or a `<img>` with a hand-built CDN URL. Those are patterns from React frameworks where the loader must be passed per usage — in Astro the service is global and already configured.
+- Do **not** touch `image.service` in `astro.config.mjs`. Overriding it with `sharp`, `squoosh` or `passthrough` disables the Flyo CDN transformation for the whole project.
+- `width` and `height` are required for remote images: they drive the `/thumb/{width}x{height}` transformation and prevent layout shift.
+- The output format defaults to `webp`; override it per image with `format="jpg"` when a specific format is needed.
+- A raw source string is enough — the service prefixes `https://storage.flyo.cloud/` when the URL does not already contain it.
+- CMS image fields can be empty, so guard the usage instead of wrapping the component:
+
+  ```
+  {block.content?.image?.source && (
+    <Image src={block.content.image.source} alt="" width={800} height={600} />
+  )}
+  ```
+
+Local project assets (logos, icons in `src/assets/`) keep working as usual — Astro resolves them through the same component.
 
 ### 9. Create a reusable Claude skill for building a named Flyo block
 
@@ -550,8 +530,9 @@ Shared Flyo helpers are available at:
 
 ```txt
 src/components/flyo/wysiwyg/AppWysiwyg.astro
-src/components/flyo/FlyoImage.astro
 ```
+
+Images use the built-in `<Image />` component from `astro:assets` — the Flyo Storage CDN is registered as Astro's image service by the integration, so there is no image wrapper component and no loader to pass.
 
 Blocks are registered in the `components` map of `flyoNitroIntegration()` in `astro.config.mjs`.
 
@@ -579,7 +560,7 @@ When asked to build a named block:
 4. Create or update the block component in `src/components/flyo` using the block name (for example `Hero.astro`).
 5. Implement the design faithfully: responsive layout, sensible spacing, and the project's existing design system where one exists.
 6. Use `AppWysiwyg` for WYSIWYG JSON fields.
-7. Use `FlyoImage` for Flyo media/image fields.
+7. Use `<Image />` from `astro:assets` for Flyo media/image fields — never a hand-built `<img>` with a CDN URL.
 8. Spread `editable(block)` onto the block's root element.
 9. Use `BlockSlot` for nested slot rendering.
 10. Register (or confirm registration of) the block in `astro.config.mjs`.
@@ -591,7 +572,7 @@ When the user points to an existing component ("base it on the existing `HeroBan
 
 1. Read the referenced component and preserve its look and feel (class names, layout, spacing, variants).
 2. Replace its hardcoded/static props with the block's CMS fields from `src/generated/flyo.ts`.
-3. Keep the original styling and structure; only swap the data source and add the Flyo wiring (`editable`, `AppWysiwyg`, `FlyoImage`, slots).
+3. Keep the original styling and structure; only swap the data source and add the Flyo wiring (`editable`, `AppWysiwyg`, `astro:assets` images, slots).
 4. If the original component should stay as a presentational component, you may keep it and have the block wrap it, passing CMS values as props — whichever keeps the design intact with the least duplication.
 
 ## Design guidance
@@ -685,18 +666,26 @@ import AppWysiwyg from "./wysiwyg/AppWysiwyg.astro";
 
 ## Image usage
 
+The integration registers the Flyo Storage CDN as Astro's image service, so `astro:assets` transforms Flyo URLs out of the box. Use it directly — do not create a wrapper component, a loader, or a manual `/thumb/` URL:
+
 ```astro
 ---
-import FlyoImage from "./FlyoImage.astro";
+import { Image } from "astro:assets";
 ---
 
-<FlyoImage
-  src={block.content?.image?.source}
-  alt={block.content?.image?.caption ?? ""}
-  width={800}
-  height={600}
-/>
+{
+  block.content?.image?.source && (
+    <Image
+      src={block.content.image.source}
+      alt={block.content.image.caption ?? ""}
+      width={800}
+      height={600}
+    />
+  )
+}
 ```
+
+`width` and `height` are required for remote images — they drive the `/thumb/{width}x{height}` transformation and prevent layout shift. The format defaults to `webp`; override it per image with `format="jpg"` when needed.
 
 ## Registering the block
 
@@ -725,7 +714,7 @@ Adding a new entry requires **restarting the dev server** — tell the user when
 - The design intent (brief, reference component, or mockup) is faithfully implemented and responsive.
 - If converting an existing component, its look and feel is preserved.
 - WYSIWYG fields use `AppWysiwyg`.
-- Images use `FlyoImage` with explicit width and height.
+- Images use `<Image />` from `astro:assets` with explicit width and height.
 - Slot rendering uses `BlockSlot`.
 - `editable(block)` is spread onto the root element.
 - The block is registered in `astro.config.mjs` and the dev server was restarted.
@@ -922,7 +911,7 @@ src/generated/flyo.ts exists
 src/pages/[...slug].astro exists and rewrites to /404 for unknown slugs
 src/pages/404.astro exists
 src/components/flyo/wysiwyg/AppWysiwyg.astro exists
-src/components/flyo/FlyoImage.astro exists
+Images use <Image /> from astro:assets and image.service is not overridden in astro.config.mjs
 /sitemap.xml returns the Flyo pages and entities
 .claude/skills/flyo-block/SKILL.md exists
 AGENTS.md exists at the project root and references the Flyo Nitro docs (github.com/flyocloud/nitro-astro#usage and the raw ai-instructions-astro.md)

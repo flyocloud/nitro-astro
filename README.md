@@ -29,7 +29,7 @@ The advisory covers:
 - TypeScript type generation from the Flyo OpenAPI schema
 - Layout `Header` and `Footer` components driven by Flyo containers
 - The catch-all `src/pages/[...slug].astro` route
-- WYSIWYG and image helper components
+- WYSIWYG wrapper component and the built-in `astro:assets` CDN image handling
 - A reusable Claude skill (`.claude/skills/flyo-block/SKILL.md`) for building a named block from a design or existing component
 - Entity detail pages, i18n and sitemap
 - A final validation checklist
@@ -482,7 +482,7 @@ const { block } = Astro.props;
 
 ### 9. Image Optimization with the Flyo CDN
 
-The integration registers a custom Astro image service, so the built-in `<Image />` component from `astro:assets` transforms Flyo storage URLs automatically — no loader configuration needed:
+The integration registers the [Flyo Storage image service](https://dev.flyo.cloud/dev/infos/images.html) as Astro's image service, so the built-in `<Image />` component from `astro:assets` transforms Flyo storage URLs out of the box:
 
 ```astro
 ---
@@ -505,6 +505,28 @@ The service:
 - Applies width/height transformations (`/thumb/{width}x{height}`)
 - Converts to WebP by default (override with the `format` attribute)
 - Emits `width`, `height`, `loading="lazy"` and `decoding="async"` to prevent layout shift
+
+> [!IMPORTANT]
+> **There is no `FlyoImage` component and no loader to pass** — use `<Image />` (or `<Picture />`) from `astro:assets` directly. Frameworks without a pluggable image service need a per-usage loader or a wrapper component; Astro does not, because the service is configured globally by the integration.
+>
+> For the same reason, do not set `image.service` in your own `astro.config.mjs`. Overriding it (with `sharp`, `squoosh` or `passthrough`) replaces the Flyo service and disables CDN transformation for the whole project.
+
+`width` and `height` are required for remote images — they are what the CDN transformation uses. CMS image fields can be empty, so guard the usage:
+
+```astro
+{
+  block.content?.image?.source && (
+    <Image
+      src={block.content.image.source}
+      alt={block.content.image.caption ?? ""}
+      width={800}
+      height={600}
+    />
+  )
+}
+```
+
+Local project assets in `src/assets/` keep working as usual through the same component.
 
 ### 10. Nested Blocks (Slots)
 
