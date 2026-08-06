@@ -104,4 +104,37 @@ Symptom of a stale bridge: the preview renders, but the Flyo editor reports no c
 
 **Use `2.4.3` or newer if you import components.** Earlier versions raised `TS2307: Cannot find module '@flyo/nitro-astro/BlockSlot.astro'` in projects whose `tsconfig.json` did not extend `astro/tsconfigs/*`. If you added an ambient `declare module "*.astro"` to work around it, delete it — it flattens the props of your own components to `any`.
 
+## Upgrading from 2.4 to 2.5
+
+**The CDN image service emits query parameters instead of the `/thumb/` path.** `<Image width={800} height={600} />` now renders `https://storage.flyo.cloud/<image>?w=800&h=600&format=webp` instead of `…/thumb/800x600?format=webp`, and `MetaInfo` builds `?w=1200&h=630&format=jpg` for `og:image` (`h=600` for `twitter:image`). Nothing to change in your project — the rendered markup differs, the images do not. Update snapshot tests and any assertion matching `/thumb/`, and expect cold caches on the first deploy since every image URL changes.
+
+The reason is the CDN itself: `/thumb/{width}x{height}` is deprecated (removal announced for 06.08.2028) and the `/filter/…` variants were removed on 06.08.2026. If you build storage URLs by hand anywhere — hero backgrounds, e-mail templates, `<link rel="preload">`, custom `og:image` tags — migrate them:
+
+```diff
+- https://storage.flyo.cloud/image_xxx.jpg/thumb/300x300
++ https://storage.flyo.cloud/image_xxx.jpg?w=300&h=300
+
+- https://storage.flyo.cloud/image_xxx.jpg/thumb/300xnull
++ https://storage.flyo.cloud/image_xxx.jpg?w=300
+
+- https://storage.flyo.cloud/image_xxx.jpg/thumb/nullx300
++ https://storage.flyo.cloud/image_xxx.jpg?h=300
+
+- https://storage.flyo.cloud/image_xxx.jpg/filter/300x300
++ https://storage.flyo.cloud/image_xxx.jpg?w=300&h=300
+```
+
+A dynamic side is expressed by leaving the parameter out — `w=0`, `w=` and `w=null` answer with HTTP 400. Oversized values are capped by the CDN, and `format` without `w` or `h` is ignored, so a bare URL always returns the original file.
+
+**New export `flyoImageUrl(src, options)`** for the places `<Image />` cannot reach:
+
+```ts
+import { flyoImageUrl } from "@flyo/nitro-astro";
+
+flyoImageUrl(image, { width: 1200, height: 630, format: "jpg" });
+// https://storage.flyo.cloud/<image>?w=1200&h=630&format=jpg
+```
+
+It adds the CDN host when missing, drops invalid dimensions and replaces `w` / `h` / `format` already present on the URL. Limits such as the maximum dimension stay with the CDN, so a change there needs no release here.
+
 For the full API and component reference see [README.md](README.md).

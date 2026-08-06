@@ -436,13 +436,14 @@ import { Image } from "astro:assets";
 />
 ```
 
-This renders `https://storage.flyo.cloud/<image>/thumb/800x600?format=webp` with `loading="lazy"` and `decoding="async"` already applied.
+This renders `https://storage.flyo.cloud/<image>?w=800&h=600&format=webp` with `loading="lazy"` and `decoding="async"` already applied.
 
 Rules to follow:
 
-- Use `<Image />` and `<Picture />` from `astro:assets` in block components. The service is global, so nothing has to be passed per image, and a hand-built `<img>` with a manual `/thumb/` URL would bypass it.
+- Use `<Image />` and `<Picture />` from `astro:assets` in block components. The service is global, so nothing has to be passed per image, and a hand-built `<img>` with a manual CDN URL would bypass it.
 - Do **not** touch `image.service` in `astro.config.mjs`. Overriding it with `sharp`, `squoosh` or `passthrough` disables the Flyo CDN transformation for the whole project.
-- `width` and `height` are required for remote images: they drive the `/thumb/{width}x{height}` transformation and prevent layout shift.
+- `width` and `height` are required for remote images: they drive the `?w={width}&h={height}` transformation and prevent layout shift.
+- Never write the legacy `/thumb/{width}x{height}` path into a URL. It still resolves but is deprecated; `/filter/{width}x{height}` and other path-based variants were removed on 06.08.2026 and answer with HTTP 404.
 - The output format defaults to `webp`; override it per image with `format="jpg"` when a specific format is needed.
 - A raw source string is enough — the service prefixes `https://storage.flyo.cloud/` when the URL does not already contain it.
 - CMS image fields can be empty, so guard the usage:
@@ -685,7 +686,7 @@ import { Image } from "astro:assets";
 }
 ```
 
-`width` and `height` are required for remote images — they drive the `/thumb/{width}x{height}` transformation and prevent layout shift. The format defaults to `webp`; override it per image with `format="jpg"` when needed.
+`width` and `height` are required for remote images — they drive the `?w={width}&h={height}` transformation and prevent layout shift. The format defaults to `webp`; override it per image with `format="jpg"` when needed.
 
 ## Registering the block
 
