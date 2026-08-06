@@ -506,7 +506,7 @@ The service:
 - Converts to WebP by default (override with the `format` attribute)
 - Emits `width`, `height`, `loading="lazy"` and `decoding="async"` to prevent layout shift
 
-Only the side you pass is sent: `width` alone yields `?w=1920` and lets the CDN derive the height from the aspect ratio, `height` alone yields `?h=768`. Values above `2560` are capped, and a value the CDN would reject (`0`, an empty string, `"null"`) is treated as "this side is dynamic" and left out. Without any dimension the untouched original file is served — the CDN ignores `format` in that case, so it is not sent either.
+Only the side you pass is sent: `width` alone yields `?w=1920` and lets the CDN derive the height from the aspect ratio, `height` alone yields `?h=768`. A value the CDN would reject (`0`, an empty string, `"null"`) is treated as "this side is dynamic" and left out. Without any dimension the untouched original file is served — the CDN ignores `format` in that case, so it is not sent either. Oversized values are passed through and capped by the CDN itself.
 
 > [!NOTE]
 > The CDN's legacy `/thumb/{width}x{height}` path is deprecated (removal announced for 06.08.2028) and is no longer produced by this integration. `/filter/{width}x{height}` and other path-based variants were removed on 06.08.2026 and now answer with HTTP 404. If you build storage URLs by hand somewhere, migrate them: `/thumb/{w}x{h}` → `?w={w}&h={h}`, `/thumb/{w}xnull` → `?w={w}`, `/thumb/nullx{h}` → `?h={h}`.

@@ -9,16 +9,16 @@ import type { ExternalImageService, ImageTransform } from "astro";
 /** Base url of the flyo storage CDN. */
 export const FLYO_CDN_URL = "https://storage.flyo.cloud";
 
-/** The CDN caps `w` and `h` at this value. */
-export const FLYO_CDN_MAX_DIMENSION = 2560;
-
 /**
- * A dimension the CDN accepts: a positive integer, capped at 2560.
+ * A dimension the CDN accepts: a positive integer.
  *
  * Everything else (`0`, `""`, `"null"`, negative or non numeric values) becomes
  * `null`. A `null` side is expressed by leaving the parameter out entirely,
  * which is how the CDN reads "this side is dynamic" — sending the value would
  * answer with HTTP 400 instead.
+ *
+ * The upper bound stays with the CDN: it caps oversized values itself, and that
+ * limit can change without a release here.
  */
 function normalizeDimension(value: unknown): number | null {
   const parsed =
@@ -32,7 +32,7 @@ function normalizeDimension(value: unknown): number | null {
 
   const rounded = Math.round(parsed);
 
-  return rounded < 1 ? null : Math.min(rounded, FLYO_CDN_MAX_DIMENSION);
+  return rounded < 1 ? null : rounded;
 }
 
 export interface FlyoImageOptions {

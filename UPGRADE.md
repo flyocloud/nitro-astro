@@ -124,7 +124,7 @@ The reason is the CDN itself: `/thumb/{width}x{height}` is deprecated (removal a
 + https://storage.flyo.cloud/image_xxx.jpg?w=300&h=300
 ```
 
-A dynamic side is expressed by leaving the parameter out — `w=0`, `w=` and `w=null` answer with HTTP 400. Values above `2560` are capped by the CDN, and `format` without `w` or `h` is ignored, so a bare URL always returns the original file.
+A dynamic side is expressed by leaving the parameter out — `w=0`, `w=` and `w=null` answer with HTTP 400. Oversized values are capped by the CDN, and `format` without `w` or `h` is ignored, so a bare URL always returns the original file.
 
 **New export `flyoImageUrl(src, options)`** for the places `<Image />` cannot reach:
 
@@ -135,6 +135,6 @@ flyoImageUrl(image, { width: 1200, height: 630, format: "jpg" });
 // https://storage.flyo.cloud/<image>?w=1200&h=630&format=jpg
 ```
 
-It adds the CDN host when missing, drops invalid dimensions, caps at `2560` and replaces `w` / `h` / `format` already present on the URL.
+It adds the CDN host when missing, drops invalid dimensions and replaces `w` / `h` / `format` already present on the URL. Limits such as the maximum dimension stay with the CDN, so a change there needs no release here.
 
 For the full API and component reference see [README.md](README.md).

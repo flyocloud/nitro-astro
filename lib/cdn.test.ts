@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import service, { flyoImageUrl, FLYO_CDN_MAX_DIMENSION } from "./cdn";
+import service, { flyoImageUrl } from "./cdn";
 
 const IMAGE = "image_7a158241.jpg";
 const ABSOLUTE = `https://storage.flyo.cloud/${IMAGE}`;
@@ -60,9 +60,9 @@ describe("flyoImageUrl", () => {
     }
   );
 
-  it("caps dimensions at the CDN maximum", () => {
+  it("passes large dimensions through, capping is the CDN's business", () => {
     expect(flyoImageUrl(IMAGE, { width: 5000, height: 4000 })).toBe(
-      `${ABSOLUTE}?w=${FLYO_CDN_MAX_DIMENSION}&h=${FLYO_CDN_MAX_DIMENSION}`
+      `${ABSOLUTE}?w=5000&h=4000`
     );
   });
 
