@@ -497,14 +497,19 @@ import { Image } from "astro:assets";
 />
 ```
 
-The URL is rewritten to `https://storage.flyo.cloud/image_xxx.jpg/thumb/1920x768?format=webp`.
+The URL is rewritten to `https://storage.flyo.cloud/image_xxx.jpg?w=1920&h=768&format=webp`.
 
 The service:
 
 - Adds the Flyo CDN host (`storage.flyo.cloud`) if it is not already part of the URL
-- Applies width/height transformations (`/thumb/{width}x{height}`)
+- Applies width/height transformations (`?w={width}&h={height}`)
 - Converts to WebP by default (override with the `format` attribute)
 - Emits `width`, `height`, `loading="lazy"` and `decoding="async"` to prevent layout shift
+
+Only the side you pass is sent: `width` alone yields `?w=1920` and lets the CDN derive the height from the aspect ratio, `height` alone yields `?h=768`. Values above `2560` are capped, and a value the CDN would reject (`0`, an empty string, `"null"`) is treated as "this side is dynamic" and left out. Without any dimension the untouched original file is served — the CDN ignores `format` in that case, so it is not sent either.
+
+> [!NOTE]
+> The CDN's legacy `/thumb/{width}x{height}` path is deprecated (removal announced for 06.08.2028) and is no longer produced by this integration. `/filter/{width}x{height}` and other path-based variants were removed on 06.08.2026 and now answer with HTTP 404. If you build storage URLs by hand somewhere, migrate them: `/thumb/{w}x{h}` → `?w={w}&h={h}`, `/thumb/{w}xnull` → `?w={w}`, `/thumb/nullx{h}` → `?h={h}`.
 
 Use `<Image />` and `<Picture />` from `astro:assets` as you normally would — the service is configured globally by the integration, so there is nothing to pass per image.
 
@@ -741,7 +746,7 @@ import MetaInfo from "@flyo/nitro-astro/MetaInfo.astro";
 />
 ```
 
-> The `image` must be a plain Flyo CDN URL — it is rewritten to `1200x630` (jpg) for `og:image` and `1200x600` for `twitter:image`. `MetaInfo` also emits `og:url` and `<link rel="canonical">` from the current URL, so remove your own canonical link.
+> The `image` must be a plain Flyo CDN URL — it is rewritten to `?w=1200&h=630&format=jpg` for `og:image` and `?w=1200&h=600&format=jpg` for `twitter:image`. `MetaInfo` also emits `og:url` and `<link rel="canonical">` from the current URL, so remove your own canonical link.
 
 `DebugInfo` prints an HTML comment into the page with live edit status, environment, API version and date, token type, Vercel deployment ID and commit SHA — useful for checking what a deployed site is actually serving:
 
@@ -843,6 +848,13 @@ In dev mode the integration adds an Astro dev toolbar app with quick links to th
   <div {...editable(block)}>…</div>
   ```
   > `editableBlock` remains available as a backwards-compatible alias.
+- **`flyoImageUrl(src, options)`** — Builds a Flyo storage URL with the CDN transformation parameters. `<Image />` covers the normal case; use this where no `<img>` is involved — CSS backgrounds, `<link rel="preload">`, e-mail templates, custom meta tags. Options are `width`, `height`, `format` and `download`.
+  ```ts
+  flyoImageUrl(block.content.image.source, { width: 1200, height: 630 });
+  // https://storage.flyo.cloud/image_xxx.jpg?w=1200&h=630
+  flyoImageUrl(block.content.image.source, { width: 1200 });
+  // https://storage.flyo.cloud/image_xxx.jpg?w=1200  (height follows the aspect ratio)
+  ```
 
 ### Components
 

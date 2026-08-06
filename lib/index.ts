@@ -12,6 +12,13 @@ import {
 } from "@flyo/nitro-typescript";
 import vitePluginFlyoComponents from "./vite-plugin-flyo-components";
 
+export {
+  flyoImageUrl,
+  FLYO_CDN_URL,
+  FLYO_CDN_MAX_DIMENSION,
+  type FlyoImageOptions,
+} from "./cdn";
+
 /**
  * Options for configuring the integration.
  */

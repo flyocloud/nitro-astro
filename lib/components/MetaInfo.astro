@@ -1,10 +1,16 @@
 ---
+import { flyoImageUrl } from "@flyo/nitro-astro";
+
 const { title, image, description, jsonld } = Astro.props;
 const jsonLdString = jsonld ? JSON.stringify(jsonld) : null;
 
 // Transform image to 1200x600 jpg for optimal social media display
-const transformedImage = `${image}/thumb/1200x630?format=jpg`
-const transformedTwitterImage = `${image}/thumb/1200x600?format=jpg`
+const transformedImage = image
+  ? flyoImageUrl(image, { width: 1200, height: 630, format: "jpg" })
+  : null;
+const transformedTwitterImage = image
+  ? flyoImageUrl(image, { width: 1200, height: 600, format: "jpg" })
+  : null;
 
 const ogUrl = Astro.url.href; // absolute URL
 ---
