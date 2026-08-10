@@ -2,6 +2,7 @@ import { describe, it, expect, beforeAll } from "vitest";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
+import { isBuiltin } from "node:module";
 import path from "node:path";
 
 const libDir = fileURLToPath(new URL(".", import.meta.url));
@@ -32,6 +33,45 @@ function astroSubpaths(): string[] {
     .filter((key) => key.endsWith(".astro"))
     .map((key) => key.replace(/^\.\//, ""));
 }
+
+/** Shipped files the consumer's own toolchain resolves, i.e. everything outside dist/. */
+const RAW_SOURCE = /^(?!dist\/).*\.(astro|[cm]?[jt]sx?)$/;
+
+/** `from "x"`, `import "x"`, `import("x")` — enough for the source we ship. */
+const SPECIFIER = /(?:\bfrom\s*|\bimport\s*\(?\s*)["']([^"']+)["']/g;
+
+/** `@scope/name/deep/path` -> `@scope/name`, `name/deep/path` -> `name`. */
+function packageName(specifier: string): string {
+  const segments = specifier.split("/");
+  return specifier.startsWith("@") ? segments.slice(0, 2).join("/") : segments[0];
+}
+
+/** Every bare specifier a shipped file imports, deduplicated. */
+function bareSpecifiers(file: string): string[] {
+  const source = readFileSync(path.join(libDir, file), "utf8");
+  const specifiers = [...source.matchAll(SPECIFIER)].map((match) => match[1]);
+  return [
+    ...new Set(
+      specifiers
+        .filter((specifier) => !/^[./]/.test(specifier))
+        .filter((specifier) => !specifier.startsWith("virtual:")) // our own vite plugin
+        .filter((specifier) => !isBuiltin(specifier))
+    ),
+  ];
+}
+
+/** The packages a shipped file imports by bare specifier, deduplicated. */
+function importedPackages(file: string): string[] {
+  return [...new Set(bareSpecifiers(file).map(packageName))];
+}
+
+/**
+ * Bare specifiers shipped source may import without `dependencies` naming them.
+ * `astro` is the host project by definition — an integration is loaded from the
+ * consumer's `astro.config.mjs`, so their Astro is always present and is the copy
+ * that has to win. The package's own name resolves to the installed package.
+ */
+const HOST_PROVIDED = ["astro", pkg.name];
 
 /** Files that must never reach npm, even when their directory is listed in `files`. */
 const JUNK = [
@@ -80,6 +120,49 @@ describe("published package", () => {
     const declared = declaredTargets().filter((target) => target.startsWith("dist/types/"));
     const actual = shipped.filter((file) => file.startsWith("dist/types/"));
     expect(actual.sort()).toEqual(declared.sort());
+  });
+});
+
+describe("runtime resolution for consumers", () => {
+  // Only `index.ts` is bundled. Every component, `cdn.ts`, `middleware.ts`,
+  // `sitemap.ts` and `toolbar.ts` ships as raw source and is resolved by the
+  // consumer's Astro/Vite out of *their* node_modules, so a bare import missing
+  // from `dependencies` only resolves where something else in their tree happens
+  // to hoist it: `camelcase` in FlyoNitroBlock.astro rode on astro -> boxen ->
+  // camelcase until an install that did not hoist it failed a user's build. The
+  // bundle hides this — rollup inlines the same import, so dist/ always works.
+  it("declares every package the shipped source imports", () => {
+    const declared = [
+      ...Object.keys(pkg.dependencies ?? {}),
+      ...Object.keys(pkg.peerDependencies ?? {}),
+      ...HOST_PROVIDED,
+    ];
+    const undeclared = shipped
+      .filter((file) => RAW_SOURCE.test(file))
+      .flatMap((file) =>
+        importedPackages(file)
+          .filter((name) => !declared.includes(name))
+          .map((name) => `${file}: ${name}`)
+      );
+    expect(undeclared).toEqual([]);
+  });
+
+  // Shipped source reaching for its own package goes through `exports` like anyone
+  // else's import would, and there is no wildcard in it. Nothing else catches a
+  // subpath that is missing there: the vitest alias in vitest.config.ts resolves
+  // these by file path, so a renamed file or a forgotten `exports` entry passes
+  // every unit test and breaks the first consumer build instead.
+  it("exports every subpath of itself that shipped source imports", () => {
+    const unreachable = shipped
+      .filter((file) => RAW_SOURCE.test(file))
+      .flatMap((file) =>
+        bareSpecifiers(file)
+          .filter((specifier) => packageName(specifier) === pkg.name)
+          .map((specifier) => specifier.replace(pkg.name, "."))
+          .filter((subpath) => !pkg.exports[subpath])
+          .map((subpath) => `${file}: ${subpath}`)
+      );
+    expect([...new Set(unreachable)]).toEqual([]);
   });
 });
 

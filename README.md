@@ -123,6 +123,8 @@ The `flyoNitroIntegration()` function accepts the following options:
   }
   ```
 
+  The key is matched against the block's `component` name ignoring casing and separators, so `HeroImage`, `heroImage` and `hero_image` all address the same component. Two keys that differ only in those — `HeroImage` and `hero_image` side by side — are rejected at build time, because nothing could tell which of the two a block meant.
+
 #### Optional
 
 - **`liveEdit`** (string | boolean | number, default `false`) — Enables live editing mode. The application reloads when changes are made in the Flyo preview frame. Enable it on dev and preview systems, disable it in production.

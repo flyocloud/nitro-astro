@@ -1,0 +1,8 @@
+---
+interface Props {
+  block: Record<string, unknown>;
+}
+const { block } = Astro.props;
+---
+
+<p data-registered={block.component}>registered</p>

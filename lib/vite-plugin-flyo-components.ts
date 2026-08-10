@@ -1,8 +1,8 @@
 /**
  * Custom Vite plugin to prepare flyo components
  */
-import camelcase from "camelcase";
 import type { Plugin } from "vite";
+import { componentKey } from "./componentKey";
 
 export default function vitePluginFlyoComponents(
   componentsDir: string,
@@ -21,7 +21,13 @@ export default function vitePluginFlyoComponents(
     },
     async load(id: string) {
       if (id === resolvedVirtualModuleId) {
-        const exports: string[] = [];
+        // A keyed registry rather than one named export per component: the key is
+        // derived from a name the user controls, and `export { default as 2cols }`
+        // or `as subfolder/Thing` is a syntax error in the emitted module. Numbered
+        // locals cannot collide with anything.
+        const imports: string[] = [];
+        const entries: string[] = [];
+        const claimedBy = new Map<string, string>();
 
         for (const [componentName, componentFile] of Object.entries(
           components
@@ -31,9 +37,21 @@ export default function vitePluginFlyoComponents(
           );
 
           if (resolvedId) {
-            exports.push(
-              `export { default as ${camelcase(componentName)} } from "${resolvedId.id}"`
-            );
+            const key = componentKey(componentName);
+            const claim = claimedBy.get(key);
+
+            if (claim) {
+              // Silently keeping the last one would render the wrong component for
+              // one of the two, which is a great deal harder to notice than this.
+              throw new Error(
+                `The Flyo components "${claim}" and "${componentName}" are the same component name, they only differ in casing or separators. Rename one of them in the components option.`
+              );
+            }
+
+            claimedBy.set(key, componentName);
+            const local = `component${entries.length}`;
+            imports.push(`import ${local} from "${resolvedId.id}"`);
+            entries.push(`${JSON.stringify(key)}: ${local}`);
           }
         }
 
@@ -44,16 +62,19 @@ export default function vitePluginFlyoComponents(
           );
         }
         if (fallbackComponentResolvedId) {
-          exports.push(
-            `export { default as fallback } from "${fallbackComponentResolvedId.id}"`
+          imports.push(
+            `import fallback from "${fallbackComponentResolvedId.id}"`
           );
         } else {
-          exports.push(
-            `export { default as fallback } from "@flyo/nitro-astro/FallbackComponent.astro"`
+          imports.push(
+            `import fallback from "@flyo/nitro-astro/FallbackComponent.astro"`
           );
         }
 
-        return exports.join(";");
+        return [
+          ...imports,
+          `export default { components: { ${entries.join(", ")} }, fallback }`,
+        ].join(";");
       }
     },
   };

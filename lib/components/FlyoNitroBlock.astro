@@ -1,7 +1,7 @@
 ---
-import * as components from "virtual:flyo-components";
+import registry from "virtual:flyo-components";
 import type { AstroComponentFactory } from "astro/dist/runtime/server";
-import camelcase from "camelcase";
+import { componentKey } from "@flyo/nitro-astro/componentKey";
 import { Block } from "@flyo/nitro-typescript";
 
 interface Props {
@@ -14,13 +14,15 @@ const { block, ...props } = Astro.props;
 /* @vite-ignore */
 let Component: AstroComponentFactory | null = null;
 
-const key: string = camelcase(block.component as string);
-const componentFound: boolean = key in components;
+const key: string = componentKey(block.component as string);
+// hasOwn, not `key in`: the registry is a plain object, so a block named
+// "constructor" or "toString" would otherwise resolve to Object.prototype.
+const componentFound: boolean = Object.hasOwn(registry.components, key);
 
 if (componentFound) {
-  Component = components[key];
+  Component = registry.components[key];
 } else {
-  Component = components.fallback;
+  Component = registry.fallback;
 }
 ---
 
