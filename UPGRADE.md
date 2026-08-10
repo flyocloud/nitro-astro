@@ -137,4 +137,51 @@ flyoImageUrl(image, { width: 1200, height: 630, format: "jpg" });
 
 It adds the CDN host when missing, drops invalid dimensions and replaces `w` / `h` / `format` already present on the URL. Limits such as the maximum dimension stay with the CDN, so a change there needs no release here.
 
+## Upgrading from 2.5 to 2.6
+
+**Remove `camelcase` from your `package.json` if you added it.** Up to 2.5 `FlyoNitroBlock.astro` imported it without this package declaring it, so the build only worked where npm hoisted the copy `astro` pulls in transitively. Installs that do not hoist — pnpm, Yarn PnP, a future Astro without that dependency — failed with `Failed to resolve import "camelcase"`, and adding it by hand was the workaround. 2.6 needs nothing:
+
+```diff
+  "dependencies": {
+-   "camelcase": "^8.0.0",
+    "@flyo/nitro-astro": "^2.6.0"
+  }
+```
+
+**Component matching is unchanged for every name that resolved before.** The keys of the `components` option are still matched against the block's `component` name ignoring casing and separators, so `HeroImage`, `heroImage`, `hero_image` and `hero-image` still address the same component. What changed is the normalization behind it — one local function instead of camelCase — and every pair of names the old one treated as equal is still treated as equal.
+
+**Two option keys that differ only in casing or separators are now a build error.** They were distinguishable before (`heroimage` and `HeroImage` became two separate exports), but nothing could tell which of the two an incoming block meant. Rename one:
+
+```diff
+  components: {
+-   heroimage: "HeroImageLegacy",
++   HeroImageLegacy: "HeroImageLegacy",
+    HeroImage: "HeroImage",
+  }
+```
+
+The error names both keys. If your `components` map has no such pair — the normal case — there is nothing to do.
+
+**A component name that is not a valid JavaScript identifier now works.** An option key was written straight into a generated `export { default as … }`, so one starting with a digit (`2cols`) or containing a character camelCase did not fold away (`hero/block`, `hero!block`) broke the build with a syntax error in a virtual module. Keys are data now, so any name Flyo can send is registrable. Spaces, dots, dashes and underscores were never affected.
+
+**A block whose `component` collides with an `Object.prototype` member renders the fallback.** `constructor`, `toString` and `valueOf` previously resolved to the prototype member and rendered whatever Astro made of it.
+
+**`virtual:flyo-components` changed shape.** It is internal — `FlyoNitroBlock.astro` is its only consumer — but if you imported it yourself, it went from one named export per component to a default export:
+
+```diff
+- import * as components from "virtual:flyo-components";
+- const Component = components[key] ?? components.fallback;
++ import registry from "virtual:flyo-components";
++ const Component = registry.components[key] ?? registry.fallback;
+```
+
+**New export `@flyo/nitro-astro/componentKey`** for computing the same key yourself, should you index blocks by component name:
+
+```ts
+import { componentKey } from "@flyo/nitro-astro/componentKey";
+
+componentKey("HeroImage"); // "heroimage"
+componentKey("hero_image"); // "heroimage"
+```
+
 For the full API and component reference see [README.md](README.md).
