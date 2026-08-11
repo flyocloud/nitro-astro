@@ -719,7 +719,9 @@ export default defineConfig({
 });
 ```
 
-Entities are listed with their `routes.detail` path, pages with their slug. Nothing else to wire up — do **not** add `@astrojs/sitemap` for Flyo content, it would not see the CMS routes.
+Entities are listed with their `routes.detail` path, pages with their slug. Every entry also carries a `<lastmod>` taken from the `updated_at` timestamp the API delivers — for pages that is the last time the delivered content actually changed, so a rebuild that produces identical output does not move it. Entries the API reports without a usable timestamp are emitted without `lastmod`, which is valid.
+
+Nothing else to wire up — do **not** add `@astrojs/sitemap` for Flyo content, it would not see the CMS routes.
 
 ### 14. Meta Information & Debug Info
 
