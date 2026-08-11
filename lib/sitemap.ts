@@ -1,22 +1,5 @@
 import { useSitemapApi } from "@flyo/nitro-astro";
-import type { EntityinterfaceInner } from "@flyo/nitro-typescript";
 import type { AstroGlobal } from "astro";
-
-/**
- * A sitemap item as the API delivers it:
- *
- * - `href` is the resolved URL path of the entry, the value to put into `loc`.
- * - `updated_at` is a Unix timestamp (in seconds) of the last time the content
- *   delivered for that entry actually changed, the value the API documents as
- *   the `lastmod` source.
- *
- * Both are declared here because the generated model of the oldest supported
- * SDK version does not carry them yet.
- */
-type SitemapItem = EntityinterfaceInner & {
-  href?: string;
-  updated_at?: number;
-};
 
 type SitemapEntry = { loc: string; updatedAt?: number };
 
@@ -45,11 +28,7 @@ function buildLastMod(updatedAt?: number) {
 }
 
 export async function GET(config: AstroGlobal) {
-  // The generated `sitemap()` maps every item through the SDK model, which
-  // copies the properties it knows and would drop `updated_at`. Reading the raw
-  // response body keeps it until the SDK is regenerated.
-  const response = await useSitemapApi().sitemapRaw({});
-  const sitemap: SitemapItem[] = await response.raw.json();
+  const sitemap = await useSitemapApi().sitemap();
 
   const entries = new Map<string, SitemapEntry>();
 

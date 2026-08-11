@@ -3,12 +3,9 @@ import type { AstroGlobal } from "astro";
 
 const api = vi.hoisted(() => ({ items: [] as Record<string, unknown>[] }));
 
-// The route resolves the SDK through the package itself; the raw response is
-// what carries `updated_at`, so the mock has to hand out a real Response.
+// The route resolves the SDK through the package itself.
 vi.mock("@flyo/nitro-astro", () => ({
-  useSitemapApi: () => ({
-    sitemapRaw: async () => ({ raw: new Response(JSON.stringify(api.items)) }),
-  }),
+  useSitemapApi: () => ({ sitemap: async () => api.items }),
 }));
 
 const { GET } = await import("./sitemap");
