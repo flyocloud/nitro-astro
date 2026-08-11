@@ -771,7 +771,7 @@ Keep the `fetch(api)` metric call guarded by `import.meta.env.PROD` so developme
 
 ### 11. Sitemap
 
-The integration injects `/sitemap.xml` automatically with all Flyo pages and entity detail routes. There is nothing to create — only make sure `site` is set correctly in `astro.config.mjs`.
+The integration injects `/sitemap.xml` automatically with all Flyo pages and entity detail routes, each listed with the `href` the API resolved for it and a `<lastmod>` taken from its `updated_at` timestamp. There is nothing to create — only make sure `site` is set correctly in `astro.config.mjs`.
 
 Do **not** add `@astrojs/sitemap` for Flyo content; it does not see the CMS routes. If the project already uses it for other static routes, tell the user that the two sitemaps coexist and only one can be served at `/sitemap.xml`.
 

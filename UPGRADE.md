@@ -184,4 +184,14 @@ componentKey("HeroImage"); // "heroimage"
 componentKey("hero_image"); // "heroimage"
 ```
 
+## Upgrading from 2.6 to 2.7
+
+Nothing to change in your project. Two things about the injected `/sitemap.xml` are worth knowing.
+
+**Every entry now carries a `<lastmod>`**, taken from the `updated_at` timestamp the API delivers per item. For pages that is the last time the delivered content actually changed, so a rebuild producing identical output does not move it. Entries the API reports without a usable timestamp are listed without the element.
+
+**Locations come from the `href` the API resolved**, for pages and entities alike, instead of being rebuilt from `entity_slug` and `routes.detail`. If you compared the generated sitemap against a stored copy, expect the paths of entries whose resolved `href` differs from their raw slug to change — language-prefixed urls in a multi-lingual setup, most notably. Entities without a resolved `href` are no longer listed.
+
+**Dependencies:** `@flyo/nitro-typescript` moved to `^1.5.0`, which is the version whose sitemap model carries `href` and `updated_at`. If you import models from it yourself, note that the unused `BlockSlot` and `PageProperty` interfaces are gone — `BlockSlotValue` and `PagePropertyValue`, the ones `Block.slots` and `Page.properties` actually use, are unchanged.
+
 For the full API and component reference see [README.md](README.md).
