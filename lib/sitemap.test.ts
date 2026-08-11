@@ -22,18 +22,26 @@ async function render(items: Record<string, unknown>[]) {
 }
 
 describe("sitemap", () => {
-  it("emits updated_at as lastmod for pages and entities", async () => {
+  it("lists the resolved href of pages and entities", async () => {
     const xml = await render([
-      {
-        entity_type: "nitro-page",
-        entity_slug: "about-us",
-        updated_at: 1739276400,
-      },
+      { entity_type: "nitro-page", entity_slug: "about-us", href: "/about-us" },
       {
         entity_type: "news",
-        routes: { detail: "/news/news-title-1" },
-        updated_at: 1739362800,
+        entity_slug: "news-title-1",
+        href: "/news/news-title-1",
+        routes: { detail: "/ignored" },
       },
+    ]);
+
+    expect(xml).toContain("<loc>https://example.com/about-us</loc>");
+    expect(xml).toContain("<loc>https://example.com/news/news-title-1</loc>");
+    expect(xml).not.toContain("ignored");
+  });
+
+  it("emits updated_at as lastmod", async () => {
+    const xml = await render([
+      { href: "/about-us", updated_at: 1739276400 },
+      { href: "/news/news-title-1", updated_at: 1739362800 },
     ]);
 
     expect(xml).toContain(
@@ -46,13 +54,9 @@ describe("sitemap", () => {
 
   it("omits lastmod when no usable timestamp is delivered", async () => {
     const xml = await render([
-      { entity_type: "nitro-page", entity_slug: "about-us" },
-      { entity_type: "nitro-page", entity_slug: "contact", updated_at: 0 },
-      {
-        entity_type: "news",
-        routes: { detail: "/news/one" },
-        updated_at: null,
-      },
+      { href: "/about-us" },
+      { href: "/contact", updated_at: 0 },
+      { href: "/news/one", updated_at: null },
     ]);
 
     expect(xml).toContain("<url><loc>https://example.com/about-us</loc></url>");
@@ -61,18 +65,10 @@ describe("sitemap", () => {
     expect(xml).not.toContain("<lastmod>");
   });
 
-  it("keeps one entry per page slug with the most recent timestamp", async () => {
+  it("keeps one entry per location with the most recent timestamp", async () => {
     const xml = await render([
-      {
-        entity_type: "nitro-page",
-        entity_slug: "about-us",
-        updated_at: 1739276400,
-      },
-      {
-        entity_type: "nitro-page",
-        entity_slug: "about-us",
-        updated_at: 1739362800,
-      },
+      { href: "/about-us", updated_at: 1739276400 },
+      { href: "/about-us", updated_at: 1739362800 },
     ]);
 
     expect(
@@ -81,10 +77,13 @@ describe("sitemap", () => {
     expect(xml).toContain("<lastmod>2025-02-12T12:20:00Z</lastmod>");
   });
 
-  it("skips items without a route", async () => {
+  it("skips items without a listable href", async () => {
     const xml = await render([
-      { entity_type: "news", routes: { _empty: true } },
-      { entity_type: "nitro-page", updated_at: 1739276400 },
+      { entity_type: "nitro-page", entity_slug: "no-href" },
+      { href: "" },
+      { href: "mailto:hello@flyo.ch" },
+      { href: "https://other.example.com/page" },
+      { href: "//other.example.com/page" },
     ]);
 
     expect(xml).toBe(

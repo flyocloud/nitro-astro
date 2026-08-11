@@ -3,14 +3,25 @@ import type { EntityinterfaceInner } from "@flyo/nitro-typescript";
 import type { AstroGlobal } from "astro";
 
 /**
- * A sitemap item as the API delivers it. `updated_at` is a Unix timestamp (in
- * seconds) of the last time the content delivered for that entry actually
- * changed, and is the value the API documents as the `lastmod` source. It is
- * not part of the generated SDK model yet, so it is declared here.
+ * A sitemap item as the API delivers it:
+ *
+ * - `href` is the resolved URL path of the entry, the value to put into `loc`.
+ * - `updated_at` is a Unix timestamp (in seconds) of the last time the content
+ *   delivered for that entry actually changed, the value the API documents as
+ *   the `lastmod` source.
+ *
+ * Both are declared here because the generated model of the oldest supported
+ * SDK version does not carry them yet.
  */
-type SitemapItem = EntityinterfaceInner & { updated_at?: number };
+type SitemapItem = EntityinterfaceInner & {
+  href?: string;
+  updated_at?: number;
+};
 
 type SitemapEntry = { loc: string; updatedAt?: number };
+
+/** An `href` that is not a path of this site — `mailto:`, `tel:`, an absolute url. */
+const ABSOLUTE_HREF = /^[a-z][a-z0-9+.-]*:|^\/\//i;
 
 function buildUrl(path: string, domain: string) {
   return `${domain.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
@@ -40,40 +51,35 @@ export async function GET(config: AstroGlobal) {
   const response = await useSitemapApi().sitemapRaw({});
   const sitemap: SitemapItem[] = await response.raw.json();
 
-  const entries: SitemapEntry[] = [];
-  const pageEntries = new Map<string, SitemapEntry>();
+  const entries = new Map<string, SitemapEntry>();
 
   for (const item of sitemap) {
-    if (item.entity_type === "nitro-page") {
-      if (!item.entity_slug) {
-        continue;
-      }
-      // The same page slug can be delivered by more than one container; keep
-      // one entry per slug and the most recent modification date of them.
-      const known = pageEntries.get(item.entity_slug);
-      if (known) {
-        known.updatedAt =
-          Math.max(known.updatedAt ?? 0, item.updated_at ?? 0) || undefined;
-        continue;
-      }
-      const entry = {
-        loc: buildUrl(item.entity_slug, config.site.origin),
-        updatedAt: item.updated_at,
-      };
-      pageEntries.set(item.entity_slug, entry);
-      entries.push(entry);
-    } else if (item.routes?.detail) {
-      entries.push({
-        loc: buildUrl(item.routes["detail"], config.site.origin),
-        updatedAt: item.updated_at,
-      });
+    // `href` is the URL the API resolved for the entry, for pages and entities
+    // alike. No route or slug guessing: an item without one has no location to
+    // list, and one that is not a path of this site does not belong in a sitemap.
+    if (!item.href || ABSOLUTE_HREF.test(item.href)) {
+      continue;
     }
+
+    const loc = buildUrl(item.href, config.site.origin);
+
+    // The same location can arrive more than once, for instance a page that is
+    // delivered by several containers. One entry per location, carrying the most
+    // recent modification date of them.
+    const known = entries.get(loc);
+    if (known) {
+      known.updatedAt =
+        Math.max(known.updatedAt ?? 0, item.updated_at ?? 0) || undefined;
+      continue;
+    }
+
+    entries.set(loc, { loc, updatedAt: item.updated_at });
   }
 
   let xml = '<?xml version="1.0" encoding="UTF-8"?>';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
-  for (const entry of entries) {
+  for (const entry of entries.values()) {
     xml += `<url><loc>${entry.loc}</loc>${buildLastMod(entry.updatedAt)}</url>`;
   }
 
