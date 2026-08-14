@@ -194,4 +194,14 @@ Nothing to change in your project. Two things about the injected `/sitemap.xml` 
 
 **Dependencies:** `@flyo/nitro-typescript` moved to `^1.5.0`, which is the version whose sitemap model carries `href` and `updated_at`. If you import models from it yourself, note that the unused `BlockSlot` and `PageProperty` interfaces are gone — `BlockSlotValue` and `PagePropertyValue`, the ones `Block.slots` and `Page.properties` actually use, are unchanged.
 
+## Upgrading from 2.7 to 2.8
+
+Nothing to change in your project. Both items are about the `<head>` your pages ship.
+
+**`MetaInfoPage` emits the page JSON-LD.** The page endpoint returns a `jsonld` object with schema.org information about the page, the same way the entity endpoint does, but only `MetaInfoEntity` ever rendered it. Pages now ship a `<script type="application/ld+json">` too, built from `page.jsonld`. If you were rendering that script yourself next to `MetaInfoPage`, remove it or you will ship two. Pages the API delivers without `jsonld` emit nothing, as before.
+
+**Page meta images work again.** `@flyo/nitro-typescript` moved to `^1.6.0`. In `1.5.0` — the version 2.6 and 2.7 depended on — `meta_json.image` was deserialized to an empty object no matter what the API sent, so `MetaInfoPage` shipped no `og:image` or `twitter:image` for any page. `1.6.0` deserializes the value correctly and the tags come back. Entity meta images were never affected, and nothing about the emitted markup changed apart from the tags now being present.
+
+The value that arrives is a URL string when a meta image is set and `false` when none is, so `MetaInfo` selects the source by type rather than by truthiness. If you pass `image` to `MetaInfo` yourself, both are accepted; anything that is not a non-empty string renders no image tags.
+
 For the full API and component reference see [README.md](README.md).

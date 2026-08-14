@@ -39,4 +39,11 @@ describe("MetaInfo", () => {
 
     expect(html).not.toContain("og:image");
   });
+
+  it("emits no image tags when the meta image is false", async () => {
+    const html = await render({ title: "Title", image: false });
+
+    expect(html).not.toContain("og:image");
+    expect(html).not.toContain("false");
+  });
 });
