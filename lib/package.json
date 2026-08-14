@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@flyo/nitro-js-bridge": "^1.5.0",
-    "@flyo/nitro-typescript": "^1.5.0"
+    "@flyo/nitro-typescript": "^1.6.0"
   },
   "devDependencies": {
     "@types/node": "20.17.0",

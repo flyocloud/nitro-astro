@@ -1,15 +1,27 @@
 ---
 import { flyoImageUrl } from "@flyo/nitro-astro";
+import type { MetaImage } from "@flyo/nitro-typescript";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: MetaImage | null;
+  jsonld?: object | null;
+}
 
 const { title, image, description, jsonld } = Astro.props;
 const jsonLdString = jsonld ? JSON.stringify(jsonld) : null;
 
+// `meta_json.image` is a URL string when a meta image is set and `false` when
+// none is, so the source has to be checked by type, not by truthiness.
+const imageSrc = typeof image === "string" && image ? image : null;
+
 // Transform image to 1200x600 jpg for optimal social media display
-const transformedImage = image
-  ? flyoImageUrl(image, { width: 1200, height: 630, format: "jpg" })
+const transformedImage = imageSrc
+  ? flyoImageUrl(imageSrc, { width: 1200, height: 630, format: "jpg" })
   : null;
-const transformedTwitterImage = image
-  ? flyoImageUrl(image, { width: 1200, height: 600, format: "jpg" })
+const transformedTwitterImage = imageSrc
+  ? flyoImageUrl(imageSrc, { width: 1200, height: 600, format: "jpg" })
   : null;
 
 const ogUrl = Astro.url.href; // absolute URL
@@ -34,7 +46,7 @@ const ogUrl = Astro.url.href; // absolute URL
   )
 }
 {
-  image && (
+  imageSrc && (
     <>
       <meta name="image" content={transformedImage} />
       <meta property="og:image" content={transformedImage} />
