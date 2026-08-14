@@ -725,7 +725,7 @@ Nothing else to wire up — do **not** add `@astrojs/sitemap` for Flyo content, 
 
 ### 14. Meta Information & Debug Info
 
-`MetaInfoPage` and `MetaInfoEntity` render title, description, Open Graph, Twitter and JSON-LD tags from the CMS data. They must end up inside `<head>`, which is what the named `head` slot in the layout is for:
+`MetaInfoPage` and `MetaInfoEntity` render title, description, Open Graph, Twitter and JSON-LD tags from the CMS data — the schema.org markup comes from `page.jsonld` and `response.jsonld` respectively and is emitted as a `<script type="application/ld+json">`. They must end up inside `<head>`, which is what the named `head` slot in the layout is for:
 
 ```astro
 <Layout title={page.title}>
