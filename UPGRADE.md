@@ -204,4 +204,27 @@ Nothing to change in your project. Both items are about the `<head>` your pages 
 
 The value that arrives is a URL string when a meta image is set and `false` when none is, so `MetaInfo` selects the source by type rather than by truthiness. If you pass `image` to `MetaInfo` yourself, both are accepted; anything that is not a non-empty string renders no image tags.
 
+## Upgrading from 2.8 to 2.9
+
+Nothing to change in your project unless you annotate types against the SDK yourself. No component renders anything differently and no API call changed.
+
+**Dependencies:** `@flyo/nitro-typescript` moved to `^1.7.0`, regenerated against OpenAPI document 2.30. Every endpoint and method signature is unchanged; two model details are worth knowing.
+
+**The `Routes` model is gone.** `routes` used to point at a named `Routes` schema, which 2.30 inlines, so the SDK no longer exports `Routes`, `RoutesFromJSON`, `RoutesToJSON` or `instanceOfRoutes`. Importing the type stops compiling — replace the annotation with the inline type it stood for:
+
+```diff
+- import type { Routes } from "@flyo/nitro-typescript";
+- function firstRoute(routes: Routes) { … }
++ function firstRoute(routes: { [key: string]: any }) { … }
+```
+
+**`routes` is now `{ [key: string]: any }`** on both `EntityInterface` and `EntityinterfaceInner`. On `EntityInterface` it was declared as a map of strings, which was wrong: the map always carries the boolean `_empty` key next to the URL paths, so `routes._empty` no longer needs a cast to be read as a boolean. Reading a path by name — `item.link.routes.detail`, the way the block examples do — still type-checks and still gives you a string. What you lose is `string` inference when the key is dynamic, so narrow there:
+
+```ts
+const path = entity.routes?.[key];
+if (typeof path !== "string") return undefined;
+```
+
+Deserialization is unchanged but for one case: when the API sends an explicit `"_empty": null`, `1.6.0` dropped the key and `1.7.0` keeps the `null`. Compare with `routes._empty == null` if you want to treat a missing and a null value alike.
+
 For the full API and component reference see [README.md](README.md).
