@@ -566,20 +566,26 @@ For a blog post, use `src/pages/blog/[slug].astro` with `entityBySlug`. Slugs ar
 ```astro
 ---
 import Layout from "../../layouts/Layout.astro";
-import { useEntitiesApi } from "@flyo/nitro-astro";
+import { useEntitiesApi, disableCache } from "@flyo/nitro-astro";
 import MetaInfoEntity from "@flyo/nitro-astro/MetaInfoEntity.astro";
 
 const { slug } = Astro.params;
 
 let response = null;
 try {
-  response = await useEntitiesApi(Astro).entityBySlug({
+  response = await useEntitiesApi().entityBySlug({
     slug,
     lang: Astro.currentLocale,
     typeId: 9999,
   });
 } catch (e) {
   return Astro.rewrite("/404");
+}
+
+// A draft link must not be cached — see below. Nothing happens for a
+// published entity, where `is_draft` is false.
+if (response.is_draft) {
+  disableCache(Astro);
 }
 
 const isProd = import.meta.env.PROD;
@@ -591,7 +597,7 @@ const isProd = import.meta.env.PROD;
   <img src={response.model.image.source} style="width:100%" />
 </Layout>
 {
-  isProd && (
+  isProd && !response.is_draft && (
     <script is:inline define:vars={{ api: response.entity.entity_metric.api }}>
       fetch(api)
     </script>
@@ -599,9 +605,9 @@ const isProd = import.meta.env.PROD;
 }
 ```
 
-The inline `fetch(api)` call reports the detail view back to Flyo's entity metrics — only do this in production.
+The inline `fetch(api)` call reports the detail view back to Flyo's entity metrics — only do this in production, and not for a draft preview.
 
-> Pass `Astro` to `useEntitiesApi()`, as above. It changes nothing for a published entity and makes [draft links](#draft-links) uncacheable — without it a draft snapshot ends up in the CDN and in the visitor's browser. `useEntitiesApi()` without an argument stays valid and behaves exactly as before.
+> The `disableCache(Astro)` line is what keeps a [draft link](#draft-links) out of the CDN and the visitor's browser. It is a no-op for every published entity, so it belongs on any detail route that should resolve draft links at all.
 
 #### Example 2: Request by unique ID
 
@@ -611,7 +617,7 @@ The unique ID is globally unique across the whole system, which makes it reliabl
 ---
 const { uniqueid } = Astro.params;
 // ...
-const response = await useEntitiesApi(Astro).entityByUniqueid({
+const response = await useEntitiesApi().entityByUniqueid({
   uniqueid,
   lang: Astro.currentLocale,
 });
@@ -630,7 +636,11 @@ A **draft link** is a shareable, expiring snapshot of an entity that is still of
 
 ```astro
 ---
-const response = await useEntitiesApi(Astro).entityBySlug({ slug });
+const response = await useEntitiesApi().entityBySlug({ slug });
+
+if (response.is_draft) {
+  disableCache(Astro);
+}
 
 const expires =
   response.draft_expires_at != null
@@ -650,7 +660,7 @@ const expires =
 
 Three things a detail route has to get right for draft links to work:
 
-- **Caching is off, automatically.** A draft is private and expires, so no copy of it may survive anywhere. `useEntitiesApi(Astro)` marks the request as uncacheable the moment a response carries `is_draft`, and the middleware answers with `no-store` for the client and for the server/CDN instead of the configured TTLs — see [Middleware & Caching](#middleware--caching). This only works when the context is passed; if you fetch entities through the raw API methods or your own `fetch`, call `disableCache(Astro)` yourself.
+- **Turn caching off for the draft.** A draft is private and expires, so no copy of it may survive anywhere: the CDN would serve the snapshot to everyone and the browser would keep answering after the link expired. `disableCache(Astro)` marks the request as uncacheable and the middleware answers it with `no-store` for the client and for the server/CDN instead of the configured TTLs — see [Middleware & Caching](#middleware--caching). It has to run in the page frontmatter, where the response is assembled; a nested component renders after the middleware has written the headers.
 - **Do not pass `typeId` when resolving a token.** The token is not a slug the type filter applies to, so a typed lookup does not find the draft. Either drop `typeId` on that route, or retry the request once without it when the typed lookup fails — which is what [`playground/src/pages/tier/[slug].astro`](playground/src/pages/tier/%5Bslug%5D.astro) does.
 - **Let the token through your own validation.** A router that checks the slug against a pattern rejects it: the token looks like neither a slug nor a unique ID.
 
@@ -685,8 +695,8 @@ export default defineConfig({
 **Entity detail pages need the language explicitly**, because an entity slug is shared across languages:
 
 ```js
-await useEntitiesApi(Astro).entityBySlug({ slug, lang: Astro.currentLocale });
-await useEntitiesApi(Astro).entityByUniqueid({
+await useEntitiesApi().entityBySlug({ slug, lang: Astro.currentLocale });
+await useEntitiesApi().entityByUniqueid({
   uniqueid,
   lang: Astro.currentLocale,
 });
@@ -871,21 +881,22 @@ In dev mode the integration adds an Astro dev toolbar app with quick links to th
   ```ts
   const page = await usePagesApi().page({ slug: "about" });
   ```
-- **`useEntitiesApi(astro?)`** — Returns the `EntitiesApi` instance for entity details. Pass the Astro context to have [draft links](#draft-links) answered without caching: `entityBySlug()` and `entityByUniqueid()` also resolve a draft token, and a response carrying `is_draft` marks the request as uncacheable for the middleware. Without the context the client behaves as it always did.
+- **`useEntitiesApi()`** — Returns the `EntitiesApi` instance for entity details. `entityBySlug()` and `entityByUniqueid()` also resolve a [draft link](#draft-links); pair them with `disableCache()` when the response carries `is_draft`.
   ```ts
-  await useEntitiesApi(Astro).entityBySlug({
+  await useEntitiesApi().entityBySlug({
     slug,
     lang: Astro.currentLocale,
     typeId: 54,
   });
-  await useEntitiesApi(Astro).entityByUniqueid({
+  await useEntitiesApi().entityByUniqueid({
     uniqueid,
     lang: Astro.currentLocale,
   });
   ```
-- **`disableCache(astro)`** — Marks the current request as uncacheable: the middleware answers it with `no-store` for the client and for the server/CDN instead of the configured TTLs. Draft links do this on their own through `useEntitiesApi(Astro)`; call it yourself for a personalised page, a response built from a cookie, or an entity fetched through the raw API methods. It has to run in the page frontmatter — a nested component renders after the middleware has written the headers.
+- **`disableCache(astro)`** — Marks the current request as uncacheable: the middleware answers it with `no-store` for the client and for the server/CDN instead of the configured TTLs. Use it for a [draft link](#draft-links), a personalised page, or a response built from a cookie. It has to run in the page frontmatter — a nested component renders after the middleware has written the headers.
   ```ts
-  disableCache(Astro);
+  const response = await useEntitiesApi().entityBySlug({ slug });
+  if (response.is_draft) disableCache(Astro);
   ```
 - **`isCacheDisabled(astro)`** — Whether `disableCache()` has been called for this request. Useful in your own middleware, which runs before the integration's.
 - **`applyCacheHeaders(response, astro, options)`** — Writes the cache headers of a response: the TTLs from `options`, or `no-store` when the request was marked uncacheable. This is what the injected middleware calls; you only need it if you replace that middleware with your own.

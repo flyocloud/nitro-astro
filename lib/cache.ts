@@ -40,12 +40,18 @@ function localsOf(context: FlyoRequestContext | null | undefined) {
  * `no-store` at the client and at the server/CDN, instead of the configured
  * TTLs.
  *
- * Draft links do this on their own through `useEntitiesApi(Astro)` — a draft is
- * a shareable, expiring snapshot of content that is still offline, so a CDN
- * copy would hand it to everyone and a browser copy would outlive the link.
- * Call it yourself for anything else that must not be cached: a personalised
- * page, a response built from a cookie, an entity fetched through the raw API
- * methods.
+ * The case it exists for is a **draft link**: a shareable, expiring snapshot of
+ * content that is still offline, so a CDN copy would hand it to everyone and a
+ * browser copy would outlive the link. An entity detail route calls this when
+ * the response carries `is_draft`:
+ *
+ * ```ts
+ * const response = await useEntitiesApi().entityBySlug({ slug });
+ * if (response.is_draft) disableCache(Astro);
+ * ```
+ *
+ * Anything else that must not be cached works the same way: a personalised
+ * page, a response built from a cookie, a search result behind a login.
  *
  * It has to run while the page frontmatter runs, which is where the response is
  * assembled. A nested component renders after the middleware has written the

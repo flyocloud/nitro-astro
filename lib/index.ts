@@ -9,10 +9,8 @@ import {
   VersionApi,
   type Block,
   type ConfigResponse,
-  type Entity,
 } from "@flyo/nitro-typescript";
 import vitePluginFlyoComponents from "./vite-plugin-flyo-components";
-import { disableCache, type FlyoRequestContext } from "./cache";
 
 export { flyoImageUrl, FLYO_CDN_URL, type FlyoImageOptions } from "./cdn";
 export {
@@ -125,46 +123,18 @@ export function useConfigApi(): ConfigApi {
 /**
  * Returns the `EntitiesApi` instance for entity detail requests.
  *
- * Pass the Astro context to have **draft links** answered without caching:
- * `entityBySlug()` and `entityByUniqueid()` also resolve a draft token in place
- * of the slug or the unique id, and a response carrying `is_draft` marks the
- * request as uncacheable for the middleware — see `disableCache()`. Without the
- * context the API behaves exactly as before, drafts included, but the response
- * is cached like any other page.
+ * `entityBySlug()` and `entityByUniqueid()` also resolve a **draft link** — an
+ * opaque token in place of the slug or the unique id — and answer it with
+ * `is_draft: true`. A draft is private and expires, so no cache may keep it:
+ * call `disableCache()` for such a response.
  *
  * ```ts
- * const response = await useEntitiesApi(Astro).entityBySlug({ slug });
- * // response.is_draft tells you whether to render a "not live yet" hint
+ * const response = await useEntitiesApi().entityBySlug({ slug });
+ * if (response.is_draft) disableCache(Astro);
  * ```
  */
-export function useEntitiesApi(astro?: FlyoRequestContext): EntitiesApi {
-  const api = new EntitiesApi(useConfiguration());
-
-  if (!astro) {
-    return api;
-  }
-
-  // The instance is created per call, so shadowing the two methods that can
-  // resolve a draft token only affects this caller.
-  const entityBySlug = api.entityBySlug.bind(api);
-  const entityByUniqueid = api.entityByUniqueid.bind(api);
-
-  api.entityBySlug = async (requestParameters, initOverrides) =>
-    flagDraft(await entityBySlug(requestParameters, initOverrides), astro);
-
-  api.entityByUniqueid = async (requestParameters, initOverrides) =>
-    flagDraft(await entityByUniqueid(requestParameters, initOverrides), astro);
-
-  return api;
-}
-
-/** Marks the request uncacheable when the response came from a draft link. */
-function flagDraft(entity: Entity, astro: FlyoRequestContext): Entity {
-  if (entity?.is_draft) {
-    disableCache(astro);
-  }
-
-  return entity;
+export function useEntitiesApi(): EntitiesApi {
+  return new EntitiesApi(useConfiguration());
 }
 
 export function usePagesApi(): PagesApi {

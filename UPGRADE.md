@@ -206,22 +206,25 @@ The value that arrives is a URL string when a meta image is set and `false` when
 
 ## Upgrading from 2.8 to 2.9
 
-The integration keeps working as it is: every existing call site compiles and behaves as before. Two things are worth doing — one line per entity detail route so **draft links** are not cached, and an audit of your own SDK annotations, if you have any.
+The integration keeps working as it is: every existing call site compiles and behaves as before. Two things are worth doing — two lines per entity detail route so **draft links** are not cached, and an audit of your own SDK annotations, if you have any.
 
 **Dependencies:** `@flyo/nitro-typescript` moved from `^1.6.0` to `^2.0.0`, regenerated against OpenAPI document 2.35 (was 2.29). No endpoint, parameter or request shape changed. `Entity` gained `is_draft` and `draft_expires_at`, `/sitemap` got a response model of its own, and the model details below carry over from the `1.7.0` step that this release skips.
 
-**Pass the Astro context on entity detail routes.** A draft link is a shareable, expiring snapshot of an entity that is still offline in Flyo, requested through `entityBySlug()` and `entityByUniqueid()` with an opaque token in place of the slug or the unique id. `is_draft` is `true` on such a response and `draft_expires_at` holds the Unix timestamp at which the link stops working; after that the same URL answers 404.
+**Turn caching off for a draft link on entity detail routes.** A draft link is a shareable, expiring snapshot of an entity that is still offline in Flyo, requested through `entityBySlug()` and `entityByUniqueid()` with an opaque token in place of the slug or the unique id. `is_draft` is `true` on such a response and `draft_expires_at` holds the Unix timestamp at which the link stops working; after that the same URL answers 404.
 
-Because a draft is private and expires, no cache may keep a copy of it. Pass the context and the integration takes care of that:
+Because a draft is private and expires, no cache may keep a copy of it — the CDN would serve the snapshot to everyone and the browser would keep answering after the link had expired. The new `disableCache()` says so for the current request:
 
 ```diff
-- const response = await useEntitiesApi().entityBySlug({ slug, typeId: 9999 });
-+ const response = await useEntitiesApi(Astro).entityBySlug({ slug, typeId: 9999 });
+  const response = await useEntitiesApi().entityBySlug({ slug, typeId: 9999 });
++
++ if (response.is_draft) {
++   disableCache(Astro);
++ }
 ```
 
-With the context, a response carrying `is_draft` marks the request as uncacheable and the middleware answers it with `Cache-Control: private, no-store, max-age=0, must-revalidate` plus `CDN-Cache-Control: no-store` and `Vercel-CDN-Cache-Control: no-store`, instead of the configured TTLs. Without it nothing breaks, but a draft snapshot is cached like a published page — the CDN then serves it to everyone and the browser keeps it after the link has expired. `useEntitiesApi()` without an argument is not deprecated; it is the right call wherever caching is not involved.
+`useEntitiesApi()` and every other `use*Api()` function is unchanged. `disableCache()` marks the request, and the middleware then answers it with `Cache-Control: private, no-store, max-age=0, must-revalidate` plus `CDN-Cache-Control: no-store` and `Vercel-CDN-Cache-Control: no-store` instead of the configured TTLs. It is a no-op for a published entity, where `is_draft` is `false`.
 
-For anything else that must not be cached — a personalised page, a response built from a cookie, an entity fetched through the raw `entityBySlugRaw()` methods — the flag is now public:
+Two details about where it goes:
 
 ```ts
 import { disableCache } from "@flyo/nitro-astro";
@@ -229,12 +232,14 @@ import { disableCache } from "@flyo/nitro-astro";
 disableCache(Astro); // in the page frontmatter, not in a nested component
 ```
 
+It has to run while the frontmatter runs, which is where the response is assembled — a nested component renders after the middleware has written the headers. And it is not entity-specific: use it for a personalised page, a response built from a cookie, or an entity fetched through the raw `entityBySlugRaw()` methods.
+
 Two more things a detail route needs for draft links to resolve at all, both of them yours to decide:
 
 - **Do not pass `typeId` when the parameter is a draft token.** The token is not a slug the type filter applies to, so a typed lookup misses the draft. Either drop `typeId` on that route or retry the lookup once without it when it fails.
 - **Let the token past your own slug validation.** It looks like neither a slug nor a unique id, so a route that matches the parameter against a pattern rejects it.
 
-`MetaInfoEntity` now renders `<meta name="robots" content="noindex, nofollow">` when `is_draft` is `true`, so a leaked preview URL stays out of the search index. Regular entity responses are unaffected.
+`MetaInfoEntity` now renders `<meta name="robots" content="noindex, nofollow">` when `is_draft` is `true`, so a leaked preview URL stays out of the search index. Regular entity responses are unaffected. Note that it only touches the markup — the caching decision stays in the route, where the response is still being assembled.
 
 **The sitemap moved off the entity model.** `/sitemap` used to reuse the entity/search model; 2.35 gives it its own "Sitemap Item" schema, so `SitemapApi.sitemap()` returns `SitemapinterfaceInner[]` instead of `EntityinterfaceInner[]` (`sitemapRaw()` likewise). The injected `/sitemap.xml` route reads only `href` and `updated_at`, which are both on the new model, so there is nothing to change unless you generate a sitemap yourself.
 
