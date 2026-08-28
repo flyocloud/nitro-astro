@@ -738,26 +738,48 @@ import MetaInfoEntity from "@flyo/nitro-astro/MetaInfoEntity.astro";
 
 const { slug = "" } = Astro.params;
 
+// `useEntitiesApi(Astro)`: passing the context disables client and CDN caching
+// as soon as the response is a draft link. Always pass it on a detail route.
+const entities = useEntitiesApi(Astro);
+
 let response = null;
 try {
-  response = await useEntitiesApi().entityBySlug({
+  response = await entities.entityBySlug({
     slug,
     lang: Astro.currentLocale,
     typeId: 9999, // the entity type ID from Flyo
   });
 } catch (e) {
-  return Astro.rewrite("/404");
+  // A draft link puts an opaque token where the slug goes, and the type filter
+  // does not apply to a token — so retry once without `typeId` before giving up.
+  try {
+    response = await entities.entityBySlug({ slug, lang: Astro.currentLocale });
+  } catch (draftError) {
+    return Astro.rewrite("/404");
+  }
 }
 
 const isProd = import.meta.env.PROD;
+const draftExpires =
+  response.draft_expires_at != null
+    ? new Date(response.draft_expires_at * 1000).toLocaleString()
+    : null;
 ---
 
 <Layout title={response.entity.entity_title}>
   <MetaInfoEntity response={response} slot="head" />
+  {
+    response.is_draft && (
+      <p>
+        Draft preview — this entity is not published
+        {draftExpires && `, the link expires ${draftExpires}`}.
+      </p>
+    )
+  }
   <h1>{response.entity.entity_title}</h1>
 </Layout>
 {
-  isProd && (
+  isProd && !response.is_draft && (
     <script is:inline define:vars={{ api: response.entity.entity_metric.api }}>
       fetch(api)
     </script>
@@ -767,7 +789,16 @@ const isProd = import.meta.env.PROD;
 
 For a unique-ID based route use `entityByUniqueid({ uniqueid, lang: Astro.currentLocale })` instead. Any route parameter name works — the resolution logic is yours.
 
-Keep the `fetch(api)` metric call guarded by `import.meta.env.PROD` so development views are not counted.
+Keep the `fetch(api)` metric call guarded by `import.meta.env.PROD`, and by `!response.is_draft`, so neither development nor draft views are counted.
+
+**Draft links.** The same two endpoints also resolve a draft link: a shareable, expiring snapshot of an entity that is still offline in Flyo, addressed by an opaque token in place of the slug or the unique ID. The response then carries `is_draft: true` and `draft_expires_at` (a Unix timestamp, `null` otherwise); after expiry the URL answers 404. Four rules for a detail route:
+
+1. Pass the Astro context to `useEntitiesApi(Astro)`. A draft must not be cached — it is private and it expires — and with the context the middleware answers it with `no-store` for the client and the server/CDN instead of the configured TTLs. Without the context the draft is cached like a published page.
+2. Do not send `typeId` for a token; retry the lookup without it, as above.
+3. If the route validates the parameter against a pattern, let the token through — it looks like neither a slug nor a unique ID.
+4. Render a visible hint when `is_draft` is true, so nobody mistakes the preview for the live page. `MetaInfoEntity` already adds `<meta name="robots" content="noindex, nofollow">` for drafts.
+
+For anything else that must not be cached — a personalised page, a response built from a cookie — call `disableCache(Astro)` in the page frontmatter (not from a nested component: the middleware writes the headers when the page returns).
 
 ### 11. Sitemap
 
@@ -813,8 +844,8 @@ const config = await useConfig(Astro);
 4. Entity detail routes must pass the language explicitly, because an entity slug is shared across languages:
 
 ```
-await useEntitiesApi().entityBySlug({ slug, lang: Astro.currentLocale, typeId: <id> });
-await useEntitiesApi().entityByUniqueid({ uniqueid, lang: Astro.currentLocale });
+await useEntitiesApi(Astro).entityBySlug({ slug, lang: Astro.currentLocale, typeId: <id> });
+await useEntitiesApi(Astro).entityByUniqueid({ uniqueid, lang: Astro.currentLocale });
 ```
 
 If entity details are internationalized, create one detail page per language (`src/pages/de/detail/[slug].astro`, `src/pages/fr/detail/[slug].astro`).
@@ -911,6 +942,7 @@ Header and Footer use the user-provided Flyo container identifiers
 src/generated/flyo.ts exists
 src/pages/[...slug].astro exists and rewrites to /404 for unknown slugs
 src/pages/404.astro exists
+Entity detail routes call useEntitiesApi(Astro) so draft links are not cached
 src/components/flyo/wysiwyg/AppWysiwyg.astro exists
 Images use <Image /> from astro:assets and image.service is not overridden in astro.config.mjs
 /sitemap.xml returns the Flyo pages and entities

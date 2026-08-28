@@ -206,9 +206,51 @@ The value that arrives is a URL string when a meta image is set and `false` when
 
 ## Upgrading from 2.8 to 2.9
 
-Nothing to change in your project unless you annotate types against the SDK yourself. No component renders anything differently and no API call changed.
+The integration keeps working as it is: every existing call site compiles and behaves as before. Two things are worth doing — one line per entity detail route so **draft links** are not cached, and an audit of your own SDK annotations, if you have any.
 
-**Dependencies:** `@flyo/nitro-typescript` moved to `^1.7.0`, regenerated against OpenAPI document 2.30. Every endpoint and method signature is unchanged; two model details are worth knowing.
+**Dependencies:** `@flyo/nitro-typescript` moved from `^1.6.0` to `^2.0.0`, regenerated against OpenAPI document 2.35 (was 2.29). No endpoint, parameter or request shape changed. `Entity` gained `is_draft` and `draft_expires_at`, `/sitemap` got a response model of its own, and the model details below carry over from the `1.7.0` step that this release skips.
+
+**Pass the Astro context on entity detail routes.** A draft link is a shareable, expiring snapshot of an entity that is still offline in Flyo, requested through `entityBySlug()` and `entityByUniqueid()` with an opaque token in place of the slug or the unique id. `is_draft` is `true` on such a response and `draft_expires_at` holds the Unix timestamp at which the link stops working; after that the same URL answers 404.
+
+Because a draft is private and expires, no cache may keep a copy of it. Pass the context and the integration takes care of that:
+
+```diff
+- const response = await useEntitiesApi().entityBySlug({ slug, typeId: 9999 });
++ const response = await useEntitiesApi(Astro).entityBySlug({ slug, typeId: 9999 });
+```
+
+With the context, a response carrying `is_draft` marks the request as uncacheable and the middleware answers it with `Cache-Control: private, no-store, max-age=0, must-revalidate` plus `CDN-Cache-Control: no-store` and `Vercel-CDN-Cache-Control: no-store`, instead of the configured TTLs. Without it nothing breaks, but a draft snapshot is cached like a published page — the CDN then serves it to everyone and the browser keeps it after the link has expired. `useEntitiesApi()` without an argument is not deprecated; it is the right call wherever caching is not involved.
+
+For anything else that must not be cached — a personalised page, a response built from a cookie, an entity fetched through the raw `entityBySlugRaw()` methods — the flag is now public:
+
+```ts
+import { disableCache } from "@flyo/nitro-astro";
+
+disableCache(Astro); // in the page frontmatter, not in a nested component
+```
+
+Two more things a detail route needs for draft links to resolve at all, both of them yours to decide:
+
+- **Do not pass `typeId` when the parameter is a draft token.** The token is not a slug the type filter applies to, so a typed lookup misses the draft. Either drop `typeId` on that route or retry the lookup once without it when it fails.
+- **Let the token past your own slug validation.** It looks like neither a slug nor a unique id, so a route that matches the parameter against a pattern rejects it.
+
+`MetaInfoEntity` now renders `<meta name="robots" content="noindex, nofollow">` when `is_draft` is `true`, so a leaked preview URL stays out of the search index. Regular entity responses are unaffected.
+
+**The sitemap moved off the entity model.** `/sitemap` used to reuse the entity/search model; 2.35 gives it its own "Sitemap Item" schema, so `SitemapApi.sitemap()` returns `SitemapinterfaceInner[]` instead of `EntityinterfaceInner[]` (`sitemapRaw()` likewise). The injected `/sitemap.xml` route reads only `href` and `updated_at`, which are both on the new model, so there is nothing to change unless you generate a sitemap yourself.
+
+If you do, `entity_title`, `entity_teaser`, `entity_image`, `entity_time_start` and `entity_type_id` are gone from a sitemap entry — read them from `SearchApi.search()` or the entities endpoints instead. And drop any explicit annotation on the result: every property of both models is optional, so `SitemapinterfaceInner` is still assignable to `EntityinterfaceInner` and an annotated result keeps compiling while the dropped fields silently read `undefined`.
+
+```diff
+- const items: EntityinterfaceInner[] = await useSitemapApi().sitemap({});
++ const items = await useSitemapApi().sitemap({});
+  items.map((item) => `<url><loc>${base}${item.href}</loc></url>`);
+```
+
+`entity_type`, `entity_slug` and `routes` are still on the sitemap item, still populated and still typed as before, but marked `@deprecated`: `href` is the resolved URL for pages and mapped entities alike, and the endpoint omits entries it cannot resolve one for. Nothing errors today; migrate URL assembly to `href` before the next major spec bump.
+
+`SearchApi.search()` still returns `EntityinterfaceInner[]` — that model is unchanged and not deprecated. Only the sitemap moved off it.
+
+**Two model details carry over from the skipped `1.7.0`,** and only matter if you annotate types against the SDK yourself.
 
 **The `Routes` model is gone.** `routes` used to point at a named `Routes` schema, which 2.30 inlines, so the SDK no longer exports `Routes`, `RoutesFromJSON`, `RoutesToJSON` or `instanceOfRoutes`. Importing the type stops compiling — replace the annotation with the inline type it stood for:
 
@@ -225,6 +267,6 @@ const path = entity.routes?.[key];
 if (typeof path !== "string") return undefined;
 ```
 
-Deserialization is unchanged but for one case: when the API sends an explicit `"_empty": null`, `1.6.0` dropped the key and `1.7.0` keeps the `null`. Compare with `routes._empty == null` if you want to treat a missing and a null value alike.
+Deserialization is unchanged but for one case: when the API sends an explicit `"_empty": null`, `1.6.0` dropped the key while `1.7.0` and `2.0.0` keep the `null`. Compare with `routes._empty == null` if you want to treat a missing and a null value alike. The same holds for the new draft fields — `is_draft: false` survives deserialization and an explicit `draft_expires_at: null` is kept as `null` rather than dropped, so use `draft_expires_at == null` if you mean "either".
 
 For the full API and component reference see [README.md](README.md).

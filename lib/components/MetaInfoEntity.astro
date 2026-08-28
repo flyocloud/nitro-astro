@@ -15,3 +15,11 @@ const { response } = Astro.props;
   image={response.entity?.entity_image}
   jsonld={response.jsonld}
 />
+{
+  /*
+   * A draft link is a preview of content that is still offline: it must not end
+   * up in an index, and it stops working when the link expires. Caching is
+   * handled separately, by `useEntitiesApi(Astro)` and the middleware.
+   */
+  response.is_draft && <meta name="robots" content="noindex, nofollow" />
+}

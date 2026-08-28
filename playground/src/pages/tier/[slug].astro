@@ -6,25 +6,53 @@ import { Image } from "astro:assets";
 
 const { slug = "" } = Astro.params;
 
+// Passing `Astro` makes the client answer a draft link without caching: the
+// middleware sends no-store to the browser and to the CDN instead of the
+// configured TTLs, so the private snapshot is never stored anywhere.
+const entities = useEntitiesApi(Astro);
+
 let response = null;
 try {
-  response = await useEntitiesApi().entityBySlug({
+  response = await entities.entityBySlug({
     slug,
     lang: Astro.currentLocale,
     typeId: 54,
   });
 } catch (e) {
-  console.log(e);
-  return new Response(e.body, {
-    status: 404,
-    statusText: "Entity Not Found",
-  });
+  // The same route also resolves a draft link, whose token takes the place of
+  // the slug. The type filter does not apply to a token, so a miss is retried
+  // once without `typeId` before the route gives up.
+  try {
+    response = await entities.entityBySlug({
+      slug,
+      lang: Astro.currentLocale,
+    });
+  } catch (draftError) {
+    console.log(e);
+    return new Response(draftError.body, {
+      status: 404,
+      statusText: "Entity Not Found",
+    });
+  }
 }
+
 const isProd = import.meta.env.PROD;
+const draftExpiresAt =
+  response.draft_expires_at != null
+    ? new Date(response.draft_expires_at * 1000).toLocaleString()
+    : null;
 ---
 
 <Layout title={response.entity.entity_title}>
   <MetaInfoEntity response={response} slot="head" />
+  {
+    response.is_draft && (
+      <p style="padding:0.75rem 1rem;background:#fff4d6;border:1px solid #e0b400">
+        <strong>Draft preview</strong> — this entity is not published
+        {draftExpiresAt && `, the link expires ${draftExpiresAt}`}.
+      </p>
+    )
+  }
   <h1>{response.entity.entity_title}</h1>
   {
     response.model.image && (
@@ -38,7 +66,8 @@ const isProd = import.meta.env.PROD;
   }
 </Layout>
 {
-  isProd && (
+  /* Only visits of the published entity count towards the entity metrics. */
+  isProd && !response.is_draft && (
     <script is:inline define:vars={{ api: response.entity.entity_metric.api }}>
       fetch(api)
     </script>

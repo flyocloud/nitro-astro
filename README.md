@@ -573,7 +573,7 @@ const { slug } = Astro.params;
 
 let response = null;
 try {
-  response = await useEntitiesApi().entityBySlug({
+  response = await useEntitiesApi(Astro).entityBySlug({
     slug,
     lang: Astro.currentLocale,
     typeId: 9999,
@@ -601,6 +601,8 @@ const isProd = import.meta.env.PROD;
 
 The inline `fetch(api)` call reports the detail view back to Flyo's entity metrics — only do this in production.
 
+> Pass `Astro` to `useEntitiesApi()`, as above. It changes nothing for a published entity and makes [draft links](#draft-links) uncacheable — without it a draft snapshot ends up in the CDN and in the visitor's browser. `useEntitiesApi()` without an argument stays valid and behaves exactly as before.
+
 #### Example 2: Request by unique ID
 
 The unique ID is globally unique across the whole system, which makes it reliable for fetching a specific entity. Use `src/pages/blog/[uniqueid].astro`:
@@ -609,7 +611,7 @@ The unique ID is globally unique across the whole system, which makes it reliabl
 ---
 const { uniqueid } = Astro.params;
 // ...
-const response = await useEntitiesApi().entityByUniqueid({
+const response = await useEntitiesApi(Astro).entityByUniqueid({
   uniqueid,
   lang: Astro.currentLocale,
 });
@@ -617,6 +619,42 @@ const response = await useEntitiesApi().entityByUniqueid({
 ```
 
 Any route parameter name works — you control the resolution logic, the library only provides the API clients and the meta/JSON-LD components.
+
+#### Draft links
+
+A **draft link** is a shareable, expiring snapshot of an entity that is still offline in Flyo — the only way to look at unpublished content on the website. It is requested through the very same two endpoints, with an opaque token in place of the slug or the unique ID, so a detail route resolves draft links without a second route. Three properties of the response describe the situation:
+
+- `response.is_draft` — `false` on every regular response, `true` when the token resolved to a draft.
+- `response.draft_expires_at` — the Unix timestamp at which the link stops working, `null` when `is_draft` is `false`. After it expires the same URL answers 404.
+- everything else is the entity, exactly as for a published one.
+
+```astro
+---
+const response = await useEntitiesApi(Astro).entityBySlug({ slug });
+
+const expires =
+  response.draft_expires_at != null
+    ? new Date(response.draft_expires_at * 1000).toLocaleString()
+    : null;
+---
+
+{
+  response.is_draft && (
+    <p class="draft-banner">
+      Draft preview — this entity is not published
+      {expires && `, the link expires ${expires}`}.
+    </p>
+  )
+}
+```
+
+Three things a detail route has to get right for draft links to work:
+
+- **Caching is off, automatically.** A draft is private and expires, so no copy of it may survive anywhere. `useEntitiesApi(Astro)` marks the request as uncacheable the moment a response carries `is_draft`, and the middleware answers with `no-store` for the client and for the server/CDN instead of the configured TTLs — see [Middleware & Caching](#middleware--caching). This only works when the context is passed; if you fetch entities through the raw API methods or your own `fetch`, call `disableCache(Astro)` yourself.
+- **Do not pass `typeId` when resolving a token.** The token is not a slug the type filter applies to, so a typed lookup does not find the draft. Either drop `typeId` on that route, or retry the request once without it when the typed lookup fails — which is what [`playground/src/pages/tier/[slug].astro`](playground/src/pages/tier/%5Bslug%5D.astro) does.
+- **Let the token through your own validation.** A router that checks the slug against a pattern rejects it: the token looks like neither a slug nor a unique ID.
+
+`MetaInfoEntity` renders `<meta name="robots" content="noindex, nofollow">` for a draft response on its own, so a leaked preview URL does not end up in a search index.
 
 ### 12. Multilanguage (i18n)
 
@@ -647,8 +685,8 @@ export default defineConfig({
 **Entity detail pages need the language explicitly**, because an entity slug is shared across languages:
 
 ```js
-await useEntitiesApi().entityBySlug({ slug, lang: Astro.currentLocale });
-await useEntitiesApi().entityByUniqueid({
+await useEntitiesApi(Astro).entityBySlug({ slug, lang: Astro.currentLocale });
+await useEntitiesApi(Astro).entityByUniqueid({
   uniqueid,
   lang: Astro.currentLocale,
 });
@@ -771,12 +809,18 @@ The integration adds a middleware (`order: "post"`) that:
 - Resolves the Flyo configuration once per request and exposes it as `Astro.locals.config` (read it with `useConfig(Astro)`)
 - Sets cache headers in production, configurable via `clientCacheHeaderTtl` and `serverCacheHeaderTtl`
 - Disables caching entirely when `liveEdit` is enabled
+- Disables caching for a single request that was marked uncacheable — a [draft link](#draft-links), or anything you flag with `disableCache()`
 
 Headers set when live edit is off:
 
 - `Cache-Control` — client-side caching (`clientCacheHeaderTtl`)
 - `CDN-Cache-Control` — CDN caching (`serverCacheHeaderTtl`)
 - `Vercel-CDN-Cache-Control` — Vercel-specific caching (`serverCacheHeaderTtl`)
+
+Headers set for a request marked with `disableCache()`, live edit or not:
+
+- `Cache-Control: private, no-store, max-age=0, must-revalidate` — nothing is stored by the browser or a shared proxy
+- `CDN-Cache-Control: no-store` and `Vercel-CDN-Cache-Control: no-store` — nothing is stored by the CDN
 
 > Your own middleware runs **before** the integration's, so `context.locals.config` is only populated after `await next()`. If you manage caching yourself, set both TTL options to `0` or overwrite the headers in your own middleware.
 
@@ -827,18 +871,24 @@ In dev mode the integration adds an Astro dev toolbar app with quick links to th
   ```ts
   const page = await usePagesApi().page({ slug: "about" });
   ```
-- **`useEntitiesApi()`** — Returns the `EntitiesApi` instance for entity details.
+- **`useEntitiesApi(astro?)`** — Returns the `EntitiesApi` instance for entity details. Pass the Astro context to have [draft links](#draft-links) answered without caching: `entityBySlug()` and `entityByUniqueid()` also resolve a draft token, and a response carrying `is_draft` marks the request as uncacheable for the middleware. Without the context the client behaves as it always did.
   ```ts
-  await useEntitiesApi().entityBySlug({
+  await useEntitiesApi(Astro).entityBySlug({
     slug,
     lang: Astro.currentLocale,
     typeId: 54,
   });
-  await useEntitiesApi().entityByUniqueid({
+  await useEntitiesApi(Astro).entityByUniqueid({
     uniqueid,
     lang: Astro.currentLocale,
   });
   ```
+- **`disableCache(astro)`** — Marks the current request as uncacheable: the middleware answers it with `no-store` for the client and for the server/CDN instead of the configured TTLs. Draft links do this on their own through `useEntitiesApi(Astro)`; call it yourself for a personalised page, a response built from a cookie, or an entity fetched through the raw API methods. It has to run in the page frontmatter — a nested component renders after the middleware has written the headers.
+  ```ts
+  disableCache(Astro);
+  ```
+- **`isCacheDisabled(astro)`** — Whether `disableCache()` has been called for this request. Useful in your own middleware, which runs before the integration's.
+- **`applyCacheHeaders(response, astro, options)`** — Writes the cache headers of a response: the TTLs from `options`, or `no-store` when the request was marked uncacheable. This is what the injected middleware calls; you only need it if you replace that middleware with your own.
 - **`useSearchApi()`** — Returns the `SearchApi` instance for search operations.
 - **`useSitemapApi()`** — Returns the `SitemapApi` instance. The `/sitemap.xml` route is generated automatically; use this only for custom sitemap handling.
 - **`useVersionApi()`** — Returns the `VersionApi` instance for API version checks.
@@ -889,7 +939,7 @@ Import each component from its own subpath — components are shipped as raw `.a
   ```astro
   <MetaInfoPage page={page} slot="head" />
   ```
-- **`MetaInfoEntity.astro`** — Meta tags and JSON-LD derived from an entity response.
+- **`MetaInfoEntity.astro`** — Meta tags and JSON-LD derived from an entity response. Adds `<meta name="robots" content="noindex, nofollow">` when the response is a [draft](#draft-links).
   ```astro
   <MetaInfoEntity response={response} slot="head" />
   ```
@@ -938,6 +988,8 @@ The package is fully typed and re-uses the models from `@flyo/nitro-typescript`:
 ```ts
 import type { Block, Page, Entity } from "@flyo/nitro-typescript";
 ```
+
+> A `/sitemap` entry is described by `SitemapinterfaceInner`, not by the entity/search model `EntityinterfaceInner` — see [UPGRADE.md](UPGRADE.md) if you annotate sitemap results yourself.
 
 For project-specific block shapes, prefer the generated types from `npm run flyo:types` (see [Generate Block Types](#6-generate-block-types)).
 

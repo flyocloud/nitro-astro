@@ -61,7 +61,7 @@ Add it to **both** `files` and `exports` in [lib/package.json](lib/package.json)
 "./thing.ts": "./thing.ts"
 ```
 
-If it should instead be part of the bundle and the generated types, it has to be reachable from `index.ts` — see the dts note below.
+If it should instead be part of the bundle and the generated types, it has to be reachable from `index.ts` and listed in the dts `include` — see the dts notes below. `cache.ts` is such a module: nothing outside the bundle imports it, so it is in neither `files` nor `exports`.
 
 ## What the tests enforce
 
@@ -72,13 +72,15 @@ If it should instead be part of the bundle and the generated types, it has to be
 - `dist/types/**` contains anything the package does not reference,
 - a shipped source file imports a package that `dependencies` does not name (`astro` and the package's own name excepted — see the dependency note below),
 - an `.astro` subpath in `exports` has no `typesVersions` fallback, or the two disagree (forgot step 5),
-- a shim has no `components/X.astro.d.ts` beside it (forgot step 3).
+- a shim has no `components/X.astro.d.ts` beside it (forgot step 3),
+- a relative import inside `dist/types/**` resolves to a file that is not shipped (see the declarations note below).
 
 So a forgotten export or a junk file is a red CI run, not a broken release. If you change what the package ships, expect this suite to have an opinion.
 
 ## Gotchas
 
-- **Declarations are generated for `index.ts` only** (`include` on the dts plugin in [lib/vite.config.ts](lib/vite.config.ts)). Pointing `types` at some other `dist/types/*.d.ts` will not work until you widen that.
+- **`dist/types/index.d.ts` is the only declaration file**, rolled up from `index.ts` and the siblings it re-exports (`include` plus `rollupTypes` on the dts plugin in [lib/vite.config.ts](lib/vite.config.ts)). Pointing `types` at some other `dist/types/*.d.ts` will not work until you widen that.
+- **A new module that `index.ts` re-exports has to be added to the dts `include`**, next to `cdn.ts` and `cache.ts`. Without it api-extractor has nothing to inline and leaves `from "./yours"` in the rolled-up declarations — a path that resolves to nothing beside it. Nobody gets an error for that, because every Astro tsconfig sets `skipLibCheck`: the re-exported symbols just become `any` in the consumer's editor. `flyoImageUrl` was `any` that way until `rollupTypes` was turned on. The packaging test now fails on it.
 - **`exports` alone is not enough for consumers.** TypeScript only reads `exports` under `moduleResolution` `bundler` / `node16` / `nodenext`. A consumer whose `tsconfig.json` does not extend `astro/tsconfigs/*` — or who has no `tsconfig.json` at all — gets legacy `node10` resolution, where `exports` is invisible and `@flyo/nitro-astro/BlockSlot.astro` is looked up as a literal file at the package root. That file does not exist (components live in `components/`), so the IDE reports `TS2307: Cannot find module`. `typesVersions` is the fallback legacy resolution _does_ read; it only affects types, runtime resolution goes through `exports` either way. Keep the two in sync — the tests do not let you forget.
 - **`.astro` imports from `.ts` resolve via `components/X.astro.d.ts`**, not an ambient `declare module "*.astro"`. The ambient version would have to be published to help consumers, and publishing it flattens the props of _their_ components to `any`. [lib/module.d.ts](lib/module.d.ts) is for `virtual:*` only.
 - **Every bare import in shipped source must be a real `dependency`.** The bundle inlines its imports, so `dist/` works no matter what `dependencies` says — but the raw source is resolved from the _consumer's_ `node_modules`, where an undeclared package only resolves if something else in their tree happens to hoist it. `camelcase` in `components/FlyoNitroBlock.astro` was undeclared and resolved through `astro` → `boxen` → `camelcase` for exactly that reason, until an install that did not hoist it turned into a failed consumer build. `astro` is the one thing raw source may import freely: an integration is loaded from the consumer's `astro.config.mjs`, so their Astro is always present and always the version that has to win.
