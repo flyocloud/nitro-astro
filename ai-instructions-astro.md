@@ -783,7 +783,7 @@ const draftExpires =
   <h1>{response.entity.entity_title}</h1>
 </Layout>
 {
-  isProd && !response.is_draft && (
+  isProd && (
     <script is:inline define:vars={{ api: response.entity.entity_metric.api }}>
       fetch(api)
     </script>
@@ -793,7 +793,7 @@ const draftExpires =
 
 For a unique-ID based route use `entityByUniqueid({ uniqueid, lang: Astro.currentLocale })` instead. Any route parameter name works — the resolution logic is yours.
 
-Keep the `fetch(api)` metric call guarded by `import.meta.env.PROD`, and by `!response.is_draft`, so neither development nor draft views are counted.
+Keep the `fetch(api)` metric call guarded by `import.meta.env.PROD`.
 
 **Draft links.** The same two endpoints also resolve a draft link: a shareable, expiring snapshot of an entity that is still offline in Flyo, addressed by an opaque token in place of the slug or the unique ID. The response then carries `is_draft: true` and `draft_expires_at` (a Unix timestamp, `null` otherwise); after expiry the URL answers 404. Four rules for a detail route:
 

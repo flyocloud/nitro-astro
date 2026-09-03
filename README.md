@@ -597,7 +597,7 @@ const isProd = import.meta.env.PROD;
   <img src={response.model.image.source} style="width:100%" />
 </Layout>
 {
-  isProd && !response.is_draft && (
+  isProd && (
     <script is:inline define:vars={{ api: response.entity.entity_metric.api }}>
       fetch(api)
     </script>
@@ -605,7 +605,7 @@ const isProd = import.meta.env.PROD;
 }
 ```
 
-The inline `fetch(api)` call reports the detail view back to Flyo's entity metrics — only do this in production, and not for a draft preview.
+The inline `fetch(api)` call reports the detail view back to Flyo's entity metrics — only do this in production.
 
 > The `disableCache(Astro)` line is what keeps a [draft link](#draft-links) out of the CDN and the visitor's browser. It is a no-op for every published entity, so it belongs on any detail route that should resolve draft links at all.
 
