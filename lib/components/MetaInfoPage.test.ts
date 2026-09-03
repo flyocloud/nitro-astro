@@ -28,6 +28,19 @@ describe("MetaInfoPage", () => {
     );
   });
 
+  it("keeps a non-indexable page out of the search index", async () => {
+    const html = await render({ page: { is_indexable: 0 } });
+
+    expect(html).toContain('<meta name="robots" content="noindex">');
+  });
+
+  it("emits no robots tag for an indexable page", async () => {
+    expect(await render({ page: { is_indexable: 1 } })).not.toContain(
+      'name="robots"'
+    );
+    expect(await render({ page: {} })).not.toContain('name="robots"');
+  });
+
   it("emits no ld+json script without json-ld", async () => {
     const html = await render({ page: { meta_json: { title: "About Me" } } });
 

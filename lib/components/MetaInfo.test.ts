@@ -46,4 +46,14 @@ describe("MetaInfo", () => {
     expect(html).not.toContain("og:image");
     expect(html).not.toContain("false");
   });
+
+  it("renders the robots directive it is given", async () => {
+    const html = await render({ title: "Title", robots: "noindex" });
+
+    expect(html).toContain('<meta name="robots" content="noindex">');
+  });
+
+  it("emits no robots tag without a directive", async () => {
+    expect(await render({ title: "Title" })).not.toContain('name="robots"');
+  });
 });

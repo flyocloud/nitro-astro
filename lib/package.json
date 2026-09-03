@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@flyo/nitro-js-bridge": "^1.5.0",
-    "@flyo/nitro-typescript": "^2.0.0"
+    "@flyo/nitro-typescript": "^2.2.0"
   },
   "devDependencies": {
     "@types/node": "20.17.0",
@@ -132,24 +132,60 @@
   },
   "typesVersions": {
     "*": {
-      "BlockSlot.astro": ["./components/BlockSlot.ts"],
-      "components/BlockSlot.astro": ["./components/BlockSlot.ts"],
-      "FallbackComponent.astro": ["./components/FallbackComponent.ts"],
-      "components/FallbackComponent.astro": ["./components/FallbackComponent.ts"],
-      "FlyoNitroBlock.astro": ["./components/FlyoNitroBlock.ts"],
-      "components/FlyoNitroBlock.astro": ["./components/FlyoNitroBlock.ts"],
-      "FlyoNitroPage.astro": ["./components/FlyoNitroPage.ts"],
-      "components/FlyoNitroPage.astro": ["./components/FlyoNitroPage.ts"],
-      "MetaInfo.astro": ["./components/MetaInfo.ts"],
-      "components/MetaInfo.astro": ["./components/MetaInfo.ts"],
-      "MetaInfoEntity.astro": ["./components/MetaInfoEntity.ts"],
-      "components/MetaInfoEntity.astro": ["./components/MetaInfoEntity.ts"],
-      "MetaInfoPage.astro": ["./components/MetaInfoPage.ts"],
-      "components/MetaInfoPage.astro": ["./components/MetaInfoPage.ts"],
-      "FlyoWysiwyg.astro": ["./components/FlyoWysiwyg.ts"],
-      "components/FlyoWysiwyg.astro": ["./components/FlyoWysiwyg.ts"],
-      "DebugInfo.astro": ["./components/DebugInfo.ts"],
-      "components/DebugInfo.astro": ["./components/DebugInfo.ts"]
+      "BlockSlot.astro": [
+        "./components/BlockSlot.ts"
+      ],
+      "components/BlockSlot.astro": [
+        "./components/BlockSlot.ts"
+      ],
+      "FallbackComponent.astro": [
+        "./components/FallbackComponent.ts"
+      ],
+      "components/FallbackComponent.astro": [
+        "./components/FallbackComponent.ts"
+      ],
+      "FlyoNitroBlock.astro": [
+        "./components/FlyoNitroBlock.ts"
+      ],
+      "components/FlyoNitroBlock.astro": [
+        "./components/FlyoNitroBlock.ts"
+      ],
+      "FlyoNitroPage.astro": [
+        "./components/FlyoNitroPage.ts"
+      ],
+      "components/FlyoNitroPage.astro": [
+        "./components/FlyoNitroPage.ts"
+      ],
+      "MetaInfo.astro": [
+        "./components/MetaInfo.ts"
+      ],
+      "components/MetaInfo.astro": [
+        "./components/MetaInfo.ts"
+      ],
+      "MetaInfoEntity.astro": [
+        "./components/MetaInfoEntity.ts"
+      ],
+      "components/MetaInfoEntity.astro": [
+        "./components/MetaInfoEntity.ts"
+      ],
+      "MetaInfoPage.astro": [
+        "./components/MetaInfoPage.ts"
+      ],
+      "components/MetaInfoPage.astro": [
+        "./components/MetaInfoPage.ts"
+      ],
+      "FlyoWysiwyg.astro": [
+        "./components/FlyoWysiwyg.ts"
+      ],
+      "components/FlyoWysiwyg.astro": [
+        "./components/FlyoWysiwyg.ts"
+      ],
+      "DebugInfo.astro": [
+        "./components/DebugInfo.ts"
+      ],
+      "components/DebugInfo.astro": [
+        "./components/DebugInfo.ts"
+      ]
     }
   },
   "files": [

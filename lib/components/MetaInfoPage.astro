@@ -7,6 +7,12 @@ interface Props {
 }
 
 const { page } = Astro.props;
+
+// `is_indexable` is `0` for a page the editor keeps out of the index, and absent
+// on responses from an API that does not know the flag yet — so only an explicit
+// non-indexable value emits the tag, everything else stays indexable as before.
+const robots =
+  page.is_indexable !== undefined && !page.is_indexable ? "noindex" : null;
 ---
 
 <MetaInfo
@@ -14,4 +20,5 @@ const { page } = Astro.props;
   description={page.meta_json?.description}
   image={page.meta_json?.image}
   jsonld={page.jsonld}
+  robots={robots}
 />

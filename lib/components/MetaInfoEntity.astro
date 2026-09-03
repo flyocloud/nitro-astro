@@ -7,6 +7,21 @@ interface Props {
 }
 
 const { response } = Astro.props;
+
+/*
+ * A draft link is a preview of content that is still offline: it must not end up
+ * in an index, and it stops working when the link expires. Caching is the
+ * route's call — `disableCache(Astro)` — not this component's.
+ *
+ * `is_indexable` is `false` when the API keeps the entity out of the sitemap and
+ * the search endpoint, and absent on responses from an API that does not know
+ * the flag yet — so only an explicit non-indexable value emits the tag.
+ */
+const robots = response.is_draft
+  ? "noindex, nofollow"
+  : response.is_indexable !== undefined && !response.is_indexable
+    ? "noindex"
+    : null;
 ---
 
 <MetaInfo
@@ -14,12 +29,5 @@ const { response } = Astro.props;
   description={response.entity?.entity_teaser}
   image={response.entity?.entity_image}
   jsonld={response.jsonld}
+  robots={robots}
 />
-{
-  /*
-   * A draft link is a preview of content that is still offline: it must not end
-   * up in an index, and it stops working when the link expires. Caching is the
-   * route's call — `disableCache(Astro)` — not this component's.
-   */
-  response.is_draft && <meta name="robots" content="noindex, nofollow" />
-}

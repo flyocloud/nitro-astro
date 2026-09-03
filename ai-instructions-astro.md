@@ -381,6 +381,8 @@ try {
 
 If the project has no `src/pages/404.astro`, create a minimal one so the rewrite has a target.
 
+`MetaInfoPage` and `MetaInfoEntity` add `<meta name="robots" content="noindex">` on their own when the API reports the page or entity as not indexable. Do not emit a robots tag for that yourself.
+
 If the project already has routes (for example a hand-built `index.astro` or other static pages), inspect the routing structure first. Astro gives more specific routes priority over the catch-all, so existing pages keep working — but a hand-built `src/pages/index.astro` will shadow the Flyo homepage. Ask the user whether the homepage should come from Flyo, and remove or rename the static file if so.
 
 ### 7. Prepare a project WYSIWYG wrapper

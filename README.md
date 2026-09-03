@@ -782,6 +782,8 @@ Nothing else to wire up — do **not** add `@astrojs/sitemap` for Flyo content, 
 </Layout>
 ```
 
+Content the editor marks as non-indexable is handled on its own: a page with `is_indexable` `0` and an entity with `is_indexable` `false` get `<meta name="robots" content="noindex">`, so they stay reachable by URL but out of the search index — the API leaves them out of the sitemap and the search endpoint anyway. Nothing to configure.
+
 `MetaInfo` is the generic version if you want to set the values yourself:
 
 ```astro
@@ -794,11 +796,12 @@ import MetaInfo from "@flyo/nitro-astro/MetaInfo.astro";
   description="Page description"
   image="https://storage.flyo.cloud/image_xxx.jpg"
   jsonld={jsonldObject}
+  robots="noindex"
   slot="head"
 />
 ```
 
-> The `image` must be a plain Flyo CDN URL — it is rewritten to `?w=1200&h=630&format=jpg` for `og:image` and `?w=1200&h=600&format=jpg` for `twitter:image`. `MetaInfo` also emits `og:url` and `<link rel="canonical">` from the current URL, so remove your own canonical link.
+> `robots` is optional and renders `<meta name="robots" content="…">` verbatim; omit it and no robots tag is emitted. The `image` must be a plain Flyo CDN URL — it is rewritten to `?w=1200&h=630&format=jpg` for `og:image` and `?w=1200&h=600&format=jpg` for `twitter:image`. `MetaInfo` also emits `og:url` and `<link rel="canonical">` from the current URL, so remove your own canonical link.
 
 `DebugInfo` prints an HTML comment into the page with live edit status, environment, API version and date, token type, Vercel deployment ID and commit SHA — useful for checking what a deployed site is actually serving:
 
@@ -945,12 +948,12 @@ Import each component from its own subpath — components are shipped as raw `.a
   import FlyoWysiwyg from "@flyo/nitro-astro/FlyoWysiwyg.astro";
   <FlyoWysiwyg json={block.content.json} components={{ image: CustomImage }} />
   ```
-- **`MetaInfo.astro`** — Generic meta tags (title, description, image, JSON-LD, `og:url`, canonical).
-- **`MetaInfoPage.astro`** — Meta tags derived from a page's `meta_json`.
+- **`MetaInfo.astro`** — Generic meta tags (title, description, image, JSON-LD, `og:url`, canonical, optional `robots`).
+- **`MetaInfoPage.astro`** — Meta tags derived from a page's `meta_json`. Adds `<meta name="robots" content="noindex">` when the page is not indexable.
   ```astro
   <MetaInfoPage page={page} slot="head" />
   ```
-- **`MetaInfoEntity.astro`** — Meta tags and JSON-LD derived from an entity response. Adds `<meta name="robots" content="noindex, nofollow">` when the response is a [draft](#draft-links).
+- **`MetaInfoEntity.astro`** — Meta tags and JSON-LD derived from an entity response. Adds `<meta name="robots" content="noindex, nofollow">` when the response is a [draft](#draft-links), and `<meta name="robots" content="noindex">` when the entity is not indexable.
   ```astro
   <MetaInfoEntity response={response} slot="head" />
   ```

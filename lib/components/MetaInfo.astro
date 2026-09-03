@@ -7,9 +7,10 @@ interface Props {
   description?: string;
   image?: MetaImage | null;
   jsonld?: object | null;
+  robots?: string | null;
 }
 
-const { title, image, description, jsonld } = Astro.props;
+const { title, image, description, jsonld, robots } = Astro.props;
 const jsonLdString = jsonld ? JSON.stringify(jsonld) : null;
 
 // `meta_json.image` is a URL string when a meta image is set and `false` when
@@ -54,6 +55,7 @@ const ogUrl = Astro.url.href; // absolute URL
     </>
   )
 }
+{robots && <meta name="robots" content={robots} />}
 {jsonLdString && <script type="application/ld+json" set:html={jsonLdString} />}
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary_large_image" />

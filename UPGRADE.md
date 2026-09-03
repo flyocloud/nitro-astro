@@ -208,7 +208,7 @@ The value that arrives is a URL string when a meta image is set and `false` when
 
 The integration keeps working as it is: every existing call site compiles and behaves as before. Two things are worth doing — two lines per entity detail route so **draft links** are not cached, and an audit of your own SDK annotations, if you have any.
 
-**Dependencies:** `@flyo/nitro-typescript` moved from `^1.6.0` to `^2.0.0`, regenerated against OpenAPI document 2.35 (was 2.29). No endpoint, parameter or request shape changed. `Entity` gained `is_draft` and `draft_expires_at`, `/sitemap` got a response model of its own, and the model details below carry over from the `1.7.0` step that this release skips.
+**Dependencies:** `@flyo/nitro-typescript` moved from `^1.6.0` to `^2.2.0`, regenerated against OpenAPI document 2.35 (was 2.29) and later; `2.1.0` added `Entity.canonical`, `2.2.0` the `is_indexable` flag described below. No endpoint, parameter or request shape changed. `Entity` gained `is_draft` and `draft_expires_at`, `/sitemap` got a response model of its own, and the model details below carry over from the `1.7.0` step that this release skips.
 
 **Turn caching off for a draft link on entity detail routes.** A draft link is a shareable, expiring snapshot of an entity that is still offline in Flyo, requested through `entityBySlug()` and `entityByUniqueid()` with an opaque token in place of the slug or the unique id. `is_draft` is `true` on such a response and `draft_expires_at` holds the Unix timestamp at which the link stops working; after that the same URL answers 404.
 
@@ -271,6 +271,10 @@ If you do, `entity_title`, `entity_teaser`, `entity_image`, `entity_time_start` 
 const path = entity.routes?.[key];
 if (typeof path !== "string") return undefined;
 ```
+
+**Non-indexable content emits `noindex` on its own.** `@flyo/nitro-typescript` moved to `^2.2.0`, which adds `is_indexable` to `Page` (`0` when the page is kept out of the index) and to `Entity` (`false` when every page placing the entity's content pool is non-indexable). `MetaInfoPage` and `MetaInfoEntity` render `<meta name="robots" content="noindex">` for such content without any configuration; a draft still renders `noindex, nofollow`, and never both tags. The flag is not access control — the page or entity is delivered and stays reachable by URL, it is only kept out of the sitemap, the search endpoint and the index. Remove your own robots tag if you were deriving one from the same flag. Content the API reports without `is_indexable` is treated as indexable, exactly as before.
+
+`MetaInfo` takes the directive as a `robots` prop for the same purpose: `<MetaInfo robots="noindex" … />` renders the tag verbatim, omitting it renders none.
 
 Deserialization is unchanged but for one case: when the API sends an explicit `"_empty": null`, `1.6.0` dropped the key while `1.7.0` and `2.0.0` keep the `null`. Compare with `routes._empty == null` if you want to treat a missing and a null value alike. The same holds for the new draft fields — `is_draft: false` survives deserialization and an explicit `draft_expires_at: null` is kept as `null` rather than dropped, so use `draft_expires_at == null` if you mean "either".
 
