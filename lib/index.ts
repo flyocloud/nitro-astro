@@ -13,6 +13,13 @@ import {
 import vitePluginFlyoComponents from "./vite-plugin-flyo-components";
 
 export { flyoImageUrl, FLYO_CDN_URL, type FlyoImageOptions } from "./cdn";
+export {
+  disableCache,
+  isCacheDisabled,
+  applyCacheHeaders,
+  type CacheHeaderOptions,
+  type FlyoRequestContext,
+} from "./cache";
 
 /**
  * Options for configuring the integration.
@@ -60,12 +67,14 @@ export interface IntegrationOptions {
   /**
    * TTL (Time-To-Live) for client-side cache headers, in seconds.
    * Default is 900 seconds (15 minutes) its only availble if the liveEdit is disabled. Use 0 to disable client caching.
+   * A request marked with `disableCache()` — a draft link, for instance — is answered with `no-store` instead, whatever this value is.
    */
   clientCacheHeaderTtl: number;
 
   /**
    * TTL (Time-To-Live) for server-side cache headers, in seconds.
    * Default is 1200 seconds (20 minutes) its only availble if the liveEdit is disabled. Use 0 to disable server caching.
+   * A request marked with `disableCache()` — a draft link, for instance — is answered with `no-store` instead, whatever this value is.
    */
   serverCacheHeaderTtl: number;
 }
@@ -111,6 +120,19 @@ export function useConfigApi(): ConfigApi {
   return new ConfigApi(useConfiguration());
 }
 
+/**
+ * Returns the `EntitiesApi` instance for entity detail requests.
+ *
+ * `entityBySlug()` and `entityByUniqueid()` also resolve a **draft link** — an
+ * opaque token in place of the slug or the unique id — and answer it with
+ * `is_draft: true`. A draft is private and expires, so no cache may keep it:
+ * call `disableCache()` for such a response.
+ *
+ * ```ts
+ * const response = await useEntitiesApi().entityBySlug({ slug });
+ * if (response.is_draft) disableCache(Astro);
+ * ```
+ */
 export function useEntitiesApi(): EntitiesApi {
   return new EntitiesApi(useConfiguration());
 }

@@ -35,6 +35,27 @@ describe("sitemap", () => {
     expect(xml).not.toContain("ignored");
   });
 
+  it("reads the sitemap item model of the API, nothing else", async () => {
+    // What /sitemap delivers per entry: the id, the timestamp and the resolved
+    // url. Titles, teasers, images and the type id live on the entity/search
+    // model and are not part of a sitemap item.
+    const xml = await render([
+      {
+        entity_unique_id: "12_K6uT5tY4TwXRL3",
+        updated_at: 1739276400,
+        href: "/news/news-title-1",
+      },
+    ]);
+
+    expect(xml).toBe(
+      '<?xml version="1.0" encoding="UTF-8"?>' +
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
+        "<url><loc>https://example.com/news/news-title-1</loc>" +
+        "<lastmod>2025-02-11T12:20:00Z</lastmod></url>" +
+        "</urlset>"
+    );
+  });
+
   it("emits updated_at as lastmod", async () => {
     const xml = await render([
       { href: "/about-us", updated_at: 1739276400 },

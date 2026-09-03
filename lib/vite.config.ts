@@ -16,11 +16,18 @@ export default defineConfig(() => {
     plugins: [
       dts({
         outDir: "dist/types",
-        // Only the bundle entry needs generated declarations: `exports` in
-        // package.json resolves every other subpath (./cdn.ts, ./middleware.ts,
-        // ./sitemap.ts, ./toolbar.ts and the components) to the shipped source,
-        // so declarations for those were emitted but never resolved by anyone.
-        include: ["index.ts"],
+        // The bundle entry plus what it re-exports. `exports` in package.json
+        // resolves every other subpath (./middleware.ts, ./sitemap.ts,
+        // ./toolbar.ts and the components) to the shipped source, so
+        // declarations for those were emitted but never resolved by anyone.
+        include: ["index.ts", "cdn.ts", "cache.ts"],
+        // One self-contained file. Without the rollup, `export … from "./cdn"`
+        // survives into dist/types/index.d.ts as a relative import that resolves
+        // to nothing beside it, and consumers see no error for it — every Astro
+        // tsconfig sets skipLibCheck — the re-exported symbols just degrade to
+        // `any`. The rollup inlines them, and emits nothing but index.d.ts, which
+        // is what packaging.test.ts checks for.
+        rollupTypes: true,
       }) as unknown as Plugin,
     ],
   };

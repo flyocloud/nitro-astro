@@ -1,5 +1,9 @@
 import { defineMiddleware } from "astro/middleware";
-import { useConfigApi, useFlyoIntegration } from "@flyo/nitro-astro";
+import {
+  applyCacheHeaders,
+  useConfigApi,
+  useFlyoIntegration,
+} from "@flyo/nitro-astro";
 
 let resolvedValue;
 
@@ -31,32 +35,20 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   context.locals.config = getConfigPromise(context);
 
-  let liveEditEnabled = false;
+  let options = null;
   try {
     // Safely retrieve options from useFlyoIntegration
-    liveEditEnabled = useFlyoIntegration()?.options?.liveEdit || false;
+    options = useFlyoIntegration()?.options || null;
   } catch (error) {
     console.error("Error in useFlyoIntegration:", error);
   }
 
-  if (!liveEditEnabled) {
-    const response = await next();
+  const response = await next();
 
-    response.headers.set(
-      "Vercel-CDN-Cache-Control",
-      `max-age=${useFlyoIntegration().options.serverCacheHeaderTtl}`
-    );
-    response.headers.set(
-      "CDN-Cache-Control",
-      `max-age=${useFlyoIntegration().options.serverCacheHeaderTtl}`
-    );
-    response.headers.set(
-      "Cache-Control",
-      `max-age=${useFlyoIntegration().options.clientCacheHeaderTtl}`
-    );
+  // The TTLs from the integration options, or no-store when the page marked the
+  // request uncacheable — which a draft link does on its own. Live edit gets no
+  // header at all. See cache.ts.
+  applyCacheHeaders(response, context, options);
 
-    return response;
-  }
-
-  return next();
+  return response;
 });

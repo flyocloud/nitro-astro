@@ -733,27 +733,53 @@ For a slug-based detail page create `src/pages/<segment>/[slug].astro`:
 ```
 ---
 import Layout from "../../layouts/Layout.astro";
-import { useEntitiesApi } from "@flyo/nitro-astro";
+import { useEntitiesApi, disableCache } from "@flyo/nitro-astro";
 import MetaInfoEntity from "@flyo/nitro-astro/MetaInfoEntity.astro";
 
 const { slug = "" } = Astro.params;
 
+const entities = useEntitiesApi();
+
 let response = null;
 try {
-  response = await useEntitiesApi().entityBySlug({
+  response = await entities.entityBySlug({
     slug,
     lang: Astro.currentLocale,
     typeId: 9999, // the entity type ID from Flyo
   });
 } catch (e) {
-  return Astro.rewrite("/404");
+  // A draft link puts an opaque token where the slug goes, and the type filter
+  // does not apply to a token — so retry once without `typeId` before giving up.
+  try {
+    response = await entities.entityBySlug({ slug, lang: Astro.currentLocale });
+  } catch (draftError) {
+    return Astro.rewrite("/404");
+  }
+}
+
+// A draft link is private and expires: neither the browser nor the CDN may
+// keep a copy. A no-op for a published entity, where `is_draft` is false.
+if (response.is_draft) {
+  disableCache(Astro);
 }
 
 const isProd = import.meta.env.PROD;
+const draftExpires =
+  response.draft_expires_at != null
+    ? new Date(response.draft_expires_at * 1000).toLocaleString()
+    : null;
 ---
 
 <Layout title={response.entity.entity_title}>
   <MetaInfoEntity response={response} slot="head" />
+  {
+    response.is_draft && (
+      <p>
+        Draft preview — this entity is not published
+        {draftExpires && `, the link expires ${draftExpires}`}.
+      </p>
+    )
+  }
   <h1>{response.entity.entity_title}</h1>
 </Layout>
 {
@@ -767,7 +793,16 @@ const isProd = import.meta.env.PROD;
 
 For a unique-ID based route use `entityByUniqueid({ uniqueid, lang: Astro.currentLocale })` instead. Any route parameter name works — the resolution logic is yours.
 
-Keep the `fetch(api)` metric call guarded by `import.meta.env.PROD` so development views are not counted.
+Keep the `fetch(api)` metric call guarded by `import.meta.env.PROD`.
+
+**Draft links.** The same two endpoints also resolve a draft link: a shareable, expiring snapshot of an entity that is still offline in Flyo, addressed by an opaque token in place of the slug or the unique ID. The response then carries `is_draft: true` and `draft_expires_at` (a Unix timestamp, `null` otherwise); after expiry the URL answers 404. Four rules for a detail route:
+
+1. Call `disableCache(Astro)` in the frontmatter when `is_draft` is true. A draft must not be cached — it is private and it expires — and the middleware then answers the request with `no-store` for the client and the server/CDN instead of the configured TTLs. Without it the draft is cached like a published page: the CDN hands the snapshot to everyone and the browser keeps it after the link expired. It has to be the frontmatter, not a nested component — the middleware writes the headers when the page returns.
+2. Do not send `typeId` for a token; retry the lookup without it, as above.
+3. If the route validates the parameter against a pattern, let the token through — it looks like neither a slug nor a unique ID.
+4. Render a visible hint when `is_draft` is true, so nobody mistakes the preview for the live page. `MetaInfoEntity` already adds `<meta name="robots" content="noindex, nofollow">` for drafts.
+
+`disableCache()` is not entity-specific: use it for anything else that must not be cached, such as a personalised page or a response built from a cookie.
 
 ### 11. Sitemap
 
@@ -911,6 +946,7 @@ Header and Footer use the user-provided Flyo container identifiers
 src/generated/flyo.ts exists
 src/pages/[...slug].astro exists and rewrites to /404 for unknown slugs
 src/pages/404.astro exists
+Entity detail routes call disableCache(Astro) when is_draft is true
 src/components/flyo/wysiwyg/AppWysiwyg.astro exists
 Images use <Image /> from astro:assets and image.service is not overridden in astro.config.mjs
 /sitemap.xml returns the Flyo pages and entities

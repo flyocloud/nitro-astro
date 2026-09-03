@@ -60,6 +60,13 @@ function bareSpecifiers(file: string): string[] {
   ];
 }
 
+/** Every relative specifier a shipped file imports, deduplicated. */
+function bareRelativeSpecifiers(file: string): string[] {
+  const source = readFileSync(path.join(libDir, file), "utf8");
+  const specifiers = [...source.matchAll(SPECIFIER)].map((match) => match[1]);
+  return [...new Set(specifiers.filter((specifier) => specifier.startsWith(".")))];
+}
+
 /** The packages a shipped file imports by bare specifier, deduplicated. */
 function importedPackages(file: string): string[] {
   return [...new Set(bareSpecifiers(file).map(packageName))];
@@ -184,6 +191,27 @@ describe("type resolution for consumers", () => {
       (subpath) => fallbacks[subpath]?.[0] !== pkg.exports[`./${subpath}`].types
     );
     expect(mismatched).toEqual([]);
+  });
+
+  // `index.ts` re-exports from siblings (./cdn, ./cache) and only its own
+  // declarations are emitted, so without `rollupTypes` in vite.config.ts those
+  // survive as relative imports pointing at files that are not there. Nobody
+  // sees an error for it — every Astro tsconfig sets skipLibCheck — the
+  // re-exported symbols silently become `any` in the consumer's editor.
+  it("resolves every relative import in the shipped declarations", () => {
+    const dangling = shipped
+      .filter((file) => file.startsWith("dist/types/"))
+      .flatMap((file) =>
+        bareRelativeSpecifiers(file).map((specifier) => {
+          const target = path.posix.join(path.posix.dirname(file), specifier);
+          const resolves = [`${target}.d.ts`, `${target}/index.d.ts`, target].some(
+            (candidate) => shipped.includes(candidate)
+          );
+          return resolves ? null : `${file}: ${specifier}`;
+        })
+      )
+      .filter(Boolean);
+    expect(dangling).toEqual([]);
   });
 
   it("declares every .astro a shim imports, so plain tsc can follow it", () => {
