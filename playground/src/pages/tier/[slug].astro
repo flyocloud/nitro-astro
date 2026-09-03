@@ -68,8 +68,7 @@ const draftExpiresAt =
   }
 </Layout>
 {
-  /* Only visits of the published entity count towards the entity metrics. */
-  isProd && !response.is_draft && (
+  isProd && (
     <script is:inline define:vars={{ api: response.entity.entity_metric.api }}>
       fetch(api)
     </script>
