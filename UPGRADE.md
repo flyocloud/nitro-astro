@@ -279,3 +279,5 @@ if (typeof path !== "string") return undefined;
 Deserialization is unchanged but for one case: when the API sends an explicit `"_empty": null`, `1.6.0` dropped the key while `1.7.0` and `2.0.0` keep the `null`. Compare with `routes._empty == null` if you want to treat a missing and a null value alike. The same holds for the new draft fields — `is_draft: false` survives deserialization and an explicit `draft_expires_at: null` is kept as `null` rather than dropped, so use `draft_expires_at == null` if you mean "either".
 
 For the full API and component reference see [README.md](README.md).
+
+(publish workflow changed)
