@@ -23,11 +23,12 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v5
         with:
+          # node 24 bundles npm 11.x, which trusted publishing needs (>= 11.5.1).
+          # do not upgrade to npm 12 here: it defaults `allow-git` to `none` and
+          # a transitive git dep in the playground (@emmetio/css-parser, via
+          # @astrojs/check) then fails `npm ci` with EALLOWGIT.
           node-version: "24"
           cache: "npm"
-      - name: Update npm
-        # trusted publishing needs npm >= 11.5.1
-        run: npm install -g npm@latest
       - name: Install dependencies
         run: npm ci
       - name: Build lib
